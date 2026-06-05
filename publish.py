@@ -167,9 +167,10 @@ def get_dates(slug):
     return created, pub, mod
 
 def list_status():
-    print(f'{"Status":<10} {"Created":<11} {"Published":<11} {"Modified":<11} {"Slug":<48} Headline')
-    print('-' * 135)
-    for slug, headline in BLOGS.items():
+    sticky = set(load_sticky())
+    print(f'{"Status":<10} {"Sticky":<7} {"Created":<11} {"Published":<11} {"Modified":<11} Slug')
+    print('-' * 96)
+    for slug in BLOGS:
         st = is_published(slug)
         if st is None:
             label = 'MISSING'
@@ -177,8 +178,9 @@ def list_status():
             label = 'PUBLISHED'
         else:
             label = 'draft'
+        sticky_mark = '*' if slug in sticky else ''
         created, pub, mod = get_dates(slug)
-        print(f'{label:<10} {created:<11} {pub:<11} {mod:<11} {slug:<48} {headline[:40]}')
+        print(f'{label:<10} {sticky_mark:<7} {created:<11} {pub:<11} {mod:<11} {slug}')
 
 # ----------------------------------------------------------------------------
 
