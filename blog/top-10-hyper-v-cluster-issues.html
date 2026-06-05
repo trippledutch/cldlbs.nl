@@ -249,7 +249,7 @@ Get-ClusterResource | Where-Object {$_.OwnerGroup -eq 'Cluster Group'} |
           <li><strong>Two-site stretched:</strong> Cloud Witness, or a File Share Witness in a third site, never in one of the two cluster sites.</li>
           <li><strong>Disconnected or air-gapped:</strong> File Share Witness on documented independent storage and power.</li>
         </ul>
-        <p>Full comparison in <!--LINK:cluster-witness-comparison--><!--draft:<a href="cluster-witness-comparison.html">File Share Witness vs Cloud Witness vs Disk Witness: which to choose</a>-->File Share Witness vs Cloud Witness vs Disk Witness: which to choose<!--/LINK:cluster-witness-comparison-->.</p>
+        <p>Full comparison in <!--LINK:cluster-witness-comparison--><a href="cluster-witness-comparison.html">File Share Witness vs Cloud Witness vs Disk Witness: which to choose</a><!--/LINK:cluster-witness-comparison-->.</p>
 
         <h2 id="en-3">3. CSV ownership imbalance</h2>
         <p>Cluster Shared Volume ownership piles up on one node after a patch round, a failover, or a node drain that nobody rebalanced afterwards. The symptom is uneven CPU on the coordinator node and read-heavy workloads experiencing latency spikes that look random until you correlate them with CSV ownership.</p>
@@ -460,7 +460,7 @@ Get-ClusterResource | Where-Object {$_.OwnerGroup -eq 'Cluster Group'} |
           <li><strong>Two-site stretched:</strong> Cloud Witness, of een File Share Witness in een derde site, nooit in een van de twee cluster-sites.</li>
           <li><strong>Disconnected of air-gapped:</strong> File Share Witness op gedocumenteerd onafhankelijke storage en voeding.</li>
         </ul>
-        <p>Volledige vergelijking in <!--LINK:cluster-witness-comparison--><!--draft:<a href="cluster-witness-comparison.html">File Share Witness vs Cloud Witness vs Disk Witness: welk type kies je?</a>-->File Share Witness vs Cloud Witness vs Disk Witness: welk type kies je?<!--/LINK:cluster-witness-comparison-->.</p>
+        <p>Volledige vergelijking in <!--LINK:cluster-witness-comparison--><a href="cluster-witness-comparison.html">File Share Witness vs Cloud Witness vs Disk Witness: welk type kies je?</a><!--/LINK:cluster-witness-comparison-->.</p>
 
         <h2 id="nl-3">3. CSV ownership-onbalans</h2>
         <p>Cluster Shared Volume-eigendom stapelt zich op één node na een patch-ronde, een failover, of een node-drain die niemand achteraf herbalanceerd heeft. Het symptoom is ongelijke CPU op de coordinator-node en read-heavy workloads die latency-pieken ervaren die er random uitzien, tenzij je ze correleert met CSV-ownership.</p>
@@ -610,7 +610,7 @@ Get-PhysicalDisk | Group-Object MediaType, OperationalStatus, FirmwareVersion</c
         <ul>
           <!--LINK:csv-ownership-imbalance--><!--draft:<li><a href="csv-ownership-imbalance.html"><span lang="en">CSV ownership imbalance: causes and fixes</span><span lang="nl">CSV ownership-onbalans: oorzaken en oplossingen</span></a></li>--><!--/LINK:csv-ownership-imbalance-->
           <!--LINK:live-migration-wrong-network--><li><a href="live-migration-wrong-network.html"><span lang="en">Live Migration on the wrong network</span><span lang="nl">Live Migration over het verkeerde netwerk</span></a></li><!--/LINK:live-migration-wrong-network-->
-          <!--LINK:cluster-witness-comparison--><!--draft:<li><a href="cluster-witness-comparison.html"><span lang="en">File Share Witness vs Cloud Witness vs Disk Witness</span><span lang="nl">File Share Witness vs Cloud Witness vs Disk Witness</span></a></li>--><!--/LINK:cluster-witness-comparison-->
+          <!--LINK:cluster-witness-comparison--><li><a href="cluster-witness-comparison.html"><span lang="en">File Share Witness vs Cloud Witness vs Disk Witness</span><span lang="nl">File Share Witness vs Cloud Witness vs Disk Witness</span></a></li><!--/LINK:cluster-witness-comparison-->
           <!--LINK:azure-local-migration-readiness--><!--draft:<li><a href="azure-local-migration-readiness.html"><span lang="en">Azure Local migration readiness checklist</span><span lang="nl">Azure Local migratie-readiness checklist</span></a></li>--><!--/LINK:azure-local-migration-readiness-->
         </ul>
       </div>

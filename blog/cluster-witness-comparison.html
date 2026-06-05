@@ -4,7 +4,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#0a1024">
 <link rel="icon" href="../favicon.png" type="image/png">
 <title>File Share Witness vs Cloud Witness vs Disk Witness: Which Type Fits Your Cluster? · CloudLabs</title>
@@ -18,7 +17,7 @@
 <meta property="og:title" content="File Share Witness vs Cloud Witness vs Disk Witness: Which Type Fits Your Cluster?">
 <meta property="og:description" content="Failover Cluster witness types compared in production terms — by CloudLabs.">
 <meta property="og:image" content="https://cldlbs.com/images/cluster.jpg">
-<meta property="article:published_time" content="2026-05-15">
+<meta property="article:published_time" content="2026-05-24">
 <meta property="article:author" content="Hans Vredevoort">
 <meta property="article:section" content="Quorum">
 <meta property="article:tag" content="Witness">
@@ -32,8 +31,8 @@
   "headline":"File Share Witness vs Cloud Witness vs Disk Witness: Which Type Fits Your Cluster?",
   "description":"Failover Cluster witness types compared in production terms: File Share, Cloud, and Disk Witness — failure modes, topology fit, and the five configuration mistakes that quietly remove resilience.",
   "image":"https://cldlbs.com/images/cluster.jpg",
-  "datePublished":"2026-05-15",
-  "dateModified":"2026-05-15",
+  "datePublished":"2026-05-24",
+  "dateModified":"2026-05-24",
   "author":{"@type":"Person","name":"Hans Vredevoort","url":"https://cldlbs.com/about.html","jobTitle":"Hyper-V & Cluster Consultant","worksFor":{"@type":"Organization","name":"CloudLabs"}},
   "publisher":{"@type":"Organization","name":"CloudLabs","url":"https://cldlbs.com/","logo":{"@type":"ImageObject","url":"https://cldlbs.com/favicon.png"}},
   "mainEntityOfPage":{"@type":"WebPage","@id":"https://cldlbs.com/blog/cluster-witness-comparison.html"},
@@ -190,7 +189,7 @@
       <!-- ============= ENGLISH ============= -->
       <div lang="en">
         <h1>File Share Witness vs Cloud Witness vs Disk Witness: Which Type Fits Your Cluster?</h1>
-        <div class="meta">By Hans Vredevoort · 15 May 2026 · 14 minute read · Quorum</div>
+        <div class="meta">By Hans Vredevoort · 24 May 2026 · 14 minute read · Quorum</div>
 
         <p class="lede">Quorum is the invisible thing keeping a Windows Server Failover Cluster alive when nodes go away. Witness configuration is also one of the top three areas where CloudLabs Hyper-V Cluster Health Checks find quiet resilience gaps. The witness exists, the cluster reports healthy, validation passes, and one fault domain still takes the cluster down because the witness sits exactly in the wrong place.</p>
         <p class="lede">This article compares the three witness types in production terms: failure modes, topology fit, the configuration mistakes we keep finding, and the decisions you want to get right once.</p>
@@ -409,7 +408,7 @@ Set-ClusterQuorum -DiskWitness 'Cluster Disk Witness'</code></pre>
       <!-- ============= DUTCH ============= -->
       <div lang="nl">
         <h1>File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster?</h1>
-        <div class="meta">Door Hans Vredevoort · 15 mei 2026 · 14 minuten leestijd · Quorum</div>
+        <div class="meta">Door Hans Vredevoort · 24 mei 2026 · 14 minuten leestijd · Quorum</div>
 
         <p class="lede">Quorum is het onzichtbare stuk dat een Windows Server Failover Cluster overeind houdt wanneer nodes verdwijnen. Witness-configuratie is ook een van de top drie gebieden waar CloudLabs Hyper-V Cluster Health Checks stille resilience-gaten vinden. De witness bestaat, het cluster rapporteert gezond, validatie komt door, en één fault domain legt het cluster alsnog plat omdat de witness precies op de verkeerde plek staat.</p>
         <p class="lede">Dit artikel vergelijkt de drie witness-types in productie-termen: failure modes, topologie-fit, de configuratiefouten die wij blijven vinden, en de beslissingen die je in één keer goed wilt maken.</p>

@@ -1,4 +1,4 @@
-/* CloudLabs · shared script · v0.2.1 */
+/* CloudLabs · shared script · v0.2.2 */
 (function(){
   /* Mobile nav overflow fade */
   var navEl  = document.querySelector('nav.tabs');
@@ -198,4 +198,23 @@
     });
     wrap.appendChild(btn);
   });
+
+  /* Scrollspy on sticky TOC sidebar (blog articles, desktop) */
+  var stickyToc = document.querySelector('.article-toc-sticky');
+  if(stickyToc && 'IntersectionObserver' in window){
+    var headings = document.querySelectorAll('.article h2[id]');
+    if(headings.length){
+      var spyObs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            var id = entry.target.id;
+            stickyToc.querySelectorAll('a').forEach(function(a){
+              a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+            });
+          }
+        });
+      }, { rootMargin: '-12% 0px -78% 0px', threshold: 0 });
+      headings.forEach(function(h){ spyObs.observe(h); });
+    }
+  }
 })();
