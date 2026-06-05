@@ -1,4 +1,4 @@
-/* CloudLabs · shared stylesheet · v0.2.3 */
+/* CloudLabs · shared stylesheet · v0.2.4 */
 :root{
   --bg:#0a1024;--bg-2:#0f1832;--panel:#121d3a;--panel-2:#162345;
   --line:rgba(120,160,255,.14);--line-strong:rgba(120,160,255,.28);
@@ -398,6 +398,10 @@ html[data-lang="nl"] [lang="en"]{display:none}
 @media (hover:none){
   .article .code-block .copy-btn{opacity:.7}
 }
+
+/* Blog-article lede: override the global .lede max-width (62ch) so the
+   lede wraps at the same right margin as the body paragraphs (75ch). */
+.article .lede{max-width:none}
 
 /* Sticky TOC sidebar (blog articles, desktop only).
    Right-anchored to the .app container's right edge (the .app is max-width:1400px
