@@ -1,4 +1,4 @@
-/* CloudLabs · shared stylesheet · v0.2.1 */
+/* CloudLabs · shared stylesheet · v0.2.2 */
 :root{
   --bg:#0a1024;--bg-2:#0f1832;--panel:#121d3a;--panel-2:#162345;
   --line:rgba(120,160,255,.14);--line-strong:rgba(120,160,255,.28);
@@ -380,3 +380,21 @@ footer a:hover{color:var(--ink-dim)}
 
 html[data-lang="en"] [lang="nl"]{display:none}
 html[data-lang="nl"] [lang="en"]{display:none}
+
+/* Code-block copy button (blog articles) */
+.article .code-block{position:relative}
+.article .code-block .copy-btn{
+  position:absolute;top:8px;right:8px;
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(95,227,255,.08);color:var(--cyan);
+  border:1px solid rgba(95,227,255,.22);border-radius:4px;
+  padding:4px 9px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  cursor:pointer;opacity:.35;transition:opacity .15s,background .15s,border-color .15s;
+}
+.article .code-block:hover .copy-btn{opacity:1}
+.article .code-block .copy-btn:hover{background:rgba(95,227,255,.16)}
+.article .code-block .copy-btn.copied{background:rgba(95,227,255,.22);border-color:var(--cyan);opacity:1}
+@media (hover:none){
+  .article .code-block .copy-btn{opacity:.7}
+}

@@ -1,4 +1,4 @@
-/* CloudLabs · shared script · v0.2.0 */
+/* CloudLabs · shared script · v0.2.1 */
 (function(){
   /* Mobile nav overflow fade */
   var navEl  = document.querySelector('nav.tabs');
@@ -161,4 +161,41 @@
     if(decline) decline.addEventListener('click', function(){ update('denied');  });
     if(reopen)  reopen.addEventListener('click',  function(){ showBanner(); });
   }
+
+  /* Copy-to-clipboard buttons on code blocks (blog articles) */
+  document.querySelectorAll('.article pre').forEach(function(pre){
+    var code = pre.querySelector('code');
+    if(!code) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'code-block';
+    pre.parentNode.insertBefore(wrap, pre);
+    wrap.appendChild(pre);
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'copy-btn';
+    btn.setAttribute('aria-label', 'Copy code');
+    btn.innerHTML = '<span class="copy-label">Copy</span>';
+    btn.addEventListener('click', function(){
+      var text = code.textContent;
+      var done = function(){
+        btn.classList.add('copied');
+        btn.querySelector('.copy-label').textContent = 'Copied';
+        setTimeout(function(){
+          btn.classList.remove('copied');
+          btn.querySelector('.copy-label').textContent = 'Copy';
+        }, 1500);
+      };
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(done).catch(function(){});
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly','');
+        ta.style.position='absolute'; ta.style.left='-9999px';
+        document.body.appendChild(ta); ta.select();
+        try{ document.execCommand('copy'); done(); }catch(e){}
+        document.body.removeChild(ta);
+      }
+    });
+    wrap.appendChild(btn);
+  });
 })();
