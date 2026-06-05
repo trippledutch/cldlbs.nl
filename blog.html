@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.5 · Blog -->
+<!-- CloudLabs · v0.3.6 · Blog -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -65,6 +65,14 @@
   .blog-card p{font-size:14px;line-height:1.6;color:var(--ink-dim);margin:0 0 14px;flex:1}
   .blog-card .meta{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.06em}
   .blog-card .read-more{color:var(--cyan);font-size:13px;margin-top:8px}
+  .blog-card.featured{border-color:var(--cyan);position:relative;background:rgba(95,227,255,.04)}
+  .blog-card.featured:hover{border-color:var(--cyan)}
+  .blog-card.featured::before{
+    content:"FEATURED";position:absolute;top:12px;right:12px;
+    font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+    color:var(--cyan);background:rgba(95,227,255,.1);
+    padding:3px 7px;border-radius:3px;border:1px solid rgba(95,227,255,.2);
+  }
 </style>
 </head>
 <body>
@@ -118,7 +126,7 @@
 
     <div class="blog-grid">
 
-      <a class="blog-card" href="blog/top-10-hyper-v-cluster-issues.html">
+      <a class="blog-card featured" href="blog/top-10-hyper-v-cluster-issues.html">
         <span class="tag">Cluster Health</span>
         <h2>
           <span lang="en">Hyper-V Cluster Health Check: 10 issues we keep finding in 2026</span>
@@ -131,6 +139,7 @@
         <div class="meta">2026-05-15 · 14 min read</div>
         <span class="read-more">Read article →</span>
       </a>
+
       <!-- DRAFT, not yet published. Remove these comments to publish.
       <a class="blog-card" href="blog/azure-local-migration-readiness.html">
         <span class="tag">Azure Local</span>
@@ -146,6 +155,7 @@
         <span class="read-more">Read article →</span>
       </a>
       -->
+
       <!-- DRAFT, not yet published. Remove these comments to publish.
       <a class="blog-card" href="blog/csv-ownership-imbalance.html">
         <span class="tag">Storage</span>
@@ -161,6 +171,7 @@
         <span class="read-more">Read article →</span>
       </a>
       -->
+
       <!-- DRAFT, not yet published. Remove these comments to publish.
       <a class="blog-card" href="blog/live-migration-wrong-network.html">
         <span class="tag">Networking</span>
@@ -176,6 +187,7 @@
         <span class="read-more">Read article →</span>
       </a>
       -->
+
       <!-- DRAFT, not yet published. Remove these comments to publish.
       <a class="blog-card" href="blog/cluster-witness-comparison.html">
         <span class="tag">Quorum</span>
@@ -191,6 +203,7 @@
         <span class="read-more">Read article →</span>
       </a>
       -->
+
       <!-- DRAFT, not yet published. Remove these comments to publish.
       <a class="blog-card" href="blog/vmware-to-hyper-v-migration-assessment.html">
         <span class="tag">Migration</span>
@@ -206,6 +219,7 @@
         <span class="read-more">Read article →</span>
       </a>
       -->
+
       <!-- DRAFT, not yet published. Remove these comments to publish.
       <a class="blog-card" href="blog/hyper-v-time-drift-kerberos-csv.html">
         <span class="tag">Time Service</span>
@@ -221,6 +235,7 @@
         <span class="read-more">Read article →</span>
       </a>
       -->
+
       <!-- DRAFT, not yet published. Remove these comments to publish.
       <a class="blog-card" href="blog/windows-server-2025-hyper-v-cluster-features.html">
         <span class="tag">Windows Server 2025</span>
@@ -236,6 +251,7 @@
         <span class="read-more">Read article →</span>
       </a>
       -->
+
       <!-- DRAFT, not yet published. Remove these comments to publish.
       <a class="blog-card" href="blog/cluster-aware-updating-runbook-audit-trail.html">
         <span class="tag">Patching</span>
@@ -251,6 +267,7 @@
         <span class="read-more">Read article →</span>
       </a>
       -->
+
       <!-- DRAFT, not yet published. Remove these comments to publish.
       <a class="blog-card" href="blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">
         <span class="tag">Storage Architecture</span>
@@ -280,7 +297,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="book.html" lang="en">Book</a><a href="book.html" lang="nl">Boek</a>
     <a href="privacy.html" lang="en">Privacy</a><a href="privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.5</span>
+    <span class="brand-version">v0.3.6</span>
   </footer>
 
 </div>

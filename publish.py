@@ -3,9 +3,12 @@
 CloudLabs blog publish helper.
 
 Usage:
-    ./publish.py --list                 # show status of all blogs
-    ./publish.py <slug>                 # publish a draft (unhide everywhere)
-    ./publish.py --unpublish <slug>     # back to draft (hide everywhere)
+    ./publish.py --list                       # show status of all blogs
+    ./publish.py <slug>                       # publish a draft (unhide everywhere)
+    ./publish.py <slug> --date YYYY-MM-DD     # publish AND set the date everywhere
+    ./publish.py --unpublish <slug>           # back to draft (hide everywhere)
+    ./publish.py --sync-links                 # rebuild cross-blog link visibility
+    ./publish.py --wrap-links                 # wrap unmarked cross-blog links + sync
 
 The slug is the filename without .html, e.g.:
     ./publish.py azure-local-migration-readiness
@@ -21,6 +24,7 @@ What "publish" does:
 Idempotent. Safe to run multiple times.
 """
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -64,9 +68,102 @@ def is_published(slug):
         return None
     return 'name="robots"' not in f.read_text()
 
+# ----------------------------------------------------------------------------
+# Date helpers
+
+MONTHS_EN = ['January','February','March','April','May','June',
+             'July','August','September','October','November','December']
+MONTHS_NL = ['januari','februari','maart','april','mei','juni',
+             'juli','augustus','september','oktober','november','december']
+
+def _parse_iso(date_iso):
+    m = re.fullmatch(r'(\d{4})-(\d{2})-(\d{2})', date_iso or '')
+    if not m:
+        raise ValueError(f'Invalid date (expected YYYY-MM-DD): {date_iso!r}')
+    return int(m.group(1)), int(m.group(2)), int(m.group(3))
+
+def format_date(date_iso, lang='en'):
+    y, mo, d = _parse_iso(date_iso)
+    months = MONTHS_EN if lang == 'en' else MONTHS_NL
+    return f'{d} {months[mo-1]} {y}'
+
+def published_date(slug):
+    """Return the blog's datePublished from its JSON-LD, or None."""
+    f = BLOG_DIR / f'{slug}.html'
+    if not f.exists():
+        return None
+    m = re.search(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})"', f.read_text())
+    return m.group(1) if m else None
+
+def set_date(slug, date_iso):
+    """Overwrite all date fields in the blog file and matching blog.html card.
+
+    Updated locations:
+      - blog file JSON-LD: datePublished, dateModified
+      - blog file <meta property="article:published_time">
+      - blog file visible <div class="meta">By Hans Vredevoort \xb7 D Month Y \xb7 ...
+      - blog file visible <div class="meta">Door Hans Vredevoort \xb7 D maand Y \xb7 ...
+      - blog.html card <div class="meta">YYYY-MM-DD \xb7 X min read</div>
+    """
+    _parse_iso(date_iso)  # validate
+    f = BLOG_DIR / f'{slug}.html'
+    if not f.exists():
+        return False
+    t = f.read_text()
+    en_h = format_date(date_iso, 'en')
+    nl_h = format_date(date_iso, 'nl')
+    # JSON-LD dates
+    t = re.sub(r'"datePublished"\s*:\s*"\d{4}-\d{2}-\d{2}"',
+               f'"datePublished":"{date_iso}"', t)
+    t = re.sub(r'"dateModified"\s*:\s*"\d{4}-\d{2}-\d{2}"',
+               f'"dateModified":"{date_iso}"', t)
+    # OG/article meta
+    t = re.sub(r'(<meta property="article:published_time" content=")\d{4}-\d{2}-\d{2}(")',
+               rf'\g<1>{date_iso}\g<2>', t)
+    # Visible meta lines: replace the date portion only, keep word count and category
+    t = re.sub(r'(<div class="meta">By Hans Vredevoort \xb7 )[^\xb7]+( \xb7 )',
+               rf'\g<1>{en_h}\g<2>', t)
+    t = re.sub(r'(<div class="meta">Door Hans Vredevoort \xb7 )[^\xb7]+( \xb7 )',
+               rf'\g<1>{nl_h}\g<2>', t)
+    f.write_text(t)
+    # blog.html card date (DRAFT-wrapped or visible)
+    t2 = INDEX.read_text()
+    card_pat = re.compile(
+        r'(<a class="blog-card" href="blog/' + re.escape(slug) + r'\.html">.*?<div class="meta">)\d{4}-\d{2}-\d{2}( \xb7 [^<]+</div>)',
+        re.DOTALL,
+    )
+    new2, n = card_pat.subn(rf'\g<1>{date_iso}\g<2>', t2)
+    if n:
+        INDEX.write_text(new2)
+    return True
+
+def get_dates(slug):
+    """Return (created, published, modified) as YYYY-MM-DD strings or '-'.
+
+    - created: first git commit that added the file
+    - published / modified: parsed from JSON-LD BlogPosting
+    """
+    f = BLOG_DIR / f'{slug}.html'
+    if not f.exists():
+        return '-', '-', '-'
+    t = f.read_text()
+    pub = (re.search(r'"datePublished"\s*:\s*"([^"]+)"', t) or [None, '-'])[1]
+    mod = (re.search(r'"dateModified"\s*:\s*"([^"]+)"', t) or [None, '-'])[1]
+    try:
+        out = subprocess.run(
+            ['git', 'log', '--diff-filter=A', '--follow',
+             '--format=%ad', '--date=short', '--reverse',
+             '--', str(f.relative_to(ROOT))],
+            capture_output=True, text=True, cwd=ROOT, check=False,
+        ).stdout.strip().splitlines()
+        created = out[0] if out else '-'
+    except Exception:
+        created = '-'
+    return created, pub, mod
+
 def list_status():
-    print(f'{"Status":<10} {"Slug":<48} Headline')
-    print('-' * 100)
+    print(f'{"Status":<10} {"Created":<11} {"Published":<11} {"Modified":<11} {"Slug":<48} Headline')
+    print('-' * 135)
     for slug, headline in BLOGS.items():
         st = is_published(slug)
         if st is None:
@@ -75,7 +172,8 @@ def list_status():
             label = 'PUBLISHED'
         else:
             label = 'draft'
-        print(f'{label:<10} {slug:<48} {headline[:50]}')
+        created, pub, mod = get_dates(slug)
+        print(f'{label:<10} {created:<11} {pub:<11} {mod:<11} {slug:<48} {headline[:40]}')
 
 # ----------------------------------------------------------------------------
 
@@ -152,9 +250,10 @@ def add_blogposting_jsonld(slug):
     """Add the BlogPosting entry back into blog.html JSON-LD, if missing."""
     headline = BLOGS[slug]
     url = f'https://cldlbs.com/blog/{slug}.html'
+    date = published_date(slug) or '2026-05-15'
     entry = (
         f'    {{"@type":"BlogPosting","headline":"{headline}",'
-        f'"url":"{url}","datePublished":"2026-05-15",'
+        f'"url":"{url}","datePublished":"{date}",'
         f'"author":{{"@type":"Person","name":"Hans Vredevoort"}}}}'
     )
     t = INDEX.read_text()
@@ -206,7 +305,7 @@ SITEMAP_URL_TEMPLATE = '''  <url>
     <xhtml:link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/{slug}.html"/>
     <xhtml:link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/{slug}.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/{slug}.html"/>
-    <lastmod>2026-05-15</lastmod>
+    <lastmod>{date}</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -217,7 +316,8 @@ def add_to_sitemap(slug):
     needle = f'<loc>https://cldlbs.com/blog/{slug}.html</loc>'
     if needle in t:
         return False
-    entry = SITEMAP_URL_TEMPLATE.format(slug=slug)
+    date = published_date(slug) or '2026-05-15'
+    entry = SITEMAP_URL_TEMPLATE.format(slug=slug, date=date)
     t = t.replace('</urlset>', entry + '</urlset>')
     SITEMAP.write_text(t)
     return True
@@ -386,19 +486,116 @@ def sync_links(verbose=True):
     return changed_files
 
 # ----------------------------------------------------------------------------
+# Sticky cards + reorder by date
+#
+# STICKY lists slugs that should always appear first on blog.html, in their
+# given order. Non-sticky cards (published or draft) follow, sorted by their
+# datePublished descending. reorder_cards() runs on every publish/unpublish so
+# blog.html stays consistent without manual editing.
 
-def publish(slug):
+STICKY = [
+    'top-10-hyper-v-cluster-issues',
+]
+
+BLOG_GRID_RE = re.compile(
+    r'(<div class="blog-grid">)(.*?)(\n    </div>)',
+    re.DOTALL,
+)
+# A card-block is either a DRAFT-wrapped card or a bare visible card. DRAFT
+# alternative must come first so the inner anchor is not matched in isolation.
+CARD_BLOCK_RE = re.compile(
+    r'(?:<!-- DRAFT, not yet published\. Remove these comments to publish\.\s*'
+    r'<a class="blog-card[^"]*" href="blog/[a-z0-9-]+\.html">.*?</a>\s*-->'
+    r'|'
+    r'<a class="blog-card[^"]*" href="blog/[a-z0-9-]+\.html">.*?</a>)',
+    re.DOTALL,
+)
+_SLUG_FROM_BLOCK_RE = re.compile(r'href="blog/([a-z0-9-]+)\.html"')
+_DATE_FROM_BLOCK_RE = re.compile(r'<div class="meta">(\d{4}-\d{2}-\d{2})')
+
+
+def _apply_featured_class(block, is_sticky):
+    """Toggle the 'featured' class on the outer <a class="blog-card"> tag."""
+    target = 'class="blog-card featured"' if is_sticky else 'class="blog-card"'
+    return re.sub(r'class="blog-card(?: featured)?"', target, block, count=1)
+
+
+def reorder_cards(verbose=True):
+    """Reorder blog.html cards: STICKY first (fixed order), then by date desc.
+
+    Also toggles the 'featured' class on each card so sticky cards get styling.
+    """
+    t = INDEX.read_text()
+    m = BLOG_GRID_RE.search(t)
+    if not m:
+        if verbose:
+            print('  blog-grid section not found')
+        return False
+    grid_open, _grid_body, grid_close = m.group(1), m.group(2), m.group(3)
+
+    blocks = []
+    for cm in CARD_BLOCK_RE.finditer(m.group(2)):
+        block = cm.group(0)
+        slug_m = _SLUG_FROM_BLOCK_RE.search(block)
+        date_m = _DATE_FROM_BLOCK_RE.search(block)
+        if not slug_m:
+            continue
+        slug = slug_m.group(1)
+        date = date_m.group(1) if date_m else '0000-00-00'
+        block = _apply_featured_class(block, slug in STICKY)
+        blocks.append((slug, date, block))
+
+    sticky_order = {s: i for i, s in enumerate(STICKY)}
+    sticky_blocks = sorted(
+        [b for b in blocks if b[0] in sticky_order],
+        key=lambda e: sticky_order[e[0]],
+    )
+    non_sticky_blocks = sorted(
+        [b for b in blocks if b[0] not in sticky_order],
+        key=lambda e: e[1],
+        reverse=True,
+    )
+    ordered = sticky_blocks + non_sticky_blocks
+
+    new_body_parts = ['\n']
+    for _, _, block in ordered:
+        new_body_parts.append('\n      ' + block + '\n')
+    new_body = ''.join(new_body_parts)
+
+    new = t[:m.start()] + grid_open + new_body + grid_close + t[m.end():]
+    if new != t:
+        INDEX.write_text(new)
+        if verbose:
+            print(f'  reordered {len(ordered)} cards ({len(sticky_blocks)} sticky + {len(non_sticky_blocks)} by date)')
+        return True
+    if verbose:
+        print('  cards already in order')
+    return False
+
+# ----------------------------------------------------------------------------
+
+def publish(slug, date=None):
     if slug not in BLOGS:
         print(f'Unknown slug: {slug}')
         print(f'Valid slugs: {", ".join(BLOGS.keys())}')
         return 1
     print(f'Publishing {slug}...')
+    if date:
+        try:
+            _parse_iso(date)
+        except ValueError as e:
+            print(f'  ERROR: {e}')
+            return 1
+        # Apply BEFORE the JSON-LD/sitemap helpers — they read from the blog file.
+        set_date(slug, date);            print(f'  dates set to {date}:      yes (blog + card + meta)')
     r1 = publish_post_file(slug);       print(f'  noindex removed:       {"yes" if r1 else "already removed"}')
     r2 = publish_card_in_index(slug);   print(f'  card un-hidden:        {"yes" if r2 else "already visible"}')
     r3 = add_blogposting_jsonld(slug);  print(f'  JSON-LD entry added:   {"yes" if r3 else "already present"}')
     r4 = add_to_sitemap(slug);          print(f'  sitemap entry added:   {"yes" if r4 else "already present"}')
     print('  syncing cross-blog links:')
     sync_links()
+    print('  reordering blog cards:')
+    reorder_cards()
     print('Done. Commit and push to publish live.')
     return 0
 
@@ -413,6 +610,8 @@ def unpublish(slug):
     r4 = remove_from_sitemap(slug);     print(f'  sitemap entry removed: {"yes" if r4 else "not present"}')
     print('  syncing cross-blog links:')
     sync_links()
+    print('  reordering blog cards:')
+    reorder_cards()
     print('Done.')
     return 0
 
@@ -436,12 +635,25 @@ def main():
         print('Syncing cross-blog links:')
         sync_links()
         return 0
+    if args[0] == '--reorder':
+        print('Reordering blog cards on blog.html:')
+        reorder_cards()
+        return 0
     if args[0] == '--unpublish':
         if len(args) < 2:
             print('Usage: ./publish.py --unpublish <slug>')
             return 1
         return unpublish(args[1])
-    return publish(args[0])
+    # publish [<slug>] [--date YYYY-MM-DD]
+    slug = args[0]
+    date = None
+    if '--date' in args:
+        idx = args.index('--date')
+        if idx + 1 >= len(args):
+            print('Usage: ./publish.py <slug> --date YYYY-MM-DD')
+            return 1
+        date = args[idx + 1]
+    return publish(slug, date=date)
 
 if __name__ == '__main__':
     sys.exit(main())
