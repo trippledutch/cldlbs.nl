@@ -3,12 +3,17 @@
 CloudLabs blog publish helper.
 
 Usage:
-    ./publish.py --list                       # show status of all blogs
-    ./publish.py <slug>                       # publish a draft (unhide everywhere)
-    ./publish.py <slug> --date YYYY-MM-DD     # publish AND set the date everywhere
-    ./publish.py --unpublish <slug>           # back to draft (hide everywhere)
-    ./publish.py --sync-links                 # rebuild cross-blog link visibility
-    ./publish.py --wrap-links                 # wrap unmarked cross-blog links + sync
+    ./publish.py --list                          # show status of all blogs
+    ./publish.py <slug>                          # publish a draft (unhide everywhere)
+    ./publish.py <slug> --date YYYY-MM-DD        # publish AND set the date everywhere
+    ./publish.py <slug> --sticky                 # publish AND mark as sticky/cornerstone
+    ./publish.py <slug> --date YYYY-MM-DD --sticky  # combine the two
+    ./publish.py --sticky <slug>                 # mark sticky without publishing
+    ./publish.py --unsticky <slug>               # remove sticky flag
+    ./publish.py --unpublish <slug>              # back to draft (hide everywhere)
+    ./publish.py --reorder                       # rebuild blog.html card order
+    ./publish.py --sync-links                    # rebuild cross-blog link visibility
+    ./publish.py --wrap-links                    # wrap unmarked cross-blog links + sync
 
 The slug is the filename without .html, e.g.:
     ./publish.py azure-local-migration-readiness
@@ -488,14 +493,41 @@ def sync_links(verbose=True):
 # ----------------------------------------------------------------------------
 # Sticky cards + reorder by date
 #
-# STICKY lists slugs that should always appear first on blog.html, in their
-# given order. Non-sticky cards (published or draft) follow, sorted by their
-# datePublished descending. reorder_cards() runs on every publish/unpublish so
-# blog.html stays consistent without manual editing.
+# Sticky slugs are persisted in sticky.txt (one slug per line, order matters).
+# Sticky cards always appear first on blog.html, in their listed order. Non-
+# sticky cards follow, sorted by datePublished descending. reorder_cards()
+# runs on every publish/unpublish so blog.html stays consistent without manual
+# editing. Manage the set with `--sticky <slug>` / `--unsticky <slug>` or by
+# editing sticky.txt directly.
 
-STICKY = [
-    'top-10-hyper-v-cluster-issues',
-]
+STICKY_FILE = ROOT / 'sticky.txt'
+
+def load_sticky():
+    if not STICKY_FILE.exists():
+        return []
+    return [
+        line.strip() for line in STICKY_FILE.read_text().splitlines()
+        if line.strip() and not line.startswith('#')
+    ]
+
+def save_sticky(slugs):
+    STICKY_FILE.write_text('\n'.join(slugs) + '\n' if slugs else '')
+
+def add_sticky(slug):
+    slugs = load_sticky()
+    if slug in slugs:
+        return False
+    slugs.append(slug)
+    save_sticky(slugs)
+    return True
+
+def remove_sticky(slug):
+    slugs = load_sticky()
+    if slug not in slugs:
+        return False
+    slugs.remove(slug)
+    save_sticky(slugs)
+    return True
 
 BLOG_GRID_RE = re.compile(
     r'(<div class="blog-grid">)(.*?)(\n    </div>)',
@@ -525,6 +557,7 @@ def reorder_cards(verbose=True):
 
     Also toggles the 'featured' class on each card so sticky cards get styling.
     """
+    sticky = load_sticky()
     t = INDEX.read_text()
     m = BLOG_GRID_RE.search(t)
     if not m:
@@ -542,10 +575,10 @@ def reorder_cards(verbose=True):
             continue
         slug = slug_m.group(1)
         date = date_m.group(1) if date_m else '0000-00-00'
-        block = _apply_featured_class(block, slug in STICKY)
+        block = _apply_featured_class(block, slug in sticky)
         blocks.append((slug, date, block))
 
-    sticky_order = {s: i for i, s in enumerate(STICKY)}
+    sticky_order = {s: i for i, s in enumerate(sticky)}
     sticky_blocks = sorted(
         [b for b in blocks if b[0] in sticky_order],
         key=lambda e: sticky_order[e[0]],
@@ -574,7 +607,7 @@ def reorder_cards(verbose=True):
 
 # ----------------------------------------------------------------------------
 
-def publish(slug, date=None):
+def publish(slug, date=None, sticky=False):
     if slug not in BLOGS:
         print(f'Unknown slug: {slug}')
         print(f'Valid slugs: {", ".join(BLOGS.keys())}')
@@ -592,6 +625,8 @@ def publish(slug, date=None):
     r2 = publish_card_in_index(slug);   print(f'  card un-hidden:        {"yes" if r2 else "already visible"}')
     r3 = add_blogposting_jsonld(slug);  print(f'  JSON-LD entry added:   {"yes" if r3 else "already present"}')
     r4 = add_to_sitemap(slug);          print(f'  sitemap entry added:   {"yes" if r4 else "already present"}')
+    if sticky:
+        r5 = add_sticky(slug);          print(f'  marked sticky:         {"yes" if r5 else "already sticky"}')
     print('  syncing cross-blog links:')
     sync_links()
     print('  reordering blog cards:')
@@ -639,21 +674,39 @@ def main():
         print('Reordering blog cards on blog.html:')
         reorder_cards()
         return 0
+    if args[0] == '--sticky' and len(args) >= 2:
+        # Standalone: mark sticky without publishing (and reorder)
+        slug = args[1]
+        if slug not in BLOGS:
+            print(f'Unknown slug: {slug}')
+            return 1
+        r = add_sticky(slug); print(f'sticky:                {"added" if r else "already sticky"}')
+        reorder_cards()
+        return 0
+    if args[0] == '--unsticky':
+        if len(args) < 2:
+            print('Usage: ./publish.py --unsticky <slug>')
+            return 1
+        slug = args[1]
+        r = remove_sticky(slug); print(f'sticky:                {"removed" if r else "not sticky"}')
+        reorder_cards()
+        return 0
     if args[0] == '--unpublish':
         if len(args) < 2:
             print('Usage: ./publish.py --unpublish <slug>')
             return 1
         return unpublish(args[1])
-    # publish [<slug>] [--date YYYY-MM-DD]
+    # publish <slug> [--date YYYY-MM-DD] [--sticky]
     slug = args[0]
     date = None
+    sticky = '--sticky' in args
     if '--date' in args:
         idx = args.index('--date')
         if idx + 1 >= len(args):
-            print('Usage: ./publish.py <slug> --date YYYY-MM-DD')
+            print('Usage: ./publish.py <slug> --date YYYY-MM-DD [--sticky]')
             return 1
         date = args[idx + 1]
-    return publish(slug, date=date)
+    return publish(slug, date=date, sticky=sticky)
 
 if __name__ == '__main__':
     sys.exit(main())
