@@ -31,7 +31,11 @@
     "url":"https://cldlbs.com/"
   },
   "blogPost":[
-    {"@type":"BlogPosting","headline":"Hyper-V Cluster Health Check: 10 issues we keep finding in 2026","url":"https://cldlbs.com/blog/top-10-hyper-v-cluster-issues.html","datePublished":"2026-05-15","author":{"@type":"Person","name":"Hans Vredevoort"}}
+    {"@type":"BlogPosting","headline":"Hyper-V Cluster Health Check: 10 issues we keep finding in 2026","url":"https://cldlbs.com/blog/top-10-hyper-v-cluster-issues.html","datePublished":"2026-05-15","author":{"@type":"Person","name":"Hans Vredevoort"}},
+    {"@type":"BlogPosting","headline":"Live Migration on the Wrong Network: The Silent Hyper-V Pitfall","url":"https://cldlbs.com/blog/live-migration-wrong-network.html","datePublished":"2026-05-17","author":{"@type":"Person","name":"Hans Vredevoort"}},
+    {"@type":"BlogPosting","headline":"Secure Boot certificates and Hyper-V: why your Gen 2 VMs are not updating in 2026","url":"https://cldlbs.com/blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html","datePublished":"2026-06-05","author":{"@type":"Person","name":"Hans Vredevoort"}}
+  
+  
   ]
 }
 </script>
@@ -140,6 +144,34 @@
         <span class="read-more">Read article →</span>
       </a>
 
+      <a class="blog-card featured" href="blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html">
+        <span class="tag">Failover Clustering</span>
+        <h2>
+          <span lang="en">Secure Boot certificates and Hyper-V: why your Gen 2 VMs are not updating in 2026</span>
+          <span lang="nl">Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM's niet bijwerken in 2026</span>
+        </h2>
+        <p>
+          <span lang="en">The 2011 Microsoft Secure Boot certificates begin expiring in June 2026. On Windows Server Gen 2 VMs the 2023 update is not automatic and often fails silently with Event ID 1795 — opt-in set, certificates absent, every dashboard green. Diagnose, remediate, avoid the boot-media trap.</span>
+          <span lang="nl">De Microsoft Secure Boot-certificaten uit 2011 verlopen vanaf juni 2026. Op Windows Server Gen 2-VM's gaat de 2023-update niet automatisch en mislukt hij vaak stilletjes met Event ID 1795 — opt-in gezet, certificaten afwezig, elk dashboard groen. Diagnose, herstel, voorkom de bootmedia-valkuil.</span>
+        </p>
+        <div class="meta">2026-06-05 · 13 min read</div>
+        <span class="read-more">Read article →</span>
+      </a>
+
+      <a class="blog-card" href="blog/live-migration-wrong-network.html">
+        <span class="tag">Networking</span>
+        <h2>
+          <span lang="en">Live Migration on the Wrong Network: The Silent Hyper-V Pitfall</span>
+          <span lang="nl">Live Migration over het verkeerde netwerk: de stille Hyper-V valkuil</span>
+        </h2>
+        <p>
+          <span lang="en">The single most common Health Check finding. Three independent configuration layers, the PowerShell to verify the actual TCP path during migration, and the remediation we apply on every engagement.</span>
+          <span lang="nl">De meest voorkomende Health Check-bevinding. Drie onafhankelijke configuratielagen, de PowerShell om het werkelijke TCP-pad tijdens migratie te verifiëren, en de remediation die wij in elke opdracht toepassen.</span>
+        </p>
+        <div class="meta">2026-05-17 · 12 min read</div>
+        <span class="read-more">Read article →</span>
+      </a>
+
       <!-- DRAFT, not yet published. Remove these comments to publish.
       <a class="blog-card" href="blog/azure-local-migration-readiness.html">
         <span class="tag">Azure Local</span>
@@ -166,22 +198,6 @@
         <p>
           <span lang="en">One node owning every CSV is a silent performance killer. Why ownership drifts after patching or failover, the measured impact (4.5x worse P99 read latency), and how to rebalance safely.</span>
           <span lang="nl">Eén node die alle CSV's bezit is een stille performance-killer. Waarom ownership scheef raakt na patching of failover, de gemeten impact (4.5x slechtere P99 read-latency), en hoe je veilig herbalanceert.</span>
-        </p>
-        <div class="meta">2026-05-15 · 12 min read</div>
-        <span class="read-more">Read article →</span>
-      </a>
-      -->
-
-      <!-- DRAFT, not yet published. Remove these comments to publish.
-      <a class="blog-card" href="blog/live-migration-wrong-network.html">
-        <span class="tag">Networking</span>
-        <h2>
-          <span lang="en">Live Migration on the Wrong Network: The Silent Hyper-V Pitfall</span>
-          <span lang="nl">Live Migration over het verkeerde netwerk: de stille Hyper-V valkuil</span>
-        </h2>
-        <p>
-          <span lang="en">The single most common Health Check finding. Three independent configuration layers, the PowerShell to verify the actual TCP path during migration, and the remediation we apply on every engagement.</span>
-          <span lang="nl">De meest voorkomende Health Check-bevinding. Drie onafhankelijke configuratielagen, de PowerShell om het werkelijke TCP-pad tijdens migratie te verifiëren, en de remediation die wij in elke opdracht toepassen.</span>
         </p>
         <div class="meta">2026-05-15 · 12 min read</div>
         <span class="read-more">Read article →</span>

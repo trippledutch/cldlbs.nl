@@ -118,4 +118,22 @@
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://cldlbs.com/blog/live-migration-wrong-network.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/live-migration-wrong-network.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/live-migration-wrong-network.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/live-migration-wrong-network.html"/>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cldlbs.com/blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html"/>
+    <lastmod>2026-06-05</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

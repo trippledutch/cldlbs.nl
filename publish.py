@@ -55,6 +55,8 @@ BLOGS = {
         'Cluster Aware Updating: Runbook, Audit Trail, and What Nobody Documents',
     'san-vs-s2d-vs-azure-local-hyper-v-storage':
         'SAN vs S2D vs Azure Local: Choosing Hyper-V Storage in 2026',
+    'secure-boot-2023-certificates-hyper-v-gen2-vms':
+        'Secure Boot certificates and Hyper-V: why your Gen 2 VMs are not updating in 2026',
 }
 
 ROOT = Path(__file__).parent
