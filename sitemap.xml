@@ -136,4 +136,13 @@
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://cldlbs.com/blog/hyper-v-time-drift-kerberos-csv.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/hyper-v-time-drift-kerberos-csv.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/hyper-v-time-drift-kerberos-csv.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/hyper-v-time-drift-kerberos-csv.html"/>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
