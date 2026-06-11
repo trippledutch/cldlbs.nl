@@ -1,2 +1,3 @@
 top-10-hyper-v-cluster-issues
 secure-boot-2023-certificates-hyper-v-gen2-vms
+azure-local-documented-flaws-exit-strategy
