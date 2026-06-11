@@ -35,6 +35,8 @@ from pathlib import Path
 
 # slug -> headline (used in blog.html JSON-LD)
 BLOGS = {
+    'azure-local-documented-flaws-exit-strategy':
+        'Azure Local in 2026: The Flaws Are Documented. Plan Your Exit Before You Enter',
     'top-10-hyper-v-cluster-issues':
         'Hyper-V Cluster Health Check: 10 issues we keep finding in 2026',
     'azure-local-migration-readiness':
