@@ -1,4 +1,4 @@
-/* CloudLabs · shared script · v0.2.2 */
+/* CloudLabs · shared script · v0.4.0 */
 (function(){
   /* Mobile nav overflow fade */
   var navEl  = document.querySelector('nav.tabs');
