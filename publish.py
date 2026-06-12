@@ -18,9 +18,16 @@ Usage:
 The slug is the filename without .html, e.g.:
     ./publish.py azure-local-migration-readiness
 
+REQUIRED BEFORE PUBLISHING A NEW BLOG:
+  1. Write blog/<slug>.html with noindex meta tag
+  2. Add <slug> to BLOGS dictionary with English headline
+  3. Add a blog card to blog.html wrapped in DRAFT comments (see docs/PUBLISHING.md Stap 3)
+
+If the blog card is missing from blog.html, publish will not work.
+
 What "publish" does:
   1. Remove <meta name="robots" content="noindex,nofollow"> from blog/<slug>.html
-  2. Uncomment the blog card on blog.html
+  2. Uncomment the blog card on blog.html (assumes card already exists as DRAFT)
   3. Add the BlogPosting entry back to blog.html's JSON-LD
   4. Add the URL to sitemap.xml
 
