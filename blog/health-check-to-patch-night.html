@@ -310,7 +310,7 @@ $job = Start-Job { param($p)
           </ol>
         </div>
 
-        <h2 id="nl-1">1. De situatie schetsen</h2>
+        <h2 id="nl-1">1. De situatie geschetst</h2>
         <p>Dit was een geplande Windows Update ronde op een productie multi-site Hyper-V cluster, zes Windows Server 2022 nodes verspreid over twee Nederlandse datacenters met ongeveer 135 VM's. De updates waren opzettelijk ingepland als laatste stap van een Health Check engagement, na meerdere dagen van remediation verspreid over enkele weken, en uitgevoerd op afstand met Cluster Aware Updating.</p>
         <p>Mijn Bangkok-ochtend had ik besteed aan de laatste controles, het run script, een nieuwe DNS-audit van alle nodes, en een volledige Failover Cluster Validation, allemaal schoon om kwart over elf. Daarna, om 06:37 Amsterdamtijd, terwijl de klanten nog sliepen, startte ik de run. Om 09:08 was het klaar: 23 updates geïnstalleerd, nul fouten, nul geannuleerd, elke node weer up, elke VM waar die hoort, voordat de eerste gebruikers binnenkwamen op een stille vrijdagochtend. Een van de twee beheerders was met vakantie. De ander checkte in via Teams, midden in een wandeling met zijn hond, toen de run al bijna klaar was. Niemand hoefde uit bed.</p>
         <p>Dat is het hele verhaal, en dat is het punt. Een patch run op een productie multi-site cluster zou het saaiste event van de maand moeten zijn. Dat was het, maar alleen omdat alles wat ervoor gebeurde zo zorgvuldig was uitgevoerd.</p>
