@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.4 · Blog · Azure Local Migration Readiness -->
+<!-- CloudLabs · v0.3.5 · Blog · Azure Local Migration Readiness -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -442,7 +442,7 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
         </ul>
 
         <h2 id="nl-5">5. Licensing en kosten-realiteit</h2>
-        <p>Azure Local wordt per fysieke core per maand gefactureerd via je Azure-subscription. Er is geen perpetual-licentie voor het OS zelf. Guest-workloads worden apart gelicenseerd. Windows Server VM's worden meestal gedekt door Windows Server Datacenter met Software Assurance, of door Azure Hybrid Benefit.</p>
+        <p>Azure Local wordt per fysieke core per maand gefactureerd via je Azure-subscription. Er is geen perpetual-licentie voor het OS zelf. Guest-workloads worden apart gelicentieerd. Windows Server VM's worden meestal gedekt door Windows Server Datacenter met Software Assurance, of door Azure Hybrid Benefit.</p>
 
         <table>
           <thead>
@@ -450,19 +450,19 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
           </thead>
           <tbody>
             <tr><td>Azure Local OS</td><td>Per fysieke core per maand</td><td>Via Azure-subscription, geen perpetual optie</td></tr>
-            <tr><td>Windows Server guests</td><td>Datacenter SA of AHB</td><td>Onbeperkt Windows-VM's op de node bij Datacenter</td></tr>
+            <tr><td>Windows Server guests</td><td>Datacenter SA of AHB</td><td>Onbeperkte Windows-VM's op de node bij Datacenter</td></tr>
             <tr><td>Azure-diensten (Arc, Monitor, Defender)</td><td>Consumptie</td><td>Optioneel maar in de meeste deployments verwacht</td></tr>
             <tr><td>Hardware</td><td>CapEx</td><td>Solution-pricing varieert per OEM</td></tr>
             <tr><td>Egress / connectivity</td><td>Variabel</td><td>Materieel in Backup- en Site Recovery-scenario's</td></tr>
           </tbody>
         </table>
 
-        <p>Voor een four-node cluster met 32 cores per node en bestaande Datacenter SA wordt de meerprijs ten opzichte van Windows Server gedomineerd door de per-core OS-fee en de Azure-dienstconsumptie. Modelleer het vóór de commitment. Wij zien in onze opdrachten regelmatig dat de Azure Monitor en Log Analytics consumptie in steady state 3x hoger uitvalt dan tijdens deployment ingeschat.</p>
+        <p>Voor een four-node cluster met 32 cores per node en bestaande Datacenter SA wordt de meerprijs ten opzichte van Windows Server gedomineerd door de per-core OS-fee en de Azure-dienstconsumptie. Modelleer het vóór de commitment. Wij zien in onze opdrachten regelmatig dat de Azure Monitor- en Log Analytics-consumptie in steady state 3x hoger uitvalt dan tijdens deployment ingeschat.</p>
 
         <div class="mid-cta">
           <span class="label">Tussenstop</span>
           <p>De vier secties hierboven (hardware, netwerk, identity, licensing) bepalen of een Azure Local project überhaupt mogelijk is. De drie secties hieronder bepalen of het operationeel houdbaar is.</p>
-          <p>Twijfel je of jouw omgeving er klaar voor is? Een Azure Local Readiness Assessment van CloudLabs geeft binnen vijf werkdagen een go/no-go advies met expliciete trade-offs, in een klantgericht <code>.docx</code> rapport.</p>
+          <p>Twijfel je of jouw omgeving er klaar voor is? Een Azure Local Readiness Assessment van CloudLabs geeft binnen vijf werkdagen een go/no-go advies met expliciete trade-offs, in een <code>.docx</code>-rapport voor de klant.</p>
           <a href="../book.html">Plan een Azure Local Readiness Assessment →</a>
         </div>
 
@@ -478,7 +478,7 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
         </ul>
 
         <h2 id="nl-7">7. Migratiepaden vanuit Hyper-V en Azure Stack HCI</h2>
-        <p>Er is geen in-place upgrade van Windows Server Hyper-V naar Azure Local. Je bouwt een nieuw cluster, migreert workloads ernaartoe, en decommissioneert de oude. Vanaf Azure Stack HCI 22H2 bestaat er wel een in-place upgrade-pad naar Azure Local 23H2 en hoger, met prerequisites die zorgvuldige controle vereisen.</p>
+        <p>Er is geen in-place upgrade van Windows Server Hyper-V naar Azure Local. Je bouwt een nieuw cluster, migreert workloads ernaartoe, en decommissioneert het oude. Vanaf Azure Stack HCI 22H2 bestaat er wel een in-place upgrade-pad naar Azure Local 23H2 en hoger, met prerequisites die zorgvuldige controle vereisen.</p>
 
         <p>Migratie-opties voor workloads, in volgorde van afnemende voorkeur voor de meeste productie-VM's:</p>
         <ul>
@@ -494,11 +494,11 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
           <li><strong>Switches zonder DCB op het storage-VLAN.</strong> Het cluster deployt en draait, performance is stilletjes gedegradeerd. We zien dit nog steeds bij DCB-geconfigureerde switches waar de configuratie alleen op management-poorten staat, niet op de poorten richting de Azure Local nodes.</li>
           <li><strong>OU-inheritance niet geblokkeerd.</strong> Group Policy breekt de deployment dan op subtiele manieren na de eerste patch-cyclus. Symptoom: cluster werkt, Arc-registratie werkt, na een week vallen Update Runs uit met access-denied fouten waar niemand een logische oorzaak voor vindt.</li>
           <li><strong>Entra ID tenant-mismatch.</strong> Cluster geregistreerd in de ene tenant, subscription in een andere. Verplaatsen is pijnlijk en in sommige scenario's vereist het opnieuw uitrollen van het cluster.</li>
-          <li><strong>Kostenverrassing op egress en Azure Monitor-data.</strong> Geschat op deployment-datavolumes, realiteit is 3x in steady state. Modelleer kosten op basis van werkelijke log-volumes van een bestaand Hyper-V cluster, niet op basis van Microsofts calculator-defaults.</li>
+          <li><strong>Kostenverrassing op egress en Azure Monitor-data.</strong> Geschat op deployment-datavolumes, realiteit is 3x zoveel in steady state. Modelleer kosten op basis van werkelijke log-volumes van een bestaand Hyper-V cluster, niet op basis van Microsofts calculator-defaults.</li>
         </ol>
 
         <h2 id="nl-9">9. De pre-migratie checklist</h2>
-        <p>CloudLabs levert dit als klantgericht <code>.docx</code> na een Azure Local Readiness Assessment. De korte versie:</p>
+        <p>CloudLabs levert dit als <code>.docx</code> voor de klant na een Azure Local Readiness Assessment. De korte versie:</p>
 
         <ul class="checklist">
           <li>Gevalideerde solution geselecteerd uit Azure Local Solutions Catalog</li>
@@ -526,7 +526,7 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
           <h2>Veelgestelde vragen</h2>
 
           <div class="faq-q">Wat is het verschil tussen Azure Stack HCI en Azure Local?</div>
-          <p>Azure Local is sinds eind 2024 de nieuwe naam voor wat eerder Azure Stack HCI heette. Het is hetzelfde product, met een verbreed scope (ook edge en kleinere deployments) en duidelijker positionering binnen Microsofts Arc-strategie. Bestaande Azure Stack HCI 22H2-clusters kunnen in-place upgraden naar Azure Local 23H2 en hoger.</p>
+          <p>Azure Local is sinds eind 2024 de nieuwe naam voor wat eerder Azure Stack HCI heette. Het is hetzelfde product, met een verbrede scope (ook edge en kleinere deployments) en duidelijker positionering binnen Microsofts Arc-strategie. Bestaande Azure Stack HCI 22H2-clusters kunnen in-place upgraden naar Azure Local 23H2 en hoger.</p>
 
           <div class="faq-q">Moet ik mijn hele Hyper-V cluster vervangen voor Azure Local?</div>
           <p>Ja. Er is geen in-place upgrade van Windows Server Hyper-V naar Azure Local. Je bouwt een nieuw cluster op gevalideerde hardware en migreert workloads ernaartoe.</p>
@@ -535,7 +535,7 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
           <p>Tot 30 dagen disconnected operation wordt ondersteund. Daarna stopt het cluster met factureren via Azure en moet de connectivity hersteld zijn. Voor strict air-gapped omgevingen is Azure Local niet de juiste keuze.</p>
 
           <div class="faq-q">Kan ik mijn bestaande VMM blijven gebruiken voor Azure Local?</div>
-          <p>Beperkt. SCVMM 2025 ondersteunt management van Azure Local clusters, maar de Arc-portal is de primaire interface volgens Microsofts roadmap. Voor klanten met een grote bestaande VMM-investering werkt beide naast elkaar tijdens de transitie.</p>
+          <p>Beperkt. SCVMM 2025 ondersteunt management van Azure Local clusters, maar de Arc-portal is de primaire interface volgens Microsofts roadmap. Voor klanten met een grote bestaande VMM-investering werken beide naast elkaar tijdens de transitie.</p>
 
           <div class="faq-q">Wat kost een typische four-node Azure Local deployment voor het OS zelf?</div>
           <p>Per-core, per-maand pricing varieert per regio. Voor een four-node cluster met 32 cores per node komt de OS-component meestal op een paar duizend euro per maand uit, exclusief Azure-dienstconsumptie en exclusief Windows Server-licenties voor de guests. Modelleer met de Azure pricing calculator én met werkelijke log-volumes uit een vergelijkbare bestaande omgeving.</p>
@@ -558,7 +558,7 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.4</span>
+    <span class="brand-version">v0.3.5</span>
   </footer>
 
 </div>
