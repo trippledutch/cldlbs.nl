@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.4 · Blog · Windows Server 2025 Hyper-V -->
+<!-- CloudLabs · v0.3.5 · Blog · Windows Server 2025 Hyper-V -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -400,10 +400,10 @@ Get-VM | Select-Object Name, Generation,
         <h2 id="nl-1">1. De vier Hyper-V veranderingen die er werkelijk toe doen</h2>
         <p>Windows Server 2025 brengt tientallen verbeteringen. De vier die wij in cluster Health Checks en pre-upgrade assessments als materieel zien:</p>
         <ul>
-          <li><strong>Dynamic CPU compatibility for Live Migration.</strong> Live Migration tussen hosts met verschillende CPU-generaties zonder VM-shutdown of CPU compatibility-mode.</li>
+          <li><strong>Dynamic CPU compatibility voor Live Migration.</strong> Live Migration tussen hosts met verschillende CPU-generaties zonder VM-shutdown of CPU compatibility-mode.</li>
           <li><strong>GPU-P (GPU Partitioning) voor productie.</strong> Verdeling van een fysieke GPU over meerdere VM's, nu volwassen genoeg voor productie-workloads, niet meer alleen lab.</li>
           <li><strong>vTPM 2.0 standaard.</strong> Trusted Platform Module voor VM's wordt standaard meegerold, met implicaties voor backup, replicatie en DR.</li>
-          <li><strong>Hot-patching voor Hyper-V hosts.</strong> Bepaalde patches zonder reboot, beperkt scope maar genoeg om patch-windows merkbaar in te korten.</li>
+          <li><strong>Hot-patching voor Hyper-V hosts.</strong> Bepaalde patches zonder reboot, beperkte scope maar genoeg om patch-windows merkbaar in te korten.</li>
         </ul>
         <p>Buiten deze vier zijn er verbeteringen aan SDN, AKS on Hyper-V integratie en storage replica, maar die zijn voor de meeste klanten secundair tot <!--LINK:azure-local-migration-readiness--><a href="azure-local-migration-readiness.html">Azure Local</a><!--/LINK:azure-local-migration-readiness--> in beeld komt. Daar leveren we een aparte readiness-assessment voor.</p>
 
@@ -412,7 +412,7 @@ Get-VM | Select-Object Name, Generation,
 
         <p><strong>Het oude probleem:</strong></p>
         <p>Een cluster met nodes van verschillende CPU-generaties (bijvoorbeeld Intel Xeon Skylake en Ice Lake, of Sapphire Rapids en Emerald Rapids gemixed) kon alleen Live Migration tussen die nodes doen met CPU compatibility-mode aangezet op de VM. Dat beperkte de CPU-features die de VM zag tot wat de oudste generatie ondersteunde, en handmatige aanpassing per VM was vereist. Live Migration tussen nodes met verschillende AMD- en Intel-generaties was sowieso niet mogelijk zonder VM-shutdown.</p>
-        <p>In de praktijk betekende dit dat na elke hardware-refresh ofwel het hele cluster vervangen moest worden ineens, of dat een deel van de VM's vast zat aan oudere nodes. Beide opties zijn duur.</p>
+        <p>In de praktijk betekende dit dat na elke hardware-refresh ofwel het hele cluster in één keer vervangen moest worden, of dat een deel van de VM's vast zat aan oudere nodes. Beide opties zijn duur.</p>
 
         <p><strong>Wat 2025 verandert:</strong></p>
         <p>Dynamic CPU compatibility past de gepresenteerde CPU-feature set live aan tijdens de migratie, op basis van wat de doel-host ondersteunt. De VM ziet bij de bron-host de volledige feature set, bij de doel-host de set die beide ondersteunen, en de overgang gebeurt zonder VM-restart en zonder dat handmatige compatibility-mode-configuratie nodig is.</p>
@@ -440,7 +440,7 @@ Get-VM | Select-Object Name,
 
         <p><strong>Voor welke workloads:</strong></p>
         <p>VDI met grafische versnelling, waar gebruikers een fractie van GPU-capaciteit nodig hebben (CAD-viewers, video-editing, sommige Office-versnelde rendering-features). AI-inferentie waarbij meerdere modellen tegelijk draaien zonder elk een hele GPU op te eisen. Remote desktop hosts voor ontwikkelaars die GPU-acceleratie nodig hebben voor specifieke tools.</p>
-        <p>Niet voor: zware AI-training, waar je de volle GPU wilt en DDA de juiste keuze blijft. En niet voor scenarios waar je echte hardware-isolatie tussen tenants nodig hebt om compliance-redenen.</p>
+        <p>Niet voor: zware AI-training, waar je de volle GPU wilt en DDA de juiste keuze blijft. En niet voor scenario's waar je echte hardware-isolatie tussen tenants nodig hebt om compliance-redenen.</p>
 
         <p><strong>Cluster-implicaties:</strong></p>
         <p>GPU-P werkt momenteel niet over Live Migration heen. Een VM met een vGPU is gepind aan de host die de fysieke GPU heeft. Plan dat in cluster-ontwerp: GPU-hosts zijn een dedicated subset, geen mix met algemene workloads, en je accepteert dat GPU-VM's down moeten voor host-onderhoud.</p>
@@ -456,7 +456,7 @@ Set-VMGpuPartitionAdapter -VMName 'VDI-Pool-01' `
     -MaxPartitionVRAM 8589934592 `
     -OptimalPartitionVRAM 4294967296</code></pre>
 
-        <p>Voor klanten die GPU-P serieus willen inzetten, raden wij een dedicated assessment aan. De GPU-modellen die ondersteund worden, de driver-versies aan host en guest, en de licentievoorwaarden (NVIDIA vGPU vereist apart vGPU-licenties) maken het een onderwerp dat eigen aandacht verdient.</p>
+        <p>Voor klanten die GPU-P serieus willen inzetten, raden wij een dedicated assessment aan. De GPU-modellen die ondersteund worden, de driver-versies aan host en guest, en de licentievoorwaarden (NVIDIA vGPU vereist aparte vGPU-licenties) maken het een onderwerp dat eigen aandacht verdient.</p>
 
         <h2 id="nl-4">4. vTPM 2.0 standaard, en wat dat betekent voor backup en DR</h2>
         <p>Virtual TPM 2.0 was in eerdere versies opt-in. In 2025 is het standaard voor Generation 2 VM's die op Windows Server 2025 hosts worden aangemaakt. Dat klinkt onschuldig, maar het heeft implicaties.</p>
@@ -530,18 +530,18 @@ Get-VM | Select-Object Name, Generation,
 
         <p><strong>Stap 1, assessment.</strong> Inventariseer guest-OS versies, identificeer 2012 R2 en 2016 VM's die OS-upgrade nodig hebben, controleer backup-product-versies op vTPM-support, en check GPU-modellen tegen GPU-P compatibility-lijsten.</p>
 
-        <p><strong>Stap 2, guest OS-upgrades.</strong> Pak de 2012 R2 en 2016 VM's aan. Upgrade naar 2019 of 2022 (niet direct naar 2025, want OS in-place upgrade overslaat meerdere versies wordt zelden gladjes), of vervang met nieuwe builds. Dit is meestal het langste deel van het traject.</p>
+        <p><strong>Stap 2, guest OS-upgrades.</strong> Pak de 2012 R2 en 2016 VM's aan. Upgrade naar 2019 of 2022 (niet direct naar 2025, want een OS-in-place-upgrade die meerdere versies overslaat, verloopt zelden soepel), of vervang met nieuwe builds. Dit is meestal het langste deel van het traject.</p>
 
         <p><strong>Stap 3, backup-stack update.</strong> Verifieer dat Veeam, Commvault of welk product ook in gebruik is, vTPM-aware is op de gebruikte versie. Upgrade waar nodig vóór de host-upgrade.</p>
 
-        <p><strong>Stap 4, cluster rolling upgrade.</strong> Windows Server 2025 ondersteunt cluster rolling upgrade vanuit 2019 en 2022. Een node tegelijk wordt geüpgraded, de cluster blijft draaien, en de Cluster Functional Level wordt aan het eind expliciet verhoogd met <code>Update-ClusterFunctionalLevel</code>. Reken op één tot twee nodes per onderhoudsvenster, afhankelijk van VM-evacuatietijd.</p>
+        <p><strong>Stap 4, cluster rolling upgrade.</strong> Windows Server 2025 ondersteunt cluster rolling upgrade vanuit 2019 en 2022. Een node tegelijk wordt geüpgraded, het cluster blijft draaien, en de Cluster Functional Level wordt aan het eind expliciet verhoogd met <code>Update-ClusterFunctionalLevel</code>. Reken op één tot twee nodes per onderhoudsvenster, afhankelijk van VM-evacuatietijd.</p>
 
         <p><strong>Stap 5, post-upgrade validatie.</strong> Volledige <code>Test-Cluster</code> run, validatie van Live Migration-paden, controle of GPU-P (indien in gebruik) correct werkt, en hercontrole van <!--LINK:hyper-v-time-drift-kerberos-csv--><a href="hyper-v-time-drift-kerberos-csv.html">time service-configuratie</a><!--/LINK:hyper-v-time-drift-kerberos-csv-->. Dat laatste, omdat wij regelmatig zien dat een major-version upgrade de w32time-configuratie op subtiele manieren beïnvloedt.</p>
 
         <p><strong>Stap 6, activeer nieuwe features.</strong> Pas wanneer het cluster stabiel is op de nieuwe versie, activeer je Dynamic CPU compatibility-features op heterogene clusters, plan je GPU-P deployment, en koppel je hosts aan Azure Arc voor hot-patching. Allemaal stap-voor-stap, niet allemaal tegelijk.</p>
 
         <h2>De CloudLabs aanpak voor Windows Server 2025 upgrade</h2>
-        <p>Wij behandelen een Windows Server 2025 upgrade voor een bestaand Hyper-V cluster als een opdracht in twee fasen. Een assessment-fase van drie tot vijf werkdagen die alle afhankelijkheden in kaart brengt, een go/no-go-advies geeft en een gefaseerd upgrade-plan oplevert. Daarna een uitvoering-fase die ofwel door het klantteam wordt gedaan met onze runbook, ofwel door ons gedaan in nauwe samenwerking met het klantteam.</p>
+        <p>Wij behandelen een Windows Server 2025 upgrade voor een bestaand Hyper-V cluster als een opdracht in twee fasen. Een assessment-fase van drie tot vijf werkdagen die alle afhankelijkheden in kaart brengt, een go/no-go-advies geeft en een gefaseerd upgrade-plan oplevert. Daarna een uitvoering-fase die ofwel door het klantteam wordt gedaan met ons runbook, ofwel door ons gedaan in nauwe samenwerking met het klantteam.</p>
         <p>Voor klanten die overwegen of een Hyper-V upgrade nog wel logisch is versus een sprong naar Azure Local, leveren wij een vergelijkende assessment die beide opties tegen elkaar afzet op kosten, operationele impact, en strategische fit.</p>
         <p><a href="../book.html"><strong>Plan een Windows Server 2025 Hyper-V assessment →</strong></a></p>
 
@@ -583,7 +583,7 @@ Get-VM | Select-Object Name, Generation,
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.4</span>
+    <span class="brand-version">v0.3.5</span>
   </footer>
 
 </div>
