@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.4 · Blog · VMware to Hyper-V Migration Assessment -->
+<!-- CloudLabs · v0.3.5 · Blog · VMware to Hyper-V Migration Assessment -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -366,7 +366,7 @@
         <h2 id="nl-1">1. Waarom een pre-migration assessment het verschil maakt</h2>
         <p>De meeste mislukte VMware naar Hyper-V migraties die wij achteraf onderzoeken zijn niet kapot omdat de conversie-tool faalde. Ze zijn kapot omdat het Hyper-V cluster niet klaar was: te weinig RAM-headroom voor N-1, een netwerk-topologie die VMware's port groups niet 1-op-1 kon afbeelden, of een backup-strategie die op vCenter-snapshots leunde en op Hyper-V niet werkt.</p>
         <p>De assessment doet vier dingen die de migratie-tool zelf niet doet. Het modelleert capaciteit tegen werkelijke load, niet tegen toegewezen waardes. Het identificeert configuratiebeslissingen op de doelomgeving die per-VM eigenschappen moeten zijn vóór cutover. Het brengt operationele kennis-gaten in kaart (monitoring, patching, backup-procedures). En het schrijft een rollback-criteria-document zodat het migratie-team weet wanneer ze stoppen.</p>
-        <p>De assessment kost typisch vier tot zes werkdagen voor een omgeving tot 100 VM's, levert een go/no-go advies, en als het go is een gedetailleerd migratie-plan dat de migratie-fase ongeveer 30% versnelt door geëlimineerde herwerk. Voor klanten die er klaar voor zijn, en voor klanten waar het beter eerst nog twee maanden Hyper-V cluster-hardening kost.</p>
+        <p>De assessment kost typisch vier tot zes werkdagen voor een omgeving tot 100 VM's, levert een go/no-go advies, en als het go is een gedetailleerd migratie-plan dat de migratie-fase ongeveer 30% versnelt doordat dubbel werk wordt voorkomen. Voor klanten die er klaar voor zijn, en voor klanten waar het beter eerst nog twee maanden Hyper-V cluster-hardening kost.</p>
 
         <h2 id="nl-2">2. Stap 1, capacity en consolidatie-modellering</h2>
         <p>VMware en Hyper-V dimensioneren resources anders. Een vSphere VM met 8 vCPU en 32 GB RAM gebruikt zelden alle 8 vCPU's tegelijk, en VMware's CPU scheduler verbergt dat efficiënt. Wanneer je diezelfde VM verplaatst naar Hyper-V, krijg je dezelfde toewijzing maar zonder dezelfde scheduler-optimalisaties.</p>
@@ -385,12 +385,12 @@
         <h2 id="nl-3">3. Stap 2, network parity en VLAN-mapping</h2>
         <p>VMware's port groups, distributed vSwitches, en NSX-segmenten moeten 1-op-1 worden afgebeeld op Hyper-V's virtuele switches, VLAN-tags, en eventueel SDN. Dit is meestal niet ingewikkeld, maar de catalogering moet exhaustief zijn vóór de migratie start.</p>
         <p>Per port group documenteren we het VLAN-ID, de naamgevingsconventie die op Hyper-V gebruikt gaat worden, eventuele QoS-policies, en welke VM's eraan hangen. Voor distributed vSwitches met meerdere uplink-policies (LACP, failover-volgorde) bepalen we het Hyper-V equivalent: SET met dynamische load balancing, of een specifieke teaming-modus.</p>
-        <p>Voor klanten die NSX gebruiken voor microsegmentation, is dit het moment waarop de strategische keuze wordt gemaakt: Hyper-V Network Virtualization, Azure Arc-integratie met Azure Network Security Groups voor hybride scenarios, of accepteer dat microsegmentation post-migratie op een ander niveau (firewall, OS-level) wordt opgelost.</p>
+        <p>Voor klanten die NSX gebruiken voor microsegmentation, is dit het moment waarop de strategische keuze wordt gemaakt: Hyper-V Network Virtualization, Azure Arc-integratie met Azure Network Security Groups voor hybride scenario's, of accepteer dat microsegmentation post-migratie op een ander niveau (firewall, OS-level) wordt opgelost.</p>
 
         <p><strong>Wat we vinden bij netwerkparity:</strong></p>
         <ul>
           <li>VMware-omgevingen met port groups die over de jaren heen "weesjes" zijn geworden, geen VM's meer aan, maar wel zorgvuldig gepland en gedocumenteerd. Migreren we die mee of laten we ze achter? Antwoord: laat achter, documenteer beslissing, voorkom dat een development-team over zes maanden vraagt waar VLAN 247 gebleven is.</li>
-          <li>VLAN-tagging die op vSphere op de port group niveau zit en op Hyper-V op de VM-NIC niveau moet. Klinkt triviaal, breekt elke keer dat het zonder pre-check wordt gedaan.</li>
+          <li>VLAN-tagging die op vSphere op port group-niveau zit en op Hyper-V op VM-NIC-niveau moet. Klinkt triviaal, breekt elke keer dat het zonder pre-check wordt gedaan.</li>
           <li>Promiscuous mode of MAC address changes die op vSphere zijn toegestaan voor specifieke security-tools, op Hyper-V moeten worden vertaald naar <code>Set-VMNetworkAdapter -MacAddressSpoofing On</code> per VM.</li>
         </ul>
 
@@ -406,7 +406,7 @@
         </ul>
 
         <p><strong>Voor klanten met VMware vSAN die naar Hyper-V op SAN gaan:</strong></p>
-        <p>Een fundamentele architecturele keuze: vSAN was hyperconverged, SAN-attached Hyper-V is niet. De storage- en compute-paden zijn nu apart, MPIO en zoning komen weer in beeld, en backup-strategieën die op vSAN-snapshots leunden moeten herzien worden. Voor klanten die liever hyperconverged blijven, is <!--LINK:azure-local-migration-readiness--><a href="azure-local-migration-readiness.html">Azure Local</a><!--/LINK:azure-local-migration-readiness--> een aanvullend traject met eigen readiness-assessment.</p>
+        <p>Een fundamentele architecturele keuze: vSAN was hyperconverged, SAN-attached Hyper-V is niet. De storage- en compute-paden zijn nu apart, MPIO en zoning komen weer in beeld, en backup-strategieën die op vSAN-snapshots leunden moeten herzien worden. Voor klanten die liever hyperconverged blijven, is <!--LINK:azure-local-migration-readiness--><a href="azure-local-migration-readiness.html">Azure Local</a><!--/LINK:azure-local-migration-readiness--> een aanvullend traject met een eigen readiness-assessment.</p>
 
         <h2 id="nl-5">5. Stap 4, guest readiness en driver-strategie</h2>
         <p>De VM's zelf moeten klaar zijn voor Hyper-V. De grootste valkuilen:</p>
@@ -422,7 +422,7 @@
 
         <div class="mid-cta">
           <p>Een grondige pre-migration assessment voor een omgeving van 50 tot 100 VM's kost vier tot zes werkdagen en levert het verschil tussen een migratie die over budget en schema loopt, en een die op tijd opgeleverd wordt.</p>
-          <p>CloudLabs voert dit uit als opdracht met vaste scope, levert het rapport in Nederlands of Engels als klantgericht <code>.docx</code>, en bevat een gedetailleerd migratie-runbook plus rollback-criteria.</p>
+          <p>CloudLabs voert dit uit als opdracht met vaste scope, levert het rapport in Nederlands of Engels als <code>.docx</code> voor de klant, en bevat een gedetailleerd migratie-runbook plus rollback-criteria.</p>
           <a href="../book.html">Plan een pre-migration assessment →</a>
         </div>
 
@@ -454,7 +454,7 @@
           <li>Tot slot stateful productie: databases, fileservers, identity. Dit is waar de meeste pre-cutover validatie en de meeste rollback-zorgen zitten. Plan ruime maintenance windows, en plan ook reservedagen voor onverwachte issues.</li>
         </ol>
 
-        <p>VMware vCenter zelf decommissioneren is de laatste stap, niet de eerste. Een working vCenter naast het Hyper-V cluster voor zes weken na de laatste VM-migratie is goedkope verzekering, en wij adviseren het standaard.</p>
+        <p>VMware vCenter zelf decommissioneren is de laatste stap, niet de eerste. Een werkende vCenter naast het Hyper-V cluster voor zes weken na de laatste VM-migratie is goedkope verzekering, en wij adviseren het standaard.</p>
 
         <h2 id="nl-8">8. De gereedschappen die werken in 2026</h2>
         <p><strong>Microsoft Windows Admin Center VM Conversion Extension</strong> (preview op het moment van schrijven). Online migratie met minimale downtime, gratis bij Windows Admin Center. Ondersteunt Windows en moderne Linux-distributies. Vooral geschikt voor batches tot enkele tientallen VM's. Voor grotere migraties hebben we in productie betere resultaten gezien met SCVMM of Veeam.</p>
@@ -466,7 +466,7 @@
         <h2 id="nl-9">9. Drie valkuilen die we steeds zien</h2>
         <ol>
           <li><strong>Onderschatting van guest OS-upgrade-werk.</strong> Klanten plannen de hypervisor-migratie alsof het puur infrastructuur is, maar Windows Server 2012 R2 en 2016 worden niet ondersteund op Windows Server 2025 Hyper-V. De OS-upgrade zit in 30 tot 60% van de VM's en moet in de migratie-planning.</li>
-          <li><strong>Backup-licentie niet gechecked vóór cutover.</strong> Veeam, Commvault en anderen rekenen vaak per workload-type. Een licentie die alleen vSphere dekt, dekt geen Hyper-V. Klanten ontdekken dit drie dagen vóór de eerste cutover, en moeten dan een procurement-cyclus van vier weken doorlopen.</li>
+          <li><strong>Backup-licentie niet gecheckt vóór cutover.</strong> Veeam, Commvault en anderen rekenen vaak per workload-type. Een licentie die alleen vSphere dekt, dekt geen Hyper-V. Klanten ontdekken dit drie dagen vóór de eerste cutover, en moeten dan een procurement-cyclus van vier weken doorlopen.</li>
           <li><strong>Geen budget voor twee maanden parallel draaien.</strong> vCenter en de oude VMware-licentie blijven actief tot na de laatste VM-migratie, plus enkele weken voor rollback-veiligheid. Dat is in totaal 2 tot 4 maanden dubbele licentiekosten. Reken het mee in de business case.</li>
         </ol>
 
@@ -485,7 +485,7 @@
           <p>Geleidelijk werkt vrijwel altijd beter. Big-bang migraties zien wij alleen in zeer specifieke gevallen (datacenter-verhuizing, hardware-end-of-life met harde deadline). Een gefaseerde aanpak per workload-cluster geeft je tijd om scripts en runbooks te verfijnen op laagrisico-VM's voordat je kritieke workloads aanraakt.</p>
 
           <div class="faq-q">Wat doen we met VMware NSX microsegmentation?</div>
-          <p>Vier opties. Hyper-V Network Virtualization (technisch volwassen, weinig in productie), Azure Arc plus Azure Network Security Groups voor hybride scenarios, derde-partij microsegmentation-tools (Illumio, Akamai Guardicore), of accepteer dat microsegmentation post-migratie op een ander niveau (firewall, OS-level) wordt opgelost. Welke keuze het juiste is hangt af van regulatory eisen en wat het netwerk-team kan operationaliseren.</p>
+          <p>Vier opties. Hyper-V Network Virtualization (technisch volwassen, weinig in productie), Azure Arc plus Azure Network Security Groups voor hybride scenario's, derde-partij microsegmentation-tools (Illumio, Akamai Guardicore), of accepteer dat microsegmentation post-migratie op een ander niveau (firewall, OS-level) wordt opgelost. Welke keuze het juiste is hangt af van wettelijke eisen en wat het netwerk-team kan operationaliseren.</p>
 
           <div class="faq-q">Werkt Live Migration tussen vSphere en Hyper-V tijdens de transitie?</div>
           <p>Nee. Cross-hypervisor live migration bestaat niet. Wat wel werkt is parallel draaien tijdens cutover-windows en VM's één voor één overzetten met geplande downtime. De WAC VM Conversion Extension biedt "online migration" maar dat is replicatie plus cutover, niet vMotion-stijl live migration.</p>
@@ -512,7 +512,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.4</span>
+    <span class="brand-version">v0.3.5</span>
   </footer>
 
 </div>
