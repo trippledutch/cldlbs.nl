@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.5 · Blog · SAN vs S2D vs Azure Local -->
+<!-- CloudLabs · v0.3.6 · Blog · SAN vs S2D vs Azure Local -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -417,7 +417,7 @@
         <h1>SAN vs S2D vs Azure Local: storage-keuze voor Hyper-V in 2026</h1>
         <div class="meta">Door Hans Vredevoort · 15 mei 2026 · 15 minuten leestijd · Storage</div>
 
-        <p class="lede">De meeste marketing in 2026 vertelt je dat hyperconverged het antwoord is. Microsoft promoot Azure Local, vendors promoten hun HCI-stack, en op conferenties hoor je dat SAN-gebaseerde Hyper-V clusters "legacy" zijn. In de praktijk klopt dat verhaal voor een aanzienlijke groep klanten niet. SAN-attached Hyper-V is in 2026 een rationele, ondersteunde, en in veel scenarios financieel verstandige keuze.</p>
+        <p class="lede">De meeste marketing in 2026 vertelt je dat hyperconverged het antwoord is. Microsoft promoot Azure Local, vendors promoten hun HCI-stack, en op conferenties hoor je dat SAN-gebaseerde Hyper-V clusters "legacy" zijn. In de praktijk klopt dat verhaal voor een aanzienlijke groep klanten niet. SAN-attached Hyper-V is in 2026 een rationele, ondersteunde, en in veel scenario's financieel verstandige keuze.</p>
         <p class="lede">Dit artikel is de eerlijke vergelijking tussen de drie storage-architecturen die je in 2026 kunt kiezen voor een Hyper-V cluster. SAN-attached (FC, iSCSI of Shared SAS), Storage Spaces Direct (S2D) op Windows Server, en Azure Local. Welke past bij welke situatie, en welke trade-offs neem je impliciet wanneer je voor één van de drie kiest.</p>
 
         <div class="toc">
@@ -442,16 +442,16 @@
         <p>Op hardware-niveau zit het verschil tussen S2D en Azure Local in de Solutions Catalog en de licentievorm, niet in fundamentele architectuur. Maar operationeel zijn het twee verschillende producten met verschillende toolchains.</p>
 
         <h2 id="nl-2">2. Wanneer SAN nog steeds de juiste keuze is</h2>
-        <p>SAN-attached Hyper-V krijgt in vakliteratuur weinig aandacht meer, maar wij zien het in 2026 als de juiste keuze voor specifieke scenarios. Niet één daarvan is exotisch.</p>
+        <p>SAN-attached Hyper-V krijgt in vakliteratuur weinig aandacht meer, maar wij zien het in 2026 als de juiste keuze voor specifieke scenario's. Niet één daarvan is exotisch.</p>
         <p><strong>Scenario 1: bestaande SAN-investering met afschrijving die nog jaren loopt.</strong> Een klant heeft drie jaar geleden een Pure Storage FlashArray of een HPE Alletra geplaatst, met een afschrijvingstermijn van zeven jaar. Vervangen door HCI betekent vier jaar resterende afschrijving wegschrijven. De financiële case voor migratie is in dit scenario meestal slecht, tenzij er andere drivers zijn (vendor support eindigt, hardware-defecten).</p>
         <p><strong>Scenario 2: separate compute- en storage-schaling.</strong> Wanneer storage-groei en compute-groei niet synchroon lopen, is SAN flexibeler. Een database-cluster met 200 TB storage en 12 cores per node kun je op SAN dimensioneren zonder cores te betalen die je niet gebruikt. Op HCI moet je nodes toevoegen die zowel compute als storage leveren, of accepteren dat je in cores overbetaalt.</p>
         <p><strong>Scenario 3: shared storage tussen meerdere clusters.</strong> Een SAN-array kan LUN's leveren aan een Hyper-V cluster, een SQL Server failover cluster, en een fileserver-cluster tegelijk. HCI is per definitie storage-gekoppeld aan één cluster. Voor organisaties met meerdere kleine clusters die storage-resources delen, is SAN operationeel eenvoudiger.</p>
-        <p><strong>Scenario 4: regulatory of compliance-eisen voor data-locatie.</strong> Sommige compliance-frameworks vereisen dat storage fysiek isoleerbaar is, met expliciete encryption-at-rest controls aan de storage-zijde. SAN-arrays leveren dat in mature vorm met decennia aan tooling. HCI levert vergelijkbare features maar de auditbaarheid is anders georganiseerd.</p>
-        <p><strong>Scenario 5: gespecialiseerde storage-features die HCI niet matched.</strong> Synchroon replicatie tussen sites met sub-millisecond RTO (Dell PowerStore Metro, HPE Alletra Peer Persistence), array-level snapshots geïntegreerd met VMware-VAAI-equivalenten voor Hyper-V (ODX), en deduplication op array-niveau die over alle hosts geldt. HCI levert software-equivalenten maar niet altijd met dezelfde performance-eigenschappen.</p>
+        <p><strong>Scenario 4: wettelijke of compliance-eisen voor data-locatie.</strong> Sommige compliance-frameworks vereisen dat storage fysiek isoleerbaar is, met expliciete encryption-at-rest controls aan de storage-zijde. SAN-arrays leveren dat in mature vorm met decennia aan tooling. HCI levert vergelijkbare features maar de auditbaarheid is anders georganiseerd.</p>
+        <p><strong>Scenario 5: gespecialiseerde storage-features die HCI niet kan evenaren.</strong> Synchrone replicatie tussen sites met sub-millisecond RTO (Dell PowerStore Metro, HPE Alletra Peer Persistence), array-level snapshots geïntegreerd met VMware-VAAI-equivalenten voor Hyper-V (ODX), en deduplication op array-niveau die over alle hosts geldt. HCI levert software-equivalenten maar niet altijd met dezelfde performance-eigenschappen.</p>
 
         <p><strong>Wat SAN in 2026 NIET goed doet:</strong></p>
         <ul>
-          <li>Edge-deployments en kleine sites. Een SAN voor twee Hyper-V nodes is operationeel overkill. Voor die scenarios is HCI of een derde optie (een single shared SAS-DAS) beter.</li>
+          <li>Edge-deployments en kleine sites. Een SAN voor twee Hyper-V nodes is operationeel overkill. Voor die scenario's is HCI of een derde optie (een single shared SAS-DAS) beter.</li>
           <li>Snelle hardware-refresh-cycli. Een SAN-array vervangen is een groot project. HCI nodes vervangen kun je rolling doen.</li>
           <li>Cloud-native integratie. SAN-storage integreert niet naadloos met Azure-diensten zoals Site Recovery, Azure Backup voor block-storage, of Arc. Dat moet allemaal apart.</li>
         </ul>
@@ -462,8 +462,8 @@
         <p><strong>De juiste fit voor S2D op Windows Server:</strong></p>
         <ul>
           <li>Klant wil hyperconverged maar niet de per-core Azure-licentie van Azure Local. Bestaande Datacenter SA dekt Windows Server, en daarmee is S2D zonder additionele OS-licentie inbegrepen.</li>
-          <li>Klant heeft geen Azure-connectivity of wil die principieel niet. Strikt air-gapped omgevingen, of organisaties met sterke souvereignity-eisen die Azure-integratie afwijzen.</li>
-          <li>Klant beheert al meerdere S2D-clusters met bestaande operationele expertise, en heeft geen aanleiding om naar een nieuwe tool-chain te bewegen voor één nieuw cluster.</li>
+          <li>Klant heeft geen Azure-connectivity of wil die principieel niet. Strikt air-gapped omgevingen, of organisaties met sterke soevereiniteitseisen die Azure-integratie afwijzen.</li>
+          <li>Klant beheert al meerdere S2D-clusters met bestaande operationele expertise, en heeft geen aanleiding om naar een nieuwe toolchain te bewegen voor één nieuw cluster.</li>
         </ul>
 
         <p><strong>Wat S2D op Windows Server in 2026 lastiger maakt:</strong></p>
@@ -514,7 +514,7 @@
         <ul>
           <li><strong>De waarde van bestaande hardware.</strong> Een SAN die nog vijf jaar afschrijft, drukt de SAN-keuze financieel veel gunstiger dan greenfield. HCI levert geen credit voor bestaande hardware tenzij je een trade-in-programma kunt onderhandelen.</li>
           <li><strong>De waarde van operationele expertise.</strong> Een team dat al jaren met Fibre Channel en MPIO werkt, levert SAN-operatie goedkoper dan een team dat dat opnieuw moet leren. Andersom geldt hetzelfde voor S2D en Azure Local.</li>
-          <li><strong>Lifecycle-events.</strong> Een SAN-array vervangen na zeven jaar is een project van honderdduizenden euros. Vier HCI-nodes vervangen na vijf jaar is een rolling refresh die gedistribueerd kan over een jaar.</li>
+          <li><strong>Lifecycle-events.</strong> Een SAN-array vervangen na zeven jaar is een project van honderdduizenden euro's. Vier HCI-nodes vervangen na vijf jaar is een rolling refresh die gedistribueerd kan over een jaar.</li>
           <li><strong>Risicokosten.</strong> Een SAN-controller-failure die niet goed wordt opgevangen door HA-pad-configuratie kan een cluster downen. Een HCI-node-failure raakt alleen de capaciteit van die node. Beide architecturen hebben failure-modes, maar de blast-radius is anders.</li>
         </ul>
 
@@ -523,7 +523,7 @@
 
         <p><strong>SAN-attached, performance-karakteristieken:</strong></p>
         <ul>
-          <li>Latency is consistent over tijd. Een goed-geconfigureerde FC-SAN levert microseconde-latency stabiel onder load, omdat de SAN-array een dedicated apparaat is met dedicated cache en geen workload-interferentie.</li>
+          <li>Latency is consistent over tijd. Een goed geconfigureerde FC-SAN levert microseconde-latency stabiel onder load, omdat de SAN-array een dedicated apparaat is met dedicated cache en geen workload-interferentie.</li>
           <li>IOPS-piek is hoog, vooral bij moderne all-NVMe arrays (Pure FlashArray, Dell PowerStore, HPE Alletra MP). Miljoenen IOPS per array zijn standaard.</li>
           <li>Latency bij N-1 evacuatie (één host weg) is identiek aan steady state. De SAN merkt niet dat een host weg is.</li>
         </ul>
@@ -537,14 +537,14 @@
 
         <p><strong>Waar HCI duidelijk wint:</strong></p>
         <ul>
-          <li>Mixed read/write workloads met cache-locality. S2D's NVMe-tier caching werkt extreem goed voor VDI en general-purpose VM workloads. Latency P99 is vaak beter dan op een SAN, omdat de write hits direct in lokale NVMe landt.</li>
+          <li>Mixed read/write workloads met cache-locality. S2D's NVMe-tier caching werkt extreem goed voor VDI en general-purpose VM workloads. Latency P99 is vaak beter dan op een SAN, omdat de write hits direct in lokale NVMe landen.</li>
           <li>Workloads die van data-tiering profiteren. S2D plaatst frequent-accessed data automatisch op snelle tier. SAN-arrays doen dit ook, maar met andere algoritmes en tuning-vereisten.</li>
         </ul>
 
         <p><strong>Waar SAN nog wint:</strong></p>
         <ul>
           <li>Sequential I/O-zware workloads. Grote backups, file-server-workloads met sequential reads, en data warehouse-loads doen het op SAN vaak beter, omdat de array een grote write-cache en sequential-optimised firmware heeft.</li>
-          <li>Storage features op array-niveau. Synchroon replicatie met sub-millisecond RPO, array-level snapshots met VSS-integratie, en specifieke compressie-algoritmes die op vendor-niveau zijn gevalideerd.</li>
+          <li>Storage features op array-niveau. Synchrone replicatie met sub-millisecond RPO, array-level snapshots met VSS-integratie, en specifieke compressie-algoritmes die op vendor-niveau zijn gevalideerd.</li>
         </ul>
 
         <h2 id="nl-7">7. Operationele realiteit, wat het beheer werkelijk vraagt</h2>
@@ -567,22 +567,22 @@
         <p><strong>Azure Local operationele realiteit:</strong></p>
         <ul>
           <li>Twee management-planes: Azure Portal voor primaire orchestratie, plus PowerShell en Failover Cluster Manager voor operationele taken. Teams moeten beide leren.</li>
-          <li>Azure Update Manager voor patching is comfortabel, maar vereist disciplinaire change-management voor update-runs die nu vanuit cloud worden getriggerd.</li>
+          <li>Azure Update Manager voor patching is comfortabel, maar vereist gedisciplineerd change-management voor update-runs die nu vanuit cloud worden getriggerd.</li>
           <li>Kosten-monitoring is een continue activiteit. Azure Monitor, Log Analytics en Defender-consumptie kunnen verrassen als ze niet actief worden bewaakt.</li>
         </ul>
 
         <div class="mid-cta">
           <p>De juiste storage-keuze voor jouw Hyper-V cluster hangt af van factoren die niet allemaal zichtbaar zijn in een marketing-vergelijking: bestaande investeringen, team-expertise, compliance-eisen, en de fit met je bredere infrastructuur-strategie.</p>
-          <p>Een CloudLabs storage assessment voor Hyper-V brengt deze factoren in kaart per workload-groep, en levert een beargumenteerde aanbeveling met expliciete trade-offs in een klantgericht <code>.docx</code> rapport.</p>
+          <p>Een CloudLabs storage assessment voor Hyper-V brengt deze factoren in kaart per workload-groep, en levert een beargumenteerde aanbeveling met expliciete trade-offs in een <code>.docx</code>-rapport voor de klant.</p>
           <a href="../book.html">Plan een storage assessment →</a>
         </div>
 
         <h2 id="nl-8">8. Migratie-paden tussen de drie</h2>
         <p>Bewegen tussen architecturen is geen kleine operatie. De praktische opties:</p>
         <ul>
-          <li><strong>Van SAN naar S2D op Windows Server.</strong> Bouw een nieuwe S2D-cluster naast de bestaande SAN-cluster. Migreer VM's via Live Migration (als beide in hetzelfde domein zitten) of via Hyper-V Replica gevolgd door failover. Decommissioneer de SAN na verificatie. Geen in-place upgrade mogelijk.</li>
+          <li><strong>Van SAN naar S2D op Windows Server.</strong> Bouw een nieuw S2D-cluster naast het bestaande SAN-cluster. Migreer VM's via Live Migration (als beide in hetzelfde domein zitten) of via Hyper-V Replica gevolgd door failover. Decommissioneer de SAN na verificatie. Geen in-place upgrade mogelijk.</li>
           <li><strong>Van SAN naar Azure Local.</strong> Vergelijkbaar pad als naar S2D, maar met de aanvullende Azure Local readiness-stappen. Zie <!--LINK:azure-local-migration-readiness--><a href="azure-local-migration-readiness.html">Azure Local migratie readiness checklist</a><!--/LINK:azure-local-migration-readiness--> voor de volledige procedure.</li>
-          <li><strong>Van S2D op Windows Server naar Azure Local.</strong> Vanaf Azure Stack HCI 22H2 bestaat er een in-place upgrade-pad. Vanaf S2D op Windows Server 2022 is het pad ingewikkelder en wij adviseren een nieuwe Azure Local cluster te bouwen naast het bestaande, en VM's te migreren. Hardware-validatie tegen de Azure Local Solutions Catalog is een verplichte tussenstap.</li>
+          <li><strong>Van S2D op Windows Server naar Azure Local.</strong> Vanaf Azure Stack HCI 22H2 bestaat er een in-place upgrade-pad. Vanaf S2D op Windows Server 2022 is het pad ingewikkelder en wij adviseren een nieuw Azure Local cluster te bouwen naast het bestaande, en VM's te migreren. Hardware-validatie tegen de Azure Local Solutions Catalog is een verplichte tussenstap.</li>
           <li><strong>Van HCI terug naar SAN.</strong> Dit gebeurt zelden maar het kan. Bouw een SAN-cluster, migreer VM's via Live Migration of restore. Argumenten zijn meestal financieel (HCI kwam duurder uit dan verwacht) of operationeel (HCI-skills bleken te schaars).</li>
         </ul>
 
@@ -629,10 +629,10 @@
           <p>Onder de motorkap is de S2D-technologie identiek. Het verschil zit in: hardware-validatie (Azure Local Solutions Catalog is strikter), licentievorm (Azure Local is per core per maand, Windows Server S2D is via Datacenter SA), management-plane (Azure Local heeft Azure Portal-integratie), update-mechanisme (Azure Local heeft Azure Update Manager), en strategische focus (Microsoft investeert primair in Azure Local).</p>
 
           <div class="faq-q">Hoe zwaar weegt de Azure-licentie van Azure Local in de TCO?</div>
-          <p>Voor een four-node cluster met 32 cores per node komt de Azure Local OS-fee uit op enkele duizenden euros per maand. Over vijf jaar is dat materieel, maar typisch nog steeds lager dan de SAN-hardware plus storage-software-licenties die je anders zou kopen. Het exacte plaatje verschilt per regio en per workload-profiel; modelleer het in een TCO-vergelijking met realistische assumpties.</p>
+          <p>Voor een four-node cluster met 32 cores per node komt de Azure Local OS-fee uit op enkele duizenden euro's per maand. Over vijf jaar is dat materieel, maar typisch nog steeds lager dan de SAN-hardware plus storage-software-licenties die je anders zou kopen. Het exacte plaatje verschilt per regio en per workload-profiel; modelleer het in een TCO-vergelijking met realistische assumpties.</p>
 
           <div class="faq-q">Werkt Hyper-V Replica goed op alle drie de architecturen?</div>
-          <p>Ja, Hyper-V Replica is storage-agnostisch en werkt op SAN, S2D en Azure Local. De configuratie en operationele procedures verschillen iets per architectuur, maar de functionaliteit is in alle drie de gevallen volwassen. Voor stretched clusters met synchroon replicatie zijn de overwegingen anders, en die werken specifiek met array-level features (SAN), Storage Replica (S2D), of Azure-services (Azure Local).</p>
+          <p>Ja, Hyper-V Replica is storage-agnostisch en werkt op SAN, S2D en Azure Local. De configuratie en operationele procedures verschillen iets per architectuur, maar de functionaliteit is in alle drie de gevallen volwassen. Voor stretched clusters met synchrone replicatie zijn de overwegingen anders, en die werken specifiek met array-level features (SAN), Storage Replica (S2D), of Azure-services (Azure Local).</p>
         </div>
       </div>
 
@@ -654,7 +654,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.5</span>
+    <span class="brand-version">v0.3.6</span>
   </footer>
 
 </div>
