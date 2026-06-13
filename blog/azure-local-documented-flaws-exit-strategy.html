@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.4.0 · Blog · Azure Local Documented Flaws and Exit Strategy -->
+<!-- CloudLabs · v0.4.1 · Blog · Azure Local Documented Flaws and Exit Strategy -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -283,7 +283,7 @@
           <div class="toc-title">In dit artikel</div>
           <ol>
             <li><a href="#nl-1">De orchestrator bezit alles, inclusief je storing</a></li>
-            <li><a href="#nl-2">De Arc-ketting: certificaten, deadlines en een 30-dagen klok</a></li>
+            <li><a href="#nl-2">De Arc-ketting: certificaten, deadlines en een 30-dagenklok</a></li>
             <li><a href="#nl-3">Disconnected Operations: te klein om te schalen, te verbonden om soeverein te zijn</a></li>
             <li><a href="#nl-4">Storage- en migratie-lock-in</a></li>
             <li><a href="#nl-5">De mythe: "iedereen gaat terug naar Server 2022"</a></li>
@@ -299,7 +299,7 @@
         <div class="callout"><strong>Vuistregel uit het veld</strong>
         Behandel Network ATC intents na deployment als onveranderlijk. Blijf één release achter (N-1), lees vóór elke solution update de known-issues pagina en de Supportability-repo, en draai de health checks vanuit PowerShell voordat Azure Update Manager iets aanraakt. <code>Start-SolutionUpdate</code> vanuit PowerShell geeft veel beter diagnosticeerbare output dan de portal. Onze <a href="cluster-aware-updating-runbook-audit-trail.html">CAU-runbookdiscipline</a> vertaalt één op één: zelfde governance, andere motor.</div>
 
-        <h2 id="nl-2">2. De Arc-ketting: certificaten, deadlines en een 30-dagen klok</h2>
+        <h2 id="nl-2">2. De Arc-ketting: certificaten, deadlines en een 30-dagenklok</h2>
         <p>Het control plane van Azure Local leeft in Azure, en Microsoft dwingt die afhankelijkheid af met harde deadlines. De Arc resource bridge heeft binnen een jaar een solution update nodig, anders verlopen de certificaten en breekt VM-beheer. Modern Lifecycle policy vereist dat je binnen zes maanden van de nieuwste release blijft om supported te zijn. Het cluster moet elke 30 dagen synchroniseren met Azure. Mis genoeg van deze vensters en je bezit een hypervisor die je niet meer volledig kunt beheren.</p>
         <p>Lees dat nog eens vanuit operationeel perspectief: patchen is niet langer jouw beslissing. Het is een contractuele verplichting met technische handhaving. Voor sommige organisaties is dat een feature, het dwingt hygiëne af. Voor organisaties met als instinct "wij patchen wanneer we getest hebben" vecht dit platform elk kwartaal tegen je, en het wint, want het alternatief is een gedegradeerd management plane.</p>
         <p>Hier bestaat geen omweg, alleen mitigatie: bewaak de leeftijd van het bridge-certificaat en de syncstatus als eersteklas alerts, en laat een cluster nooit meer dan twee releasecycli achterlopen. De afhankelijkheid zelf ís het product.</p>
@@ -314,24 +314,24 @@
 
         <h2 id="nl-5">5. De mythe: "iedereen gaat terug naar Server 2022"</h2>
         <p>Het standaardalternatief voor Azure Local is Windows Server 2025 Datacenter met Hyper-V, failover clustering en storage naar keuze, optioneel Arc-enabled voor de portalvoordelen zonder de lifecycle-handboeien. Wat 2025 werkelijk toevoegt voor clusterbeheerders beschreven we in <a href="windows-server-2025-hyper-v-cluster-features.html">een apart artikel</a>: GPU-partitionering met live migration, dynamic processor compatibility, vTPM-verbeteringen, hot-patching.</p>
-        <p>De laatste tijd horen we de tegenwerping dat Windows Server 2025 wordt verlaten en klanten terugkeren naar 2022. Het eerste jaar was werkelijk ruig: onvolwassen NIC- en storagedrivers, hot-patching achter een abonnement, en de beruchte bug waarbij 2019- en 2022-servers zichzelf 's nachts naar 2025 upgradeden, soms zonder licentie, een defect dat Microsoft pas in april 2026 sloot, ruim een jaar na erkenning. Sommige organisaties zijn in 2025 inderdaad teruggegaan, met redenen.</p>
+        <p>De laatste tijd horen we de tegenwerping dat Windows Server 2025 wordt verlaten en klanten terugkeren naar 2022. Het eerste jaar was werkelijk ruig: onvolwassen NIC- en storagedrivers, hot-patching achter een abonnement, en de beruchte bug waarbij 2019- en 2022-servers zichzelf 's nachts naar 2025 upgradeden, soms zonder licentie, een defect dat Microsoft pas in april 2026 sloot, ruim een jaar na erkenning. Sommige organisaties zijn in 2025 inderdaad teruggegaan, en met reden.</p>
         <p>Maar als strategie voor medio 2026 houdt de terugtocht geen stand. De lelijke patch van april 2026 die domain controllers in reboot loops bracht, raakte Server 2022, 2019 en 2016 even hard als 2025; allemaal hadden ze nood-fixes nodig. Terugrollen levert nul verbetering in patchkwaliteit op. Ondertussen verlaat Server 2022 in oktober 2026 mainstream support. Een nieuw cluster erop bouwen betekent vandaag bouwen op een OS dat binnen maanden in onderhoudsmodus gaat. Valideer je NIC- en storagefirmware tegen de 2025-hardwarelijst en zet 2025 neer.</p>
 
         <h2 id="nl-6">6. Veeam is de exit. Installeer het op dag één.</h2>
-        <p>Hier is de reddende eigenschap: Azure Local VM's zijn gewone Hyper-V VM's op Cluster Shared Volumes. Veeam, of een vergelijkbaar host-level backupproduct, maakt er agentless back-ups van en herstelt ze, desnoods via Instant Recovery, naar elke standalone Hyper-V host of Windows Server failover cluster. Het backuppad loopt om alles heen dat Microsoft weigert te ondersteunen: geen live migration nodig, geen network migration, geen Azure Migrate preview.</p>
-        <p>Het praktische exit-runbook is kort. Backup-copy of repliceer naar het doelcluster, cut-over per VM in onderhoudsvensters, hermap netwerken en her-IP waar nodig, verwijder de Arc Connected Machine agent uit de guests, en controleer Gen 2-firmware en Secure Boot-instellingen na restore (hetzelfde terrein als ons <a href="secure-boot-2023-certificates-hyper-v-gen2-vms.html">Secure Boot-certificatenartikel</a>, dat op beide platformen bijt).</p>
+        <p>Hier is de reddende eigenschap: Azure Local VM's zijn gewone Hyper-V VM's op Cluster Shared Volumes. Veeam, of een vergelijkbaar host-level backupproduct, maakt er agentless back-ups van en herstelt ze, desnoods via Instant Recovery, naar elke standalone Hyper-V host of Windows Server failover cluster. Het backuppad loopt om alles heen wat Microsoft weigert te ondersteunen: geen live migration nodig, geen network migration, geen Azure Migrate preview.</p>
+        <p>Het praktische exit-runbook is kort. Backup-copy of repliceer naar het doelcluster, cut-over per VM in onderhoudsvensters, wijs netwerken opnieuw toe en pas IP-adressen aan waar nodig, verwijder de Arc Connected Machine agent uit de guests, en controleer Gen 2-firmware en Secure Boot-instellingen na restore (hetzelfde terrein als ons <a href="secure-boot-2023-certificates-hyper-v-gen2-vms.html">Secure Boot-certificatenartikel</a>, dat op beide platformen bijt).</p>
         <div class="callout"><strong>Kern</strong>
-        Een Azure Local commitment zonder getest en geoefend restorepad naar een niet-Azure-Local cluster is geen platformbeslissing. Het is een gijzeling met een maandelijkse factuur.</div>
+        Een Azure Local commitment zonder een getest en geoefend restorepad naar een niet-Azure-Local cluster is geen platformbeslissing. Het is een gijzeling met een maandelijkse factuur.</div>
 
         <h2 id="nl-7">7. Wat wij zeggen tegen klanten die Azure Local nog overwegen</h2>
         <p>Koop Azure Local omdat je het Azure control plane on-premises wilt, nooit ondanks dat. Vier kwalificerende vragen beslissen het:</p>
         <ol>
           <li><strong>Wil je Azure werkelijk als je management plane?</strong> Arc VM-provisioning, Azure Policy, Azure Virtual Desktop on-premises, gratis Extended Security Updates voor legacy guests. Hebben deze echte waarde voor jou, dan levert Azure Local dingen die Windows Server niet biedt, en kan het abonnement uit.</li>
-          <li><strong>Kan je team leven met Modern Lifecycle?</strong> Verplichte updates op het ritme van Microsoft, certificaatdeadlines, een 30-dagen syncplicht, en de acceptatie dat sommige storingen eindigen in tickets, niet in fixes. Stijgt je bloeddruk van die beschrijving, geloof dat gevoel.</li>
+          <li><strong>Kan je team leven met Modern Lifecycle?</strong> Verplichte updates op het ritme van Microsoft, certificaatdeadlines, een 30-dagensyncplicht, en de acceptatie dat sommige storingen eindigen in tickets, niet in fixes. Stijgt je bloeddruk van die beschrijving, geloof dat gevoel.</li>
           <li><strong>Is connectiviteit gegarandeerd, voor altijd?</strong> Staat soevereiniteit of air-gap ergens in de eisen, loop nu weg. Sectie 3 wordt niet beter vóór je go-live.</li>
           <li><strong>Heb je SAN nodig, stretch clustering op eigen voorwaarden, of VMM-achtige controle?</strong> Dan is het Windows Server, punt.</li>
         </ol>
-        <p>Wijzen de antwoorden naar ja, ga dan weloverwogen verder: gevalideerde hardware exact volgens catalogus, gescripte deployment, onveranderlijke network intents, N-1 releasecadans, en Veeam vanaf dag één in het ontwerp. En let op waar de bredere markt heen gaat: het grootste deel van de post-VMware golf die wij beoordelen lands op Windows Server 2025 Hyper-V, Proxmox of Nutanix, niet op Azure Local. Wie aan de ene lock-in ontsnapt, tekent niet graag voor een diepere.</p>
+        <p>Wijzen de antwoorden naar ja, ga dan weloverwogen verder: gevalideerde hardware exact volgens catalogus, gescripte deployment, onveranderlijke network intents, N-1 releasecadans, en Veeam vanaf dag één in het ontwerp. En let op waar de bredere markt heen gaat: het grootste deel van de post-VMware golf die wij beoordelen landt op Windows Server 2025 Hyper-V, Proxmox of Nutanix, niet op Azure Local. Wie aan de ene lock-in ontsnapt, tekent niet graag voor een diepere.</p>
 
         <div class="mid-cta">
           <span class="label">Nu aan het beslissen?</span>
@@ -342,9 +342,9 @@
         <div class="faq-block">
           <h2>Veelgestelde vragen</h2>
           <div class="faq-q">Is Azure Local een slecht product?</div>
-          <p>Nee. Het is een door Microsoft beheerde appliance in jouw rack. Wil je het Azure control plane on-premises en accepteer je de Modern Lifecycle verplichtingen, dan levert het dingen die Windows Server niet biedt. De spijtgevallen zijn vrijwel altijd klanten die een autonoom on-premises platform verwachtten.</p>
+          <p>Nee. Het is een door Microsoft beheerde appliance in jouw rack. Wil je het Azure control plane on-premises en accepteer je de Modern Lifecycle-verplichtingen, dan levert het dingen die Windows Server niet biedt. De spijtgevallen zijn vrijwel altijd klanten die een autonoom on-premises platform verwachtten.</p>
           <div class="faq-q">Kan Azure Local volledig air-gapped draaien?</div>
-          <p>In de praktijk niet. Standaard Azure Local ondersteunt maximaal 30 dagen disconnected. De Disconnected Operations variant verscheen begin 2026 met meerdere kritieke known issues, AKS dat niet volledig air-gapped werkt, en een multi-rack optie die een permanente Microsoft-verbinding vereist. Harde air-gap betekent Windows Server failover clustering.</p>
+          <p>In de praktijk niet. Standaard Azure Local ondersteunt maximaal 30 dagen disconnected. De Disconnected Operations-variant verscheen begin 2026 met meerdere kritieke known issues, AKS dat niet volledig air-gapped werkt, en een multi-rack optie die een permanente Microsoft-verbinding vereist. Harde air-gap betekent Windows Server failover clustering.</p>
           <div class="faq-q">Verlaten klanten Windows Server 2025 werkelijk voor 2022?</div>
           <p>Sommigen zijn in 2025 teruggerold vanwege drivervolwassenheid. Voor nieuwe clusters medio 2026 faalt het argument: Server 2022 verlaat in oktober 2026 mainstream support, en het patchdebacle van april 2026 raakte 2022 en 2019 even hard als 2025. Valideer firmware tegen de 2025-hardwarelijst en zet 2025 neer.</p>
           <div class="faq-q">Hoe migreer ik van Azure Local af?</div>
@@ -371,7 +371,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.4.0</span>
+    <span class="brand-version">v0.4.1</span>
   </footer>
 
 </div>
