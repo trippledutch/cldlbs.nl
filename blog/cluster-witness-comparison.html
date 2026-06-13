@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.4 · Blog · Cluster Witness Comparison -->
+<!-- CloudLabs · v0.3.5 · Blog · Cluster Witness Comparison -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -472,7 +472,7 @@ Set-ClusterQuorum -DiskWitness 'Cluster Disk Witness'</code></pre>
           <li>File Share Witness op één fysieke server, geen UPS, in hetzelfde rack als de helft van het cluster. De rack-PDU is dan een single point of failure voor het hele cluster.</li>
           <li>File Share Witness op een NAS die zelf een single-node appliance is. Reboot de NAS voor firmware, verlies de witness tijdens een kritiek onderhoudsvenster.</li>
           <li>File Share Witness op een van de cluster-nodes zelf. We hebben dit in productie gezien. De beheerder kwam fileservers tekort en "had nog ruimte op HV03". Dat is geen witness, dat is een permanent kapotte configuratie.</li>
-          <li>FSW-pad geconfigureerd met een NetBIOS-naam die naar meerdere IP's resolvet (DFS-namespace), waarbij sommige targets in de verkeerde site staan.</li>
+          <li>FSW-pad geconfigureerd met een NetBIOS-naam die naar meerdere IP's verwijst (DFS-namespace), waarbij sommige targets in de verkeerde site staan.</li>
         </ul>
 
         <p><strong>Vereisten voor een bruikbare File Share Witness:</strong></p>
@@ -539,7 +539,7 @@ Set-ClusterQuorum -DiskWitness 'Cluster Disk Witness'</code></pre>
 
         <div class="mid-cta">
           <p>Witness-topologie is een onderwerp waarop monitoring stilzwijgt. Het cluster is gezond, validatie komt door, het rapport is groen. Pas bij een echte storing blijkt dat de witness in hetzelfde fault domain zat als de helft van het cluster.</p>
-          <p>Een CloudLabs Hyper-V Cluster Health Check toetst witness-plaatsing tegen je werkelijke topologie en documenteert de gap met severity en remediation-stappen.</p>
+          <p>Een CloudLabs Hyper-V Cluster Health Check toetst witness-plaatsing tegen je werkelijke topologie en documenteert de kloof met severity en remediation-stappen.</p>
           <a href="../book.html">Plan een Health Check kennismaking →</a>
         </div>
 
@@ -617,7 +617,7 @@ Set-ClusterQuorum -DiskWitness 'Cluster Disk Witness'</code></pre>
           <p>Dynamic Witness past het stemgewicht van de witness aan zodra het cluster detecteert dat hij onbereikbaar is. Het cluster blijft draaien zolang een meerderheid van de overige stemmen (nodes plus eventuele witness) intact is. De witness wordt automatisch weer meegerekend zodra connectivity terug is.</p>
 
           <div class="faq-q">Werkt Cloud Witness met Azure Government of sovereign clouds?</div>
-          <p>Ja, het <code>-Endpoint</code> parameter ondersteunt verschillende Azure-cloud endpoints. Voor Azure Government gebruik je <code>core.usgovcloudapi.net</code>, voor Azure China <code>core.chinacloudapi.cn</code>. Sovereign clouds met data residency-eisen kunnen Cloud Witness gebruiken zolang de Azure-tenant in de juiste cloud zit.</p>
+          <p>Ja, de <code>-Endpoint</code> parameter ondersteunt verschillende Azure-cloud endpoints. Voor Azure Government gebruik je <code>core.usgovcloudapi.net</code>, voor Azure China <code>core.chinacloudapi.cn</code>. Sovereign clouds met data residency-eisen kunnen Cloud Witness gebruiken zolang de Azure-tenant in de juiste cloud zit.</p>
 
           <div class="faq-q">Hoe groot is de impact van witness-latency op clusterperformance?</div>
           <p>Verwaarloosbaar in normale werking. Het cluster raakt de witness alleen aan tijdens quorum-events (node-failure, reboot, witness-state verandering). Voor stretched clusters met latency tussen sites is de witness-locatie wel belangrijk voor failover-tijden, maar niet voor steady-state performance.</p>
@@ -641,7 +641,7 @@ Set-ClusterQuorum -DiskWitness 'Cluster Disk Witness'</code></pre>
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.4</span>
+    <span class="brand-version">v0.3.5</span>
   </footer>
 
 </div>
