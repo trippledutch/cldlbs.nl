@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.5 · Blog · Azure Local Migration Readiness -->
+<!-- CloudLabs · v0.3.6 · Blog · Azure Local Migration Readiness -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -32,7 +32,7 @@
   "description":"The Azure Local migration readiness checklist for 2026: hardware compatibility, RDMA networking, Entra ID, licensing, operational shift, gotchas. From the CloudLabs Readiness Assessment playbook.",
   "image":"https://cldlbs.com/images/cluster.jpg",
   "datePublished":"2026-06-01",
-  "dateModified":"2026-06-01",
+  "dateModified":"2026-06-13",
   "author":{"@type":"Person","name":"Hans Vredevoort","url":"https://cldlbs.com/about.html","jobTitle":"Hyper-V & Cluster Consultant","worksFor":{"@type":"Organization","name":"CloudLabs"}},
   "publisher":{"@type":"Organization","name":"CloudLabs","url":"https://cldlbs.com/","logo":{"@type":"ImageObject","url":"https://cldlbs.com/favicon.png"}},
   "mainEntityOfPage":{"@type":"WebPage","@id":"https://cldlbs.com/blog/azure-local-migration-readiness.html"},
@@ -286,6 +286,7 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
         <div class="mid-cta">
           <span class="label">Pause</span>
           <p>The four sections above (hardware, network, identity, licensing) determine whether an Azure Local project is even feasible. The three sections below determine whether it is operationally sustainable.</p>
+          <p>Before you commit, also read our <!--LINK:azure-local-documented-flaws-exit-strategy--><a href="azure-local-documented-flaws-exit-strategy.html">analysis of the documented flaws and the exit path</a><!--/LINK:azure-local-documented-flaws-exit-strategy-->. This checklist helps you do it right; that article helps you decide whether to do it at all.</p>
           <p>Not sure if your environment is ready? An Azure Local Readiness Assessment from CloudLabs delivers a go/no-go recommendation with explicit trade-offs in five working days, as a customer-facing <code>.docx</code> report.</p>
           <a href="../book.html">Schedule an Azure Local Readiness Assessment →</a>
         </div>
@@ -462,6 +463,7 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
         <div class="mid-cta">
           <span class="label">Tussenstop</span>
           <p>De vier secties hierboven (hardware, netwerk, identity, licensing) bepalen of een Azure Local project überhaupt mogelijk is. De drie secties hieronder bepalen of het operationeel houdbaar is.</p>
+          <p>Voordat je je vastlegt, lees ook onze <!--LINK:azure-local-documented-flaws-exit-strategy--><a href="azure-local-documented-flaws-exit-strategy.html">analyse van de gedocumenteerde gebreken en het exitpad</a><!--/LINK:azure-local-documented-flaws-exit-strategy-->. Deze checklist helpt je het goed te doen; dat artikel helpt je beslissen of je het wel moet doen.</p>
           <p>Twijfel je of jouw omgeving er klaar voor is? Een Azure Local Readiness Assessment van CloudLabs geeft binnen vijf werkdagen een go/no-go advies met expliciete trade-offs, in een <code>.docx</code>-rapport voor de klant.</p>
           <a href="../book.html">Plan een Azure Local Readiness Assessment →</a>
         </div>
@@ -558,7 +560,7 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.5</span>
+    <span class="brand-version">v0.3.6</span>
   </footer>
 
 </div>
