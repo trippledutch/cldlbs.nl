@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.4 · Blog · CSV Ownership Imbalance -->
+<!-- CloudLabs · v0.3.5 · Blog · CSV Ownership Imbalance -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -375,7 +375,7 @@ Get-ClusterSharedVolume | ForEach-Object {
         <h1>CSV ownership onbalans in Hyper-V clusters: oorzaken en oplossingen</h1>
         <div class="meta">Door Hans Vredevoort · 15 mei 2026 · 12 minuten leestijd · Storage</div>
 
-        <p class="lede">Na elke patch-ronde, na elke Live Migration-storm, na elke geplande failover drijft Cluster Shared Volume ownership uit elkaar. Eén node bezit uiteindelijk alle CSV's, wordt coordinator voor elke metadata-operatie, en limiteert stilletjes de read-performance van het hele cluster. CSV ownership onbalans is een van de top drie bevindingen in CloudLabs Hyper-V Cluster Health Checks, en ook een van de eenvoudigste om permanent op te lossen.</p>
+        <p class="lede">Na elke patch-ronde, na elke Live Migration-storm, na elke geplande failover drijft Cluster Shared Volume ownership uit elkaar. Eén node bezit uiteindelijk alle CSV's, wordt coordinator voor elke metadata-operatie, en begrenst stilletjes de read-performance van het hele cluster. CSV ownership onbalans is een van de top drie bevindingen in CloudLabs Hyper-V Cluster Health Checks, en ook een van de eenvoudigste om permanent op te lossen.</p>
         <p class="lede">Dit artikel legt uit wat er werkelijk gebeurt onder de motorkap, hoe je het detecteert, en hoe je CSV's gebalanceerd houdt zonder constante handmatige interventie.</p>
 
         <div class="toc">
@@ -396,12 +396,12 @@ Get-ClusterSharedVolume | ForEach-Object {
         <p>Een Cluster Shared Volume is één NTFS- of ReFS-volume dat alle cluster-nodes gelijktijdig kunnen lezen en schrijven. Achter die simpele beschrijving zit een coordinator-rol. Eén node, de coordinator-node, bezit de metadata-operaties van het volume. Ruimte alloceren, een VHD uitbreiden, een snapshot maken, attributen wijzigen, dat loopt allemaal via de coordinator. Andere nodes doen direct I/O voor normale reads en writes, en omzeilen de coordinator daarmee volledig.</p>
         <p>Dit werkt goed wanneer het cluster gebalanceerd is. De coordinator-rol voor één CSV vraagt een kleine hoeveelheid CPU en geheugen op de eigenaar, dus de load verdeelt zich vanzelf. Het werkt slecht wanneer één node alle CSV's tegelijk bezit. Die node doet dan metadata-werk voor elke workload in het cluster, en elke operatie die wél via redirected I/O loopt (wat automatisch gebeurt als direct I/O onmogelijk is) gaat via die node.</p>
         <p>Twee situaties forceren redirected I/O. De storage-connectiviteit naar het volume is op de lokale node verloren (de node heeft geen direct pad, dus I/O wordt over het clusternetwerk gerouteerd naar de coordinator, die het pad nog wel heeft). Of de operatie is er een die altijd via de coordinator loopt (de meeste metadata-operaties, sommige snapshot-werkzaamheden, backup-software die het volume in bepaalde modi benadert).</p>
-        <p>Redirected I/O is supported en veilig. Het is ook significant trager dan direct I/O en kan cluster-netwerken verzadigen als je het laat lopen.</p>
+        <p>Redirected I/O wordt ondersteund en is veilig. Het is ook significant trager dan direct I/O en kan cluster-netwerken verzadigen als je het laat lopen.</p>
 
         <h2 id="nl-2">2. Waarom ownership scheef raakt, drie praktijkpatronen</h2>
 
         <h3>Patroon 1: de Patch Tuesday-parade</h3>
-        <p>CAU (Cluster Aware Updating) drained een node, patcht hem, brengt hem terug, drained de volgende. Elke node geeft zijn CSV's aan welke node op dat moment capaciteit heeft, meestal de net gepatchte node, die de laagste load heeft. Aan het eind van de run bezit de laatst-gepatchte node de meeste of alle CSV's.</p>
+        <p>CAU (Cluster Aware Updating) draint een node, patcht hem, brengt hem terug, draint de volgende. Elke node geeft zijn CSV's aan welke node op dat moment capaciteit heeft, meestal de net gepatchte node, die de laagste load heeft. Aan het eind van de run bezit de laatst-gepatchte node de meeste of alle CSV's.</p>
 
         <h3>Patroon 2: de middernachtelijke failover</h3>
         <p>Een ongeplande failover (meestal een NIC-firmware glitch, storage-pad dat flapt, of een host die kort zijn quorum-stem kwijt was) verplaatst alle CSV's van de falende node naar één andere node. Niemand merkt het 's ochtends, want de workloads draaien. De onbalans blijft staan tot de volgende interventie.</p>
@@ -526,7 +526,7 @@ Get-ClusterSharedVolume | ForEach-Object {
         <h2 id="nl-8">8. Herhaling voorkomen</h2>
         <p>Het CloudLabs remediation-patroon voor CSV ownership onbalans heeft vier delen.</p>
         <ol>
-          <li>Verwijder expliciete <code>PreferredOwners</code> op elke CSV, tenzij er een gedocumenteerde reden is. De meeste die wij vinden zijn debug-sessie residu.</li>
+          <li>Verwijder expliciete <code>PreferredOwners</code> op elke CSV, tenzij er een gedocumenteerde reden is. De meeste die wij vinden zijn residu van debugsessies.</li>
           <li>Zet CSV BlockCache aan op 1 tot 4 GB per node en verifieer enabled state op elke CSV-partitie.</li>
           <li>Voeg een geplande rebalance toe als post-maintenance stap in elk runbook. CAU's post-update tasklist is de juiste plek, gebruik je geen CAU, dan moet je patch-automatisering het regelen.</li>
           <li>Monitor de ownership-verdeling als metriek. We voegen een script van vijf regels toe aan ops-dashboards: aantal CSV's per node, alarm als één node meer dan <code>(totaal / nodes) + 1</code> bezit.</li>
@@ -573,7 +573,7 @@ Get-ClusterSharedVolume | ForEach-Object {
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.4</span>
+    <span class="brand-version">v0.3.5</span>
   </footer>
 
 </div>
