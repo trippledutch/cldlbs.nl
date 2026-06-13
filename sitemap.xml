@@ -92,15 +92,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://cldlbs.com/privacy.html</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://cldlbs.com/privacy.html"/>
-    <xhtml:link rel="alternate" hreflang="nl" href="https://cldlbs.com/privacy.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://cldlbs.com/privacy.html"/>
-    <lastmod>2026-05-15</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
     <loc>https://cldlbs.com/blog.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://cldlbs.com/blog.html"/>
     <xhtml:link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog.html"/>
@@ -169,6 +160,15 @@
     <xhtml:link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/health-check-to-patch-night.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/health-check-to-patch-night.html"/>
     <lastmod>2026-06-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cldlbs.com/blog/azure-local-documented-flaws-exit-strategy.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/azure-local-documented-flaws-exit-strategy.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/azure-local-documented-flaws-exit-strategy.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/azure-local-documented-flaws-exit-strategy.html"/>
+    <lastmod>2026-06-11</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
