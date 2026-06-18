@@ -510,12 +510,12 @@ def sync_links(verbose=True):
 # ----------------------------------------------------------------------------
 # Sticky cards + reorder by date
 #
-# Sticky slugs are persisted in sticky.txt (one slug per line, order matters).
-# Sticky cards always appear first on blog.html, in their listed order. Non-
-# sticky cards follow, sorted by datePublished descending. reorder_cards()
-# runs on every publish/unpublish so blog.html stays consistent without manual
-# editing. Manage the set with `--sticky <slug>` / `--unsticky <slug>` or by
-# editing sticky.txt directly.
+# Sticky slugs are persisted in sticky.txt (one slug per line; order is not
+# significant). Sticky cards always appear first on blog.html, sorted by
+# datePublished descending (newest first). Non-sticky cards follow, also sorted
+# by datePublished descending. reorder_cards() runs on every publish/unpublish
+# so blog.html stays consistent without manual editing. Manage the set with
+# `--sticky <slug>` / `--unsticky <slug>` or by editing sticky.txt directly.
 
 STICKY_FILE = ROOT / 'sticky.txt'
 
@@ -595,13 +595,16 @@ def reorder_cards(verbose=True):
         block = _apply_featured_class(block, slug in sticky)
         blocks.append((slug, date, block))
 
-    sticky_order = {s: i for i, s in enumerate(sticky)}
+    sticky_set = set(sticky)
+    # Featured cards sort by publication date (newest first), same as the rest.
+    # sticky.txt membership decides which cards are featured, not their order.
     sticky_blocks = sorted(
-        [b for b in blocks if b[0] in sticky_order],
-        key=lambda e: sticky_order[e[0]],
+        [b for b in blocks if b[0] in sticky_set],
+        key=lambda e: e[1],
+        reverse=True,
     )
     non_sticky_blocks = sorted(
-        [b for b in blocks if b[0] not in sticky_order],
+        [b for b in blocks if b[0] not in sticky_set],
         key=lambda e: e[1],
         reverse=True,
     )
