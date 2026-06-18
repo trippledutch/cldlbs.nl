@@ -70,6 +70,8 @@ BLOGS = {
         'Secure Boot certificates and Hyper-V: why your Gen 2 VMs are not updating in 2026',
     'reporting-remediation-progress':
         'How we Follow Up on the Hyper-V Cluster Health Check',
+    'aligning-vms-with-storage':
+        "Aligning VMs With Their Storage: Building on Darryl van der Peijl's Script",
 }
 
 ROOT = Path(__file__).parent
