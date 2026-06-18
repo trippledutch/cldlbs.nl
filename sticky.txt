@@ -1,3 +1,2 @@
-health-check-to-patch-night
-azure-local-documented-flaws-exit-strategy
 top-10-hyper-v-cluster-issues
+vmware-to-hyper-v-migration-assessment
