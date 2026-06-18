@@ -68,6 +68,8 @@ BLOGS = {
         'SAN vs S2D vs Azure Local: Choosing Hyper-V Storage in 2026',
     'secure-boot-2023-certificates-hyper-v-gen2-vms':
         'Secure Boot certificates and Hyper-V: why your Gen 2 VMs are not updating in 2026',
+    'reporting-remediation-progress':
+        'How we Follow Up on the Hyper-V Cluster Health Check',
 }
 
 ROOT = Path(__file__).parent
