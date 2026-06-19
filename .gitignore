@@ -3,3 +3,11 @@
 *.swp
 __pycache__/
 docs/
+Scripts/
+
+# Local review aids (Word/audio/handoff/build helper), not for the public site
+*.docx
+*.read.txt
+*.m4a
+blog/_HANDOFF-*.md
+build_blog_docx.py
