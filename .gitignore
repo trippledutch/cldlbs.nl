@@ -5,6 +5,10 @@ __pycache__/
 docs/
 Scripts/
 
+# Customer data: script output (Optimize-VMPlacement runs). NEVER publish.
+logs/
+*.csv
+
 # Local review aids (Word/audio/handoff/build helper), not for the public site
 *.docx
 *.read.txt
