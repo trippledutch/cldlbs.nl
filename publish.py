@@ -629,6 +629,44 @@ def reorder_cards(verbose=True):
 
 # ----------------------------------------------------------------------------
 
+def ping_indexnow(urls, verbose=True):
+    """Best-effort IndexNow submission (Bing and partners). Run AFTER deploy,
+    because it asks search engines to crawl the LIVE url now. Never fatal: a
+    failed ping must not break publishing. The key is read from the IndexNow
+    key file at the site root (<hexkey>.txt whose contents equal its name)."""
+    import json, urllib.request
+    urls = list(urls)
+    key = None
+    for p in sorted(ROOT.glob('*.txt')):
+        if re.fullmatch(r'[0-9a-fA-F]{8,128}', p.stem) and p.read_text().strip() == p.stem:
+            key = p.stem
+            break
+    if not key:
+        if verbose:
+            print('  IndexNow: no key file at site root, skipped')
+        return False
+    data = json.dumps({
+        'host': 'cldlbs.com',
+        'key': key,
+        'keyLocation': f'https://cldlbs.com/{key}.txt',
+        'urlList': urls,
+    }).encode()
+    req = urllib.request.Request(
+        'https://api.indexnow.org/IndexNow', data=data,
+        headers={'Content-Type': 'application/json; charset=utf-8'}, method='POST',
+    )
+    try:
+        r = urllib.request.urlopen(req, timeout=15)
+        if verbose:
+            print(f'  IndexNow: {len(urls)} URL(s) submitted -> HTTP {r.status}')
+        return True
+    except Exception as e:
+        if verbose:
+            print(f'  IndexNow: ping failed ({e}); not fatal')
+        return False
+
+# ----------------------------------------------------------------------------
+
 def publish(slug, date=None, sticky=False):
     if slug not in BLOGS:
         print(f'Unknown slug: {slug}')
@@ -691,6 +729,16 @@ def main():
         wrap_links()
         print('Syncing cross-blog links:')
         sync_links()
+        return 0
+    if args[0] == '--indexnow':
+        # Run AFTER deploy. `--indexnow <slug>` pings one blog URL; bare
+        # `--indexnow` pings every URL in sitemap.xml.
+        if len(args) >= 2:
+            urls = [f'https://cldlbs.com/blog/{args[1]}.html']
+        else:
+            urls = re.findall(r'<loc>([^<]+)</loc>', SITEMAP.read_text())
+        print('Submitting to IndexNow:')
+        ping_indexnow(urls)
         return 0
     if args[0] == '--reorder':
         print('Reordering blog cards on blog.html:')
