@@ -151,7 +151,7 @@ def set_date(slug, date_iso):
     # blog.html card date (DRAFT-wrapped or visible)
     t2 = INDEX.read_text()
     card_pat = re.compile(
-        r'(<a class="blog-card" href="blog/' + re.escape(slug) + r'\.html">.*?<div class="meta">)\d{4}-\d{2}-\d{2}( \xb7 [^<]+</div>)',
+        r'(<a class="blog-card(?: featured)?" href="blog/' + re.escape(slug) + r'\.html">.*?<div class="meta">)\d{4}-\d{2}-\d{2}( \xb7 [^<]+</div>)',
         re.DOTALL,
     )
     new2, n = card_pat.subn(rf'\g<1>{date_iso}\g<2>', t2)

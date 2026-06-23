@@ -226,7 +226,7 @@
 Move-ClusterSharedVolume -Name $csv -Node $nodeWithMostVMsHere</code></pre>
 
         <p>On the real run, the CSV-ownership phase aligned the great majority of the misaligned VMs without moving a single VM. Only a small remainder still needed a genuine Live Migration, and that is where the original technique comes back in: VM moves are kept as the fallback for the VMs that ownership moves cannot fix. You can still force the classic behaviour with a switch when you want it. The default just stopped leading with the expensive action.</p>
-        <p>The deeper background on why CSV ownership drifts in the first place, and what redirected I/O costs, is in <!--LINK:csv-ownership-imbalance--><!--draft:<a href="csv-ownership-imbalance.html">CSV Ownership Imbalance in Hyper-V Clusters: Causes and Fixes</a>-->CSV Ownership Imbalance in Hyper-V Clusters: Causes and Fixes<!--/LINK:csv-ownership-imbalance-->.</p>
+        <p>The deeper background on why CSV ownership drifts in the first place, and what redirected I/O costs, is in <!--LINK:csv-ownership-imbalance--><a href="csv-ownership-imbalance.html">CSV Ownership Imbalance in Hyper-V Clusters: Causes and Fixes</a><!--/LINK:csv-ownership-imbalance-->.</p>
 
         <h2 id="en-4">4. Site-aware role spread</h2>
         <p>The second thing we added has nothing to do with storage and everything to do with surviving a node failure. Once you are already enumerating every VM, you can also check whether VMs with the same function are spread across nodes or piled onto one. Two domain controllers on the same host is the textbook example you never want.</p>
@@ -392,7 +392,7 @@ RECOMMENDATIONS
 Move-ClusterSharedVolume -Name $csv -Node $nodeWithMostVMsHere</code></pre>
 
         <p>In de echte run lijnde de CSV-ownership-fase de overgrote meerderheid van de scheef staande VMs uit zonder ook maar één VM te verplaatsen. Slechts een kleine rest had nog een echte Live Migration nodig, en daar komt de oorspronkelijke techniek weer in beeld: VM-verplaatsingen blijven de fallback voor de VMs die ownership-verplaatsingen niet kunnen repareren. Je kunt het klassieke gedrag nog steeds afdwingen met een switch wanneer je dat wilt. De default stopte alleen met voorop te lopen met de dure actie.</p>
-        <p>De diepere achtergrond van waarom CSV-ownership überhaupt afdrijft, en wat redirected I/O kost, staat in <!--LINK:csv-ownership-imbalance--><!--draft:<a href="csv-ownership-imbalance.html">CSV ownership onbalans in Hyper-V clusters: oorzaken en oplossingen</a>-->CSV ownership onbalans in Hyper-V clusters: oorzaken en oplossingen<!--/LINK:csv-ownership-imbalance-->.</p>
+        <p>De diepere achtergrond van waarom CSV-ownership überhaupt afdrijft, en wat redirected I/O kost, staat in <!--LINK:csv-ownership-imbalance--><a href="csv-ownership-imbalance.html">CSV ownership onbalans in Hyper-V clusters: oorzaken en oplossingen</a><!--/LINK:csv-ownership-imbalance-->.</p>
 
         <h2 id="nl-4">4. Site-bewuste rolspreiding</h2>
         <p>Het tweede dat we toevoegden heeft niets met storage te maken en alles met het overleven van een node-uitval. Als je toch al elke VM inventariseert, kun je meteen controleren of VMs met dezelfde functie over nodes verspreid zijn of op één node opgestapeld. Twee domain controllers op dezelfde host is het schoolvoorbeeld dat je nooit wilt.</p>
@@ -518,7 +518,7 @@ RECOMMENDATIONS
       <div class="related">
         <h3><span lang="en">Related articles</span><span lang="nl">Gerelateerde artikelen</span></h3>
         <ul>
-          <!--LINK:csv-ownership-imbalance--><!--draft:<li><a href="csv-ownership-imbalance.html"><span lang="en">CSV Ownership Imbalance in Hyper-V Clusters: Causes and Fixes</span><span lang="nl">CSV ownership onbalans in Hyper-V clusters: oorzaken en oplossingen</span></a></li>--><!--/LINK:csv-ownership-imbalance-->
+          <!--LINK:csv-ownership-imbalance--><li><a href="csv-ownership-imbalance.html"><span lang="en">CSV Ownership Imbalance in Hyper-V Clusters: Causes and Fixes</span><span lang="nl">CSV ownership onbalans in Hyper-V clusters: oorzaken en oplossingen</span></a></li><!--/LINK:csv-ownership-imbalance-->
           <!--LINK:live-migration-wrong-network--><li><a href="live-migration-wrong-network.html"><span lang="en">Live Migration on the Wrong Network: The Silent Hyper-V Pitfall</span><span lang="nl">Live Migration over het verkeerde netwerk</span></a></li><!--/LINK:live-migration-wrong-network-->
           <!--LINK:san-vs-s2d-vs-azure-local-hyper-v-storage--><!--draft:<li><a href="san-vs-s2d-vs-azure-local-hyper-v-storage.html"><span lang="en">SAN vs S2D vs Azure Local: Choosing Hyper-V Storage in 2026</span><span lang="nl">SAN vs S2D vs Azure Local: Hyper-V storage kiezen in 2026</span></a></li>--><!--/LINK:san-vs-s2d-vs-azure-local-hyper-v-storage-->
           <!--LINK:top-10-hyper-v-cluster-issues--><li><a href="top-10-hyper-v-cluster-issues.html"><span lang="en">Hyper-V Cluster Health Check: Top 10 Issues We Find in 2026</span><span lang="nl">Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026</span></a></li><!--/LINK:top-10-hyper-v-cluster-issues-->

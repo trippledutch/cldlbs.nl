@@ -267,7 +267,7 @@ Get-ClusterSharedVolume | ForEach-Object {
     $i++
 }</code></pre>
 
-        <p>Every move causes a short I/O pause on the CSV concerned. Schedule rebalance in a quiet window or after a patch round, not in the middle of the day. We treat this as an ongoing operational task; the post-patch checklist in our remediation reports always ends with a CSV rebalance. Deep dive in <!--LINK:csv-ownership-imbalance--><!--draft:<a href="csv-ownership-imbalance.html">CSV ownership imbalance: causes and fixes</a>-->CSV ownership imbalance: causes and fixes<!--/LINK:csv-ownership-imbalance-->.</p>
+        <p>Every move causes a short I/O pause on the CSV concerned. Schedule rebalance in a quiet window or after a patch round, not in the middle of the day. We treat this as an ongoing operational task; the post-patch checklist in our remediation reports always ends with a CSV rebalance. Deep dive in <!--LINK:csv-ownership-imbalance--><a href="csv-ownership-imbalance.html">CSV ownership imbalance: causes and fixes</a><!--/LINK:csv-ownership-imbalance-->.</p>
 
         <h2 id="en-4">4. Firmware and driver drift between nodes</h2>
         <p>Cluster nodes leave the factory identical and slowly drift apart. One host gets a NIC firmware update during an incident, another a new HBA driver during a planned maintenance window, a third neither. Six months later the cluster fails in subtle ways: Live Migration takes three times as long over an Intel X710 versus a Mellanox CX-4, or storage timeouts occur only on one host.</p>
@@ -478,7 +478,7 @@ Get-ClusterSharedVolume | ForEach-Object {
     $i++
 }</code></pre>
 
-        <p>Elke move veroorzaakt een korte I/O-pauze op de betrokken CSV. Plan rebalance in een rustig venster of na een patch-ronde, niet midden op de dag. Wij behandelen dit als een doorlopende operationele taak; de post-patch checklist in onze remediation-rapporten eindigt altijd met een CSV-rebalance. Diepere uitleg in <!--LINK:csv-ownership-imbalance--><!--draft:<a href="csv-ownership-imbalance.html">CSV ownership-onbalans: oorzaken en oplossingen</a>-->CSV ownership-onbalans: oorzaken en oplossingen<!--/LINK:csv-ownership-imbalance-->.</p>
+        <p>Elke move veroorzaakt een korte I/O-pauze op de betrokken CSV. Plan rebalance in een rustig venster of na een patch-ronde, niet midden op de dag. Wij behandelen dit als een doorlopende operationele taak; de post-patch checklist in onze remediation-rapporten eindigt altijd met een CSV-rebalance. Diepere uitleg in <!--LINK:csv-ownership-imbalance--><a href="csv-ownership-imbalance.html">CSV ownership-onbalans: oorzaken en oplossingen</a><!--/LINK:csv-ownership-imbalance-->.</p>
 
         <h2 id="nl-4">4. Firmware- en driver-drift tussen nodes</h2>
         <p>Cluster-nodes komen identiek uit de doos en drijven langzaam uit elkaar. Eén host krijgt een NIC-firmware update tijdens een incident, een andere een nieuwe HBA-driver tijdens een gepland onderhoudsvenster, een derde geen van beide. Zes maanden later faalt het cluster op subtiele manieren: Live Migration duurt drie keer zo lang over een Intel X710 versus een Mellanox CX-4, of storage-timeouts treden alleen op één host op.</p>
@@ -608,7 +608,7 @@ Get-PhysicalDisk | Group-Object MediaType, OperationalStatus, FirmwareVersion</c
       <div class="related">
         <h3><span lang="en">Related articles</span><span lang="nl">Gerelateerde artikelen</span></h3>
         <ul>
-          <!--LINK:csv-ownership-imbalance--><!--draft:<li><a href="csv-ownership-imbalance.html"><span lang="en">CSV ownership imbalance: causes and fixes</span><span lang="nl">CSV ownership-onbalans: oorzaken en oplossingen</span></a></li>--><!--/LINK:csv-ownership-imbalance-->
+          <!--LINK:csv-ownership-imbalance--><li><a href="csv-ownership-imbalance.html"><span lang="en">CSV ownership imbalance: causes and fixes</span><span lang="nl">CSV ownership-onbalans: oorzaken en oplossingen</span></a></li><!--/LINK:csv-ownership-imbalance-->
           <!--LINK:live-migration-wrong-network--><li><a href="live-migration-wrong-network.html"><span lang="en">Live Migration on the wrong network</span><span lang="nl">Live Migration over het verkeerde netwerk</span></a></li><!--/LINK:live-migration-wrong-network-->
           <!--LINK:cluster-witness-comparison--><li><a href="cluster-witness-comparison.html"><span lang="en">File Share Witness vs Cloud Witness vs Disk Witness</span><span lang="nl">File Share Witness vs Cloud Witness vs Disk Witness</span></a></li><!--/LINK:cluster-witness-comparison-->
           <!--LINK:azure-local-migration-readiness--><li><a href="azure-local-migration-readiness.html"><span lang="en">Azure Local migration readiness checklist</span><span lang="nl">Azure Local migratie-readiness checklist</span></a></li><!--/LINK:azure-local-migration-readiness-->

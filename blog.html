@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.4.6 · Blog -->
+<!-- CloudLabs · v0.4.7 · Blog -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -41,7 +41,9 @@
     {"@type":"BlogPosting","headline":"From Health Check to Patch Night: The Method at Work","url":"https://cldlbs.com/blog/health-check-to-patch-night.html","datePublished":"2026-06-12","author":{"@type":"Person","name":"Hans Vredevoort"}},
     {"@type":"BlogPosting","headline":"How we Follow Up on the Hyper-V Cluster Health Check","url":"https://cldlbs.com/blog/reporting-remediation-progress.html","datePublished":"2026-06-18","author":{"@type":"Person","name":"Hans Vredevoort"}},
     {"@type":"BlogPosting","headline":"VMware to Hyper-V Cluster Migration: A 6-Step Pre-Migration Assessment","url":"https://cldlbs.com/blog/vmware-to-hyper-v-migration-assessment.html","datePublished":"2026-05-15","author":{"@type":"Person","name":"Hans Vredevoort"}},
-    {"@type":"BlogPosting","headline":"Aligning VMs With Their Storage: Building on Darryl van der Peijl's Script","url":"https://cldlbs.com/blog/aligning-vms-with-storage.html","datePublished":"2026-06-18","author":{"@type":"Person","name":"Hans Vredevoort"}}
+    {"@type":"BlogPosting","headline":"Aligning VMs With Their Storage: Building on Darryl van der Peijl's Script","url":"https://cldlbs.com/blog/aligning-vms-with-storage.html","datePublished":"2026-06-18","author":{"@type":"Person","name":"Hans Vredevoort"}},
+    {"@type":"BlogPosting","headline":"CSV Ownership Imbalance in Hyper-V Clusters: Causes and Fixes","url":"https://cldlbs.com/blog/csv-ownership-imbalance.html","datePublished":"2026-06-23","author":{"@type":"Person","name":"Hans Vredevoort"}}
+  
   
   
   
@@ -143,6 +145,20 @@
 
     <div class="blog-grid">
 
+      <a class="blog-card featured" href="blog/csv-ownership-imbalance.html">
+        <span class="tag">Storage</span>
+        <h2>
+          <span lang="en">CSV Ownership Imbalance in Hyper-V Clusters: Causes and Fixes</span>
+          <span lang="nl">CSV ownership onbalans in Hyper-V clusters: oorzaken en oplossingen</span>
+        </h2>
+        <p>
+          <span lang="en">One node owning every CSV is a silent performance killer. Why ownership drifts after patching or failover, the measured impact (4.5x worse P99 read latency), and how to rebalance safely.</span>
+          <span lang="nl">Eén node die alle CSV's bezit is een stille performance-killer. Waarom ownership scheef raakt na patching of failover, de gemeten impact (4.5x slechtere P99 read-latency), en hoe je veilig herbalanceert.</span>
+        </p>
+        <div class="meta">2026-06-23 · 12 min read</div>
+        <span class="read-more">Read article →</span>
+      </a>
+
       <a class="blog-card featured" href="blog/reporting-remediation-progress.html">
         <span class="tag">Cluster Health</span>
         <h2>
@@ -157,20 +173,6 @@
         <span class="read-more">Read article →</span>
       </a>
 
-      <a class="blog-card featured" href="blog/aligning-vms-with-storage.html">
-        <span class="tag">Storage</span>
-        <h2>
-          <span lang="en">Aligning VMs With Their Storage: Building on Darryl van der Peijl's Script</span>
-          <span lang="nl">VMs uitlijnen met hun storage: voortbouwen op het script van Darryl van der Peijl</span>
-        </h2>
-        <p>
-          <span lang="en">How CloudLabs took Darryl van der Peijl's classic align-VMs-with-storage script and grew it into a site-aware, CSV-ownership-first placement balancer for production Hyper-V clusters, with WhatIf safety and before/after visualisation.</span>
-          <span lang="nl">Hoe CloudLabs het klassieke align-VMs-with-storage script van Darryl van der Peijl uitbouwde tot een site-bewuste, CSV-ownership-first placement balancer voor productie-Hyper-V-clusters, met WhatIf-veiligheid en before/after-visualisatie.</span>
-        </p>
-        <div class="meta">2026-06-18 · 10 min read</div>
-        <span class="read-more">Read article →</span>
-      </a>
-
       <a class="blog-card featured" href="blog/top-10-hyper-v-cluster-issues.html">
         <span class="tag">Cluster Health</span>
         <h2>
@@ -182,6 +184,20 @@
           <span lang="nl">Na jaren van opdrachten komen tien bevindingen telkens terug. Live Migration-netwerken, witness-problemen, firmware-drift, CSV-onbalans — met PowerShell-diagnostiek en remediation per issue.</span>
         </p>
         <div class="meta">2026-05-15 · 14 min read</div>
+        <span class="read-more">Read article →</span>
+      </a>
+
+      <a class="blog-card" href="blog/aligning-vms-with-storage.html">
+        <span class="tag">Storage</span>
+        <h2>
+          <span lang="en">Aligning VMs With Their Storage: Building on Darryl van der Peijl's Script</span>
+          <span lang="nl">VMs uitlijnen met hun storage: voortbouwen op het script van Darryl van der Peijl</span>
+        </h2>
+        <p>
+          <span lang="en">How CloudLabs took Darryl van der Peijl's classic align-VMs-with-storage script and grew it into a site-aware, CSV-ownership-first placement balancer for production Hyper-V clusters, with WhatIf safety and before/after visualisation.</span>
+          <span lang="nl">Hoe CloudLabs het klassieke align-VMs-with-storage script van Darryl van der Peijl uitbouwde tot een site-bewuste, CSV-ownership-first placement balancer voor productie-Hyper-V-clusters, met WhatIf-veiligheid en before/after-visualisatie.</span>
+        </p>
+        <div class="meta">2026-06-18 · 10 min read</div>
         <span class="read-more">Read article →</span>
       </a>
 
@@ -283,22 +299,6 @@
         <span class="read-more">Read article →</span>
       </a>
 
-      <!-- DRAFT, not yet published. Remove these comments to publish.
-      <a class="blog-card" href="blog/csv-ownership-imbalance.html">
-        <span class="tag">Storage</span>
-        <h2>
-          <span lang="en">CSV Ownership Imbalance in Hyper-V Clusters: Causes and Fixes</span>
-          <span lang="nl">CSV ownership onbalans in Hyper-V clusters: oorzaken en oplossingen</span>
-        </h2>
-        <p>
-          <span lang="en">One node owning every CSV is a silent performance killer. Why ownership drifts after patching or failover, the measured impact (4.5x worse P99 read latency), and how to rebalance safely.</span>
-          <span lang="nl">Eén node die alle CSV's bezit is een stille performance-killer. Waarom ownership scheef raakt na patching of failover, de gemeten impact (4.5x slechtere P99 read-latency), en hoe je veilig herbalanceert.</span>
-        </p>
-        <div class="meta">2026-05-15 · 12 min read</div>
-        <span class="read-more">Read article →</span>
-      </a>
-      -->
-
       <a class="blog-card" href="blog/vmware-to-hyper-v-migration-assessment.html">
         <span class="tag">Migration</span>
         <h2>
@@ -374,7 +374,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="book.html" lang="en">Book</a><a href="book.html" lang="nl">Boek</a>
     <a href="privacy.html" lang="en">Privacy</a><a href="privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.4.6</span>
+    <span class="brand-version">v0.4.7</span>
   </footer>
 
 </div>
