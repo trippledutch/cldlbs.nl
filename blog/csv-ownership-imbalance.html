@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.5 · Blog · CSV Ownership Imbalance -->
+<!-- CloudLabs · v0.4.6 · Blog · CSV Ownership Imbalance -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -201,8 +201,9 @@
             <li><a href="#en-4">Diagnosing ownership and traffic</a></li>
             <li><a href="#en-5">Manual rebalance, the safe procedure</a></li>
             <li><a href="#en-6">Automating rebalance</a></li>
-            <li><a href="#en-7">CSV BlockCache and why it changes the math</a></li>
-            <li><a href="#en-8">Preventing recurrence</a></li>
+            <li><a href="#en-7">Three ways to rebalance: CSV ownership, VMM, and VM alignment</a></li>
+            <li><a href="#en-8">CSV BlockCache and why it changes the math</a></li>
+            <li><a href="#en-9">Preventing recurrence</a></li>
           </ol>
         </div>
 
@@ -239,6 +240,8 @@ State B — One node owns all 12 CSVs (post-patch, no rebalance)
   Storage cluster network: saturated during boot storm</code></pre>
 
         <p>In State B the cluster was technically healthy. Nothing alarmed. The only user-side symptom was complaints about login times, which the ops team was investigating under the working hypothesis of a network problem in the VDI farm. The fix took eight minutes.</p>
+
+        <p>A note on where these numbers come from: this was an S2D, all-NVMe cluster, and S2D is where imbalance hits hardest. On S2D the owner node also holds the CSV read cache and a large share of the storage-network routing, so piling every CSV onto one node concentrates metadata, cache locality and routing in the same place at once. On a classic SAN, every node keeps its own direct path to the LUN, so steady-state reads stay direct no matter who owns the CSV, and the read-latency penalty is usually a good deal smaller. What still hurts on SAN is the metadata load on the coordinator and anything that drops into redirected I/O, a node losing a storage path being the common trigger. The imbalance is worth correcting on both architectures, just expect it to surface in different places: steady-state read latency on S2D, metadata-heavy operations and path failures on SAN.</p>
 
         <h2 id="en-4">4. Diagnosing ownership and traffic</h2>
         <p>Three views give the full picture:</p>
@@ -320,7 +323,16 @@ $cluster.CsvBalancer = $cluster.CsvBalancer</code></pre>
         <p>Two cases where automatic balancing does not do what you want. CSV resources with explicit <code>PreferredOwners</code>, the balancer respects them. And heterogeneous node sizing, the balancer treats nodes as equals, so if one node has half the RAM/CPU of the others, even balancing distributes the load poorly.</p>
         <p>In both cases, a scheduled PowerShell rebalance after maintenance windows is the safer pattern. CloudLabs delivers this as part of the remediation report on every engagement where imbalance is a finding.</p>
 
-        <h2 id="en-7">7. CSV BlockCache and why it changes the math</h2>
+        <h2 id="en-7">7. Three ways to rebalance: CSV ownership, VMM, and VM alignment</h2>
+        <p>"Rebalancing" gets used for three different operations that solve different problems, and it is worth being precise about which one you mean.</p>
+        <ul>
+          <li><strong>Native CSV balancing</strong> (<code>CsvBalancer</code> and <code>Move-ClusterSharedVolume</code>, above) moves the <em>coordinator role</em> between nodes. It spreads metadata load and, on S2D, cache locality. It moves no VMs and has no opinion on where a VM runs relative to the CSV it lives on.</li>
+          <li><strong>VMM Dynamic Optimization</strong> moves <em>VMs</em> between hosts to balance CPU and memory. It is compute-aware and storage-blind: it will live-migrate a VM onto a node that does not own the VM's CSV, which on S2D quietly adds redirected reads and cross-node storage traffic. Good for compute hotspots, but it can work against storage locality at the same time.</li>
+          <li><strong>Aligning VMs with their storage</strong> moves <em>VMs</em> the other way: onto the node that owns the CSV their disks live on, so reads stay direct and the coordinator path is short. This is the axis neither CsvBalancer nor VMM touches. CloudLabs runs it from a site-aware placement script built on Darryl van der Peijl's original align-VMs-with-storage idea, with WhatIf safety and a before/after view.</li>
+        </ul>
+        <p>The three are complementary, not competing. A healthy pattern: let CsvBalancer keep coordinator ownership even, let VMM (if you run it) handle compute hotspots, and run an alignment pass after maintenance so VMs sit with their storage rather than wherever the last failover left them. The full write-up of our alignment approach is in <!--LINK:aligning-vms-with-storage--><a href="aligning-vms-with-storage.html">Aligning VMs With Their Storage</a><!--/LINK:aligning-vms-with-storage-->, and the original idea it builds on is Darryl van der Peijl's <a href="https://www.darrylvanderpeijl.com/align-vms-with-storage/" rel="noopener">align VMs with storage</a> script.</p>
+
+        <h2 id="en-8">8. CSV BlockCache and why it changes the math</h2>
         <p>CSV BlockCache is a read-side memory cache on each node. When enabled, it dramatically lowers the cost of redirected reads because most are served from local RAM. It does not solve imbalance, but it softens the consequences.</p>
 
 <pre><code>(Get-Cluster).BlockCacheSize   # value in MB, 0 = off
@@ -337,7 +349,7 @@ Get-ClusterSharedVolume | ForEach-Object {
         <p>Size BlockCache from your steady-state RAM headroom, not from the N-1 evacuated state. Verify that VM density still fits comfortably under failover conditions. We typically recommend 1 to 4 GB per node on Hyper-V clusters, and 4 to 16 GB on storage-heavy workloads.</p>
         <p>Full context on BlockCache trade-offs is in <!--LINK:top-10-hyper-v-cluster-issues--><a href="top-10-hyper-v-cluster-issues.html">Hyper-V Cluster Health Check: Top 10 Issues We Find in 2026</a><!--/LINK:top-10-hyper-v-cluster-issues-->, issue 7.</p>
 
-        <h2 id="en-8">8. Preventing recurrence</h2>
+        <h2 id="en-9">9. Preventing recurrence</h2>
         <p>The CloudLabs remediation pattern for CSV ownership imbalance has four parts.</p>
         <ol>
           <li>Remove explicit <code>PreferredOwners</code> on every CSV unless there is a documented reason. Most that we find are debug session residue.</li>
@@ -387,8 +399,9 @@ Get-ClusterSharedVolume | ForEach-Object {
             <li><a href="#nl-4">Ownership en traffic diagnosticeren</a></li>
             <li><a href="#nl-5">Handmatige rebalance, de veilige procedure</a></li>
             <li><a href="#nl-6">Rebalance automatiseren</a></li>
-            <li><a href="#nl-7">CSV BlockCache en waarom dat de wiskunde verandert</a></li>
-            <li><a href="#nl-8">Herhaling voorkomen</a></li>
+            <li><a href="#nl-7">Drie manieren om te rebalancen: CSV-ownership, VMM en VM-uitlijning</a></li>
+            <li><a href="#nl-8">CSV BlockCache en waarom dat de wiskunde verandert</a></li>
+            <li><a href="#nl-9">Herhaling voorkomen</a></li>
           </ol>
         </div>
 
@@ -425,6 +438,8 @@ State B — Eén node bezit alle 12 CSV's (post-patch, geen rebalance)
   Storage-clusternetwerk:    verzadigd tijdens boot storm</code></pre>
 
         <p>Het cluster was in State B technisch gezond. Niets alarmeerde. Het enige symptoom aan gebruikerszijde was klachten over inlogtijden, die het ops-team aan het onderzoeken was onder de werkhypothese dat er een netwerkprobleem in de VDI-farm zat. De fix kostte acht minuten.</p>
+
+        <p>Een kanttekening bij waar deze cijfers vandaan komen: dit was een S2D-cluster, all-NVMe, en S2D is waar onbalans het hardst aankomt. Op S2D houdt de eigenaar-node ook de CSV read-cache en een groot deel van de storage-netwerk-routing vast, dus alle CSV's op één node stapelen concentreert metadata, cache-localiteit en routing tegelijk op dezelfde plek. Op een klassieke SAN houdt elke node zijn eigen directe pad naar de LUN, dus steady-state reads blijven direct ongeacht wie de CSV bezit, en de read-latency-straf is doorgaans een stuk kleiner. Wat op SAN wél pijn doet is de metadata-load op de coordinator en alles wat in redirected I/O belandt, met een node die een storage-pad verliest als veelvoorkomende trigger. De onbalans is op beide architecturen het corrigeren waard, verwacht alleen dat hij op verschillende plekken opduikt: steady-state read-latency op S2D, metadata-zware operaties en pad-failures op SAN.</p>
 
         <h2 id="nl-4">4. Ownership en traffic diagnosticeren</h2>
         <p>Drie views geven het volledige beeld:</p>
@@ -506,7 +521,16 @@ $cluster.CsvBalancer = $cluster.CsvBalancer</code></pre>
         <p>Twee gevallen waarin automatische balancing niet doet wat je wilt. CSV-resources met expliciete <code>PreferredOwners</code>, de balancer respecteert die. En heterogene node-sizing, de balancer behandelt nodes als gelijken, dus als één node de helft van RAM/CPU van de anderen heeft, verdeelt gelijk balanceren de load slecht.</p>
         <p>Voor beide gevallen is een geplande PowerShell-rebalance na onderhoudsvensters het veiligere patroon. CloudLabs levert dit als onderdeel van het remediation-rapport bij elke opdracht waar onbalans een bevinding is.</p>
 
-        <h2 id="nl-7">7. CSV BlockCache en waarom dat de wiskunde verandert</h2>
+        <h2 id="nl-7">7. Drie manieren om te rebalancen: CSV-ownership, VMM en VM-uitlijning</h2>
+        <p>'Rebalancing' wordt gebruikt voor drie verschillende operaties die elk een ander probleem oplossen, en het loont om precies te zijn over welke je bedoelt.</p>
+        <ul>
+          <li><strong>Native CSV-balancing</strong> (<code>CsvBalancer</code> en <code>Move-ClusterSharedVolume</code>, hierboven) verplaatst de <em>coordinator-rol</em> tussen nodes. Het spreidt metadata-load en, op S2D, cache-localiteit. Het verplaatst geen VM's en heeft geen mening over waar een VM draait ten opzichte van de CSV waarop hij staat.</li>
+          <li><strong>VMM Dynamic Optimization</strong> verplaatst <em>VM's</em> tussen hosts om CPU en geheugen te balanceren. Het is compute-bewust en storage-blind: het migreert een VM met Live Migration naar een node die de CSV van die VM niet bezit, wat op S2D stilletjes redirected reads en cross-node storage-verkeer toevoegt. Goed voor compute-hotspots, maar het kan tegelijk tegen storage-localiteit in werken.</li>
+          <li><strong>VM's uitlijnen met hun storage</strong> verplaatst <em>VM's</em> de andere kant op: naar de node die de CSV bezit waarop hun schijven staan, zodat reads direct blijven en het coordinator-pad kort is. Dit is de as die noch CsvBalancer noch VMM raakt. CloudLabs draait dit vanuit een site-bewust placement-script, gebouwd op het oorspronkelijke align-VMs-with-storage idee van Darryl van der Peijl, met WhatIf-veiligheid en een before/after-weergave.</li>
+        </ul>
+        <p>De drie zijn complementair, niet concurrerend. Een gezond patroon: laat CsvBalancer de coordinator-ownership gelijk houden, laat VMM (als je het draait) compute-hotspots afhandelen, en draai na onderhoud een uitlijn-ronde zodat VM's bij hun storage staan in plaats van waar de laatste failover ze achterliet. De volledige uitwerking van onze uitlijn-aanpak staat in <!--LINK:aligning-vms-with-storage--><a href="aligning-vms-with-storage.html">VMs uitlijnen met hun storage</a><!--/LINK:aligning-vms-with-storage-->, en het oorspronkelijke idee waarop het voortbouwt is het <a href="https://www.darrylvanderpeijl.com/align-vms-with-storage/" rel="noopener">align VMs with storage</a> script van Darryl van der Peijl.</p>
+
+        <h2 id="nl-8">8. CSV BlockCache en waarom dat de wiskunde verandert</h2>
         <p>CSV BlockCache is een read-side memory-cache op iedere node. Aangezet, verlaagt het de kosten van redirected reads dramatisch, omdat de meeste vanuit lokaal RAM worden geserveerd. Het lost onbalans niet op, maar het verzacht wel de gevolgen ervan.</p>
 
 <pre><code>(Get-Cluster).BlockCacheSize   # waarde in MB, 0 = uit
@@ -523,7 +547,7 @@ Get-ClusterSharedVolume | ForEach-Object {
         <p>Dimensioneer BlockCache vanuit je steady-state RAM-headroom, niet vanuit de N-1 geëvacueerde toestand. Verifieer dat VM-dichtheid nog comfortabel past onder failover-condities. Wij adviseren typisch 1 tot 4 GB per node op Hyper-V clusters en 4 tot 16 GB op storage-zware workloads.</p>
         <p>Volledige context over BlockCache trade-offs zit in <!--LINK:top-10-hyper-v-cluster-issues--><a href="top-10-hyper-v-cluster-issues.html">Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026</a><!--/LINK:top-10-hyper-v-cluster-issues-->, issue 7.</p>
 
-        <h2 id="nl-8">8. Herhaling voorkomen</h2>
+        <h2 id="nl-9">9. Herhaling voorkomen</h2>
         <p>Het CloudLabs remediation-patroon voor CSV ownership onbalans heeft vier delen.</p>
         <ol>
           <li>Verwijder expliciete <code>PreferredOwners</code> op elke CSV, tenzij er een gedocumenteerde reden is. De meeste die wij vinden zijn residu van debugsessies.</li>
@@ -559,6 +583,7 @@ Get-ClusterSharedVolume | ForEach-Object {
       <div class="related">
         <h3><span lang="en">Related articles</span><span lang="nl">Gerelateerde artikelen</span></h3>
         <ul>
+          <!--LINK:aligning-vms-with-storage--><li><a href="aligning-vms-with-storage.html"><span lang="en">Aligning VMs With Their Storage: Building on Darryl van der Peijl's Script</span><span lang="nl">VMs uitlijnen met hun storage: voortbouwen op het script van Darryl van der Peijl</span></a></li><!--/LINK:aligning-vms-with-storage-->
           <!--LINK:top-10-hyper-v-cluster-issues--><li><a href="top-10-hyper-v-cluster-issues.html"><span lang="en">Hyper-V Cluster Health Check: Top 10 Issues We Find in 2026</span><span lang="nl">Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026</span></a></li><!--/LINK:top-10-hyper-v-cluster-issues-->
           <!--LINK:live-migration-wrong-network--><li><a href="live-migration-wrong-network.html"><span lang="en">Live Migration on the wrong network</span><span lang="nl">Live Migration over het verkeerde netwerk</span></a></li><!--/LINK:live-migration-wrong-network-->
           <!--LINK:cluster-witness-comparison--><li><a href="cluster-witness-comparison.html"><span lang="en">File Share Witness vs Cloud Witness vs Disk Witness</span><span lang="nl">File Share Witness vs Cloud Witness vs Disk Witness</span></a></li><!--/LINK:cluster-witness-comparison-->
@@ -573,7 +598,7 @@ Get-ClusterSharedVolume | ForEach-Object {
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.5</span>
+    <span class="brand-version">v0.4.6</span>
   </footer>
 
 </div>
