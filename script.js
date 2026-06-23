@@ -1,4 +1,4 @@
-/* CloudLabs · shared script · v0.4.0 */
+/* CloudLabs · shared script · v0.4.7 */
 (function(){
   /* Mobile nav overflow fade */
   var navEl  = document.querySelector('nav.tabs');
@@ -198,6 +198,29 @@
     });
     wrap.appendChild(btn);
   });
+
+  /* Build the sticky TOC sidebar from the in-document TOC when a blog does
+     not ship one of its own. On desktop the CSS hides the inline TOC and shows
+     this sidebar; on mobile the inline TOC shows and this stays hidden. */
+  (function(){
+    var article = document.querySelector('.article');
+    if(!article || article.querySelector('.article-toc-sticky')) return;
+    var tocs = article.querySelectorAll('.toc');
+    if(!tocs.length) return;
+    var aside = document.createElement('aside');
+    aside.className = 'article-toc-sticky';
+    aside.setAttribute('aria-label', 'On this page');
+    aside.innerHTML = '<div class="toc-title"><span lang="en">In this article</span><span lang="nl">In dit artikel</span></div>';
+    tocs.forEach(function(toc){
+      var ol = toc.querySelector('ol');
+      if(!ol) return;
+      var clone = ol.cloneNode(true);
+      var langEl = toc.closest('[lang]');
+      if(langEl) clone.setAttribute('lang', langEl.getAttribute('lang'));
+      aside.appendChild(clone);
+    });
+    article.insertBefore(aside, article.firstChild);
+  })();
 
   /* Scrollspy on sticky TOC sidebar (blog articles, desktop) */
   var stickyToc = document.querySelector('.article-toc-sticky');
