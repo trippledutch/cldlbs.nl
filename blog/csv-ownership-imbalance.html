@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0a1024">
 <link rel="icon" href="../favicon.png" type="image/png">
 <title>CSV Ownership Imbalance in Hyper-V Clusters: Causes and Fixes · CloudLabs</title>
-<meta name="description" content="Why Cluster Shared Volume ownership drifts after patching or failover, the measured performance impact on Hyper-V workloads, and how to keep CSVs balanced — by CloudLabs.">
+<meta name="description" content="Why Cluster Shared Volume ownership drifts after patching or failover, the measured performance impact on Hyper-V workloads, and how to keep CSVs balanced.">
 <link rel="canonical" href="https://cldlbs.com/blog/csv-ownership-imbalance.html">
 <link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/csv-ownership-imbalance.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/csv-ownership-imbalance.html">
@@ -183,9 +183,10 @@
         <span lang="nl">CSV ownership onbalans</span>
       </nav>
 
+      <h1><span lang="en">CSV Ownership Imbalance in Hyper-V Clusters: Causes and Fixes</span><span lang="nl">CSV ownership onbalans in Hyper-V clusters: oorzaken en oplossingen</span></h1>
+
       <!-- ============= ENGLISH ============= -->
       <div lang="en">
-        <h1>CSV Ownership Imbalance in Hyper-V Clusters: Causes and Fixes</h1>
         <div class="meta">By Hans Vredevoort · 23 June 2026 · 12 minute read · Storage</div>
 
         <p class="lede">After every patch round, every Live Migration storm, every planned failover, Cluster Shared Volume ownership drifts apart. One node ends up owning all the CSVs, becomes coordinator for every metadata operation, and quietly caps read performance for the entire cluster. CSV ownership imbalance is a top three finding in CloudLabs Hyper-V Cluster Health Checks, and also one of the simplest to fix permanently.</p>
@@ -383,7 +384,6 @@ Get-ClusterSharedVolume | ForEach-Object {
 
       <!-- ============= DUTCH ============= -->
       <div lang="nl">
-        <h1>CSV ownership onbalans in Hyper-V clusters: oorzaken en oplossingen</h1>
         <div class="meta">Door Hans Vredevoort · 23 juni 2026 · 12 minuten leestijd · Storage</div>
 
         <p class="lede">Na elke patch-ronde, na elke Live Migration-storm, na elke geplande failover drijft Cluster Shared Volume ownership uit elkaar. Eén node bezit uiteindelijk alle CSV's, wordt coordinator voor elke metadata-operatie, en begrenst stilletjes de read-performance van het hele cluster. CSV ownership onbalans is een van de top drie bevindingen in CloudLabs Hyper-V Cluster Health Checks, en ook een van de eenvoudigste om permanent op te lossen.</p>

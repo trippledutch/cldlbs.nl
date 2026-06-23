@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0a1024">
 <link rel="icon" href="../favicon.png" type="image/png">
 <title>File Share Witness vs Cloud Witness vs Disk Witness: Which Type Fits Your Cluster? · CloudLabs</title>
-<meta name="description" content="Failover Cluster witness types compared in production terms: File Share, Cloud, and Disk Witness — failure modes, topology fit, and the five configuration mistakes that quietly remove resilience. By CloudLabs.">
+<meta name="description" content="File Share vs Cloud vs Disk Witness compared in production terms: failure modes, topology fit, and the five config mistakes that quietly remove resilience.">
 <link rel="canonical" href="https://cldlbs.com/blog/cluster-witness-comparison.html">
 <link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/cluster-witness-comparison.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/cluster-witness-comparison.html">
@@ -186,9 +186,10 @@
         <span lang="nl">Cluster witness vergelijking</span>
       </nav>
 
+      <h1><span lang="en">File Share Witness vs Cloud Witness vs Disk Witness: Which Type Fits Your Cluster?</span><span lang="nl">File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster?</span></h1>
+
       <!-- ============= ENGLISH ============= -->
       <div lang="en">
-        <h1>File Share Witness vs Cloud Witness vs Disk Witness: Which Type Fits Your Cluster?</h1>
         <div class="meta">By Hans Vredevoort · 24 May 2026 · 14 minute read · Quorum</div>
 
         <p class="lede">Quorum is the invisible thing keeping a Windows Server Failover Cluster alive when nodes go away. Witness configuration is also one of the top three areas where CloudLabs Hyper-V Cluster Health Checks find quiet resilience gaps. The witness exists, the cluster reports healthy, validation passes, and one fault domain still takes the cluster down because the witness sits exactly in the wrong place.</p>
@@ -407,7 +408,6 @@ Set-ClusterQuorum -DiskWitness 'Cluster Disk Witness'</code></pre>
 
       <!-- ============= DUTCH ============= -->
       <div lang="nl">
-        <h1>File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster?</h1>
         <div class="meta">Door Hans Vredevoort · 24 mei 2026 · 14 minuten leestijd · Quorum</div>
 
         <p class="lede">Quorum is het onzichtbare stuk dat een Windows Server Failover Cluster overeind houdt wanneer nodes verdwijnen. Witness-configuratie is ook een van de top drie gebieden waar CloudLabs Hyper-V Cluster Health Checks stille resilience-gaten vinden. De witness bestaat, het cluster rapporteert gezond, validatie komt door, en één fault domain legt het cluster alsnog plat omdat de witness precies op de verkeerde plek staat.</p>

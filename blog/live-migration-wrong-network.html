@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0a1024">
 <link rel="icon" href="../favicon.png" type="image/png">
 <title>Live Migration on the Wrong Network: The Silent Hyper-V Pitfall · CloudLabs</title>
-<meta name="description" content="Why Hyper-V Live Migration quietly uses the wrong network, the three configuration layers involved, and the PowerShell to verify the actual path and lock it down — by CloudLabs.">
+<meta name="description" content="Why Hyper-V Live Migration quietly uses the wrong network, the three configuration layers involved, and the PowerShell to verify the path and lock it down.">
 <link rel="canonical" href="https://cldlbs.com/blog/live-migration-wrong-network.html">
 <link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/live-migration-wrong-network.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/live-migration-wrong-network.html">
@@ -183,9 +183,10 @@
         <span lang="nl">Live Migration over het verkeerde netwerk</span>
       </nav>
 
+      <h1><span lang="en">Live Migration on the Wrong Network: The Silent Hyper-V Pitfall</span><span lang="nl">Live Migration over het verkeerde netwerk: de stille Hyper-V-valkuil</span></h1>
+
       <!-- ============= ENGLISH ============= -->
       <div lang="en">
-        <h1>Live Migration on the Wrong Network: The Silent Hyper-V Pitfall</h1>
         <div class="meta">By Hans Vredevoort · 17 May 2026 · 12 minute read · Networking</div>
 
         <p class="lede">Live Migration quietly using the wrong network is the single most common finding in CloudLabs Hyper-V Cluster Health Checks. It is the kind of misconfiguration that does not fail, it just runs slow, competes with cluster heartbeats during patch windows, and produces incidents that look like switch problems when they are really mis-routed VM memory transfers.</p>
@@ -383,7 +384,6 @@ Get-SmbMultichannelConnection         # Session detail</code></pre>
 
       <!-- ============= DUTCH ============= -->
       <div lang="nl">
-        <h1>Live Migration over het verkeerde netwerk: de stille Hyper-V-valkuil</h1>
         <div class="meta">Door Hans Vredevoort · 17 mei 2026 · 12 minuten leestijd · Networking</div>
 
         <p class="lede">Live Migration die stilletjes het verkeerde netwerk gebruikt is de meest voorkomende bevinding in CloudLabs Hyper-V Cluster Health Checks. Het is precies het type misconfiguratie dat niet faalt, het draait gewoon traag, concurreert met cluster-heartbeats tijdens patch-vensters, en veroorzaakt incidenten die er als switch-problemen uitzien terwijl het in werkelijkheid verkeerd gerouteerde VM-memory transfers zijn.</p>

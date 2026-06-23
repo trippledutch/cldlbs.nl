@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0a1024">
 <link rel="icon" href="../favicon.png" type="image/png">
 <title>Aligning VMs With Their Storage: Building on Darryl van der Peijl's Script · CloudLabs</title>
-<meta name="description" content="How CloudLabs took Darryl van der Peijl's classic align-VMs-with-storage script and grew it into a site-aware, CSV-ownership-first placement balancer for production Hyper-V clusters — with WhatIf safety and before/after visualisation.">
+<meta name="description" content="How CloudLabs grew Darryl van der Peijl's align-VMs-with-storage script into a site-aware, CSV-ownership-first VM placement balancer for Hyper-V clusters.">
 <link rel="canonical" href="https://cldlbs.com/blog/aligning-vms-with-storage.html">
 <link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/aligning-vms-with-storage.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/aligning-vms-with-storage.html">
@@ -183,9 +183,10 @@
         <span lang="nl">VMs uitlijnen met hun storage</span>
       </nav>
 
+      <h1><span lang="en">Aligning VMs With Their Storage: Building on Darryl van der Peijl's Script</span><span lang="nl">VMs uitlijnen met hun storage: voortbouwen op het script van Darryl van der Peijl</span></h1>
+
       <!-- ============= ENGLISH ============= -->
       <div lang="en">
-        <h1>Aligning VMs With Their Storage: Building on Darryl van der Peijl's Script</h1>
         <div class="meta">By Hans Vredevoort · 18 June 2026 · 10 minute read · Storage</div>
 
         <p class="lede">Years ago a former colleague of mine, Darryl van der Peijl, wrote a small, sharp PowerShell script that did one thing well: it found every VM that was running on the wrong node relative to its storage and Live Migrated it to the node that owned its Cluster Shared Volume. The idea is published on his site under <a href="https://www.darrylvanderpeijl.com/align-vms-with-storage/" rel="noopener">align VMs with storage</a>, and it has quietly saved a lot of clusters from redirected I/O over the years. Darryl has since founded <strong>Splitbrain</strong>, but the script lives on in countless toolboxes, including mine.</p>
@@ -351,7 +352,6 @@ RECOMMENDATIONS
 
       <!-- ============= NEDERLANDS ============= -->
       <div lang="nl">
-        <h1>VMs uitlijnen met hun storage: voortbouwen op het script van Darryl van der Peijl</h1>
         <div class="meta">Door Hans Vredevoort · 18 juni 2026 · 10 minuten leestijd · Storage</div>
 
         <p class="lede">Jaren geleden schreef een oud-collega van mij, Darryl van der Peijl, een klein, scherp PowerShell-script dat één ding goed deed: het vond elke VM die op de verkeerde node draaide ten opzichte van zijn storage en migreerde die met Live Migration naar de node die zijn Cluster Shared Volume bezat. Het idee staat op zijn site onder <a href="https://www.darrylvanderpeijl.com/align-vms-with-storage/" rel="noopener">align VMs with storage</a>, en het heeft door de jaren heen stilletjes heel wat clusters voor redirected I/O behoed. Darryl heeft sindsdien <strong>Splitbrain</strong> opgericht, maar het script leeft voort in talloze toolboxen, ook de mijne.</p>

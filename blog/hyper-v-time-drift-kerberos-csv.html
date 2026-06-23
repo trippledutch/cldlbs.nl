@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0a1024">
 <link rel="icon" href="../favicon.png" type="image/png">
 <title>Time Drift in Hyper-V Clusters: The Silent Killer of Kerberos and CSV · CloudLabs</title>
-<meta name="description" content="Why clock skew between Hyper-V cluster nodes breaks Kerberos, cluster heartbeats and Live Migration — with the w32time hierarchy, PDC emulator config, drift detection and remediation playbook from CloudLabs.">
+<meta name="description" content="Why clock skew between Hyper-V nodes breaks Kerberos, cluster heartbeats and Live Migration, plus the w32time hierarchy and a drift remediation playbook.">
 <link rel="canonical" href="https://cldlbs.com/blog/hyper-v-time-drift-kerberos-csv.html">
 <link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/hyper-v-time-drift-kerberos-csv.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/hyper-v-time-drift-kerberos-csv.html">
@@ -183,9 +183,10 @@
         <span lang="nl">Time drift in Hyper-V clusters</span>
       </nav>
 
+      <h1><span lang="en">Time Drift in Hyper-V Clusters: The Silent Killer of Kerberos and CSV</span><span lang="nl">Time drift in Hyper-V clusters: de stille killer van Kerberos en CSV</span></h1>
+
       <!-- ============= ENGLISH ============= -->
       <div lang="en">
-        <h1>Time Drift in Hyper-V Clusters: The Silent Killer of Kerberos and CSV</h1>
         <div class="meta">By Hans Vredevoort · 28 May 2026 · 13 minute read · Time Service</div>
 
         <p class="lede">A Hyper-V cluster with clock skew between nodes is a time bomb. Not figuratively, literally. When clocks on cluster nodes drift more than five minutes apart, Kerberos breaks. From fifty seconds, cluster heartbeats lose their synchronisation. And the moment a Hyper-V host loses its time reference, domain-joined VMs running on that host can no longer maintain authentication to AD.</p>
@@ -421,7 +422,6 @@ foreach ($peer in $nodes | Where-Object {$_ -ne $baseline}) {
 
       <!-- ============= DUTCH ============= -->
       <div lang="nl">
-        <h1>Time drift in Hyper-V clusters: de stille killer van Kerberos en CSV</h1>
         <div class="meta">Door Hans Vredevoort · 28 mei 2026 · 13 minuten leestijd · Time Service</div>
 
         <p class="lede">Een Hyper-V cluster met klok-skew tussen nodes is een tijdbom. Niet figuurlijk, maar letterlijk. Wanneer de klokken op cluster-nodes meer dan vijf minuten uit elkaar lopen, valt Kerberos om. Vanaf vijftig seconden raken cluster-heartbeats hun synchronisatie kwijt. En zodra een Hyper-V host zijn tijd-referentie verliest, kunnen domain-joined VM's die op die host draaien hun authenticatie naar AD niet meer onderhouden.</p>

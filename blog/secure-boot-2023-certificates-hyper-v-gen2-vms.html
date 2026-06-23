@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#0a1024">
 <link rel="icon" href="../favicon.png" type="image/png">
 <title>Secure Boot certificates and Hyper-V: why Gen 2 VMs are not updating in 2026 · CloudLabs</title>
-<meta name="description" content="The 2011 Secure Boot certificates begin expiring in June 2026. On Windows Server Gen 2 VMs the 2023 update is not automatic and often fails silently. How to diagnose the KEK 1795 trap and remediate across a cluster.">
+<meta name="description" content="The 2011 Secure Boot certificates expire from June 2026. On Gen 2 VMs the 2023 update often fails silently: diagnose the KEK 1795 trap and remediate.">
 <link rel="canonical" href="https://cldlbs.com/blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html">
 <link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html">
@@ -224,9 +224,10 @@
         </ol>
       </aside>
 
+      <h1><span lang="en">Secure Boot certificates and Hyper-V: why your Gen 2 VMs are not updating, and what breaks in 2026</span><span lang="nl">Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM's niet bijwerken, en wat er in 2026 stukgaat</span></h1>
+
       <!-- ============= ENGLISH ============= -->
       <div lang="en">
-        <h1>Secure Boot certificates and Hyper-V: why your Gen 2 VMs are not updating, and what breaks in 2026</h1>
         <div class="meta">By Hans Vredevoort · 5 June 2026 · 13 minute read · Failover Clustering</div>
 
         <p class="lede">A question keeps surfacing on Reddit and in the field: does a Hyper-V host need updated firmware and hardware Secure Boot enabled before its Generation 2 VMs can receive the 2023 Secure Boot certificates? The answer is no. The host hardware has nothing to do with it. But the question is worth taking seriously, because the assumption behind it is hiding a problem that most Windows Server estates have not yet noticed, and that has a clear deadline attached.</p>
@@ -389,7 +390,6 @@ Start-VM -Name "VM01"</code></pre>
 
       <!-- ============= DUTCH ============= -->
       <div lang="nl">
-        <h1>Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM's niet bijwerken, en wat er in 2026 stukgaat</h1>
         <div class="meta">Door Hans Vredevoort · 5 juni 2026 · 13 minuten leestijd · Failover Clustering</div>
 
         <p class="lede">Een vraag blijft terugkomen op Reddit en in de praktijk: heeft een Hyper-V-host bijgewerkte firmware en hardware Secure Boot nodig voordat de Generation 2-VM's de Secure Boot-certificaten van 2023 kunnen ontvangen? Het antwoord is nee. De hosthardware heeft hier niets mee te maken. Toch is het de moeite waard de vraag serieus te nemen, want de aanname erachter verbergt een probleem dat de meeste Windows Server-omgevingen nog niet hebben opgemerkt, met een harde deadline eraan vast.</p>
