@@ -1,4 +1,4 @@
-/* CloudLabs · shared stylesheet · v0.4.0 */
+/* CloudLabs · shared stylesheet · v0.4.7 */
 :root{
   --bg:#0a1024;--bg-2:#0f1832;--panel:#121d3a;--panel-2:#162345;
   --line:rgba(120,160,255,.14);--line-strong:rgba(120,160,255,.28);
@@ -90,7 +90,7 @@ header{
 .brand .word b{font-family:var(--body);font-weight:700;letter-spacing:.01em;font-size:30px}
 .brand .word b .wm-cloud{color:var(--ink)}
 .brand .word b .wm-labs{color:var(--cyan)}
-.brand .word small{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;color:var(--ink-faint);margin-top:6px;text-transform:uppercase}
+.brand .word small{font-family:var(--body);font-size:10.5px;color:var(--ink-dim);margin-top:7px;text-transform:none;text-align:justify;text-align-last:justify;line-height:1;white-space:normal}
 .spacer{flex:1}
 .top-right{display:flex;align-items:center;gap:10px}
 .status-dot{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px;color:var(--ink-dim);letter-spacing:.1em;text-transform:uppercase}
