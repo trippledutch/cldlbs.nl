@@ -208,4 +208,13 @@
     <changefreq>yearly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html"/>
+    <lastmod>2026-06-25</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

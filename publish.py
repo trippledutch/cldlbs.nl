@@ -72,6 +72,8 @@ BLOGS = {
         'How we Follow Up on the Hyper-V Cluster Health Check',
     'aligning-vms-with-storage':
         "Aligning VMs With Their Storage: Building on Darryl van der Peijl's Script",
+    'azure-local-vs-classic-hyper-v-cluster':
+        "What's it gonna be: Classic Hyper-V or Azure Local?",
 }
 
 ROOT = Path(__file__).parent
