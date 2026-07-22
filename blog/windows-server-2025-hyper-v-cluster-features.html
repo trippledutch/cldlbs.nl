@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.5 · Blog · Windows Server 2025 Hyper-V -->
+<!-- CloudLabs · v0.4.9 · Blog · Windows Server 2025 Hyper-V -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -17,7 +17,7 @@
 <meta property="og:title" content="Windows Server 2025 Hyper-V: What It Really Adds for Cluster Operators">
 <meta property="og:description" content="The four Windows Server 2025 Hyper-V features that materially matter for cluster operators — by CloudLabs.">
 <meta property="og:image" content="https://cldlbs.com/images/cluster.jpg">
-<meta property="article:published_time" content="2026-05-15">
+<meta property="article:published_time" content="2026-07-22">
 <meta property="article:author" content="Hans Vredevoort">
 <meta property="article:section" content="Windows Server 2025">
 <meta property="article:tag" content="Windows Server 2025">
@@ -32,8 +32,8 @@
   "headline":"Windows Server 2025 Hyper-V: What It Really Adds for Cluster Operators",
   "description":"The four Windows Server 2025 Hyper-V features that materially matter for cluster operators in 2026: Dynamic CPU compatibility, GPU-P, vTPM 2.0 default, hot-patching — plus the 2012 R2/2016 guest pitfall and upgrade strategy.",
   "image":"https://cldlbs.com/images/cluster.jpg",
-  "datePublished":"2026-05-15",
-  "dateModified":"2026-05-15",
+  "datePublished":"2026-07-22",
+  "dateModified":"2026-07-22",
   "author":{"@type":"Person","name":"Hans Vredevoort","url":"https://cldlbs.com/about.html","jobTitle":"Hyper-V & Cluster Consultant","worksFor":{"@type":"Organization","name":"CloudLabs"}},
   "publisher":{"@type":"Organization","name":"CloudLabs","url":"https://cldlbs.com/","logo":{"@type":"ImageObject","url":"https://cldlbs.com/favicon.png"}},
   "mainEntityOfPage":{"@type":"WebPage","@id":"https://cldlbs.com/blog/windows-server-2025-hyper-v-cluster-features.html"},
@@ -188,7 +188,7 @@
 
       <!-- ============= ENGLISH ============= -->
       <div lang="en">
-        <div class="meta">By Hans Vredevoort · 15 May 2026 · 13 minute read · Windows Server 2025</div>
+        <div class="meta">By Hans Vredevoort · 22 July 2026 · 13 minute read · Windows Server 2025</div>
 
         <p class="lede">Windows Server 2025 has been generally available since November 2024, and in 2026 we see at CloudLabs that customers are seriously picking up upgrade planning. Not because Windows Server 2022 disappears tomorrow, but because 2025 brings a number of Hyper-V improvements that genuinely matter for cluster operators working with heterogeneous hardware, mixed-generation CPUs, and GPU workloads.</p>
         <p class="lede">This article looks at the Hyper-V additions that actually matter for failover clusters, not the marketing list. What improves your operations? What is a good reason to bring the upgrade forward? And which pitfalls open up for existing clusters during the transition?</p>
@@ -377,7 +377,7 @@ Get-VM | Select-Object Name, Generation,
 
       <!-- ============= DUTCH ============= -->
       <div lang="nl">
-        <div class="meta">Door Hans Vredevoort · 15 mei 2026 · 13 minuten leestijd · Windows Server 2025</div>
+        <div class="meta">Door Hans Vredevoort · 22 juli 2026 · 13 minuten leestijd · Windows Server 2025</div>
 
         <p class="lede">Windows Server 2025 is sinds november 2024 algemeen beschikbaar, en in 2026 zien wij bij CloudLabs steeds vaker dat klanten upgrade-planning serieus oppakken. Niet omdat Windows Server 2022 morgen ophoudt, maar omdat 2025 een aantal Hyper-V verbeteringen brengt die het verschil maken voor cluster-operators die met heterogene hardware, mixed-generation CPU's, en GPU-workloads werken.</p>
         <p class="lede">Dit artikel kijkt naar de Hyper-V toevoegingen die er werkelijk toe doen voor failover clusters, niet de marketing-lijst. Wat verbetert je operatie? Wat is een goede reden om de upgrade voor te trekken? En welke valkuilen ontstaan er voor bestaande clusters bij de overstap?</p>
@@ -484,10 +484,10 @@ Get-VM | Select-Object Name, Generation,
         <p>Bepaalde patches worden toegepast zonder reboot. De Cluster Service blijft draaien, VM's blijven draaien, en de patch is direct actief. Voor cumulative updates die hot-patch geschikt zijn, betekent dit dat een Cluster Aware Updating-run die voorheen vier uur kostte (een drain per node, een reboot per node, een rebalance achteraf) terugkomt op een fractie daarvan.</p>
 
         <p><strong>Wat het niet doet:</strong></p>
-        <p>Niet alle patches zijn hot-patchable. Kernel-updates, sommige driver-updates en firmware-niveau patches vereisen nog steeds een reboot. In de praktijk zien wij dat ongeveer 60 tot 70% van de maandelijkse CU-content hot-patchable is, met de rest in kwartaalse reboot-windows.</p>
+        <p>Niet alle patches zijn hot-patchable. Kernel-updates, sommige driver-updates en firmware-niveau patches vereisen nog steeds een reboot. In de praktijk zien wij dat ongeveer 60 tot 70% van de maandelijkse CU-content hot-patchable is, met de rest via een Server reboot per kwartaal.</p>
 
         <p><strong>Cluster-impact:</strong></p>
-        <p>Voor klanten die CAU draaien, blijft de runbook-structuur hetzelfde. Hot-patchable updates lopen sneller door, niet-hot-patchable updates triggeren nog steeds een traditionele drain-reboot-rejoin cyclus. Belangrijkste verschil: maandelijkse patch-vensters worden korter en minder disruptief, met grotere kwartaalse reboot-vensters voor de rest.</p>
+        <p>Voor klanten die CAU draaien, blijft de runbook-structuur hetzelfde. Hot-patchable updates lopen sneller door, niet-hot-patchable updates triggeren nog steeds een traditionele drain-reboot-rejoin cyclus. Belangrijkste verschil: maandelijkse patch-vensters worden korter en minder disruptief, met grotere reboot-vensters per kwartaal voor de rest.</p>
 
         <p><strong>Pre-requisite:</strong></p>
         <p>Azure Arc-enablement op de Hyper-V hosts. Hot-patching is gekoppeld aan Azure Update Manager voor coördinatie. Voor klanten zonder Azure-connectivity is hot-patching geen optie.</p>
@@ -548,10 +548,10 @@ Get-VM | Select-Object Name, Generation,
           <h2>Veelgestelde vragen</h2>
 
           <div class="faq-q">Moet ik per se naar Windows Server 2025 als mijn cluster op 2022 prima draait?</div>
-          <p>Niet per se. Windows Server 2022 wordt nog ondersteund tot 2027, en daarna nog vijf jaar Extended Support. De vraag is of de nieuwe features genoeg waarde leveren om een upgrade voor te trekken. Voor heterogene clusters met live migration-issues, GPU-workloads of strikte patch-window-eisen wel. Voor stabiele, homogene clusters zonder die behoeften kan 2025 wachten tot natuurlijke hardware-refresh.</p>
+          <p>Niet per se. Windows Server 2022 wordt nog ondersteund tot 2027, en daarna nog vijf jaar Extended Support. De vraag is of de nieuwe features genoeg waarde leveren om een upgrade naar voren te trekken. Voor heterogene clusters met live migration-issues, GPU-workloads of strikte patch-window-eisen wel. Voor stabiele, homogene clusters zonder die behoeften kan 2025 wachten tot natuurlijke hardware-refresh.</p>
 
           <div class="faq-q">Werkt cluster rolling upgrade van 2019 direct naar 2025?</div>
-          <p>Ja. Windows Server 2025 ondersteunt cluster rolling upgrade vanuit zowel 2019 als 2022. De Cluster Functional Level blijft tijdens de upgrade op de oude versie tot je hem expliciet verhoogt met <code>Update-ClusterFunctionalLevel</code>. Plan een terugrolpunt door deze verhoging als laatste stap te doen.</p>
+          <p>Ja. Windows Server 2025 ondersteunt cluster rolling upgrade vanuit zowel 2019 als 2022. De Cluster Functional Level blijft tijdens de upgrade op de oude versie tot je hem expliciet verhoogt met <code>Update-ClusterFunctionalLevel</code>. Plan een recovery point door deze verhoging als laatste stap te doen.</p>
 
           <div class="faq-q">Heeft Dynamic CPU compatibility een performance-impact?</div>
           <p>Verwaarloosbaar in praktijk. De feature-set die de VM ziet wordt beperkt tot wat alle nodes ondersteunen, dus VM's missen feature-instructions die ze op een hardware-uniform cluster wel zouden zien. Voor workloads die agressief specifieke CPU-instructies gebruiken (sommige crypto-libraries, AVX-512 in HPC-workloads) is dat een meetbaar verschil. Voor algemene workloads is het effect onder de meetbare drempel.</p>
@@ -582,7 +582,7 @@ Get-VM | Select-Object Name, Generation,
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.5</span>
+    <span class="brand-version">v0.4.9</span>
   </footer>
 
 </div>
