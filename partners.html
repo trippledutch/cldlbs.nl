@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.1 · Partners -->
+<!-- CloudLabs · v0.3.2 · Partners -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -52,6 +52,8 @@
   h3.doc{font-size:18.5px;font-weight:600;color:var(--ink);margin-bottom:6px}
   main .services .card p{font-size:14.5px;line-height:1.65}
   main .services .card h3{font-size:18px}
+  main .services .card-request{border-style:dashed;border-color:rgba(95,227,255,.35);background:rgba(95,227,255,.04)}
+  main .services .card-request .tag{color:var(--cyan)}
   main .method .step p{font-size:15px;line-height:1.7}
   main .method .step h3{font-size:17px}
   .split{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:32px;align-items:center;margin-top:22px}
@@ -202,10 +204,11 @@
         <h3>Management &amp; backup</h3>
         <p>VMM, Windows Admin Center including WAC Virtualization Mode, Veeam and Commvault can all be taken into the measurement.</p>
       </div>
-    </div>
-    <div class="notice anim-fade anim-up" style="margin-top:18px">
-      <strong>By request.</strong> Missing a module for hardware or software your customer runs?
-      Additional modules can usually be added at short notice.
+      <div class="card card-request">
+        <div class="ix">07</div><div class="tag">By request</div>
+        <h3>Missing a module?</h3>
+        <p>Hardware or software your customer runs that is not listed here? Additional modules can usually be added at short notice.</p>
+      </div>
     </div>
 
     <h2 class="sec">The documents</h2>
@@ -453,7 +456,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="book.html" lang="en">Book</a><a href="book.html" lang="nl">Boek</a>
     <a href="privacy.html" lang="en">Privacy</a><a href="privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.1</span>
+    <span class="brand-version">v0.3.2</span>
   </footer>
 
 </div>
