@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.4.1 · Partners -->
+<!-- CloudLabs · v0.4.2 · Partners -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -217,8 +217,8 @@
         <div class="num">DOC 01</div>
         <h3 class="doc"><span lang="en">Baseline health check</span><span lang="nl">Basis health check</span></h3>
         <p>
-          <span lang="en">The first measurement. Full findings with risk analysis: executive summary, a findings table graded HIGH, MEDIUM and LOW, a register of what was checked and found in order, and prioritised recommendations. The summary table gives management the whole picture on one page; the chapters behind it give the engineers the detail.</span>
-          <span lang="nl">De eerste meting. Volledige findings met risicoanalyse: managementsamenvatting, een findings-tabel met de gradaties HOOG, MIDDEL en LAAG, een register van wat is gecontroleerd en in orde bevonden, en geprioriteerde aanbevelingen. De overzichtstabel geeft het management het hele beeld op één pagina; de hoofdstukken erachter geven de engineers de details.</span>
+          <span lang="en">The first measurement. Full findings with risk analysis: executive summary, a findings table graded HIGH, MEDIUM and LOW, a register of what was checked and found in order, and prioritised recommendations. The summary table gives management the whole picture on one page; the chapters behind it give the engineers the detail. Findings reference each other where risks interact: a dead power feed on one node raises the weight of a firmware finding on that same node, and the report says so. The register also separates not measured from in order, so a clean section is a claim backed by evidence, never an assumption.</span>
+          <span lang="nl">De eerste meting. Volledige findings met risicoanalyse: managementsamenvatting, een findings-tabel met de gradaties HOOG, MIDDEL en LAAG, een register van wat is gecontroleerd en in orde bevonden, en geprioriteerde aanbevelingen. De overzichtstabel geeft het management het hele beeld op één pagina; de hoofdstukken erachter geven de engineers de details. Findings verwijzen naar elkaar waar risico's op elkaar inwerken: een uitgevallen voeding op een node verzwaart een firmware-finding op diezelfde node, en het rapport vermeldt dat. Het register scheidt bovendien niet gemeten van in orde, zodat een schone sectie een bewering is die door bewijs wordt gedekt, nooit een aanname.</span>
         </p>
       </div>
       <figure class="shot anim-fade anim-up" style="max-width:460px">
@@ -234,8 +234,8 @@
         <div class="num">DOC 02</div>
         <h3 class="doc"><span lang="en">Delta report</span><span lang="nl">Delta-rapport</span></h3>
         <p>
-          <span lang="en">After each follow-up measurement: what was resolved, what stayed open, what is new. Resolved findings are verified by measurement, not by ticket status; a finding only turns green when the follow-up run proves the fix. This is the document that keeps you at the table between measurements.</span>
-          <span lang="nl">Na elke vervolgmeting: wat is opgelost, wat is blijven staan, wat is nieuw. Opgeloste findings worden geverifieerd door meting, niet door ticketstatus; een finding wordt pas groen wanneer de vervolgmeting de oplossing aantoont. Dit is het document dat u tussen de metingen door aan tafel houdt.</span>
+          <span lang="en">After each follow-up measurement: what was resolved, what stayed open, what is new. Resolved findings are verified by measurement, not by ticket status; a finding only turns green when the follow-up run proves the fix. This is the document that keeps you at the table between measurements. The register keeps the full history per finding: when it was first seen, what changed in between, and which measurement proved it resolved. New findings that surface between measurements, like a pending reboot left behind by a patch round, join the same register with their own trail.</span>
+          <span lang="nl">Na elke vervolgmeting: wat is opgelost, wat is blijven staan, wat is nieuw. Opgeloste findings worden geverifieerd door meting, niet door ticketstatus; een finding wordt pas groen wanneer de vervolgmeting de oplossing aantoont. Dit is het document dat u tussen de metingen door aan tafel houdt. Het register houdt de volledige geschiedenis per finding bij: wanneer die voor het eerst is gezien, wat er tussentijds is veranderd, en welke meting heeft aangetoond dat die is opgelost. Nieuwe findings die tussen twee metingen opduiken, zoals een openstaande herstart die een patchronde heeft achtergelaten, komen in hetzelfde register terecht met hun eigen spoor.</span>
         </p>
       </div>
       <figure class="shot anim-fade anim-up">
@@ -268,8 +268,8 @@
         <div class="num">DOC 04</div>
         <h3 class="doc"><span lang="en">As-Built documentation</span><span lang="nl">As-built-documentatie</span></h3>
         <p>
-          <span lang="en">Current system documentation, generated from the latest measurement: identity, hardware, storage, network, cluster, virtual machines, management and backup, down to firmware levels and VLAN tables. Always in sync with reality, because it is derived from reality.</span>
-          <span lang="nl">Actuele systeemdocumentatie, gegenereerd uit de laatste meting: identiteit, hardware, storage, netwerk, cluster, virtuele machines, beheer en back-up, tot en met firmwareniveaus en VLAN-tabellen. Altijd in overeenstemming met de werkelijkheid, omdat ze uit de werkelijkheid is afgeleid.</span>
+          <span lang="en">Current system documentation, generated from the latest measurement: identity, hardware, storage, network, cluster, virtual machines, management and backup, down to firmware levels and VLAN tables. Always in sync with reality, because it is derived from reality. It comes in two tiers: Basic covers host and OS, Complete folds in the array, fabric and physical-intake chapters. Because it is regenerated with every measurement, documentation drift disappears: a replaced switch, an extra VLAN or a new node simply shows up in the next version.</span>
+          <span lang="nl">Actuele systeemdocumentatie, gegenereerd uit de laatste meting: identiteit, hardware, storage, netwerk, cluster, virtuele machines, beheer en back-up, tot en met firmwareniveaus en VLAN-tabellen. Altijd in overeenstemming met de werkelijkheid, omdat ze uit de werkelijkheid is afgeleid. Ze komt in twee niveaus: Basic dekt host en OS, Complete voegt de hoofdstukken voor array, fabric en fysieke intake toe. Omdat ze bij elke meting opnieuw wordt gegenereerd, verdwijnt documentatiedrift: een vervangen switch, een extra VLAN of een nieuwe node verschijnt gewoon in de volgende versie.</span>
         </p>
       </div>
       <figure class="shot anim-fade anim-up">
@@ -285,8 +285,8 @@
         <div class="num">DOC 05</div>
         <h3 class="doc"><span lang="en">Root Cause Analysis, on call</span><span lang="nl">Root Cause Analysis, op afroep</span></h3>
         <p>
-          <span lang="en">After a crash or serious incident: a standard measurement plus a read-only incident harvest, folded into a cross-node timeline. The analysis names the most likely cause, shows the alternatives that were weighed and rejected, and states its own evidence gaps. RCAs are handled with priority: same day or the next working day.</span>
-          <span lang="nl">Na een crash of ernstig incident: een standaardmeting plus een read-only incidentoogst, samengebracht in een tijdlijn over alle nodes heen. De analyse benoemt de meest waarschijnlijke oorzaak, toont de alternatieven die zijn afgewogen en verworpen, en vermeldt de eigen hiaten in het bewijs. RCA's worden met prioriteit behandeld: dezelfde dag of de eerstvolgende werkdag.</span>
+          <span lang="en">After a crash or serious incident: a standard measurement plus a read-only incident harvest, folded into a cross-node timeline. The analysis names the most likely cause, shows the alternatives that were weighed and rejected, and states its own evidence gaps. RCAs are handled with priority: same day or the next working day. The cluster log is collected only with explicit consent, and the detectors rank hypotheses, they never conclude: the written analysis is authored by a specialist, like every document in this chain. Where evidence is missing, the report says so instead of papering over it.</span>
+          <span lang="nl">Na een crash of ernstig incident: een standaardmeting plus een read-only incidentoogst, samengebracht in een tijdlijn over alle nodes heen. De analyse benoemt de meest waarschijnlijke oorzaak, toont de alternatieven die zijn afgewogen en verworpen, en vermeldt de eigen hiaten in het bewijs. RCA's worden met prioriteit behandeld: dezelfde dag of de eerstvolgende werkdag. De clusterlog wordt alleen met uitdrukkelijke toestemming verzameld, en de detectoren rangschikken hypothesen, ze concluderen nooit: de geschreven analyse is opgesteld door een specialist, zoals elk document in deze keten. Waar bewijs ontbreekt, vermeldt het rapport dat, in plaats van het toe te dekken.</span>
         </p>
       </div>
       <figure class="shot anim-fade anim-up">
@@ -436,7 +436,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="book.html" lang="en">Book</a><a href="book.html" lang="nl">Boek</a>
     <a href="privacy.html" lang="en">Privacy</a><a href="privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.4.1</span>
+    <span class="brand-version">v0.4.2</span>
   </footer>
 
 </div>
