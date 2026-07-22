@@ -1,3 +1,2 @@
 top-10-hyper-v-cluster-issues
 reporting-remediation-progress
-azure-local-vs-classic-hyper-v-cluster
