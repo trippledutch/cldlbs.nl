@@ -45,16 +45,17 @@
 <link rel="stylesheet" href="style.css?v=0.4.7">
 <style>
   .lede{color:var(--ink-dim);font-size:14.5px;line-height:1.7;max-width:68ch;margin-top:6px}
+  .hero-lede{font-size:clamp(16px,2.2vw,18.5px);line-height:1.75;max-width:62ch;color:var(--ink)}
   .prose p{color:var(--ink-dim);font-size:14px;line-height:1.7;margin:12px 0}
   .prose strong{color:var(--ink)}
   h2.sec{font-size:20px;margin:52px 0 8px;font-weight:600}
   h3.doc{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:6px}
-  .split{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:32px;align-items:center;margin-top:22px}
-  .split.rev{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+  .split{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:32px;align-items:center;margin-top:22px}
+  .split.rev{grid-template-columns:minmax(0,4fr) minmax(0,8fr)}
   .split.rev .txt{order:2}
   .split.rev .shot{order:1}
   @media(max-width:860px){.split,.split.rev{grid-template-columns:1fr}.split.rev .txt{order:1}.split.rev .shot{order:2}}
-  .shot{margin:0}
+  .shot{margin:0;max-width:340px;justify-self:center}
   .shot a{display:block}
   .shot img{width:100%;height:auto;display:block;border:1px solid var(--line-strong);border-radius:10px;background:#fff;box-shadow:0 12px 34px rgba(0,0,0,.45);transition:transform .25s}
   .shot a:hover img{transform:translateY(-3px)}
@@ -125,7 +126,7 @@
     <h1 style="font-size:clamp(22px,4.2vw,34px);font-weight:600;margin-bottom:10px">
       CloudLabs Health Check Toolchain v2
     </h1>
-    <p class="lede">
+    <p class="lede hero-lede">
       Every CloudLabs health check runs on the same machinery: a tailored, read-only inventory
       script at the customer, processed in the CloudLabs Studio into documents a customer can act
       on. That machinery is now in its second generation, and partners can run engagements on it.
@@ -349,7 +350,7 @@
         an engineer can execute, including the verification that closes the loop.
       </p>
     </div>
-    <figure class="shot anim-fade anim-up" style="max-width:860px;margin-top:18px">
+    <figure class="shot anim-fade anim-up" style="max-width:520px;margin-top:18px;justify-self:start">
       <a href="images/toolchain-finding-detail.webp" target="_blank" rel="noopener">
         <img src="images/toolchain-finding-detail.webp" alt="One complete finding from the sample report: BMC firmware below the vendor security floor on all nodes, graded HIGH, with measured situation, best practice, deviation, recommendation, a four-step action plan and the goal state." loading="lazy" width="1200" height="1466">
       </a>
