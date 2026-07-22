@@ -311,7 +311,7 @@ Get-VM | Select-Object Name, Generation,
         <p>The cause lies in ACPI table changes and modified VMBus device IDs in Hyper-V 2025. A 2012 R2 guest expects specific device identifiers that no longer exist, and falls back to an inaccessible boot device error.</p>
 
         <p><strong>What makes it workable (temporarily):</strong></p>
-        <p>For customers who must keep 2012 R2 VMs running temporarily on a 2025 cluster, there is a manual registry trick to alias the old device IDs. Didier Van Hoye has written an excellent article explaining the offline registry edit procedure. It is a workaround, not a solution.</p>
+        <p>For customers who must keep 2012 R2 VMs running temporarily on a 2025 cluster, there is a manual registry trick to alias the old device IDs. Didier Van Hoye has written <a href="https://blog.workinghardinit.work/2026/03/17/how-i-made-server-2012-r2-love-hyper-v-2025/" rel="noopener">an excellent article</a> explaining the offline registry edit procedure. It is a workaround, not a solution.</p>
 
         <p><strong>The right fix:</strong></p>
         <p>Plan the OS upgrade of legacy guests before or alongside the Hyper-V host upgrade. For customers <!--LINK:vmware-to-hyper-v-migration-assessment--><a href="vmware-to-hyper-v-migration-assessment.html">migrating from VMware to Hyper-V</a><!--/LINK:vmware-to-hyper-v-migration-assessment-->, this means a significant share of VMs first needs a Windows Server version upgrade, not just a hypervisor migration. We model this as standard in pre-migration assessments and in upgrade planning.</p>
@@ -500,7 +500,7 @@ Get-VM | Select-Object Name, Generation,
         <p>De oorzaak ligt in ACPI table-veranderingen en aangepaste VMBus device IDs in Hyper-V 2025. Een 2012 R2 guest verwacht specifieke device-identifiers die er niet meer zijn, en valt terug op een inaccessible boot device-fout.</p>
 
         <p><strong>Wat het werkbaar maakt (tijdelijk):</strong></p>
-        <p>Voor klanten die 2012 R2-VM's tijdelijk moeten blijven draaien op een 2025 cluster, bestaat er een handmatige registry-truc om de oude device-IDs te aliasen. Didier Van Hoye heeft hierover een uitstekend artikel geschreven dat de offline registry-edit procedure uitlegt. Het is een workaround, geen oplossing.</p>
+        <p>Voor klanten die 2012 R2-VM's tijdelijk moeten blijven draaien op een 2025 cluster, bestaat er een handmatige registry-truc om de oude device-IDs te aliasen. Didier Van Hoye heeft hierover <a href="https://blog.workinghardinit.work/2026/03/17/how-i-made-server-2012-r2-love-hyper-v-2025/" rel="noopener">een uitstekend artikel</a> geschreven dat de offline registry-edit procedure uitlegt. Het is een workaround, geen oplossing.</p>
 
         <p><strong>De juiste oplossing:</strong></p>
         <p>Plan de OS-upgrade van legacy guests vóór of gelijktijdig met de Hyper-V host-upgrade. Voor klanten die <!--LINK:vmware-to-hyper-v-migration-assessment--><a href="vmware-to-hyper-v-migration-assessment.html">VMware naar Hyper-V migreren</a><!--/LINK:vmware-to-hyper-v-migration-assessment-->, betekent dit dat een aanzienlijk deel van de VM's eerst een Windows Server-versie upgrade nodig heeft, niet alleen een hypervisor-migratie. Wij modelleren dit standaard in pre-migration assessments en in upgrade-planning.</p>
