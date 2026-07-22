@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.2.0 · Partners -->
+<!-- CloudLabs · v0.3.0 · Partners -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -44,12 +44,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css?v=0.4.7">
 <style>
-  .lede{color:var(--ink-dim);font-size:14.5px;line-height:1.7;max-width:68ch;margin-top:6px}
-  .hero-lede{font-size:clamp(16px,2.2vw,18.5px);line-height:1.75;max-width:62ch;color:var(--ink)}
-  .prose p{color:var(--ink-dim);font-size:14px;line-height:1.7;margin:12px 0}
+  .lede{color:var(--ink-dim);font-size:16px;line-height:1.75;max-width:68ch;margin-top:6px}
+  .hero-lede{font-size:clamp(17px,2.4vw,20px);line-height:1.75;max-width:62ch;color:var(--ink)}
+  .prose p{color:var(--ink-dim);font-size:16px;line-height:1.75;margin:14px 0}
   .prose strong{color:var(--ink)}
-  h2.sec{font-size:20px;margin:52px 0 8px;font-weight:600}
-  h3.doc{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:6px}
+  h2.sec{font-size:24px;margin:52px 0 8px;font-weight:600}
+  h3.doc{font-size:18.5px;font-weight:600;color:var(--ink);margin-bottom:6px}
+  main .services .card p{font-size:14.5px;line-height:1.65}
+  main .services .card h3{font-size:18px}
+  main .method .step p{font-size:15px;line-height:1.7}
+  main .method .step h3{font-size:17px}
   .split{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:32px;align-items:center;margin-top:22px}
   .split.rev{grid-template-columns:minmax(0,4fr) minmax(0,8fr)}
   .split.rev .txt{order:2}
@@ -62,24 +66,24 @@
   .shot figcaption{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-top:9px;line-height:1.6}
   .docrow{padding:26px 0;border-bottom:1px solid var(--line)}
   .docrow:last-child{border-bottom:0}
-  .docrow .num{font-family:var(--mono);font-size:11px;color:var(--cyan);letter-spacing:.14em;margin-bottom:6px}
-  .docrow p{color:var(--ink-dim);font-size:13.5px;line-height:1.7;margin-top:4px}
-  .notice{background:rgba(95,227,255,.06);border:1px solid rgba(95,227,255,.2);border-radius:10px;padding:14px 16px;font-size:13.5px;color:var(--ink-dim);margin:22px 0;line-height:1.6;max-width:72ch}
+  .docrow .num{font-family:var(--mono);font-size:12px;color:var(--cyan);letter-spacing:.14em;margin-bottom:6px}
+  .docrow p{color:var(--ink-dim);font-size:15.5px;line-height:1.75;margin-top:4px}
+  .notice{background:rgba(95,227,255,.06);border:1px solid rgba(95,227,255,.2);border-radius:10px;padding:16px 18px;font-size:15px;color:var(--ink-dim);margin:22px 0;line-height:1.7;max-width:72ch}
   .notice strong{color:var(--ink)}
   .case-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:18px}
   .case-card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0));border-radius:14px;padding:22px 20px;position:relative;overflow:hidden;transition:border-color .2s}
   .case-card:hover{border-color:var(--line-strong)}
   .case-meta{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
   .case-sector{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);background:rgba(95,227,255,.1);border:1px solid rgba(95,227,255,.25);border-radius:999px;padding:3px 10px}
-  .case-card h3{font-size:16px;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.3}
-  .case-card .situation{font-size:13.5px;color:var(--ink-dim);line-height:1.65;margin-bottom:14px}
+  .case-card h3{font-size:17.5px;font-weight:600;color:var(--ink);margin-bottom:8px;line-height:1.3}
+  .case-card .situation{font-size:15px;color:var(--ink-dim);line-height:1.7;margin-bottom:14px}
   .case-results{display:flex;flex-direction:column;gap:6px;padding-top:14px;border-top:1px solid var(--line)}
-  .case-result{display:flex;align-items:start;gap:8px;font-size:13px;color:var(--ink-dim);line-height:1.5}
+  .case-result{display:flex;align-items:start;gap:8px;font-size:14.5px;color:var(--ink-dim);line-height:1.55}
   .case-result::before{content:"✓";color:var(--green);font-family:var(--mono);font-size:11px;margin-top:2px;flex-shrink:0}
   .scenarios{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-top:18px}
   .scenario{border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-  .scenario h4{font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:4px}
-  .scenario p{font-size:13px;color:var(--ink-dim);line-height:1.55}
+  .scenario h4{font-size:15.5px;font-weight:600;color:var(--ink);margin-bottom:4px}
+  .scenario p{font-size:14.5px;color:var(--ink-dim);line-height:1.6}
 </style>
 </head>
 <body>
@@ -153,10 +157,10 @@
         </p>
       </div>
       <figure class="shot anim-fade anim-up">
-        <a href="images/toolchain-report-cover.webp" target="_blank" rel="noopener">
-          <img src="images/toolchain-report-cover.webp" alt="Cover page of the Hyper-V Health Check findings report for the Noorderlicht AZLCL01 sample cluster." loading="lazy" width="1000" height="1294">
+        <a href="images/toolchain-findings-summary.webp" target="_blank" rel="noopener">
+          <img src="images/toolchain-findings-summary.webp" alt="Findings summary page: a table of 32 findings, each with a colour-coded risk badge from red HIGH to grey NONE." loading="lazy" width="1000" height="1294">
         </a>
-        <figcaption>Findings report · cover page · sample engagement</figcaption>
+        <figcaption>Findings report · summary table · 32 findings · click to enlarge</figcaption>
       </figure>
     </div>
 
@@ -169,7 +173,7 @@
         <p>Windows Server up to 2025, failover clustering, Hyper-V, Cluster-Aware Updating, live migration configuration, time service, patch currency, OS lifecycle including ESU exposure.</p>
       </div>
       <div class="card">
-        <div class="ix">02</div><div class="tag">HCI</div>
+        <div class="ix">02</div><div class="tag">Azure Local · HCI</div>
         <h3>Azure Local &amp; S2D</h3>
         <p>Azure Local, HCI and Storage Spaces Direct: pool and virtual disk health, Network ATC intents, Arc connectivity, secured-core posture, failover headroom. Azure Migrate where relevant.</p>
       </div>
@@ -194,10 +198,10 @@
         <p>VMM, Windows Admin Center including WAC Virtualization Mode, Veeam and Commvault can all be taken into the measurement.</p>
       </div>
     </div>
-    <p class="lede" style="margin-top:14px">
-      Missing a module for hardware or software your customer runs? Additional modules can usually
-      be added at short notice.
-    </p>
+    <div class="notice anim-fade anim-up" style="margin-top:18px">
+      <strong>By request.</strong> Missing a module for hardware or software your customer runs?
+      Additional modules can usually be added at short notice.
+    </div>
 
     <h2 class="sec">The documents</h2>
     <p class="lede">An engagement produces four document types, with a fifth available on call. Every page below is real output from the sample engagement, click to view full size.</p>
@@ -213,11 +217,11 @@
           one page; the chapters behind it give the engineers the detail.
         </p>
       </div>
-      <figure class="shot anim-fade anim-up">
-        <a href="images/toolchain-findings-summary.webp" target="_blank" rel="noopener">
-          <img src="images/toolchain-findings-summary.webp" alt="Findings summary page: a table of 32 findings, each with a colour-coded risk badge from red HIGH to grey NONE." loading="lazy" width="1000" height="1294">
+      <figure class="shot anim-fade anim-up" style="max-width:460px">
+        <a href="images/toolchain-findings-spread.webp" target="_blank" rel="noopener">
+          <img src="images/toolchain-findings-spread.webp" alt="Two pages from the baseline report with worked-out HIGH findings: the PFC priority mismatch between hosts and switch, and two guest servers on Windows Server 2012 R2 without ESU, each with situation, best practice, deviation, action plan and goal." loading="lazy" width="1400" height="900">
         </a>
-        <figcaption>Baseline report · findings summary · 32 findings</figcaption>
+        <figcaption>Baseline report · two worked findings, chapter High risk · click to enlarge</figcaption>
       </figure>
     </div>
 
@@ -252,7 +256,7 @@
       </div>
       <figure class="shot anim-fade anim-up">
         <a href="images/noorderlicht-risk-trend.png" target="_blank" rel="noopener">
-          <img src="images/noorderlicht-risk-trend.png" alt="Risk trend chart across three measurements: HIGH falls from 3 to 1 to 0, MEDIUM from 11 to 5, while resolved findings climb from 0 to 5 to 12." loading="lazy" width="1300" height="690">
+          <img src="images/noorderlicht-risk-trend.png" alt="Risk trend chart across three measurements: HIGH falls from 3 to 1 to 0, MEDIUM from 11 to 10 to 5, while resolved findings climb from 0 to 5 to 12." loading="lazy" width="1300" height="690">
         </a>
         <figcaption>Progress chart · three measurements · HIGH from 3 to 0</figcaption>
       </figure>
@@ -444,7 +448,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="book.html" lang="en">Book</a><a href="book.html" lang="nl">Boek</a>
     <a href="privacy.html" lang="en">Privacy</a><a href="privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.2.0</span>
+    <span class="brand-version">v0.3.0</span>
   </footer>
 
 </div>
