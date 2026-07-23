@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.4.10 · Blog -->
+<!-- CloudLabs · v0.4.11 · Blog -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -96,6 +96,11 @@
     color:var(--cyan);background:rgba(95,227,255,.1);
     padding:3px 7px;border-radius:3px;border:1px solid rgba(95,227,255,.2);
   }
+  .blog-filter{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 6px}
+  .bf-btn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--ink-dim);background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:999px;padding:6px 13px;cursor:pointer;transition:color .15s,border-color .15s,background .15s}
+  .bf-btn:hover{color:var(--ink);border-color:var(--line-strong)}
+  .bf-btn.active{background:var(--cyan);color:#062032;border-color:var(--cyan);font-weight:600}
+  .blog-card.hide{display:none}
 </style>
 </head>
 <body>
@@ -148,6 +153,22 @@
       <span lang="en">Practical articles drawn from real Hyper-V Cluster Health Checks. Findings we keep encountering, decisions worth getting right the first time, and migration paths that actually work in production.</span>
       <span lang="nl">Praktische artikelen op basis van echte Hyper-V Cluster Health Checks. Bevindingen die we steeds tegenkomen, beslissingen die u in één keer goed wilt maken, en migratiepaden die in productie ook echt werken.</span>
     </p>
+
+    <div class="blog-filter" role="group" aria-label="Filter by theme">
+        <button class="bf-btn active" data-filter="all"><span lang="en">All</span><span lang="nl">Alle</span></button>
+        <button class="bf-btn" data-filter="Cluster Health">Cluster Health</button>
+        <button class="bf-btn" data-filter="Storage">Storage</button>
+        <button class="bf-btn" data-filter="Azure Local">Azure Local</button>
+        <button class="bf-btn" data-filter="Windows Server 2025">Windows Server 2025</button>
+        <button class="bf-btn" data-filter="Failover Clustering">Failover Clustering</button>
+        <button class="bf-btn" data-filter="Migration">Migration</button>
+        <button class="bf-btn" data-filter="Networking">Networking</button>
+        <button class="bf-btn" data-filter="Patching">Patching</button>
+        <button class="bf-btn" data-filter="Quorum">Quorum</button>
+        <button class="bf-btn" data-filter="Storage Architecture">Storage Architecture</button>
+        <button class="bf-btn" data-filter="Strategy">Strategy</button>
+        <button class="bf-btn" data-filter="Time Service">Time Service</button>
+    </div>
 
     <div class="blog-grid">
 
@@ -392,7 +413,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="book.html" lang="en">Book</a><a href="book.html" lang="nl">Boek</a>
     <a href="privacy.html" lang="en">Privacy</a><a href="privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.4.10</span>
+    <span class="brand-version">v0.4.11</span>
   </footer>
 
 </div>
@@ -409,5 +430,12 @@
 </div>
 
 <script src="script.js?v=0.4.7"></script>
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll('.bf-btn')),cards=[].slice.call(document.querySelectorAll('.blog-card'));
+  function apply(f){cards.forEach(function(c){var t=c.querySelector('.tag');var tag=t?t.textContent.trim():'';c.classList.toggle('hide', f!=='all' && tag!==f);});}
+  btns.forEach(function(b){b.addEventListener('click',function(){btns.forEach(function(x){x.classList.remove('active')});b.classList.add('active');apply(b.getAttribute('data-filter'));});});
+})();
+</script>
 </body>
 </html>
