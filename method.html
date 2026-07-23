@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.2.3 · Method -->
+<!-- CloudLabs · v0.2.4 · Method -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -29,7 +29,7 @@
     {"@type":"HowToStep","position":3,"name":"Analysis against best practice","text":"Each data point compared to the Microsoft baseline for your topology."},
     {"@type":"HowToStep","position":4,"name":"Findings document","text":"Structured findings with risk levels: HIGH, MEDIUM, LOW, NONE."},
     {"@type":"HowToStep","position":5,"name":"Action list (optional)","text":"Follow-up engagement to execute the recommendations."},
-    {"@type":"HowToStep","position":6,"name":"Follow-up measurement","text":"Each re-measurement round produces a delta report and a risk trend chart: what was resolved, what stayed open, what is new."}
+    {"@type":"HowToStep","position":6,"name":"Follow-up measurement","text":"Each re-measurement round produces three deliverables: a delta report, a remaining-risk overview, and a risk trend chart."}
   ]
 }
 </script>
@@ -45,7 +45,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=0.4.8">
+<link rel="stylesheet" href="style.css?v=0.4.9">
+<style>
+  .flow{margin-top:40px;border:1px solid var(--line);border-radius:12px;padding:20px 18px;background:rgba(255,255,255,.015)}
+  .flow-title{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px}
+  .flow-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+  .fnode{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:var(--panel);font-size:13px;color:var(--ink);white-space:nowrap}
+  .fn-num{font-family:var(--mono);font-size:10px;font-weight:600;color:#062032;background:var(--cyan);width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+  .fn-arr{color:var(--ink-faint);font-size:14px}
+  .f-loop{border-color:var(--cyan);background:rgba(95,227,255,.08)}
+  .flow-out{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}
+  .fo-lbl{font-size:12.5px;color:var(--ink-dim)}
+  .fo-chip{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--cyan);background:rgba(95,227,255,.08);border:1px solid rgba(95,227,255,.3);border-radius:999px;padding:5px 11px}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main-content"><span lang="en">Skip to content</span><span lang="nl">Naar inhoud</span></a>
@@ -118,7 +130,7 @@
       <div class="step">
         <div class="num">04</div>
         <div>
-          <h3><span lang="en">Findings document</span><span lang="nl">Findings-document</span></h3>
+          <h3><span lang="en">Findings document</span><span lang="nl">Bevindingen-document</span></h3>
           <p><span lang="en">Structured findings: Status, Current situation, Best Practice, Deviation, Recommendation, Reference. Colour-coded risk (HIGH, MEDIUM, LOW, NONE). Executive summary, findings table, risk register, prioritised recommendations.</span><span lang="nl">Gestructureerde findings: Status, Huidige situatie, Best Practice, Afwijking, Aanbeveling, Referentie. Kleurgecodeerd risico (HOOG, MIDDEL, LAAG, GEEN). Management samenvatting, findings-tabel, risicoregister en geprioriteerde aanbevelingen.</span></p>
         </div>
       </div>
@@ -133,10 +145,33 @@
         <div class="num">06</div>
         <div>
           <h3><span lang="en">Follow-up measurement</span><span lang="nl">Vervolgmeting</span></h3>
-          <p><span lang="en">On each re-measurement round the same read-only script runs again, and the report becomes a delta: what was resolved (verified by measurement, not by ticket status), what stayed open, what is new, with a risk trend chart across the rounds. Two or three rounds a year keep the picture current and progress measurable.</span><span lang="nl">Bij elke vervolgmeting draait hetzelfde read-only script opnieuw en wordt het rapport een delta: wat is opgelost (geverifieerd door meting, niet door ticketstatus), wat bleef open en wat is nieuw, met een risk trend chart over de rondes. Twee of drie rondes per jaar houden het beeld actueel en de voortgang meetbaar.</span></p>
+          <p><span lang="en">On each re-measurement round the same read-only script runs again. It produces three things: a delta report (what was resolved, verified by measurement, what stayed open, what is new), a remaining-risk overview of only the open items, and a risk trend chart across the rounds. Two or three rounds a year keep the picture current and progress measurable.</span><span lang="nl">Bij elke vervolgmeting draait hetzelfde read-only script opnieuw. Dat levert drie dingen op: een delta-rapport (wat is opgelost, geverifieerd door meting, wat bleef open, wat is nieuw), een restrisico-overzicht met alleen de openstaande punten, en een risk trend chart over de rondes. Twee of drie rondes per jaar houden het beeld actueel en de voortgang meetbaar.</span></p>
         </div>
       </div>
     </div>
+    <div class="flow">
+      <div class="flow-title"><span lang="en">The method as a flow</span><span lang="nl">De werkwijze als flow</span></div>
+      <div class="flow-row">
+        <div class="fnode"><span class="fn-num">1</span><span>Intake</span></div>
+        <span class="fn-arr" aria-hidden="true">→</span>
+        <div class="fnode"><span class="fn-num">2</span><span><span lang="en">Measurement</span><span lang="nl">Meting</span></span></div>
+        <span class="fn-arr" aria-hidden="true">→</span>
+        <div class="fnode"><span class="fn-num">3</span><span><span lang="en">Analysis</span><span lang="nl">Analyse</span></span></div>
+        <span class="fn-arr" aria-hidden="true">→</span>
+        <div class="fnode"><span class="fn-num">4</span><span><span lang="en">Findings</span><span lang="nl">Bevindingen</span></span></div>
+        <span class="fn-arr" aria-hidden="true">→</span>
+        <div class="fnode"><span class="fn-num">5</span><span><span lang="en">Action list</span><span lang="nl">Actielijst</span></span></div>
+        <span class="fn-arr" aria-hidden="true">→</span>
+        <div class="fnode f-loop"><span class="fn-num">6</span><span><span lang="en">Follow-up</span><span lang="nl">Vervolgmeting</span></span></div>
+      </div>
+      <div class="flow-out">
+        <span class="fo-lbl"><span lang="en">Step 6 repeats from the measurement and delivers:</span><span lang="nl">Stap 6 herhaalt vanaf de meting en levert op:</span></span>
+        <span class="fo-chip"><span lang="en">Delta report</span><span lang="nl">Delta-rapport</span></span>
+        <span class="fo-chip"><span lang="en">Remaining-risk overview</span><span lang="nl">Restrisico-overzicht</span></span>
+        <span class="fo-chip"><span lang="en">Risk trend chart</span><span lang="nl">Risk trend chart</span></span>
+      </div>
+    </div>
+
     <div class="cta-row" style="margin-top:24px">
       <a class="btn primary" href="book.html"><span lang="en">Start with an intake</span><span lang="nl">Begin met een intake</span><span class="arr">→</span></a>
       <a class="btn" href="findings.html"><span lang="en">See a sample finding</span><span lang="nl">Zie een voorbeeldbevinding</span></a>
@@ -148,7 +183,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="book.html" lang="en">Book</a><a href="book.html" lang="nl">Boek</a>
     <a href="privacy.html" lang="en">Privacy</a><a href="privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.2.3</span>
+    <span class="brand-version">v0.2.4</span>
   </footer>
 
 </div>
@@ -164,6 +199,6 @@
   </div>
 </div>
 
-<script src="script.js?v=0.4.7"></script>
+<script src="script.js?v=0.4.8"></script>
 </body>
 </html>

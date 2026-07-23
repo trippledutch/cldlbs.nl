@@ -97,7 +97,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=0.4.8">
+<link rel="stylesheet" href="../style.css?v=0.4.9">
 <style>
   .article{max-width:75ch;margin-top:8px}
   .article .breadcrumb{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.06em;margin-bottom:18px}
@@ -305,7 +305,7 @@ $job = Start-Job { param($p)
             <li><a href="#nl-2">Intake, weet waar je staat</a></li>
             <li><a href="#nl-3">Scripted inventory: read-only, herhaalbaar, geen agents</a></li>
             <li><a href="#nl-4">Analyse op basis van best practice: getallen, geen indrukken</a></li>
-            <li><a href="#nl-5">Het Findings-document en een herhaalde meting</a></li>
+            <li><a href="#nl-5">Het Bevindingen-document en een herhaalde meting</a></li>
             <li><a href="#nl-6">De actielijst en de afhankelijkheidsketen die alles bewaakt</a></li>
             <li><a href="#nl-7">De patch-night</a></li>
             <li><a href="#nl-8">Waarom dit werkte en wat het kostte</a></li>
@@ -320,7 +320,7 @@ $job = Start-Job { param($p)
         <h2 id="nl-2">1. Intake, weet waar je staat</h2>
         <p>De eerste stap van de CloudLabs-werkwijze. Elk engagement begint met een gesprek over topologie, storagemodel, beheertools, backup, monitoring en recente incidenten. Niet omdat het een formaliteit is, maar omdat elk later oordeel ervan afhangt.</p>
         <p>Dit cluster: de zes nodes van hierboven, SAN-storage via iSCSI op dedicated 25 GbE-netwerken, SET virtual switches voor LAN en Live Migration, beheerd via Virtual Machine Manager, geback-upt met Veeam. De VM's waren ongelijk verdeeld over de twee sites.</p>
-        <p>De intake brengt ook aan het licht wat er in beweging is. Hier waren dat twee dingen: de klant was halverwege het vervangen van zijn domeincontrollers, waardoor het DNS-landschap onder het cluster veranderde, en een Linux-VM had een bekend live-migratieprobleem. Beide zouden er aan het eind toe doen. Een intake die de bewegende delen mist, levert een Findings-document op dat al verouderd is bij aflevering.</p>
+        <p>De intake brengt ook aan het licht wat er in beweging is. Hier waren dat twee dingen: de klant was halverwege het vervangen van zijn domeincontrollers, waardoor het DNS-landschap onder het cluster veranderde, en een Linux-VM had een bekend live-migratieprobleem. Beide zouden er aan het eind toe doen. Een intake die de bewegende delen mist, levert een Bevindingen-document op dat al verouderd is bij aflevering.</p>
 
         <h2 id="nl-3">2. Scripted inventory: read-only, herhaalbaar, geen agents</h2>
         <p>Stap twee. De data komt van PowerShell-inventarisatiescripts die op maat voor de omgeving zijn geschreven, uitgevoerd vanaf de eigen managementserver van de klant. Niets wordt geïnstalleerd, niets wordt veranderd. Het inventory script is read-only by design en zegt dat in de header, omdat degene die de run goedkeurt dat in de source moet kunnen verifiëren.</p>
@@ -330,15 +330,15 @@ $job = Start-Job { param($p)
         <p><strong>Resultaat.</strong> De output is één tekstbestand. Het toont de verschillen ten opzichte van de vorige meting, wat van groot belang is voor stap vier.</p>
 
         <h2 id="nl-4">3. Analyse op basis van best practice: getallen, geen indrukken</h2>
-        <p>Stap drie. Elk gegeven wordt vergeleken met de Microsoft-baseline voor de topologie, en elke afwijking krijgt een risiconiveau met een ondersteunende referentie. De eerste volledige meting van dit cluster leverde twaalf High Risk-bevindingen op. Een voorbeeld, want het zijn de concrete getallen die een Findings-document bruikbaar maken:</p>
+        <p>Stap drie. Elk gegeven wordt vergeleken met de Microsoft-baseline voor de topologie, en elke afwijking krijgt een risiconiveau met een ondersteunende referentie. De eerste volledige meting van dit cluster leverde twaalf High Risk-bevindingen op. Een voorbeeld, want het zijn de concrete getallen die een Bevindingen-document bruikbaar maken:</p>
         <p><strong>Clock drift tot 86 seconden.</strong> Eén site was schoon, binnen een seconde. De andere site, plus een verdwaalde node, zat er 64 tot 86 seconden naast. Dat patroon wijst op een mislukte time source aan de ene kant, niet op willekeurige drift. Kerberos tolereert vijf minuten; CSV ownership en cluster heartbeats degraderen veel eerder. Bevinding, richting van de root cause, en een harde randvoorwaarde: geen patchronde tot alle nodes binnen een seconde van elkaar liggen.</p>
         <p><strong>Defender-uitsluitingen: leeg op alle zes nodes.</strong> Geen paths, geen processen, geen extensies. Elke VHDX-I/O kwam in aanmerking voor real-time scanning, de meest voorkomende oorzaak van Event ID 9 (trage I/O op een clustered volume) en vrijwel zeker de reden achter de trage backup-window waar de klant al een jaar mee leefde.</p>
         <p><strong>Pending reboots op vijf van de zes nodes,</strong> bevestigd tot in PendingFileRenameOperations in de registry, met ongeveer 200 dagen sinds de laatste restart.</p>
         <p><strong>Patch-level zeven maanden achter.</strong> De nieuwste hotfix op elke node dateerde van oktober vorig jaar.</p>
         <p>Geen ervan is exotisch. Allemaal onzichtbaar op een dashboard dat alleen groene VM's toont.</p>
 
-        <h2 id="nl-5">4. Het Findings-document en een herhaalde meting</h2>
-        <p>Stap vier. Bevindingen worden verzameld in een gestructureerd document: (1) huidige situatie, (2) best practice, (3) afwijking, (4) aanbeveling, (5) actie, (6) referentie, kleurgecodeerd op risico. Maar een Findings-document is een momentopname, en remediation verandert het beeld. Daarom krijgt het document deltaversies: meet opnieuw, vergelijk met het vorige outputbestand, en verplaats bevindingen pas naar opgelost wanneer de data dat bevestigt.</p>
+        <h2 id="nl-5">4. Het Bevindingen-document en een herhaalde meting</h2>
+        <p>Stap vier. Bevindingen worden verzameld in een gestructureerd document: (1) huidige situatie, (2) best practice, (3) afwijking, (4) aanbeveling, (5) actie, (6) referentie, kleurgecodeerd op risico. Maar een Bevindingen-document is een momentopname, en remediation verandert het beeld. Daarom krijgt het document deltaversies: meet opnieuw, vergelijk met het vorige outputbestand, en verplaats bevindingen pas naar opgelost wanneer de data dat bevestigt.</p>
         <p>Die discipline werkt beter dan een afvinklijst. Een voorbeeld dat het delen waard is: de klant rolde de Defender exclusions uit via Group Policy, exact zoals aanbevolen. De verificatie-run liet zien dat alle zes nodes nog steeds alles scanden. De oorzaak zat in de GPO-editor: in de Administrative Template voor exclusions waren de waardenaam en de waarde verwisseld. Defender neemt de waardenaam als de exclusion, dus de policy had twintig labels als exclusion list geladen en sloot in feite niets uit. Kolommen omdraaien, gpupdate, opnieuw verifiëren: 162 checks passed. Zonder een herhaalde meting met het script zou die policy er jarenlang compliant uit blijven zien.</p>
         <p>Over drie deltacycli kromp de High Risk-lijst van twaalf naar een handvol: BIOS-versies gelijkgetrokken over de sites, drivers gelijkgetrokken, pending reboots van vóór de Health Check opgelost via een gecontroleerde restartcyclus (weken vóór de patchrun), clock drift opgelost bij de time source, exclusions geverifieerd actief. Wat High Risk bleef, was de patch backlog zelf, bewust als laatste gepland, want een cluster patchen met verbroken time sync, openstaande file renames en een veranderende DNS-laag is precies hoe je een backlog in een storing verandert.</p>
 
@@ -380,7 +380,7 @@ $job = Start-Job { param($p)
         <div class="faq-block">
           <h2>Veelgestelde vragen</h2>
           <div class="faq-q">Wat is de CloudLabs-werkwijze voor een Health Check?</div>
-          <p>De vijfstaps werkwijze: (1) Intake: begrijp topologie, storage, tooling, backup, monitoring. (2) Scripted inventory: read-only, herhaalbare PowerShell over alle nodes. (3) Analyse: vergelijk met Microsoft-baselines, rangschik afwijkingen op risico. (4) Findings-document: gestructureerde output met herhaalde metingen om remediation te verifiëren. (5) Actielijst: voer aanbevelingen uit in afhankelijkheidsvolgorde, bewaakt door validatie.</p>
+          <p>De vijfstaps werkwijze: (1) Intake: begrijp topologie, storage, tooling, backup, monitoring. (2) Scripted inventory: read-only, herhaalbare PowerShell over alle nodes. (3) Analyse: vergelijk met Microsoft-baselines, rangschik afwijkingen op risico. (4) Bevindingen-document: gestructureerde output met herhaalde metingen om remediation te verifiëren. (5) Actielijst: voer aanbevelingen uit in afhankelijkheidsvolgorde, bewaakt door validatie.</p>
           <div class="faq-q">Waarom heeft dit cluster twaalf High Risk-bevindingen?</div>
           <p>Clock drift tot 86 seconden (breekt Kerberos en CSV), geen Defender exclusions (veroorzaakt trage I/O), pending reboots op vijf nodes, en zeven maanden gemiste patches. Niets daarvan zichtbaar op een dashboard dat alleen groene VM's toont. Een gescripte meting vindt wat dashboards verbergen.</p>
           <div class="faq-q">Wat bewaakte de patchrun?</div>
@@ -423,6 +423,6 @@ $job = Start-Job { param($p)
   </div>
 </div>
 
-<script src="../script.js?v=0.4.7"></script>
+<script src="../script.js?v=0.4.8"></script>
 </body>
 </html>

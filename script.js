@@ -1,4 +1,4 @@
-/* CloudLabs · shared script · v0.4.7 */
+/* CloudLabs · shared script · v0.4.8 */
 (function(){
   /* Mobile nav overflow fade */
   var navEl  = document.querySelector('nav.tabs');
@@ -240,4 +240,78 @@
       headings.forEach(function(h){ spyObs.observe(h); });
     }
   }
+
+  /* Full-text search (topbar) */
+  (function(){
+    var topRight = document.querySelector('.top-right');
+    if(!topRight) return;
+    var isBlog = /\/blog\//.test(location.pathname);
+    var base = isBlog ? '../' : '';
+    var doc = document.documentElement;
+
+    var btn = document.createElement('button');
+    btn.className = 'search-btn'; btn.id = 'searchOpen'; btn.setAttribute('aria-label','Search');
+    btn.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>';
+    topRight.insertBefore(btn, topRight.firstChild);
+
+    var ov = document.createElement('div');
+    ov.className = 'search-overlay'; ov.hidden = true;
+    ov.innerHTML = '<div class="search-panel" role="dialog" aria-modal="true" aria-label="Search"><input id="searchInput" type="search" autocomplete="off" spellcheck="false"><div class="search-results"></div></div>';
+    document.body.appendChild(ov);
+    var input = ov.querySelector('#searchInput'), results = ov.querySelector('.search-results');
+
+    var idx = null, loading = false, queue = [];
+    function load(cb){
+      if(idx){ cb(); return; }
+      queue.push(cb);
+      if(loading) return; loading = true;
+      fetch(base + 'search-index.json').then(function(r){ return r.json(); })
+        .then(function(d){ idx = d; queue.forEach(function(f){ f(); }); queue = []; })
+        .catch(function(){ results.innerHTML = '<div class="sr-empty">Search unavailable</div>'; });
+    }
+    function nlOn(){ return doc.getAttribute('data-lang') === 'nl'; }
+    function open(){
+      ov.hidden = false; document.body.style.overflow = 'hidden';
+      input.placeholder = nlOn() ? 'Zoeken op de site...' : 'Search the site...';
+      input.value = ''; results.innerHTML = ''; input.focus(); load(function(){});
+    }
+    function close(){ ov.hidden = true; document.body.style.overflow = ''; }
+    btn.addEventListener('click', open);
+    ov.addEventListener('click', function(e){ if(e.target === ov) close(); });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && !ov.hidden){ close(); return; }
+      if(ov.hidden && (e.key === '/' || ((e.metaKey||e.ctrlKey) && (e.key === 'k' || e.key === 'K')))){
+        var tag = (e.target.tagName || '').toLowerCase();
+        if(tag !== 'input' && tag !== 'textarea'){ e.preventDefault(); open(); }
+      }
+    });
+    function esc(s){ return String(s).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+    function snippet(text, terms){
+      var low = text.toLowerCase(), i = low.indexOf(terms[0]);
+      if(i < 0) i = 0;
+      var start = Math.max(0, i - 40);
+      return (start > 0 ? '…' : '') + esc(text.slice(start, start + 150)) + '…';
+    }
+    function render(q){
+      var terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+      if(!terms.length){ results.innerHTML = ''; return; }
+      var nl = nlOn(), hits = [];
+      idx.forEach(function(e){
+        var hay = (e.te + ' ' + e.tn + ' ' + e.s + ' ' + e.x).toLowerCase();
+        if(terms.every(function(t){ return hay.indexOf(t) >= 0; })){
+          var title = (nl ? e.tn : e.te) || e.te, tl = title.toLowerCase(), score = 0;
+          terms.forEach(function(t){ if(tl.indexOf(t) >= 0) score += 3; });
+          hits.push({ e: e, title: title, score: score });
+        }
+      });
+      hits.sort(function(a,b){ return b.score - a.score; });
+      if(!hits.length){ results.innerHTML = '<div class="sr-empty">' + (nl ? 'Geen resultaten' : 'No results') + '</div>'; return; }
+      results.innerHTML = hits.slice(0,8).map(function(h){
+        return '<a class="sr-item" href="' + base + h.e.u + '"><span class="sr-title">' + esc(h.title) + '</span>'
+          + (h.e.s ? '<span class="sr-sec">' + esc(h.e.s) + '</span>' : '')
+          + '<span class="sr-snip">' + snippet(h.e.x, terms) + '</span></a>';
+      }).join('');
+    }
+    input.addEventListener('input', function(){ load(function(){ render(input.value.trim()); }); });
+  })();
 })();
