@@ -52,7 +52,8 @@ def main():
         tag = re.search(r'class="tag">(.*?)</span>', mtext, re.S)
         section = strip(eb.group(1)) if eb else (strip(tag.group(1)) if tag else '')
         section = re.sub(r'^/\d+\s*·?\s*', '', section)
-        index.append({"u": f, "te": ten, "tn": tnl, "s": section, "x": strip(mtext)[:6000]})
+        cap = 20000 if f.startswith("blog/") else 6000
+        index.append({"u": f, "te": ten, "tn": tnl, "s": section, "x": strip(mtext)[:cap]})
 
     out = pathlib.Path("search-index.json")
     out.write_text(json.dumps(index, ensure_ascii=False, separators=(',', ':')))

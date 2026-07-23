@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.4.11 · Blog -->
+<!-- CloudLabs · v0.4.12 · Blog -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -96,11 +96,19 @@
     color:var(--cyan);background:rgba(95,227,255,.1);
     padding:3px 7px;border-radius:3px;border:1px solid rgba(95,227,255,.2);
   }
-  .blog-filter{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 6px}
+  .blog-filter{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:2px 0 6px}
   .bf-btn{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--ink-dim);background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:999px;padding:6px 13px;cursor:pointer;transition:color .15s,border-color .15s,background .15s}
   .bf-btn:hover{color:var(--ink);border-color:var(--line-strong)}
   .bf-btn.active{background:var(--cyan);color:#062032;border-color:var(--cyan);font-weight:600}
   .blog-card.hide{display:none}
+  .bf-cats{display:flex;flex-wrap:wrap;gap:8px}
+  .bf-search{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:999px;padding:5px 13px;background:rgba(255,255,255,.03);margin-left:auto}
+  .bf-search:focus-within{border-color:var(--cyan)}
+  .bf-search svg{color:var(--ink-faint);flex-shrink:0}
+  .bf-search input{background:transparent;border:0;outline:none;color:var(--ink);font-family:var(--body);font-size:13px;width:150px}
+  .bf-search input::placeholder{color:var(--ink-faint)}
+  .blog-empty{color:var(--ink-faint);font-size:14.5px;margin-top:22px}
+  @media(max-width:560px){.bf-search{margin-left:0;width:100%}.bf-search input{width:100%}}
 </style>
 </head>
 <body>
@@ -154,20 +162,12 @@
       <span lang="nl">Praktische artikelen op basis van echte Hyper-V Cluster Health Checks. Bevindingen die we steeds tegenkomen, beslissingen die u in één keer goed wilt maken, en migratiepaden die in productie ook echt werken.</span>
     </p>
 
-    <div class="blog-filter" role="group" aria-label="Filter by theme">
-        <button class="bf-btn active" data-filter="all"><span lang="en">All</span><span lang="nl">Alle</span></button>
-        <button class="bf-btn" data-filter="Cluster Health">Cluster Health</button>
-        <button class="bf-btn" data-filter="Storage">Storage</button>
-        <button class="bf-btn" data-filter="Azure Local">Azure Local</button>
-        <button class="bf-btn" data-filter="Windows Server 2025">Windows Server 2025</button>
-        <button class="bf-btn" data-filter="Failover Clustering">Failover Clustering</button>
-        <button class="bf-btn" data-filter="Migration">Migration</button>
-        <button class="bf-btn" data-filter="Networking">Networking</button>
-        <button class="bf-btn" data-filter="Patching">Patching</button>
-        <button class="bf-btn" data-filter="Quorum">Quorum</button>
-        <button class="bf-btn" data-filter="Storage Architecture">Storage Architecture</button>
-        <button class="bf-btn" data-filter="Strategy">Strategy</button>
-        <button class="bf-btn" data-filter="Time Service">Time Service</button>
+    <div class="blog-filter" role="group" aria-label="Filter articles">
+      <div id="blogCats" class="bf-cats"></div>
+      <div class="bf-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input id="blogSearch" type="search" autocomplete="off" spellcheck="false" aria-label="Search articles">
+      </div>
     </div>
 
     <div class="blog-grid">
@@ -402,6 +402,8 @@
 
     </div>
 
+    <p id="blogEmpty" class="blog-empty" hidden><span lang="en">No articles match your search.</span><span lang="nl">Geen artikelen gevonden.</span></p>
+
     <div class="cta-row" style="margin-top:36px">
       <a class="btn primary" href="book.html"><span lang="en">Book a health check</span><span lang="nl">Plan een health check</span><span class="arr">→</span></a>
       <a class="btn" href="services.html"><span lang="en">All services</span><span lang="nl">Alle diensten</span><span class="arr">→</span></a>
@@ -413,7 +415,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="book.html" lang="en">Book</a><a href="book.html" lang="nl">Boek</a>
     <a href="privacy.html" lang="en">Privacy</a><a href="privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.4.11</span>
+    <span class="brand-version">v0.4.12</span>
   </footer>
 
 </div>
@@ -432,9 +434,37 @@
 <script src="script.js?v=0.4.8"></script>
 <script>
 (function(){
-  var btns=[].slice.call(document.querySelectorAll('.bf-btn')),cards=[].slice.call(document.querySelectorAll('.blog-card'));
-  function apply(f){cards.forEach(function(c){var t=c.querySelector('.tag');var tag=t?t.textContent.trim():'';c.classList.toggle('hide', f!=='all' && tag!==f);});}
-  btns.forEach(function(b){b.addEventListener('click',function(){btns.forEach(function(x){x.classList.remove('active')});b.classList.add('active');apply(b.getAttribute('data-filter'));});});
+  var cards=[].slice.call(document.querySelectorAll('.blog-card'));
+  var catsEl=document.getElementById('blogCats'),searchEl=document.getElementById('blogSearch'),emptyEl=document.getElementById('blogEmpty');
+  if(!catsEl||!searchEl)return;
+  var doc=document.documentElement;
+  var counts={},order=[];
+  cards.forEach(function(c){var t=c.querySelector('.tag');var tag=t?t.textContent.trim():'';if(!tag)return;if(!(tag in counts)){counts[tag]=0;order.push(tag);}counts[tag]++;});
+  order.sort(function(a,b){return counts[b]-counts[a]||a.localeCompare(b);});
+  var activeCat='all';
+  var all=document.createElement('button');all.className='bf-btn active';all.setAttribute('data-filter','all');all.innerHTML='<span lang="en">All</span><span lang="nl">Alle</span>';catsEl.appendChild(all);
+  order.forEach(function(t){var b=document.createElement('button');b.className='bf-btn';b.setAttribute('data-filter',t);b.textContent=t;catsEl.appendChild(b);});
+  var btns=[].slice.call(catsEl.querySelectorAll('.bf-btn'));
+  var textMap=null;
+  fetch('search-index.json').then(function(r){return r.json();}).then(function(idx){textMap={};idx.forEach(function(e){if(e.u.indexOf('blog/')===0)textMap[e.u]=(e.te+' '+e.tn+' '+e.s+' '+e.x).toLowerCase();});apply();}).catch(function(){textMap={};});
+  function cardText(c){var h=c.getAttribute('href');return (textMap&&textMap[h])||(c.textContent||'').toLowerCase();}
+  function apply(){
+    var terms=(searchEl.value||'').trim().toLowerCase().split(/\s+/).filter(Boolean);
+    var shown=0;
+    cards.forEach(function(c){
+      var t=c.querySelector('.tag');var tag=t?t.textContent.trim():'';
+      var catOk=activeCat==='all'||tag===activeCat;
+      var txt=terms.length?cardText(c):'';
+      var qOk=!terms.length||terms.every(function(w){return txt.indexOf(w)>=0;});
+      var vis=catOk&&qOk;c.classList.toggle('hide',!vis);if(vis)shown++;
+    });
+    if(emptyEl)emptyEl.hidden=shown>0;
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){btns.forEach(function(x){x.classList.remove('active')});b.classList.add('active');activeCat=b.getAttribute('data-filter');apply();});});
+  searchEl.addEventListener('input',apply);
+  function setPh(){searchEl.placeholder=doc.getAttribute('data-lang')==='nl'?'Zoek in artikelen...':'Search articles...';}
+  setPh();
+  document.querySelectorAll('.lang-toggle button').forEach(function(b){b.addEventListener('click',function(){setTimeout(setPh,0);});});
 })();
 </script>
 </body>
