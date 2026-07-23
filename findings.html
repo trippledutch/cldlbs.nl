@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.2.3 · Findings -->
+<!-- CloudLabs · v0.2.4 · Findings -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -29,6 +29,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css?v=0.4.8">
+<style>
+  .deliverables{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:18px}
+  .deliv{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0));display:flex;flex-direction:column;transition:border-color .2s}
+  .deliv:hover{border-color:var(--line-strong)}
+  .deliv .thumb{display:block;background:#fff;border-bottom:1px solid var(--line)}
+  .deliv .thumb img{width:100%;height:150px;object-fit:cover;object-position:top center;display:block;cursor:zoom-in}
+  .deliv .cap{padding:12px 14px}
+  .deliv .tag{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:5px}
+  .deliv h3{font-size:14px;font-weight:600;color:var(--ink);margin:0 0 4px;line-height:1.25}
+  .deliv p{font-size:12.5px;color:var(--ink-dim);line-height:1.5;margin:0}
+  .lightbox{position:fixed;inset:0;z-index:10000;background:rgba(5,8,20,.94);display:flex;align-items:center;justify-content:center;padding:30px}
+  .lightbox[hidden]{display:none}
+  .lightbox img{max-width:min(1400px,94vw);max-height:92vh;width:auto;height:auto;border-radius:8px;background:#fff;box-shadow:0 24px 80px rgba(0,0,0,.7)}
+  .lb-close{position:fixed;top:18px;right:18px;z-index:10001;width:44px;height:44px;border-radius:50%;border:1px solid var(--line-strong);background:rgba(10,16,36,.85);color:var(--ink);font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s}
+  .lb-close:hover{border-color:var(--cyan);color:var(--cyan)}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main-content"><span lang="en">Skip to content</span><span lang="nl">Naar inhoud</span></a>
@@ -171,6 +187,30 @@
       </p>
     </div>
 
+    <p class="muted" style="margin-top:26px;max-width:70ch"><span lang="en">Real output from a sample engagement (a fictional environment, no customer data). Click any page to enlarge.</span><span lang="nl">Echte output uit een voorbeeldopdracht (een fictieve omgeving, geen klantdata). Klik op een pagina om te vergroten.</span></p>
+    <div class="deliverables anim-stagger">
+      <div class="deliv">
+        <span lang="en"><a class="thumb" href="images/toolchain-findings-summary-en.webp"><img src="images/toolchain-findings-summary-en.webp" alt="Baseline findings summary page with colour-coded risk badges" loading="lazy"></a></span><span lang="nl"><a class="thumb" href="images/toolchain-findings-summary.webp"><img src="images/toolchain-findings-summary.webp" alt="Basismeting-overzichtstabel met kleurgecodeerde risicobadges" loading="lazy"></a></span>
+        <div class="cap"><div class="tag"><span lang="en">Baseline</span><span lang="nl">Basismeting</span></div><h3><span lang="en">Health check with risk analysis</span><span lang="nl">Health check met risicoanalyse</span></h3><p><span lang="en">Findings graded HIGH, MEDIUM, LOW, with a prioritised action plan.</span><span lang="nl">Findings met gradaties HOOG, MIDDEL, LAAG, en een geprioriteerd actieplan.</span></p></div>
+      </div>
+      <div class="deliv">
+        <span lang="en"><a class="thumb" href="images/toolchain-delta-status-en.webp"><img src="images/toolchain-delta-status-en.webp" alt="Delta report register with before and after risk badges" loading="lazy"></a></span><span lang="nl"><a class="thumb" href="images/toolchain-delta-status.webp"><img src="images/toolchain-delta-status.webp" alt="Delta-rapport register met badges voor en na" loading="lazy"></a></span>
+        <div class="cap"><div class="tag"><span lang="en">Delta</span><span lang="nl">Delta</span></div><h3><span lang="en">Delta report</span><span lang="nl">Delta-rapport</span></h3><p><span lang="en">What was resolved, verified by measurement, not by ticket status.</span><span lang="nl">Wat is opgelost, geverifieerd door meting, niet door ticketstatus.</span></p></div>
+      </div>
+      <div class="deliv">
+        <span lang="en"><a class="thumb" href="images/noorderlicht-risk-trend-en.png"><img src="images/noorderlicht-risk-trend-en.png" alt="Risk trend chart across three measurements" loading="lazy"></a></span><span lang="nl"><a class="thumb" href="images/noorderlicht-risk-trend.png"><img src="images/noorderlicht-risk-trend.png" alt="Risicotrend-grafiek over drie metingen" loading="lazy"></a></span>
+        <div class="cap"><div class="tag"><span lang="en">Progress</span><span lang="nl">Voortgang</span></div><h3><span lang="en">Remaining risks &amp; trend</span><span lang="nl">Overgebleven risico's en trend</span></h3><p><span lang="en">The open risks with a progress chart across measurements.</span><span lang="nl">De openstaande risico's met een voortgangsgrafiek over de metingen.</span></p></div>
+      </div>
+      <div class="deliv">
+        <span lang="en"><a class="thumb" href="images/toolchain-asbuilt-inventory-en.webp"><img src="images/toolchain-asbuilt-inventory-en.webp" alt="As-built documentation page with inventory tables" loading="lazy"></a></span><span lang="nl"><a class="thumb" href="images/toolchain-asbuilt-inventory.webp"><img src="images/toolchain-asbuilt-inventory.webp" alt="As-built documentatiepagina met inventarisatietabellen" loading="lazy"></a></span>
+        <div class="cap"><div class="tag"><span lang="en">As-Built</span><span lang="nl">As-built</span></div><h3><span lang="en">System documentation</span><span lang="nl">Systeemdocumentatie</span></h3><p><span lang="en">Generated from the latest measurement, always in sync with reality.</span><span lang="nl">Gegenereerd uit de laatste meting, altijd actueel.</span></p></div>
+      </div>
+      <div class="deliv">
+        <span lang="en"><a class="thumb" href="images/toolchain-rca-causes-en.webp"><img src="images/toolchain-rca-causes-en.webp" alt="Root cause analysis section with cited evidence" loading="lazy"></a></span><span lang="nl"><a class="thumb" href="images/toolchain-rca-causes.webp"><img src="images/toolchain-rca-causes.webp" alt="Root-cause-analyse sectie met aangehaald bewijs" loading="lazy"></a></span>
+        <div class="cap"><div class="tag"><span lang="en">RCA · on call</span><span lang="nl">RCA · op afroep</span></div><h3><span lang="en">Root Cause Analysis</span><span lang="nl">Root Cause Analysis</span></h3><p><span lang="en">After an incident: a cross-node timeline where every claim cites evidence.</span><span lang="nl">Na een incident: een tijdlijn over alle nodes waar elke bewering bewijs aanhaalt.</span></p></div>
+      </div>
+    </div>
+
     <div class="cta-row" style="margin-top:24px">
       <a class="btn primary" href="book.html"><span lang="en">Book a health check</span><span lang="nl">Plan een health check</span><span class="arr">→</span></a>
       <a class="btn" href="method.html"><span lang="en">See the method</span><span lang="nl">Bekijk de werkwijze</span></a>
@@ -182,7 +222,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="book.html" lang="en">Book</a><a href="book.html" lang="nl">Boek</a>
     <a href="privacy.html" lang="en">Privacy</a><a href="privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.2.3</span>
+    <span class="brand-version">v0.2.4</span>
   </footer>
 
 </div>
@@ -198,6 +238,24 @@
   </div>
 </div>
 
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Document preview" hidden>
+  <button class="lb-close" id="lbClose" aria-label="Close preview">✕</button>
+  <img id="lbImg" src="" alt="">
+</div>
+
 <script src="script.js?v=0.4.7"></script>
+<script>
+(function(){
+  var lb=document.getElementById('lightbox'),img=document.getElementById('lbImg'),btn=document.getElementById('lbClose');
+  if(!lb)return;
+  function close(){lb.hidden=true;img.src='';document.body.style.overflow=''}
+  document.querySelectorAll('.deliv .thumb').forEach(function(a){
+    a.addEventListener('click',function(e){e.preventDefault();img.src=a.getAttribute('href');var im=a.querySelector('img');img.alt=im?im.alt:'';lb.hidden=false;document.body.style.overflow='hidden';btn.focus();});
+  });
+  btn.addEventListener('click',close);
+  lb.addEventListener('click',function(e){if(e.target===lb)close()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lb.hidden)close()});
+})();
+</script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 <!doctype html> 
-<!-- CloudLabs · v0.5.2 · Home -->
+<!-- CloudLabs · v0.5.3 · Home -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -55,20 +55,7 @@
   @media(max-width:680px){.measure6{grid-template-columns:repeat(2,1fr)}}
   .home-sec{margin-top:52px}
   .home-sec > .muted{max-width:64ch}
-  .deliverables{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:20px}
-  .deliv{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,0));display:flex;flex-direction:column;transition:border-color .2s}
   .deliv:hover{border-color:var(--line-strong)}
-  .deliv .thumb{display:block;background:#fff;border-bottom:1px solid var(--line)}
-  .deliv .thumb img{width:100%;height:158px;object-fit:cover;object-position:top center;display:block;cursor:zoom-in}
-  .deliv .cap{padding:13px 15px}
-  .deliv .tag{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);margin-bottom:5px}
-  .deliv h3{font-size:14.5px;font-weight:600;color:var(--ink);margin:0 0 4px;line-height:1.25}
-  .deliv p{font-size:12.5px;color:var(--ink-dim);line-height:1.5;margin:0}
-  .lightbox{position:fixed;inset:0;z-index:10000;background:rgba(5,8,20,.94);display:flex;align-items:center;justify-content:center;padding:30px}
-  .lightbox[hidden]{display:none}
-  .lightbox img{max-width:min(1400px,94vw);max-height:92vh;width:auto;height:auto;border-radius:8px;background:#fff;box-shadow:0 24px 80px rgba(0,0,0,.7)}
-  .lb-close{position:fixed;top:18px;right:18px;z-index:10001;width:44px;height:44px;border-radius:50%;border:1px solid var(--line-strong);background:rgba(10,16,36,.85);color:var(--ink);font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s}
-  .lb-close:hover{border-color:var(--cyan);color:var(--cyan)}
 </style>
 </head>
 <body>
@@ -169,90 +156,41 @@
         <div class="card">
           <div class="ix">01</div><div class="tag">Platform</div>
           <h3><span lang="en">Windows Server &amp; clusters</span><span lang="nl">Windows Server en clusters</span></h3>
-          <p><span lang="en">Windows Server to 2025, failover clustering, Hyper-V, CAU, live migration, patch and OS lifecycle.</span><span lang="nl">Windows Server tot 2025, failover clustering, Hyper-V, CAU, live migration, patch- en OS-levenscyclus.</span></p>
+          <p><span lang="en">Windows Server up to 2025, failover clustering and Hyper-V. Cluster-Aware Updating, live migration, time service, patch currency and OS lifecycle, including ESU exposure.</span><span lang="nl">Windows Server tot en met 2025, failover clustering en Hyper-V. Cluster-Aware Updating, live migration, tijdservice, patchactualiteit en OS-levenscyclus, inclusief ESU-blootstelling.</span></p>
         </div>
         <div class="card">
           <div class="ix">02</div><div class="tag">Azure Local · HCI</div>
           <h3><span lang="en">Azure Local &amp; S2D</span><span lang="nl">Azure Local en S2D</span></h3>
-          <p><span lang="en">S2D pool and disk health, Network ATC, Arc, secured-core, failover headroom.</span><span lang="nl">S2D pool- en schijfgezondheid, Network ATC, Arc, secured-core, failovermarge.</span></p>
+          <p><span lang="en">Azure Local and Storage Spaces Direct: pool and virtual disk health, Network ATC intents, Arc connectivity, secured-core posture and N-1 failover headroom.</span><span lang="nl">Azure Local en Storage Spaces Direct: gezondheid van pool en virtuele schijven, Network ATC-intents, Arc-connectiviteit, secured-core-status en N-1 failovermarge.</span></p>
         </div>
         <div class="card">
           <div class="ix">03</div><div class="tag">Hardware</div>
           <h3><span lang="en">Server hardware</span><span lang="nl">Serverhardware</span></h3>
-          <p><span lang="en">Dell, HPE and Lenovo via the BMC: firmware, power redundancy, node uniformity.</span><span lang="nl">Dell, HPE en Lenovo via de BMC: firmware, voedingsredundantie, uniformiteit.</span></p>
+          <p><span lang="en">Dell, HPE and Lenovo, measured out-of-band through the BMC: firmware against verified security floors, power supply redundancy, hardware event logs and uniformity across nodes.</span><span lang="nl">Dell, HPE en Lenovo, out-of-band gemeten via de BMC: firmware tegen geverifieerde security-floors, redundantie van voedingen, hardware-eventlogs en uniformiteit tussen de nodes.</span></p>
         </div>
         <div class="card">
           <div class="ix">04</div><div class="tag">Storage</div>
           <h3><span lang="en">Storage arrays</span><span lang="nl">Storage arrays</span></h3>
-          <p><span lang="en">Pure, HPE, Dell and Lenovo, read-only. Host-to-array symmetry.</span><span lang="nl">Pure, HPE, Dell en Lenovo, read-only. Symmetrie tussen host en array.</span></p>
+          <p><span lang="en">Pure Storage, HPE, Dell and Lenovo arrays, read-only. Host-to-array symmetry checks whether what the array serves actually matches what the hosts see.</span><span lang="nl">Arrays van Pure Storage, HPE, Dell en Lenovo, read-only. De symmetrie tussen host en array controleert of wat de array aanbiedt overeenkomt met wat de hosts zien.</span></p>
         </div>
         <div class="card">
           <div class="ix">05</div><div class="tag"><span lang="en">Network</span><span lang="nl">Netwerk</span></div>
           <h3><span lang="en">Switch fabric &amp; HBAs</span><span lang="nl">Switch fabric en HBA's</span></h3>
-          <p><span lang="en">PFC classes, VLAN trunks, and where lossless RDMA quietly stops being lossless.</span><span lang="nl">PFC-klassen, VLAN-trunks, en waar lossless RDMA ongemerkt ophoudt lossless te zijn.</span></p>
+          <p><span lang="en">Ethernet switches across several network operating systems, plus Ethernet HBAs. Host-versus-switch parity: PFC classes, VLAN trunks, and the places where lossless RDMA quietly stops being lossless.</span><span lang="nl">Ethernet-switches op diverse netwerkbesturingssystemen, plus Ethernet-HBA's. Pariteit tussen host en switch: PFC-klassen, VLAN-trunks, en de plekken waar lossless RDMA ongemerkt ophoudt lossless te zijn.</span></p>
         </div>
         <div class="card">
           <div class="ix">06</div><div class="tag"><span lang="en">Management</span><span lang="nl">Beheer</span></div>
           <h3><span lang="en">Management &amp; backup</span><span lang="nl">Beheer en back-up</span></h3>
-          <p><span lang="en">VMM, Windows Admin Center, Veeam and Commvault, taken into the measurement.</span><span lang="nl">VMM, Windows Admin Center, Veeam en Commvault, meegenomen in de meting.</span></p>
+          <p><span lang="en">VMM, Windows Admin Center including WAC Virtualization Mode, Veeam and Commvault can all be taken into the same measurement, so backup and management are covered too.</span><span lang="nl">VMM, Windows Admin Center inclusief WAC Virtualization Mode, Veeam en Commvault kunnen allemaal in dezelfde meting worden meegenomen, zodat ook backup en beheer gedekt zijn.</span></p>
         </div>
-      </div>
-      <div class="cta-row" style="margin-top:18px">
-        <a class="btn" href="services.html"><span lang="en">View all services</span><span lang="nl">Bekijk alle diensten</span><span class="arr">→</span></a>
-      </div>
-    </div>
-
-    <div class="home-sec">
-      <div class="eyebrow"><span lang="en">What you get</span><span lang="nl">Wat u krijgt</span></div>
-      <h2 style="font-size:clamp(20px,3.4vw,28px);font-weight:600;margin:6px 0 8px">
-        <span lang="en">Documents you can act on</span>
-        <span lang="nl">Documenten waar u mee aan de slag kunt</span>
-      </h2>
-      <p class="muted"><span lang="en">Real output from a sample engagement (a fictional environment, no customer data). Click any page to enlarge.</span><span lang="nl">Echte output uit een voorbeeldopdracht (een fictieve omgeving, geen klantdata). Klik op een pagina om te vergroten.</span></p>
-      <div class="deliverables anim-stagger">
-        <div class="deliv">
-          <span lang="en"><a class="thumb" href="images/toolchain-findings-summary-en.webp"><img src="images/toolchain-findings-summary-en.webp" alt="Baseline findings summary page with colour-coded risk badges" loading="lazy"></a></span><span lang="nl"><a class="thumb" href="images/toolchain-findings-summary.webp"><img src="images/toolchain-findings-summary.webp" alt="Basismeting-overzichtstabel met kleurgecodeerde risicobadges" loading="lazy"></a></span>
-          <div class="cap"><div class="tag"><span lang="en">Baseline</span><span lang="nl">Basismeting</span></div><h3><span lang="en">Health check with risk analysis</span><span lang="nl">Health check met risicoanalyse</span></h3><p><span lang="en">Findings graded HIGH, MEDIUM, LOW, with a prioritised action plan.</span><span lang="nl">Findings met gradaties HOOG, MIDDEL, LAAG, en een geprioriteerd actieplan.</span></p></div>
-        </div>
-        <div class="deliv">
-          <span lang="en"><a class="thumb" href="images/toolchain-delta-status-en.webp"><img src="images/toolchain-delta-status-en.webp" alt="Delta report register with before and after risk badges" loading="lazy"></a></span><span lang="nl"><a class="thumb" href="images/toolchain-delta-status.webp"><img src="images/toolchain-delta-status.webp" alt="Delta-rapport register met badges voor en na" loading="lazy"></a></span>
-          <div class="cap"><div class="tag"><span lang="en">Delta</span><span lang="nl">Delta</span></div><h3><span lang="en">Delta report</span><span lang="nl">Delta-rapport</span></h3><p><span lang="en">What was resolved, verified by measurement, not by ticket status.</span><span lang="nl">Wat is opgelost, geverifieerd door meting, niet door ticketstatus.</span></p></div>
-        </div>
-        <div class="deliv">
-          <span lang="en"><a class="thumb" href="images/noorderlicht-risk-trend-en.png"><img src="images/noorderlicht-risk-trend-en.png" alt="Risk trend chart across three measurements" loading="lazy"></a></span><span lang="nl"><a class="thumb" href="images/noorderlicht-risk-trend.png"><img src="images/noorderlicht-risk-trend.png" alt="Risicotrend-grafiek over drie metingen" loading="lazy"></a></span>
-          <div class="cap"><div class="tag"><span lang="en">Progress</span><span lang="nl">Voortgang</span></div><h3><span lang="en">Remaining risks &amp; trend</span><span lang="nl">Overgebleven risico's en trend</span></h3><p><span lang="en">The open risks with a progress chart across measurements.</span><span lang="nl">De openstaande risico's met een voortgangsgrafiek over de metingen.</span></p></div>
-        </div>
-        <div class="deliv">
-          <span lang="en"><a class="thumb" href="images/toolchain-asbuilt-inventory-en.webp"><img src="images/toolchain-asbuilt-inventory-en.webp" alt="As-built documentation page with inventory tables" loading="lazy"></a></span><span lang="nl"><a class="thumb" href="images/toolchain-asbuilt-inventory.webp"><img src="images/toolchain-asbuilt-inventory.webp" alt="As-built documentatiepagina met inventarisatietabellen" loading="lazy"></a></span>
-          <div class="cap"><div class="tag"><span lang="en">As-Built</span><span lang="nl">As-built</span></div><h3><span lang="en">System documentation</span><span lang="nl">Systeemdocumentatie</span></h3><p><span lang="en">Generated from the latest measurement, always in sync with reality.</span><span lang="nl">Gegenereerd uit de laatste meting, altijd actueel.</span></p></div>
-        </div>
-        <div class="deliv">
-          <span lang="en"><a class="thumb" href="images/toolchain-rca-causes-en.webp"><img src="images/toolchain-rca-causes-en.webp" alt="Root cause analysis section with cited evidence" loading="lazy"></a></span><span lang="nl"><a class="thumb" href="images/toolchain-rca-causes.webp"><img src="images/toolchain-rca-causes.webp" alt="Root-cause-analyse sectie met aangehaald bewijs" loading="lazy"></a></span>
-          <div class="cap"><div class="tag"><span lang="en">RCA · on call</span><span lang="nl">RCA · op afroep</span></div><h3><span lang="en">Root Cause Analysis</span><span lang="nl">Root Cause Analysis</span></h3><p><span lang="en">After an incident: a cross-node timeline where every claim cites evidence.</span><span lang="nl">Na een incident: een tijdlijn over alle nodes waar elke bewering bewijs aanhaalt.</span></p></div>
-        </div>
-      </div>
-      <div class="cta-row" style="margin-top:18px">
-        <a class="btn" href="findings.html"><span lang="en">See how a finding is written</span><span lang="nl">Bekijk hoe een finding wordt geschreven</span><span class="arr">→</span></a>
-      </div>
-    </div>
-
-    <div class="home-sec">
-      <div class="eyebrow"><span lang="en">How it works</span><span lang="nl">Zo werkt het</span></div>
-      <h2 style="font-size:clamp(20px,3.4vw,28px);font-weight:600;margin:6px 0 8px">
-        <span lang="en">Read-only, evidence-based, no agents</span>
-        <span lang="nl">Read-only, op basis van bewijs, geen agents</span>
-      </h2>
-      <div class="method anim-stagger" style="margin-top:18px">
-        <div class="step"><div class="num">01</div><div><h3><span lang="en">Intake</span><span lang="nl">Intake</span></h3><p><span lang="en">A short session to set scope and build an inventory script for exactly your configuration.</span><span lang="nl">Een korte sessie om de scope te bepalen en een inventarisatiescript te bouwen voor precies uw configuratie.</span></p></div></div>
-        <div class="step"><div class="num">02</div><div><h3><span lang="en">Measurement</span><span lang="nl">Meting</span></h3><p><span lang="en">A read-only script runs with credentials you provide. No agents, no installs.</span><span lang="nl">Een read-only script draait met inloggegevens die u aanlevert. Geen agents, geen installaties.</span></p></div></div>
-        <div class="step"><div class="num">03</div><div><h3><span lang="en">Analysis &amp; report</span><span lang="nl">Analyse &amp; rapport</span></h3><p><span lang="en">Processed in the CloudLabs Studio into findings, an as-built and, on re-measurement, a delta and trend.</span><span lang="nl">Verwerkt in de CloudLabs Studio tot findings, een as-built en, bij een vervolgmeting, een delta en trend.</span></p></div></div>
-        <div class="step"><div class="num">04</div><div><h3><span lang="en">Review</span><span lang="nl">Bespreking</span></h3><p><span lang="en">We walk through the report together and agree the prioritised next steps.</span><span lang="nl">We lopen het rapport samen door en bepalen de geprioriteerde vervolgstappen.</span></p></div></div>
       </div>
       <div class="cta-row" style="margin-top:24px">
         <a class="btn primary" href="book.html"><span lang="en">Book a health check</span><span lang="nl">Plan een health check</span><span class="arr">→</span></a>
-        <a class="btn" href="method.html"><span lang="en">Read the full method</span><span lang="nl">Lees de volledige werkwijze</span></a>
+        <a class="btn" href="services.html"><span lang="en">View all services</span><span lang="nl">Bekijk alle diensten</span></a>
+        <a class="btn" href="method.html"><span lang="en">Read the method</span><span lang="nl">Lees de werkwijze</span></a>
       </div>
     </div>
+
   </main>
 
   <footer>
@@ -260,7 +198,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="book.html" lang="en">Book</a><a href="book.html" lang="nl">Boek</a>
     <a href="privacy.html" lang="en">Privacy</a><a href="privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.5.2</span>
+    <span class="brand-version">v0.5.3</span>
   </footer>
 
 </div>
@@ -277,24 +215,6 @@
   </div>
 </div>
 
-<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Document preview" hidden>
-  <button class="lb-close" id="lbClose" aria-label="Close preview">✕</button>
-  <img id="lbImg" src="" alt="">
-</div>
-
 <script src="script.js?v=0.4.7"></script>
-<script>
-(function(){
-  var lb=document.getElementById('lightbox'),img=document.getElementById('lbImg'),btn=document.getElementById('lbClose');
-  if(!lb)return;
-  function close(){lb.hidden=true;img.src='';document.body.style.overflow=''}
-  document.querySelectorAll('.deliv .thumb').forEach(function(a){
-    a.addEventListener('click',function(e){e.preventDefault();img.src=a.getAttribute('href');var im=a.querySelector('img');img.alt=im?im.alt:'';lb.hidden=false;document.body.style.overflow='hidden';btn.focus();});
-  });
-  btn.addEventListener('click',close);
-  lb.addEventListener('click',function(e){if(e.target===lb)close()});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lb.hidden)close()});
-})();
-</script>
 </body>
 </html>
