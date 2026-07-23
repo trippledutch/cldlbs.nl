@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.4.1 · Blog · From Health Check to Patch Night -->
+<!-- CloudLabs · v0.4.2 · Blog · From Health Check to Patch Night -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -205,7 +205,7 @@
             <li><a href="#en-2">Intake: know what you are standing on</a></li>
             <li><a href="#en-3">Scripted inventory: read-only, repeatable, no agents</a></li>
             <li><a href="#en-4">Analysis against best practice: numbers, not impressions</a></li>
-            <li><a href="#en-5">The findings document, and the re-measurement that makes it honest</a></li>
+            <li><a href="#en-5">The findings document, and the re-measurement that keeps it accurate</a></li>
             <li><a href="#en-6">The action list, and the dependency chain that gates it</a></li>
             <li><a href="#en-7">The patch night</a></li>
             <li><a href="#en-8">Why this worked, and what it cost</a></li>
@@ -237,7 +237,7 @@
         <p><strong>Patch level seven months behind.</strong> The newest hotfix on any node dated from the previous October.</p>
         <p>None of these is exotic. All of them are invisible from a dashboard that only shows green VMs.</p>
 
-        <h2 id="en-5">4. The findings document, and the re-measurement that makes it honest</h2>
+        <h2 id="en-5">4. The findings document, and the re-measurement that keeps it accurate</h2>
         <p>Step four. Findings go into a structured document: (1) current situation, (2) best practice, (3) deviation, (4) recommendation, (5) action, (6) reference, colour-coded by risk. But a findings document is a snapshot, and remediation changes the picture. So the document gets delta versions: re-measure, compare against the previous output file, and move findings to resolved only when the data says so.</p>
         <p>That discipline catches things a checkbox process never would. One example worth sharing: the customer rolled out the Defender exclusions through Group Policy, exactly as recommended. The verification run still showed all six nodes scanning everything. The cause sat inside the GPO editor: in the Administrative Template for exclusions, the value name and the value had been swapped. Defender takes the value name as the exclusion, so the policy had loaded twenty labels like an exclusion list and excluded nothing. Flip the columns, gpupdate, re-verify: 162 checks passed. Without a scripted re-measurement, that policy would have sat there looking compliant for years.</p>
         <p>Over three delta cycles the High Risk list shrank from twelve to a handful: BIOS versions aligned across sites, drivers aligned, pending reboots from before the Health Check cleared through a controlled restart cycle (weeks before the patch run), clock drift fixed at the time source, exclusions verified active. What remained High Risk was the patch backlog itself, deliberately scheduled last, because patching a cluster with broken time sync, pending file renames and a shifting DNS layer is how you convert a backlog into an outage.</p>
@@ -407,7 +407,7 @@ $job = Start-Job { param($p)
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.4.1</span>
+    <span class="brand-version">v0.4.2</span>
   </footer>
 
 </div>

@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.4.10 · Blog · How we Follow Up on the Hyper-V Cluster Health Check -->
+<!-- CloudLabs · v0.4.11 · Blog · How we Follow Up on the Hyper-V Cluster Health Check -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -64,7 +64,7 @@
     {
       "@type":"Question",
       "name":"What is the difference between a finding marked Resolved and one marked Lowered?",
-      "acceptedAnswer":{"@type":"Answer","text":"Resolved means the root cause is actually fixed and measured as gone in the follow-up measurement. Lowered means the risk is reduced but the cause is still present, for example a workload isolated by VLAN instead of fully removed, or a finding mitigated but not eliminated. Mitigation moves a finding down a level. It does not close it. Keeping that line strict is what makes the trend chart honest."}
+      "acceptedAnswer":{"@type":"Answer","text":"Resolved means the root cause is actually fixed and measured as gone in the follow-up measurement. Lowered means the risk is reduced but the cause is still present, for example a workload isolated by VLAN instead of fully removed, or a finding mitigated but not eliminated. Mitigation moves a finding down a level. It does not close it. Keeping that line strict is what keeps the trend chart credible."}
     },
     {
       "@type":"Question",
@@ -357,7 +357,7 @@ F07  HW / PSU power feed B dead on AZLCL01N03                     MEDIUM -&gt; R
           <p>Once per measurement round, which in practice means after every batch of fixes that is large enough to change the risk picture. On a typical engagement that is every few months, though the customer can ask for a higher frequency, especially when there are many issues to work through. Each round re-runs the same read-only inventory and validation, so every report is built on a fresh measurement, not on a status meeting.</p>
 
           <div class="faq-q">What is the difference between a finding marked Resolved and one marked Lowered?</div>
-          <p>Resolved means the root cause is actually fixed and measured as gone in the follow-up measurement. Lowered means the risk is reduced but the cause is still present, for example a workload isolated by VLAN instead of fully removed. Mitigation moves a finding down a level. It does not close it. Keeping that line strict is what makes the trend chart honest.</p>
+          <p>Resolved means the root cause is actually fixed and measured as gone in the follow-up measurement. Lowered means the risk is reduced but the cause is still present, for example a workload isolated by VLAN instead of fully removed. Mitigation moves a finding down a level. It does not close it. Keeping that line strict is what keeps the trend chart credible.</p>
 
           <div class="faq-q">Why keep a separate remaining-risk document instead of one big report?</div>
           <p>The full report carries history, resolved items and context, which is what you want for the audit trail. The remaining-risk document carries only what is still open, ordered by risk, which is what the team actually works from in the next round. Two audiences, two documents.</p>
@@ -556,7 +556,7 @@ F31  Backup-uitsluitingspad niet meer bereikbaar          MIDDEL -&gt; OPGELOST
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.4.10</span>
+    <span class="brand-version">v0.4.11</span>
   </footer>
 
 </div>

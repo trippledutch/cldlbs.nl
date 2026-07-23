@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.11 · Blog · Secure Boot 2023 Certificates and Hyper-V -->
+<!-- CloudLabs · v0.3.12 · Blog · Secure Boot 2023 Certificates and Hyper-V -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -269,7 +269,7 @@
         <p>The practical takeaway is short: the boot-critical certificate to confirm is <code>Windows UEFI CA 2023</code> in the DB, and it is gated by <code>KEK 2K CA 2023</code> in the KEK. If the 2023 KEK is missing, nothing downstream lands no matter what you set inside the guest.</p>
 
         <h2 id="en-3">3. What the 2026 and 2027 deadlines actually break</h2>
-        <p>Be precise here, because the headlines overstate the immediate impact and understate the eventual one, and the truth is what lets you plan rather than panic.</p>
+        <p>Be precise here, because the headlines overstate the immediate impact and understate the eventual one, and the real picture is what lets you plan rather than panic.</p>
         <p>A VM that still trusts only the 2011 certificates after June 2026 does not stop booting on that date. It continues to start and run normally, and ordinary Windows updates continue to install. Nothing fails on the day.</p>
         <p>What it loses is the early-boot security pipeline: updates to the Windows Boot Manager, Secure Boot DB updates, DBX revocation-list updates, and mitigations for future boot-level vulnerabilities of the BlackLotus class (CVE-2023-24932). The system is pinned at its current boot-path security posture with no way to advance it.</p>
         <p>The consequences are staged, which is the good news for planning. Microsoft has indicated that security fixes for the Windows Boot Manager stop reaching systems on the old certificate by October 2026, and the Windows Production PCA 2011 expiry follows in 2027. The forward-looking risk that matters most is boot media: an OS image, WinPE build, or recovery medium signed only against the 2023 certificates will not boot on a VM whose DB never received them. That is the scenario that turns a deferred housekeeping item into a Sev-1 during a recovery, precisely when you reach for media that a stranded VM refuses to trust.</p>
@@ -569,7 +569,7 @@ Start-VM -Name "VM01"</code></pre>
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.11</span>
+    <span class="brand-version">v0.3.12</span>
   </footer>
 
 </div>

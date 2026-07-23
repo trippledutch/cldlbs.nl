@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.6 · Blog · Cluster Aware Updating Runbook -->
+<!-- CloudLabs · v0.3.7 · Blog · Cluster Aware Updating Runbook -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -203,7 +203,7 @@
             <li><a href="#en-1">The two CAU modes and what they actually mean</a></li>
             <li><a href="#en-2">What a CAU runbook needs to contain</a></li>
             <li><a href="#en-3">The audit trail that is missing</a></li>
-            <li><a href="#en-4">Self-updating vs remote-updating, an honest trade-off</a></li>
+            <li><a href="#en-4">Self-updating vs remote-updating, a real trade-off</a></li>
             <li><a href="#en-5">Pre-update and post-update tasks that matter</a></li>
             <li><a href="#en-6">CAU on Windows Server 2025, what changes</a></li>
             <li><a href="#en-7">Three common governance gaps</a></li>
@@ -268,7 +268,7 @@ Get-CauReport -ClusterName $cluster -Last 1 -Detailed |
         <p><strong>Beyond the report itself:</strong></p>
         <p>Which change management ticket is linked to this run. Who triggered or authorised the run. What was the reason for deviation from the standard schedule. This is information the cluster itself does not track, but that needs to be captured in the broader operational context.</p>
 
-        <h2 id="en-4">4. Self-updating vs remote-updating, an honest trade-off</h2>
+        <h2 id="en-4">4. Self-updating vs remote-updating, a real trade-off</h2>
         <p>Microsoft documentation suggests self-updating for most customers. Our experience is that remote-updating is often the right choice in enterprise environments, and here is why.</p>
 
         <p><strong>For self-updating:</strong></p>
@@ -420,7 +420,7 @@ Write-Host "Post-update tasks completed"
             <li><a href="#nl-1">De twee CAU-modi en wat ze werkelijk betekenen</a></li>
             <li><a href="#nl-2">Wat een CAU-runbook moet bevatten</a></li>
             <li><a href="#nl-3">De audit trail die ontbreekt</a></li>
-            <li><a href="#nl-4">Self-updating vs remote-updating, een eerlijke afweging</a></li>
+            <li><a href="#nl-4">Self-updating vs remote-updating, een nuchtere afweging</a></li>
             <li><a href="#nl-5">Pre-update en post-update tasks die ertoe doen</a></li>
             <li><a href="#nl-6">CAU op Windows Server 2025, wat verandert</a></li>
             <li><a href="#nl-7">Drie veelvoorkomende governance-gaps</a></li>
@@ -485,7 +485,7 @@ Get-CauReport -ClusterName $cluster -Last 1 -Detailed |
         <p><strong>Naast de rapportage zelf:</strong></p>
         <p>Welke change-management ticket is gekoppeld aan deze run. Wie heeft de run getriggerd of geautoriseerd. Wat was de reden voor afwijkingen van het standaardschema. Dit is informatie die het cluster zelf niet bijhoudt, maar wat in de bredere operationele context wel vastgelegd moet worden.</p>
 
-        <h2 id="nl-4">4. Self-updating vs remote-updating, een eerlijke afweging</h2>
+        <h2 id="nl-4">4. Self-updating vs remote-updating, een nuchtere afweging</h2>
         <p>Microsoft's documentatie suggereert voor de meeste klanten self-updating. Onze ervaring is dat remote-updating in enterprise-omgevingen vaker de juiste keuze is, en hier is waarom.</p>
 
         <p><strong>Voor self-updating:</strong></p>
@@ -641,7 +641,7 @@ Write-Host "Post-update tasks completed"
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.6</span>
+    <span class="brand-version">v0.3.7</span>
   </footer>
 
 </div>

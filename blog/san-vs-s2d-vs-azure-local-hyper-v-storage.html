@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.7 · Blog · SAN vs S2D vs Azure Local -->
+<!-- CloudLabs · v0.3.8 · Blog · SAN vs S2D vs Azure Local -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#0a1024">
 <link rel="icon" href="../favicon.png" type="image/png">
 <title>SAN vs S2D vs Azure Local: Choosing Hyper-V Storage in 2026 · CloudLabs</title>
-<meta name="description" content="An honest 2026 comparison of three Hyper-V storage architectures, SAN, Storage Spaces Direct and Azure Local: fit, cost, performance, and migration paths.">
+<meta name="description" content="A no-nonsense 2026 comparison of three Hyper-V storage architectures, SAN, Storage Spaces Direct and Azure Local: fit, cost, performance, and migration paths.">
 <link rel="canonical" href="https://cldlbs.com/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">
 <link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">
@@ -16,7 +16,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://cldlbs.com/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">
 <meta property="og:title" content="SAN vs S2D vs Azure Local: Choosing Hyper-V Storage in 2026">
-<meta property="og:description" content="Honest 2026 comparison of three Hyper-V storage architectures, by CloudLabs.">
+<meta property="og:description" content="No-nonsense 2026 comparison of three Hyper-V storage architectures, by CloudLabs.">
 <meta property="og:image" content="https://cldlbs.com/images/cluster.jpg">
 <meta property="article:published_time" content="2026-05-15">
 <meta property="article:author" content="Hans Vredevoort">
@@ -31,7 +31,7 @@
   "@context":"https://schema.org",
   "@type":"BlogPosting",
   "headline":"SAN vs S2D vs Azure Local: Choosing Hyper-V Storage in 2026",
-  "description":"Honest 2026 comparison of three Hyper-V storage architectures: SAN-attached, Storage Spaces Direct, and Azure Local: fit, cost lifecycle, performance, operational reality, and migration paths.",
+  "description":"No-nonsense 2026 comparison of three Hyper-V storage architectures: SAN-attached, Storage Spaces Direct, and Azure Local: fit, cost lifecycle, performance, operational reality, and migration paths.",
   "image":"https://cldlbs.com/images/cluster.jpg",
   "datePublished":"2026-05-15",
   "dateModified":"2026-05-15",
@@ -197,7 +197,7 @@
         <div class="meta">By Hans Vredevoort · 15 May 2026 · 15 minute read · Storage</div>
 
         <p class="lede">Most marketing in 2026 tells you hyperconverged is the answer. Microsoft promotes Azure Local, vendors promote their HCI stack, and at conferences you hear that SAN-attached Hyper-V clusters are "legacy". In practice that narrative does not match reality for a significant group of customers. SAN-attached Hyper-V in 2026 is a rational, supported, and in many scenarios financially sensible choice.</p>
-        <p class="lede">This article is the honest comparison between the three storage architectures you can choose for a Hyper-V cluster in 2026. SAN-attached (FC, iSCSI, or Shared SAS), Storage Spaces Direct (S2D) on Windows Server, and Azure Local. Which fits which situation, and what trade-offs do you implicitly take when picking one of the three.</p>
+        <p class="lede">This article is the no-nonsense comparison between the three storage architectures you can choose for a Hyper-V cluster in 2026. SAN-attached (FC, iSCSI, or Shared SAS), Storage Spaces Direct (S2D) on Windows Server, and Azure Local. Which fits which situation, and what trade-offs do you implicitly take when picking one of the three.</p>
 
         <div class="toc">
           <div class="toc-title">In this article</div>
@@ -206,7 +206,7 @@
             <li><a href="#en-2">When SAN is still the right choice</a></li>
             <li><a href="#en-3">When S2D on Windows Server fits</a></li>
             <li><a href="#en-4">When Azure Local is the right jump</a></li>
-            <li><a href="#en-5">Cost comparison, honestly across the full lifecycle</a></li>
+            <li><a href="#en-5">Cost comparison across the full lifecycle</a></li>
             <li><a href="#en-6">Performance, not just IOPS but latency profiles too</a></li>
             <li><a href="#en-7">Operational reality, what management actually demands</a></li>
             <li><a href="#en-8">Migration paths between the three</a></li>
@@ -270,7 +270,7 @@
 
         <p>For the full readiness assessment specific to Azure Local, see the <!--LINK:azure-local-migration-readiness--><a href="azure-local-migration-readiness.html">Azure Local migration readiness checklist</a><!--/LINK:azure-local-migration-readiness--> article.</p>
 
-        <h2 id="en-5">5. Cost comparison, honestly across the full lifecycle</h2>
+        <h2 id="en-5">5. Cost comparison across the full lifecycle</h2>
         <p>Marketing comparisons between storage architectures are notoriously skewed. The table below is what we use in CloudLabs assessments as a first-order estimate for a typical four-node Hyper-V cluster with 128 cores total and 200 TB usable storage. Numbers are relative indication, exact amounts vary widely by region and vendor.</p>
 
         <table>
@@ -420,7 +420,7 @@
         <div class="meta">Door Hans Vredevoort · 15 mei 2026 · 15 minuten leestijd · Storage</div>
 
         <p class="lede">De meeste marketing in 2026 vertelt je dat hyperconverged het antwoord is. Microsoft promoot Azure Local, vendors promoten hun HCI-stack, en op conferenties hoor je dat SAN-gebaseerde Hyper-V clusters "legacy" zijn. In de praktijk klopt dat verhaal voor een aanzienlijke groep klanten niet. SAN-attached Hyper-V is in 2026 een rationele, ondersteunde, en in veel scenario's financieel verstandige keuze.</p>
-        <p class="lede">Dit artikel is de eerlijke vergelijking tussen de drie storage-architecturen die je in 2026 kunt kiezen voor een Hyper-V cluster. SAN-attached (FC, iSCSI of Shared SAS), Storage Spaces Direct (S2D) op Windows Server, en Azure Local. Welke past bij welke situatie, en welke trade-offs neem je impliciet wanneer je voor één van de drie kiest.</p>
+        <p class="lede">Dit artikel is de nuchtere vergelijking tussen de drie storage-architecturen die je in 2026 kunt kiezen voor een Hyper-V cluster. SAN-attached (FC, iSCSI of Shared SAS), Storage Spaces Direct (S2D) op Windows Server, en Azure Local. Welke past bij welke situatie, en welke trade-offs neem je impliciet wanneer je voor één van de drie kiest.</p>
 
         <div class="toc">
           <div class="toc-title">In dit artikel</div>
@@ -429,7 +429,7 @@
             <li><a href="#nl-2">Wanneer SAN nog steeds de juiste keuze is</a></li>
             <li><a href="#nl-3">Wanneer S2D op Windows Server past</a></li>
             <li><a href="#nl-4">Wanneer Azure Local de juiste sprong is</a></li>
-            <li><a href="#nl-5">Kostenvergelijking, eerlijk over de hele lifecycle</a></li>
+            <li><a href="#nl-5">Kostenvergelijking over de hele lifecycle</a></li>
             <li><a href="#nl-6">Performance, niet alleen IOPS maar ook latency-profielen</a></li>
             <li><a href="#nl-7">Operationele realiteit, wat het beheer werkelijk vraagt</a></li>
             <li><a href="#nl-8">Migratie-paden tussen de drie</a></li>
@@ -493,7 +493,7 @@
 
         <p>Voor de volledige readiness-assessment specifiek voor Azure Local, zie het <!--LINK:azure-local-migration-readiness--><a href="azure-local-migration-readiness.html">Azure Local migratie readiness checklist</a><!--/LINK:azure-local-migration-readiness--> artikel.</p>
 
-        <h2 id="nl-5">5. Kostenvergelijking, eerlijk over de hele lifecycle</h2>
+        <h2 id="nl-5">5. Kostenvergelijking over de hele lifecycle</h2>
         <p>Marketing-vergelijkingen tussen storage-architecturen zijn berucht ongelijk. Onderstaande tabel is wat wij in CloudLabs-assessments hanteren als eerste-orde schatting voor een typische four-node Hyper-V cluster met 128 cores totaal en 200 TB usable storage. Cijfers zijn relatieve indicatie, exacte bedragen variëren sterk per regio en per vendor.</p>
 
         <table>
@@ -656,7 +656,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.7</span>
+    <span class="brand-version">v0.3.8</span>
   </footer>
 
 </div>
