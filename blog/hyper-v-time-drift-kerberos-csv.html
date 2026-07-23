@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.5 · Blog · Time Drift in Hyper-V Clusters -->
+<!-- CloudLabs · v0.3.6 · Blog · Time Drift in Hyper-V Clusters -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -15,7 +15,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://cldlbs.com/blog/hyper-v-time-drift-kerberos-csv.html">
 <meta property="og:title" content="Time Drift in Hyper-V Clusters: The Silent Killer of Kerberos and CSV">
-<meta property="og:description" content="Why clock skew between Hyper-V cluster nodes breaks Kerberos and CSV — and how to fix it.">
+<meta property="og:description" content="Why clock skew between Hyper-V cluster nodes breaks Kerberos and CSV, and how to fix it.">
 <meta property="og:image" content="https://cldlbs.com/images/cluster.jpg">
 <meta property="article:published_time" content="2026-05-28">
 <meta property="article:author" content="Hans Vredevoort">
@@ -29,7 +29,7 @@
   "@context":"https://schema.org",
   "@type":"BlogPosting",
   "headline":"Time Drift in Hyper-V Clusters: The Silent Killer of Kerberos and CSV",
-  "description":"Why clock skew between Hyper-V cluster nodes breaks Kerberos, cluster heartbeats and Live Migration — with the w32time hierarchy, PDC emulator config, drift detection and remediation playbook.",
+  "description":"Why clock skew between Hyper-V cluster nodes breaks Kerberos, cluster heartbeats and Live Migration, with the w32time hierarchy, PDC emulator config, drift detection and remediation playbook.",
   "image":"https://cldlbs.com/images/cluster.jpg",
   "datePublished":"2026-05-28",
   "dateModified":"2026-05-28",
@@ -674,7 +674,7 @@ foreach ($peer in $nodes | Where-Object {$_ -ne $baseline}) {
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.5</span>
+    <span class="brand-version">v0.3.6</span>
   </footer>
 
 </div>

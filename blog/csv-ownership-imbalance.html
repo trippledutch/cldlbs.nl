@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.4.7 · Blog · CSV Ownership Imbalance -->
+<!-- CloudLabs · v0.4.8 · Blog · CSV Ownership Imbalance -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -15,7 +15,7 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://cldlbs.com/blog/csv-ownership-imbalance.html">
 <meta property="og:title" content="CSV Ownership Imbalance in Hyper-V Clusters: Causes and Fixes">
-<meta property="og:description" content="Why CSV ownership drifts, the measured impact on Hyper-V workloads, and how to keep CSVs balanced — by CloudLabs.">
+<meta property="og:description" content="Why CSV ownership drifts, the measured impact on Hyper-V workloads, and how to keep CSVs balanced, by CloudLabs.">
 <meta property="og:image" content="https://cldlbs.com/images/cluster.jpg">
 <meta property="article:published_time" content="2026-06-23">
 <meta property="article:author" content="Hans Vredevoort">
@@ -230,15 +230,15 @@
         <p>On a four-node Hyper-V cluster running an average VDI workload, CloudLabs recently measured the impact during a Hyper-V Cluster Health Check.</p>
         <p>Workload: 220 VDI desktops, mix of boot storm and steady state. Cluster: 4 × Dell R7625, S2D, all-NVMe, 25 GbE storage.</p>
 
-<pre><code>State A — CSVs balanced (3 per node, 12 CSVs total)
+<pre><code>State A: CSVs balanced (3 per node, 12 CSVs total)
   Average read latency:  0.62 ms
   P99 read latency:       2.1 ms
-  Coordinator CPU:        5–8% per node
+  Coordinator CPU:        5-8% per node
 
-State B — One node owns all 12 CSVs (post-patch, no rebalance)
+State B: One node owns all 12 CSVs (post-patch, no rebalance)
   Average read latency:  1.08 ms
   P99 read latency:       9.4 ms (4.5x worse)
-  Coordinator CPU:       22–28% on the owner
+  Coordinator CPU:       22-28% on the owner
   Storage cluster network: saturated during boot storm</code></pre>
 
         <p>In State B the cluster was technically healthy. Nothing alarmed. The only user-side symptom was complaints about login times, which the ops team was investigating under the working hypothesis of a network problem in the VDI farm. The fix took eight minutes.</p>
@@ -427,15 +427,15 @@ Get-ClusterSharedVolume | ForEach-Object {
         <p>Op een four-node Hyper-V cluster met een gemiddelde VDI-workload heeft CloudLabs in een recente Hyper-V Cluster Health Check de impact gemeten.</p>
         <p>Workload: 220 VDI-desktops, mix van boot storm en steady state. Cluster: 4 × Dell R7625, S2D, all-NVMe, 25 GbE storage.</p>
 
-<pre><code>State A — CSV's gebalanceerd (3 per node, 12 CSV's totaal)
+<pre><code>State A: CSV's gebalanceerd (3 per node, 12 CSV's totaal)
   Gemiddelde read-latency:  0.62 ms
   P99 read-latency:          2.1 ms
-  Coordinator CPU:           5–8% per node
+  Coordinator CPU:           5-8% per node
 
-State B — Eén node bezit alle 12 CSV's (post-patch, geen rebalance)
+State B: Eén node bezit alle 12 CSV's (post-patch, geen rebalance)
   Gemiddelde read-latency:  1.08 ms
   P99 read-latency:          9.4 ms (4.5x slechter)
-  Coordinator CPU:          22–28% op de eigenaar
+  Coordinator CPU:          22-28% op de eigenaar
   Storage-clusternetwerk:    verzadigd tijdens boot storm</code></pre>
 
         <p>Het cluster was in State B technisch gezond. Niets alarmeerde. Het enige symptoom aan gebruikerszijde was klachten over inlogtijden, die het ops-team aan het onderzoeken was onder de werkhypothese dat er een netwerkprobleem in de VDI-farm zat. De fix kostte acht minuten.</p>
@@ -599,7 +599,7 @@ Get-ClusterSharedVolume | ForEach-Object {
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.4.7</span>
+    <span class="brand-version">v0.4.8</span>
   </footer>
 
 </div>
