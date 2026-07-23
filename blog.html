@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.4.13 · Blog -->
+<!-- CloudLabs · v0.4.14 · Blog -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -108,6 +108,8 @@
   .bf-search input{background:transparent;border:0;outline:none;color:var(--ink);font-family:var(--body);font-size:13px;width:150px}
   .bf-search input::placeholder{color:var(--ink-faint)}
   .blog-empty{color:var(--ink-faint);font-size:14.5px;margin-top:22px}
+  .bf-searchrow{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+  .bf-count{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-faint)}
   @media(max-width:560px){.bf-search{margin-left:0;width:100%}.bf-search input{width:100%}}
 </style>
 </head>
@@ -164,9 +166,12 @@
 
     <div class="blog-filter" role="group" aria-label="Filter articles">
       <div id="blogCats" class="bf-cats"></div>
-      <div class="bf-search">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-        <input id="blogSearch" type="search" autocomplete="off" spellcheck="false" aria-label="Search articles">
+      <div class="bf-searchrow">
+        <div class="bf-search">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input id="blogSearch" type="search" autocomplete="off" spellcheck="false" aria-label="Search articles">
+        </div>
+        <span id="blogCount" class="bf-count" aria-live="polite" hidden></span>
       </div>
     </div>
 
@@ -415,7 +420,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="book.html" lang="en">Book</a><a href="book.html" lang="nl">Boek</a>
     <a href="privacy.html" lang="en">Privacy</a><a href="privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.4.13</span>
+    <span class="brand-version">v0.4.14</span>
   </footer>
 
 </div>
@@ -435,7 +440,7 @@
 <script>
 (function(){
   var cards=[].slice.call(document.querySelectorAll('.blog-card'));
-  var catsEl=document.getElementById('blogCats'),searchEl=document.getElementById('blogSearch'),emptyEl=document.getElementById('blogEmpty');
+  var catsEl=document.getElementById('blogCats'),searchEl=document.getElementById('blogSearch'),emptyEl=document.getElementById('blogEmpty'),countEl=document.getElementById('blogCount');
   if(!catsEl||!searchEl)return;
   var doc=document.documentElement;
   var counts={},order=[];
@@ -459,12 +464,17 @@
       var vis=catOk&&qOk;c.classList.toggle('hide',!vis);if(vis)shown++;
     });
     if(emptyEl)emptyEl.hidden=shown>0;
+    if(countEl){
+      var filtering=terms.length>0||activeCat!=='all';
+      if(filtering&&shown>0){var nl=doc.getAttribute('data-lang')==='nl';var unit=nl?(shown===1?'blog':'blogs'):(shown===1?'blog':'blogs');countEl.textContent=(nl?'Gevonden in ':'Found in ')+shown+' '+unit;countEl.hidden=false;}
+      else countEl.hidden=true;
+    }
   }
   btns.forEach(function(b){b.addEventListener('click',function(){btns.forEach(function(x){x.classList.remove('active')});b.classList.add('active');activeCat=b.getAttribute('data-filter');apply();});});
   searchEl.addEventListener('input',apply);
   function setPh(){searchEl.placeholder=doc.getAttribute('data-lang')==='nl'?'Zoek in artikelen...':'Search articles...';}
   setPh();
-  document.querySelectorAll('.lang-toggle button').forEach(function(b){b.addEventListener('click',function(){setTimeout(setPh,0);});});
+  document.querySelectorAll('.lang-toggle button').forEach(function(b){b.addEventListener('click',function(){setTimeout(function(){setPh();apply();},0);});});
 })();
 </script>
 </body>
