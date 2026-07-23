@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.2.1 · FAQ -->
+<!-- CloudLabs · v0.2.3 · FAQ -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -39,7 +39,12 @@
     {
       "@type":"Question",
       "name":"What do I receive at the end?",
-      "acceptedAnswer":{"@type":"Answer","text":"You receive a customer-facing .docx report with findings ranked by severity, an action list, and optionally the raw PowerShell inventory output. Reports are delivered in Dutch or English, whichever you prefer."}
+      "acceptedAnswer":{"@type":"Answer","text":"A customer-facing .docx report with findings ranked by severity and recommended remediation steps. On a follow-up measurement you also receive a delta report and a remaining-risk overview with a risk trend chart. As-Built system documentation and, after an incident, a Root Cause Analysis are available as separate deliverables. On request: an action list and the raw PowerShell inventory output. Reports are delivered in Dutch or English."}
+    },
+    {
+      "@type":"Question",
+      "name":"How often do you re-measure?",
+      "acceptedAnswer":{"@type":"Answer","text":"A health check is not a one-off. After remediation each follow-up round re-runs the same read-only measurement and reports the delta plus a risk trend chart, so progress is measured, not asserted. Two or three rounds a year is a common rhythm."}
     },
     {
       "@type":"Question",
@@ -76,7 +81,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=0.4.7">
+<link rel="stylesheet" href="style.css?v=0.4.8">
 <style>
   .faq-list{margin-top:24px;display:flex;flex-direction:column;gap:6px;max-width:80ch}
   .faq-item{border:1px solid var(--line);border-radius:10px;overflow:hidden;transition:border-color .2s}
@@ -117,6 +122,7 @@
 <a class="skip-link" href="#main-content"><span lang="en">Skip to content</span><span lang="nl">Naar inhoud</span></a>
 <div class="app">
 
+  <div class="topbar">
   <header>
     <a class="brand" href="index.html">
       <span class="word">
@@ -149,6 +155,7 @@
     <a href="book.html"><span class="n">08</span><span lang="en">Book</span><span lang="nl">Boek</span></a>
     <a href="faq.html" aria-current="page"><span class="n">09</span><span lang="en">FAQ</span><span lang="nl">FAQ</span></a>
   </nav>
+  </div>
   </div>
 
   <main id="main-content">
@@ -192,7 +199,7 @@
           </button>
           <div class="faq-a" role="region">
             <div class="faq-a-inner">
-              Read-only access to the Hyper-V hosts and cluster is sufficient for inventory and analysis. For remediation steps you will share a session so that commands are always executed by someone on your side. Credentials are never stored.
+              Read-only access to the Hyper-V hosts and cluster is sufficient for the core inventory and analysis. Broader scope adds read-only accounts where relevant: out-of-band (BMC) for the server hardware, the storage array, the switch fabric, and Azure ARM (Reader) for Azure Local. For remediation steps you will share a session so that commands are always executed by someone on your side. Credentials are never stored.
             </div>
           </div>
         </div>
@@ -240,7 +247,19 @@
           </button>
           <div class="faq-a" role="region">
             <div class="faq-a-inner">
-              A customer-facing <strong>.docx report</strong> with findings ranked by severity and recommended remediation steps. On request: an action list (plain text, ready to paste into your ticketing system) and the raw PowerShell inventory output. Reports are delivered in Dutch or English, whichever you prefer.
+              A customer-facing <strong>.docx report</strong> with findings ranked by severity and recommended remediation steps. On a follow-up measurement you also receive a <strong>delta report</strong> and a <strong>remaining-risk overview with a risk trend chart</strong>. <strong>As-Built system documentation</strong> and, after an incident, a <strong>Root Cause Analysis</strong> are available as separate deliverables. On request: an action list (plain text, ready to paste into your ticketing system) and the raw PowerShell inventory output. Reports are delivered in Dutch or English, whichever you prefer.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" data-cat="scope">
+          <button class="faq-q" aria-expanded="false">
+            <span>How often do you re-measure?</span>
+            <span class="chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              A health check is not a one-off. After remediation each follow-up round re-runs the same read-only measurement and reports the delta plus a risk trend chart, so progress is measured, not asserted. Two or three rounds a year is a common rhythm.
             </div>
           </div>
         </div>
@@ -325,7 +344,7 @@
           </button>
           <div class="faq-a" role="region">
             <div class="faq-a-inner">
-              Leestoegang tot de Hyper-V-hosts en het cluster is voldoende voor inventarisatie en analyse. Bij herstelwerkzaamheden werkt u in een gedeelde sessie, zodat commando's altijd door iemand aan uw kant worden uitgevoerd. Inloggegevens worden nooit opgeslagen.
+              Leestoegang tot de Hyper-V-hosts en het cluster is voldoende voor de kern-inventarisatie en -analyse. Bij bredere scope komen er waar relevant extra leesaccounts bij: out-of-band (BMC) voor de serverhardware, de storage array, de switch fabric, en Azure ARM (Reader) voor Azure Local. Bij herstelwerkzaamheden werkt u in een gedeelde sessie, zodat commando's altijd door iemand aan uw kant worden uitgevoerd. Inloggegevens worden nooit opgeslagen.
             </div>
           </div>
         </div>
@@ -373,7 +392,19 @@
           </button>
           <div class="faq-a" role="region">
             <div class="faq-a-inner">
-              Een klantgericht <strong>.docx-rapport</strong> met bevindingen op volgorde van ernst en aanbevolen herstelstappen. Op verzoek: een actielijst (platte tekst, klaar om in uw ticketsysteem te plakken) en de ruwe PowerShell-inventarisoutput. Rapporten worden geleverd in het Nederlands of Engels, naar uw voorkeur.
+              Een klantgericht <strong>.docx-rapport</strong> met bevindingen op volgorde van ernst en aanbevolen herstelstappen. Bij een vervolgmeting ontvangt u ook een <strong>delta-rapport</strong> en een <strong>restrisico-overzicht met een risk trend chart</strong>. <strong>As-Built systeemdocumentatie</strong> en, na een incident, een <strong>Root Cause Analysis</strong> zijn los te bestellen. Op verzoek: een actielijst (platte tekst, klaar om in uw ticketsysteem te plakken) en de ruwe PowerShell-inventarisoutput. Rapporten worden geleverd in het Nederlands of Engels, naar uw voorkeur.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item" data-cat="scope">
+          <button class="faq-q" aria-expanded="false">
+            <span>Hoe vaak wordt er hermeten?</span>
+            <span class="chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="faq-a" role="region">
+            <div class="faq-a-inner">
+              Een health check is geen eenmalige actie. Na herstel draait elke vervolgronde dezelfde read-only meting opnieuw en rapporteert de delta plus een risk trend chart, zodat voortgang wordt gemeten en niet beweerd. Twee of drie rondes per jaar is een gebruikelijk ritme.
             </div>
           </div>
         </div>
@@ -439,7 +470,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="book.html" lang="en">Book</a><a href="book.html" lang="nl">Boek</a>
     <a href="privacy.html" lang="en">Privacy</a><a href="privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.2.1</span>
+    <span class="brand-version">v0.2.3</span>
   </footer>
 
 </div>

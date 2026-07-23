@@ -79,10 +79,10 @@ body::after{
 .app{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:0 env(safe-area-inset-right) 0 env(safe-area-inset-left)}
 
 /* Header */
+.topbar{position:sticky;top:0;z-index:100;background:var(--bg)}
 header{
   display:flex;align-items:center;gap:18px;padding:16px 24px 12px;
   border-bottom:1px solid var(--line);
-  position:sticky;top:0;z-index:100;
   background:rgba(10,16,36,.85);backdrop-filter:blur(14px);
 }
 .brand{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink)}
