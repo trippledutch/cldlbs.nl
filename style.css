@@ -1,4 +1,4 @@
-/* CloudLabs · shared stylesheet · v0.4.7 */
+/* CloudLabs · shared stylesheet · v0.4.8 */
 :root{
   --bg:#0a1024;--bg-2:#0f1832;--panel:#121d3a;--panel-2:#162345;
   --line:rgba(120,160,255,.14);--line-strong:rgba(120,160,255,.28);
@@ -434,6 +434,7 @@ html[data-lang="nl"] [lang="en"]{display:none}
 /* Full-text search */
 .search-btn{appearance:none;background:transparent;border:1px solid var(--line);color:var(--ink-dim);width:32px;height:30px;border-radius:8px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;transition:color .15s,border-color .15s}
 .search-btn:hover{color:var(--cyan);border-color:var(--cyan)}
+mark.search-hl{background:var(--cyan);color:#062032;border-radius:2px;padding:0 1px;box-shadow:0 0 0 1px rgba(95,227,255,.45)}
 .search-overlay{position:fixed;inset:0;z-index:10050;background:rgba(5,8,20,.8);backdrop-filter:blur(4px);display:flex;justify-content:center;align-items:flex-start;padding:12vh 20px 20px}
 .search-overlay[hidden]{display:none}
 .search-panel{width:100%;max-width:640px}

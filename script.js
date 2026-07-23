@@ -1,4 +1,4 @@
-/* CloudLabs · shared script · v0.4.8 */
+/* CloudLabs · shared script · v0.4.9 */
 (function(){
   /* Mobile nav overflow fade */
   var navEl  = document.querySelector('nav.tabs');
@@ -306,12 +306,69 @@
       });
       hits.sort(function(a,b){ return b.score - a.score; });
       if(!hits.length){ results.innerHTML = '<div class="sr-empty">' + (nl ? 'Geen resultaten' : 'No results') + '</div>'; return; }
+      var qs = encodeURIComponent(q);
       results.innerHTML = hits.slice(0,8).map(function(h){
-        return '<a class="sr-item" href="' + base + h.e.u + '"><span class="sr-title">' + esc(h.title) + '</span>'
+        var u = base + h.e.u, hash = '', hi = u.indexOf('#');
+        if(hi >= 0){ hash = u.slice(hi); u = u.slice(0, hi); }
+        u += (u.indexOf('?') >= 0 ? '&' : '?') + 'q=' + qs + hash;
+        return '<a class="sr-item" href="' + u + '"><span class="sr-title">' + esc(h.title) + '</span>'
           + (h.e.s ? '<span class="sr-sec">' + esc(h.e.s) + '</span>' : '')
           + '<span class="sr-snip">' + snippet(h.e.x, terms) + '</span></a>';
       }).join('');
     }
     input.addEventListener('input', function(){ load(function(){ render(input.value.trim()); }); });
+  })();
+
+  /* Highlight the search term after arriving from a search result (?q=) */
+  (function(){
+    var q;
+    try{ q = new URLSearchParams(location.search).get('q'); }catch(e){ return; }
+    if(!q) return;
+    var terms = q.toLowerCase().split(/\s+/).filter(Boolean);
+    if(!terms.length) return;
+    var root = document.getElementById('main-content') || document.querySelector('.article') || document.body;
+    var re = new RegExp('(' + terms.map(function(t){ return t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }).join('|') + ')', 'gi');
+    function hidden(node){
+      for(var el = node.parentElement; el && el !== root.parentNode; el = el.parentElement){
+        var s = getComputedStyle(el);
+        if(s.display === 'none' || s.visibility === 'hidden') return true;
+      }
+      return false;
+    }
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function(n){
+        if(!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        var tag = n.parentNode && n.parentNode.nodeName;
+        if(tag === 'SCRIPT' || tag === 'STYLE' || tag === 'MARK') return NodeFilter.FILTER_REJECT;
+        re.lastIndex = 0;
+        return re.test(n.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    var targets = [];
+    while(walker.nextNode()) targets.push(walker.currentNode);
+    var firstVisible = null;
+    targets.forEach(function(node){
+      var vis = !hidden(node), txt = node.nodeValue, frag = document.createDocumentFragment(), last = 0, m;
+      re.lastIndex = 0;
+      while((m = re.exec(txt))){
+        if(m.index > last) frag.appendChild(document.createTextNode(txt.slice(last, m.index)));
+        var mk = document.createElement('mark');
+        mk.className = 'search-hl';
+        mk.textContent = m[0];
+        frag.appendChild(mk);
+        if(!firstVisible && vis) firstVisible = mk;
+        last = m.index + m[0].length;
+        if(m.index === re.lastIndex) re.lastIndex++;
+      }
+      if(last < txt.length) frag.appendChild(document.createTextNode(txt.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    });
+    if(firstVisible){
+      setTimeout(function(){ firstVisible.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 60);
+    }
+    try{
+      var u = new URL(location.href); u.searchParams.delete('q');
+      history.replaceState(null, '', u.pathname + u.search + u.hash);
+    }catch(e){}
   })();
 })();
