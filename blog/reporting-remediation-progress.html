@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.4.4 · Blog · How we Follow Up on the Hyper-V Cluster Health Check -->
+<!-- CloudLabs · v0.4.8 · Blog · How we Follow Up on the Hyper-V Cluster Health Check -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -32,12 +32,12 @@
   "description":"A Hyper-V cluster health check is not a one-shot PDF. How CloudLabs reports remediation progress across measurement rounds with a delta report, a remaining-risk document, and a risk trend chart.",
   "image":"https://cldlbs.com/images/cluster.jpg",
   "datePublished":"2026-06-18",
-  "dateModified":"2026-06-18",
+  "dateModified":"2026-07-23",
   "author":{"@type":"Person","name":"Hans Vredevoort","url":"https://cldlbs.com/about.html","jobTitle":"Hyper-V & Cluster Consultant","worksFor":{"@type":"Organization","name":"CloudLabs"}},
   "publisher":{"@type":"Organization","name":"CloudLabs","url":"https://cldlbs.com/","logo":{"@type":"ImageObject","url":"https://cldlbs.com/favicon.png"}},
   "mainEntityOfPage":{"@type":"WebPage","@id":"https://cldlbs.com/blog/reporting-remediation-progress.html"},
   "articleSection":"Cluster Health",
-  "keywords":"Health Check, Remediation, Progress Report, Delta Report, Risk Trend, Re-measurement, Hyper-V, Failover Cluster"
+  "keywords":"Health Check, Remediation, Progress Report, Delta Report, Risk Trend, Follow-up measurement, Hyper-V, Failover Cluster"
 }
 </script>
 <script type="application/ld+json">
@@ -59,27 +59,27 @@
     {
       "@type":"Question",
       "name":"How often do you issue a progress report during remediation?",
-      "acceptedAnswer":{"@type":"Answer","text":"Once per measurement round, which in practice means after every batch of fixes that is large enough to change the risk picture. On a typical engagement that is every two to four weeks. Each round re-runs the same read-only inventory and validation, so every report is built on a fresh measurement, not on a status meeting."}
+      "acceptedAnswer":{"@type":"Answer","text":"Once per measurement round, which in practice means after every batch of fixes that is large enough to change the risk picture. On a typical engagement that is every few months, though the customer can ask for a higher frequency, especially when there are many issues to work through. Each round re-runs the same read-only inventory and validation, so every report is built on a fresh measurement, not on a status meeting."}
     },
     {
       "@type":"Question",
       "name":"What is the difference between a finding marked Resolved and one marked Lowered?",
-      "acceptedAnswer":{"@type":"Answer","text":"Resolved means the root cause is actually fixed and re-measured as gone. Lowered means the risk is reduced but the cause is still present, for example a workload isolated by VLAN instead of fully removed, or a finding mitigated but not eliminated. Mitigation moves a finding down a level. It does not close it. Keeping that line strict is what makes the trend chart honest."}
+      "acceptedAnswer":{"@type":"Answer","text":"Resolved means the root cause is actually fixed and measured as gone in the follow-up measurement. Lowered means the risk is reduced but the cause is still present, for example a workload isolated by VLAN instead of fully removed, or a finding mitigated but not eliminated. Mitigation moves a finding down a level. It does not close it. Keeping that line strict is what makes the trend chart honest."}
     },
     {
       "@type":"Question",
       "name":"Why keep a separate remaining-risk document instead of one big report?",
-      "acceptedAnswer":{"@type":"Answer","text":"The full report carries history, resolved items and context, which is what you want for the audit trail. The remaining-risk document carries only what is still open, ordered by severity, which is what the team actually works from in the next round. Two audiences, two documents. The full report is for the record, the remaining-risk view is the to-do list."}
+      "acceptedAnswer":{"@type":"Answer","text":"The full report carries history, resolved items and context, which is what you want for the audit trail. The remaining-risk document carries only what is still open, ordered by risk, which is what the team actually works from in the next round. Two audiences, two documents. The full report is for the record, the remaining-risk view is the to-do list."}
     },
     {
       "@type":"Question",
       "name":"How do you avoid cherry-picking only the improvements?",
-      "acceptedAnswer":{"@type":"Answer","text":"Every round reports reopened and newly discovered findings alongside the resolved ones. A finding can move back up a level if a fix introduced a side effect, and that reopening is shown with the same weight as a closure. The trend chart counts every severity level on every version, so a regression is visible as a bar that grew, not buried in prose."}
+      "acceptedAnswer":{"@type":"Answer","text":"Every round reports reopened and newly discovered findings alongside the resolved ones. A finding can move back up a level if a fix introduced a side effect, and that reopening is shown with the same weight as a closure. The trend chart counts every risk level on every version, so a regression is visible as a bar that grew, not buried in prose."}
     },
     {
       "@type":"Question",
       "name":"Can the customer see the trend across the whole engagement?",
-      "acceptedAnswer":{"@type":"Answer","text":"Yes. The risk trend chart plots the count per severity level across every report version, as stacked bars with a trend line per level. One image shows whether High Risk is going to zero and whether anything is creeping back up. It is the slide management asks for, and it is generated from the same numbers that drive the detailed reports."}
+      "acceptedAnswer":{"@type":"Answer","text":"Yes. The risk trend chart plots the count per risk level across every report version, as stacked bars with a trend line per level. One image shows whether High Risk is going to zero and whether anything is creeping back up. It is the slide management asks for, and it is generated from the same numbers that drive the detailed reports."}
     }
   ]
 }
@@ -145,6 +145,11 @@
   .chart-figure img{display:block;width:100%;height:auto;cursor:zoom-in}
   .chart-figure figcaption{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.04em;margin-top:8px}
   .chart-figure figcaption a{display:inline;border:0;color:var(--cyan)}
+  .lightbox{position:fixed;inset:0;z-index:10000;background:rgba(5,8,20,.94);display:flex;align-items:center;justify-content:center;padding:30px}
+  .lightbox[hidden]{display:none}
+  .lightbox img{max-width:min(1400px,94vw);max-height:92vh;width:auto;height:auto;border-radius:8px;background:#fff;box-shadow:0 24px 80px rgba(0,0,0,.7)}
+  .lb-close{position:fixed;top:18px;right:18px;z-index:10001;width:44px;height:44px;border-radius:50%;border:1px solid var(--line-strong);background:rgba(10,16,36,.85);color:var(--ink);font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s}
+  .lb-close:hover{border-color:var(--cyan);color:var(--cyan)}
 </style>
 </head>
 <body>
@@ -201,76 +206,89 @@
         <div class="meta">By Hans Vredevoort · 18 June 2026 · 11 minute read · Cluster Health</div>
 
         <p class="lede">A Hyper-V cluster health check that ends with a single PDF is a snapshot, and a snapshot ages the moment you start fixing things. Real remediation runs over weeks, in rounds, and the value of the engagement is decided by whether everyone can see what moved, what is still open, and which way the trend is heading. That is a reporting discipline, not a one-off document, and this article is about how to run it.</p>
-        <p class="lede">The pattern CloudLabs uses on every recurring health check has three artifacts that travel together: a delta report that says what changed and why, a remaining-risk document that is the working to-do list, and a risk trend chart that is the one-glance picture for management. None of them contains a customer name in this article. The mechanics are what transfer.</p>
+        <p class="lede">The pattern CloudLabs uses on every recurring health check has three connected building blocks: a delta report that, after a follow-up measurement, says what changed and why, a remaining-risk document that serves as the working to-do list, and a risk trend chart that shows management in one glance which way things are heading. None of them contains a customer name in this article. The mechanics are what transfer.</p>
 
         <div class="toc">
           <div class="toc-title">In this article</div>
           <ol>
             <li><a href="#en-1">Why one health check report is not enough</a></li>
-            <li><a href="#en-2">The three artifacts of a progress report</a></li>
-            <li><a href="#en-3">The delta report: what moved and why</a></li>
+            <li><a href="#en-2">The three building blocks of a progress report</a></li>
+            <li><a href="#en-3">The delta report: what changed and why</a></li>
             <li><a href="#en-4">The remaining-risk document: the working list</a></li>
             <li><a href="#en-5">The risk trend chart: the one-glance picture</a></li>
             <li><a href="#en-6">The discipline behind the colours</a></li>
-            <li><a href="#en-7">Re-measurement is what makes it honest</a></li>
+            <li><a href="#en-7">Follow-up measurement is what makes it objective</a></li>
             <li><a href="#en-8">Making it repeatable</a></li>
           </ol>
         </div>
 
         <h2 id="en-1">1. Why one health check report is not enough</h2>
-        <p>The first deliverable of a health check is a findings document: a numbered list of issues, each with a severity, evidence, and a recommendation. That document is correct on the day it ships and starts decaying immediately, because the whole point of delivering it is that someone now goes and fixes things. Two weeks later half the High Risk findings are closed, one fix turned out to have a side effect, the customer replaced a domain controller in the meantime, and the original PDF describes a cluster that no longer exists.</p>
+        <p>The first deliverable of a health check is a findings document: a numbered list of issues, each with a risk, evidence, and a recommendation. That document is correct on the day it ships and starts decaying immediately, because the whole point of delivering it is that someone now goes and fixes things. Two weeks later half the High Risk findings are closed, one fix turned out to have a side effect, the customer replaced a domain controller in the meantime, and the original PDF describes a cluster that no longer exists.</p>
         <p>You can handle that in two ways. You can re-issue the whole findings document every round, which buries the reader in unchanged text and makes it hard to see what actually happened between versions. Or you can report the delta: keep the baseline as the system of record, and on each round publish a focused document that says exactly what changed, plus a slimmed view of what is still open, plus a chart that shows the trajectory. The second approach is what keeps an engagement legible over six or eight weeks of work.</p>
         <p>The baseline findings document stays the anchor. Every later report references its finding numbers, so a reader can always trace a closure back to the original description. What changes round to round is the delta on top of it.</p>
 
-        <h2 id="en-2">2. The three artifacts of a progress report</h2>
+        <h2 id="en-2">2. The three building blocks of a progress report</h2>
         <p>A progress round produces three things, and they are deliberately separate because they serve three different readers.</p>
         <ul>
-          <li><strong>The delta report.</strong> For the record. Per finding, it states the old level, the new level, the reason for the move, and the evidence. It includes closures, downgrades, reopenings and new discoveries with equal weight. This is the document an auditor or a successor engineer reads to understand the history.</li>
-          <li><strong>The remaining-risk document.</strong> For the team doing the work. Only the still-open findings, ordered by severity, with the resolved and not-applicable items deliberately stripped out. This is the to-do list for the next round.</li>
-          <li><strong>The risk trend chart.</strong> For management. A single image: count per severity level across every report version, so the direction of travel is obvious without reading a word of prose.</li>
+          <li><strong>The delta report.</strong> For the record. Per finding, it states the old level, the new level, the reason for the move, and the evidence. It includes closures, downgrades, reopenings and new findings with equal weight. This is the document an auditor or a successor engineer reads to understand the history.</li>
+          <li><strong>The remaining-risk document.</strong> For the team doing the work. Only the still-open findings, ordered by risk, with the resolved and not-applicable items deliberately stripped out. This is the to-do list for the next round.</li>
+          <li><strong>The risk trend chart.</strong> For management. A single image: count per risk level across every report version, so the direction of travel is obvious without reading a word of prose.</li>
         </ul>
-        <p>Splitting them matters. If you fold everything into one file, the team working the list has to wade through resolved history, and management has to read engineering detail to find the one number they care about. Three artifacts, three audiences, generated from one set of measurements.</p>
+        <p>Splitting them matters. If you fold everything into one file, the team working the list has to wade through resolved history, and management has to read engineering detail to find the one number they care about. Three building blocks, three audiences, generated from one set of measurements.</p>
 
-        <h2 id="en-3">3. The delta report: what moved and why</h2>
-        <p>The delta report is built per finding, and every finding that moved gets a small block: its number, its title, the new severity badge, and a short "current situation" paragraph that cites the measurement that justifies the move. The categories of movement are fixed:</p>
+        <h2 id="en-3">3. The delta report: what changed and why</h2>
+        <p>The delta report is built per finding, and every finding that moved gets a small block: its number, its title, the new risk badge, and a short "current situation" paragraph that cites the measurement that justifies the move. The categories of movement are fixed:</p>
         <ul>
-          <li><strong>Resolved.</strong> The root cause is fixed and the re-measurement confirms it is gone. Example shape: a missing cumulative update is now installed on every node and the build numbers prove it, so the finding closes.</li>
+          <li><strong>Resolved.</strong> The root cause is fixed and the follow-up measurement confirms it is gone. Example shape: a missing cumulative update is now installed on every node and the build numbers prove it, so the finding closes.</li>
           <li><strong>Lowered.</strong> The risk is reduced but not eliminated. The finding stays open at a lower level with the residual risk named explicitly.</li>
           <li><strong>Reopened.</strong> A finding that was closed or low has moved back up, usually because a fix had a side effect or a benign-looking condition reappeared after maintenance. This is reported as prominently as a closure.</li>
           <li><strong>New.</strong> Something the latest measurement surfaced that was not in scope or not present before.</li>
         </ul>
-        <p>The honesty of the delta report lives in that "current situation" line. You do not write "patching done". You write what you measured: the validation run timestamp, the count of tests passed and the warnings that remain, and why the remaining warnings are benign or not. A reader who was not in the room can reconstruct the judgement from the evidence. That is the difference between a status update and a report.</p>
+        <p>The objectivity of the delta report lives in that "current situation" line. You do not write "patching done". You write what you measured: the validation run timestamp, the count of tests passed and the warnings that remain, and why the remaining warnings are benign or not. A reader who was not in the room can reconstruct the judgement from the evidence. That is the difference between a status update and a delta report.</p>
 
-        <p>An anonymised excerpt from a delta report shows the four movements in the report's own voice. The finding numbers and descriptions here are generic, the shape is the real thing:</p>
+        <p>An excerpt from a delta report, in the report's own voice. These findings are from the fictional Noorderlicht sample engagement (a demo environment, no customer data): two closures backed by follow-up measurement, an open finding that stayed at its level, and a new one that surfaced this round. The shape is exactly what a real delivery carries:</p>
 
-<pre><code>F12  Cumulative update missing on cluster nodes          HIGH -&gt; RESOLVED
-  Current situation: June CU installed on all nodes on 12 Jun; build numbers
-  verified after reboot. Root cause fixed. Finding closed.
+<pre><code>F01  HW / iDRAC firmware below the security-floor on all nodes   HIGH -&gt; RESOLVED
+  Current situation: plane D read of 16 Jun measures iDRAC9 7.10.70.00 on all
+  four nodes, above the 7.10.50.10 security-floor. Root cause fixed. Closed.
 
-F08  Storage headroom imbalance across nodes             HIGH -&gt; MEDIUM
-  Current situation: in-site failover headroom restored (busiest node
-  442 -&gt; 204 GB used); cross-site skew remains. Risk lowered, not closed.
+F09  SRV / WAC gateway two releases behind the go-forward line   MEDIUM (unchanged)
+  Current situation: gateway still at 2.4331.0, two releases behind. Update
+  planned in the August window. Stays open at MEDIUM.
 
-F20  CSV ownership skewed onto one node after patching    RESOLVED -&gt; LOW
-  Current situation: Cluster-Aware Updating left most CSVs owned by the
-  last-patched node. Re-balanced and re-confirmed; kept at LOW as a recurring
-  post-maintenance check rather than left closed.
+F33  SRV / Pending reboots on two nodes                          NEW -&gt; MEDIUM
+  Current situation: surfaced this round on AZLCL01N02 and N04 after the June
+  patch pass; not present at baseline. New finding, opened at MEDIUM.
 
-F31  Backup exclusion path no longer reachable           MEDIUM -&gt; RESOLVED
-  Current situation: workload decommissioned and removed; re-scan confirms
-  the path is gone, not merely unreachable. Closed.</code></pre>
+F07  HW / PSU power feed B dead on AZLCL01N03                     MEDIUM -&gt; RESOLVED
+  Current situation: both feeds measured live on the iDRAC of N03 (PSU1 and
+  PSU2 each about 210 W); redundancy restored. Closed.</code></pre>
 
-        <p>Each line carries its own justification: a closure rests on a verified build number, a downgrade names the residual risk, a reopening is stated openly, and a Resolved is only granted when the thing is gone rather than merely out of reach. Read together they let a reviewer audit every level change without attending a single meeting.</p>
+        <p>Each line carries its own justification: a closure rests on a re-measured version above the floor, an unchanged finding keeps its level with the reason it is still open, a new finding is opened at the level the measurement warrants, and a Resolved is only granted when the thing is measured gone rather than merely deployed. Read together they let a reviewer audit every level change without attending a single meeting.</p>
+
+        <figure class="chart-figure">
+          <a href="../images/toolchain-delta-status-en.webp" target="_blank" rel="noopener" aria-label="Open the full-size delta report page in a new tab">
+            <img src="../images/toolchain-delta-status-en.webp" alt="A delta report register page from the sample engagement: each finding with its before and after risk badge and a change verdict, several turned green RESOLVED after the follow-up measurement." loading="lazy" width="1000" height="1294">
+          </a>
+          <figcaption>Delta report register from the Noorderlicht sample: before and after level per finding, with the change verdict. <a href="../images/toolchain-delta-status-en.webp" target="_blank" rel="noopener">Open full size</a>.</figcaption>
+        </figure>
 
         <div class="callout">
           <strong>Field note</strong>
-          A finding is only allowed to change level on the strength of a measurement taken after the fix, never on the strength of "we deployed the change". The deploy is the action. The re-measurement is the evidence. The delta report cites the second, not the first.
+          A finding is only allowed to change level on the strength of a measurement taken after the fix, never on the strength of "we deployed the change". The deploy is the action. The follow-up measurement is the evidence. The delta report cites the second, not the first.
         </div>
 
         <h2 id="en-4">4. The remaining-risk document: the working list</h2>
         <p>The remaining-risk document is the delta report's opposite in spirit. The delta report is about history and is comprehensive. The remaining-risk document is about the present and is ruthless: it contains only the findings that are still open, ordered High then Medium then Low, and it deliberately drops everything that is resolved or not applicable, because a to-do list that includes finished work is noise.</p>
         <p>It is the document the customer's team actually opens during the next maintenance window. Each open finding carries its current measured numbers, not the baseline numbers, so a finding that was lowered from High to Medium shows the Medium-level reality and not the original alarm. Where a finding is partly resolved, for example a storage imbalance that is fixed on most volumes but not all, the document shows the per-item status so the remaining work is visible at the granularity of the work, not the granularity of the finding.</p>
         <p>Putting the trend chart at the top of this document, before the open findings, gives the reader the context before the detail: here is where we are, here is what is left. It is a small thing and it changes how the document reads.</p>
+
+        <figure class="chart-figure">
+          <a href="../images/blog-remaining-risks-en.webp" target="_blank" rel="noopener" aria-label="Open the full-size remaining-risk page in a new tab">
+            <img src="../images/blog-remaining-risks-en.webp" alt="A remaining-risk document page from the sample engagement: the trend chart at the top, then a summary table of only the still-open findings ordered MEDIUM then LOW, then the first Medium-risk finding in detail." loading="lazy" width="1100" height="1424">
+          </a>
+          <figcaption>Remaining-risk document from the Noorderlicht sample: trend chart first, then only the open findings ordered by risk. <a href="../images/blog-remaining-risks-en.webp" target="_blank" rel="noopener">Open full size</a>.</figcaption>
+        </figure>
 
         <div class="mid-cta">
           <p>If your last health check was a single PDF and the remediation since then lives in someone's head and a spreadsheet, you have no defensible picture of whether the cluster got better or just busier.</p>
@@ -279,50 +297,50 @@ F31  Backup exclusion path no longer reachable           MEDIUM -&gt; RESOLVED
         </div>
 
         <h2 id="en-5">5. The risk trend chart: the one-glance picture</h2>
-        <p>The chart is the artifact management remembers. It plots the count of findings per severity level across every report version, as a stacked bar per version with a trend line per level on top. One look answers the only two questions leadership asks: is High Risk going to zero, and is anything creeping back up.</p>
-        <p>An anonymised example of the shape, three measurement rounds across a multi-week engagement. Click the chart to enlarge it:</p>
+        <p>The chart is the piece management remembers. It plots the count of findings per risk level across every report version, as a stacked bar per version with a trend line per level on top. One look answers the only two questions leadership asks: is High Risk going to zero, and is anything creeping back up.</p>
+        <p>The chart below is from the fictional Noorderlicht sample engagement, three measurement rounds across a multi-week engagement. Click the chart to enlarge it:</p>
 
         <figure class="chart-figure">
-          <a href="../images/risk-trend-example.png" target="_blank" rel="noopener" aria-label="Open the full-size risk trend chart in a new tab">
-            <img src="../images/risk-trend-example.png" alt="Risk status development across three report versions: a stacked bar panel showing findings per risk level per version, and a trend-line panel per level. High Risk falls 11, 6, 1 while Resolved climbs 5, 10, 13 and Low rises 17, 19, 21." loading="lazy" width="1280" height="668">
+          <a href="../images/noorderlicht-risk-trend-en.png" target="_blank" rel="noopener" aria-label="Open the full-size risk trend chart in a new tab">
+            <img src="../images/noorderlicht-risk-trend-en.png" alt="Risk status development across three measurements from the Noorderlicht sample: a stacked bar panel showing findings per risk level per version, and a trend-line panel per level. High falls 3, 1, 0 while Resolved climbs 0, 5, 12 and Medium falls 11, 10, 5." loading="lazy" width="1300" height="690">
           </a>
-          <figcaption>Risk status development across three report versions. Left: distribution per version (stacked bars). Right: trend per severity level. <a href="../images/risk-trend-example.png" target="_blank" rel="noopener">Open full size</a>.</figcaption>
+          <figcaption>Risk status development across three measurements (Noorderlicht sample). Left: distribution per version (stacked bars). Right: trend per risk level. <a href="../images/noorderlicht-risk-trend-en.png" target="_blank" rel="noopener">Open full size</a>.</figcaption>
         </figure>
 
         <p>The same numbers in a table, for screen readers and quick reference:</p>
 
         <table class="risk-table">
           <thead>
-            <tr><th>Severity</th><th>Baseline</th><th>Round 1</th><th>Round 2</th></tr>
+            <tr><th>Risk</th><th>Baseline</th><th>Round 1</th><th>Round 2</th></tr>
           </thead>
           <tbody>
-            <tr><td><span class="badge b-high">HIGH</span></td><td>11</td><td>6</td><td>1</td></tr>
-            <tr><td><span class="badge b-med">MEDIUM</span></td><td>12</td><td>11</td><td>11</td></tr>
-            <tr><td><span class="badge b-low">LOW</span></td><td>17</td><td>19</td><td>21</td></tr>
-            <tr><td><span class="badge b-none">NONE</span></td><td>10</td><td>10</td><td>10</td></tr>
-            <tr><td><span class="badge b-res">RESOLVED</span></td><td>5</td><td>10</td><td>13</td></tr>
+            <tr><td><span class="badge b-high">HIGH</span></td><td>3</td><td>1</td><td>0</td></tr>
+            <tr><td><span class="badge b-med">MEDIUM</span></td><td>11</td><td>10</td><td>5</td></tr>
+            <tr><td><span class="badge b-low">LOW</span></td><td>6</td><td>5</td><td>4</td></tr>
+            <tr><td><span class="badge b-none">NONE</span></td><td>12</td><td>12</td><td>12</td></tr>
+            <tr><td><span class="badge b-res">RESOLVED</span></td><td>0</td><td>5</td><td>12</td></tr>
           </tbody>
         </table>
 
-        <p>Two things in that table are worth saying out loud, because they are the parts people get wrong. First, the Low count went <em>up</em> while the engagement was clearly succeeding. That is not a regression. It is High and Medium findings being lowered rather than closed, which is honest reporting: a mitigated risk drops a level, it does not vanish. Second, the Resolved count is its own column and only grows, because a finding that is genuinely fixed should never silently leave the report. It moves to Resolved and stays countable, so the trend cannot be gamed by deleting closed items.</p>
-        <p>Build the chart with the same severity colours used everywhere else in the reporting, so a reader who has seen one badge recognises the bar. High Risk red, Medium orange, Low blue, None grey, Resolved green. Consistency across the delta report, the remaining-risk document and the chart is what lets someone move between the three artifacts without re-learning the legend each time.</p>
+        <p>Three things in that table are worth saying out loud. First, High goes to zero across the three rounds, which is the headline management asks for, but it does not get there by findings vanishing: they move to Resolved and stay countable. Second, the Resolved count is its own column and only grows (0, 5, 12), because a finding that is genuinely fixed should never silently leave the report; keeping it visible is what stops the trend from being gamed by deleting closed items. Third, None holds flat at 12: those are the items that were checked and found in order at baseline and stay that way, the evidence of what was verified, not silence. The total findings count barely moves (32, 33, 33) while the risk inside it drains from red to green, and that is the whole point of counting every level on every version.</p>
+        <p>Build the chart with the same risk colours used everywhere else in the reporting, so a reader who has seen one badge recognises the bar. High Risk red, Medium orange, Low blue, None grey, Resolved green. Consistency across the delta report, the remaining-risk document and the chart is what lets someone move between the three building blocks without re-learning the legend each time.</p>
 
         <h2 id="en-6">6. The discipline behind the colours</h2>
         <p>A five-level taxonomy only works if the boundaries are defended. The two that get abused are the top and the bottom of the "good news" range, so they get explicit rules.</p>
-        <p><strong>Resolved versus Lowered.</strong> Resolved is reserved for a fixed and re-confirmed root cause. If the risk is merely contained, the finding is Lowered, not Resolved. A workload isolated behind a VLAN so that nothing reaches it any more is a real and valuable mitigation, but the underlying object still exists, so it is Low, not Resolved, until it is actually decommissioned. The absence of exposure from where you happen to be standing is not the same as the cause being gone. Holding that line is the single most important reporting decision in the whole engagement, because it is what stops the trend chart from flattering everyone.</p>
-        <p><strong>Reopened versus stayed-fixed.</strong> A finding that comes back gets reopened openly. After a maintenance round it is common for a benign-looking condition to reappear on every node, and the right move is to report it back into the list at the appropriate level with the explanation, not to quietly leave it closed because it was closed last round. The reader trusts the trend precisely because regressions show up in it.</p>
+        <p><strong>Resolved versus Lowered.</strong> Resolved is reserved for a fixed and re-confirmed root cause. If the risk is merely contained, the finding is Lowered, not Resolved. A workload isolated behind a VLAN so that nothing reaches it any more is a real and valuable mitigation, but the underlying object still exists, so it is Low, not Resolved, until the problem is genuinely resolved. The absence of exposure from where you happen to be standing is not the same as the cause being gone. Holding that line is the single most important reporting decision in the whole engagement, because it is what stops the trend chart from flattering everyone.</p>
+        <p><strong>Reopened versus stayed-fixed.</strong> A finding that comes back is reopened visibly. After a maintenance round it is common for a benign-looking condition to reappear on every node, and the right move is to report it back into the list at the appropriate level with the explanation, not to quietly leave it closed because it was closed last round. The reader trusts the trend precisely because regressions show up in it.</p>
 
-        <h2 id="en-7">7. Re-measurement is what makes it honest</h2>
-        <p>Every round starts the same way it did at baseline: the same read-only inventory script, run from the customer's own management server, plus a fresh cluster validation. Nothing in the progress report comes from a meeting or a recollection. A finding only moves on the strength of a measurement taken after the change, and the report cites that measurement by its run: the inventory file, the validation timestamp, the specific counter.</p>
-        <p>This also catches the moving parts that a status-update style of reporting misses. A domain controller replaced mid-engagement, a node that briefly fell out of the management subnet, a validation warning that was measured before the patch reboots and is stale by the next round. Because the measurement is re-run rather than remembered, the report describes the cluster as it is on the day it ships, not as it was when the work was scheduled.</p>
+        <h2 id="en-7">7. Follow-up measurement is what makes it objective</h2>
+        <p>Every round starts the same way it did at baseline: the same or an improved read-only inventory script, run from the customer's own management server, plus a fresh cluster validation. Nothing in the progress report comes from a meeting or a recollection. A finding only moves on the strength of a measurement taken after the change, and the report cites that measurement by its run: the inventory file, the validation timestamp, the specific counter.</p>
+        <p>This also catches the moving parts that a status-update style of reporting misses. A domain controller replaced mid-engagement, a node that briefly fell out of the management subnet, a validation warning that was measured before the patch reboots and is stale by the next round. Because the measurement is re-run rather than remembered, the report describes the cluster as it is on the day of the follow-up measurement, not as it was when the work was scheduled.</p>
         <p>The mechanics of that read-only inventory and the pre-flight that keeps it self-documenting are covered in <!--LINK:health-check-to-patch-night--><a href="health-check-to-patch-night.html">From Health Check to Patch Night: The Method at Work</a><!--/LINK:health-check-to-patch-night-->. The progress reporting in this article is the layer that sits on top of those measurements over multiple rounds.</p>
 
         <h2 id="en-8">8. Making it repeatable</h2>
-        <p>The reason to standardise the three artifacts is that the next round, and the next engagement, should not re-invent them. The pattern that holds up:</p>
+        <p>The reason to standardise the three building blocks is that the next round, and the next engagement, should not re-invent them. The pattern that holds up:</p>
         <ol>
           <li>Keep the baseline findings document as the system of record and never renumber its findings. Every later report references those numbers.</li>
           <li>Generate the delta report, the remaining-risk document and the trend chart from the same round of measurements, so the three can never disagree with each other.</li>
-          <li>Use one severity taxonomy and one colour set across all three, and defend the Resolved boundary strictly.</li>
+          <li>Use one risk taxonomy and one colour set across all three, and defend the Resolved boundary strictly.</li>
           <li>Put the trend chart at the top of the remaining-risk document so context precedes detail.</li>
           <li>Cite the run behind every level change, so the report is reconstructable by someone who was not there.</li>
         </ol>
@@ -334,19 +352,19 @@ F31  Backup exclusion path no longer reachable           MEDIUM -&gt; RESOLVED
           <h2>Frequently asked questions</h2>
 
           <div class="faq-q">How often do you issue a progress report during remediation?</div>
-          <p>Once per measurement round, which in practice means after every batch of fixes that is large enough to change the risk picture. On a typical engagement that is every two to four weeks. Each round re-runs the same read-only inventory and validation, so every report is built on a fresh measurement, not on a status meeting.</p>
+          <p>Once per measurement round, which in practice means after every batch of fixes that is large enough to change the risk picture. On a typical engagement that is every few months, though the customer can ask for a higher frequency, especially when there are many issues to work through. Each round re-runs the same read-only inventory and validation, so every report is built on a fresh measurement, not on a status meeting.</p>
 
           <div class="faq-q">What is the difference between a finding marked Resolved and one marked Lowered?</div>
-          <p>Resolved means the root cause is actually fixed and re-measured as gone. Lowered means the risk is reduced but the cause is still present, for example a workload isolated by VLAN instead of fully removed. Mitigation moves a finding down a level. It does not close it. Keeping that line strict is what makes the trend chart honest.</p>
+          <p>Resolved means the root cause is actually fixed and measured as gone in the follow-up measurement. Lowered means the risk is reduced but the cause is still present, for example a workload isolated by VLAN instead of fully removed. Mitigation moves a finding down a level. It does not close it. Keeping that line strict is what makes the trend chart honest.</p>
 
           <div class="faq-q">Why keep a separate remaining-risk document instead of one big report?</div>
-          <p>The full report carries history, resolved items and context, which is what you want for the audit trail. The remaining-risk document carries only what is still open, ordered by severity, which is what the team actually works from in the next round. Two audiences, two documents.</p>
+          <p>The full report carries history, resolved items and context, which is what you want for the audit trail. The remaining-risk document carries only what is still open, ordered by risk, which is what the team actually works from in the next round. Two audiences, two documents.</p>
 
           <div class="faq-q">How do you avoid cherry-picking only the improvements?</div>
-          <p>Every round reports reopened and newly discovered findings alongside the resolved ones. A finding can move back up a level if a fix introduced a side effect, and that reopening is shown with the same weight as a closure. The trend chart counts every severity level on every version, so a regression is visible as a bar that grew.</p>
+          <p>Every round reports reopened and newly discovered findings alongside the resolved ones. A finding can move back up a level if a fix introduced a side effect, and that reopening is shown with the same weight as a closure. The trend chart counts every risk level on every version, so a regression is visible as a bar that grew.</p>
 
           <div class="faq-q">Can the customer see the trend across the whole engagement?</div>
-          <p>Yes. The risk trend chart plots the count per severity level across every report version, as stacked bars with a trend line per level. One image shows whether High Risk is going to zero and whether anything is creeping back up. It is generated from the same numbers that drive the detailed reports.</p>
+          <p>Yes. The risk trend chart plots the count per risk level across every report version, as stacked bars with a trend line per level. One image shows whether High Risk is going to zero and whether anything is creeping back up. It is generated from the same numbers that drive the detailed reports.</p>
         </div>
       </div>
 
@@ -354,93 +372,108 @@ F31  Backup exclusion path no longer reachable           MEDIUM -&gt; RESOLVED
       <div lang="nl">
         <div class="meta">Door Hans Vredevoort · 18 juni 2026 · 11 minuten leestijd · Cluster Health</div>
 
-        <p class="lede">Een Hyper-V cluster health check die eindigt met één PDF is een momentopname, en een momentopname veroudert op het moment dat je dingen begint te repareren. Echte remediatie loopt over weken, in rondes, en de waarde van de opdracht wordt bepaald door of iedereen kan zien wat er bewoog, wat er nog open staat, en welke kant de trend op gaat. Dat is een rapportagediscipline, geen eenmalig document, en dit artikel gaat over hoe je die voert.</p>
-        <p class="lede">Het patroon dat CloudLabs bij elke terugkerende health check gebruikt heeft drie artefacten die samen reizen: een deltarapport dat zegt wat er veranderde en waarom, een restrisico-overzicht dat de werkende to-dolijst is, en een risk trend chart die het oogopslag-beeld voor het management is. Geen ervan bevat in dit artikel een klantnaam. Het is de werkwijze die overdraagbaar is.</p>
+        <p class="lede">Een Hyper-V cluster health check die eindigt met één PDF is een momentopname. En een momentopname begint te verouderen zodra je dingen gaat repareren. Het serieus aanpakken van risico's en bevindingen neemt weken in beslag en verloopt in meerdere rondes. De waarde van de opdracht wordt uiteindelijk bepaald door de vraag of iedereen kan zien wat er is veranderd, wat er nog openstaat en welke kant de trend opgaat. Dat is een rapportagediscipline, geen eenmalig document. Dit artikel gaat over hoe je die discipline toepast.</p>
+        <p class="lede">Het patroon dat CloudLabs bij elke terugkerende health check gebruikt, bestaat uit drie samenhangende bouwstenen: een deltarapport dat na een vervolgmeting laat zien wat er is veranderd en waarom, een restrisico-overzicht dat als actuele to-dolijst dient, en een risk trend chart die het management in één oogopslag laat zien welke kant het opgaat. Geen van deze voorbeelden bevat in dit artikel een klantnaam. Het gaat om de werkwijze, en die is overdraagbaar.</p>
 
         <div class="toc">
           <div class="toc-title">In dit artikel</div>
           <ol>
             <li><a href="#nl-1">Waarom één health check-rapport niet genoeg is</a></li>
-            <li><a href="#nl-2">De drie artefacten van een voortgangsrapport</a></li>
-            <li><a href="#nl-3">Het deltarapport: wat verschoof en waarom</a></li>
+            <li><a href="#nl-2">De drie samenhangende bouwstenen van een voortgangsrapport</a></li>
+            <li><a href="#nl-3">Het deltarapport: wat is er veranderd en waarom?</a></li>
             <li><a href="#nl-4">Het restrisico-overzicht: de werklijst</a></li>
-            <li><a href="#nl-5">De risk trend chart: het oogopslag-beeld</a></li>
+            <li><a href="#nl-5">De risk trend chart: het beeld in één oogopslag</a></li>
             <li><a href="#nl-6">De discipline achter de kleuren</a></li>
-            <li><a href="#nl-7">Hermeting maakt het eerlijk</a></li>
+            <li><a href="#nl-7">Vervolgmeting maakt het objectief</a></li>
             <li><a href="#nl-8">Het herhaalbaar maken</a></li>
           </ol>
         </div>
 
         <h2 id="nl-1">1. Waarom één health check-rapport niet genoeg is</h2>
-        <p>De eerste oplevering van een health check is een bevindingendocument: een genummerde lijst van issues, elk met een ernst, bewijs en een aanbeveling. Dat document klopt op de dag dat het wordt opgeleverd en begint meteen te verouderen, want het hele punt van de oplevering is dat iemand nu dingen gaat repareren. Twee weken later is de helft van de High Risk-bevindingen gesloten, bleek één fix een bijwerking te hebben, verving de klant ondertussen een domain controller, en beschrijft de oorspronkelijke PDF een cluster dat niet meer bestaat.</p>
-        <p>Daar kun je op twee manieren mee omgaan. Je kunt elke ronde het hele bevindingendocument opnieuw uitgeven, wat de lezer bedelft onder ongewijzigde tekst en het lastig maakt om te zien wat er tussen versies echt gebeurde. Of je rapporteert de delta: houd de baseline als systeem van vastlegging, en publiceer elke ronde een gericht document dat precies zegt wat er veranderde, plus een uitgedunde weergave van wat nog open staat, plus een grafiek die het traject toont. De tweede aanpak houdt een opdracht leesbaar over zes of acht weken werk.</p>
-        <p>Het baseline-bevindingendocument blijft het anker. Elk later rapport verwijst naar de bevindingsnummers ervan, zodat een lezer een afsluiting altijd terug kan herleiden naar de oorspronkelijke beschrijving. Wat van ronde tot ronde verandert is de delta daarbovenop.</p>
+        <p>De eerste oplevering van een health check is een document met bevindingen: een genummerde lijst met issues, elk voorzien van een risiconiveau, bewijs en een aanbeveling. Dat document klopt op de dag waarop het wordt opgeleverd en begint daarna meteen te verouderen. Dat is tenslotte precies het doel van de oplevering: iemand gaat nu dingen repareren. Twee weken later is misschien de helft van de HOOG (Risico)-bevindingen gesloten, heeft één fix een onverwachte bijwerking gehad, heeft de klant ondertussen een domain controller vervangen en beschrijft de oorspronkelijke PDF een cluster dat inmiddels niet meer bestaat. Daar kun je op twee manieren mee omgaan.</p>
+        <p>Je kunt elke ronde het volledige bevindingendocument opnieuw uitbrengen. Het nadeel is dat de lezer wordt bedolven onder ongewijzigde tekst en dat het lastig wordt om te zien wat er tussen de verschillende versies daadwerkelijk is gebeurd. Of je rapporteert de delta: je houdt de baseline als systeem van vastlegging en publiceert per ronde een gericht document dat precies beschrijft wat er is veranderd. Daar voeg je een uitgedunde weergave van de openstaande punten aan toe, plus een grafiek die het verloop laat zien. Die tweede aanpak houdt een opdracht ook na zes of acht weken werk nog leesbaar.</p>
+        <p>Het baseline-bevindingendocument blijft het anker. Elk later rapport verwijst naar de oorspronkelijke bevindingsnummers, zodat een lezer een afsluiting altijd kan terugleiden naar de oorspronkelijke beschrijving. Wat van ronde tot ronde verandert, is de delta daarbovenop.</p>
 
-        <h2 id="nl-2">2. De drie artefacten van een voortgangsrapport</h2>
-        <p>Een voortgangsronde levert drie dingen op, en die zijn bewust gescheiden omdat ze drie verschillende lezers bedienen.</p>
+        <h2 id="nl-2">2. De drie samenhangende bouwstenen van een voortgangsrapport</h2>
+        <p>Een voortgangsronde levert drie dingen op. Ze zijn bewust van elkaar gescheiden, omdat ze drie verschillende groepen lezers bedienen.</p>
         <ul>
-          <li><strong>Het deltarapport.</strong> Voor de vastlegging. Per bevinding noemt het het oude niveau, het nieuwe niveau, de reden voor de verschuiving en het bewijs. Het bevat afsluitingen, verlagingen, heropeningen en nieuwe ontdekkingen met gelijk gewicht. Dit is het document dat een auditor of een opvolgend engineer leest om de historie te begrijpen.</li>
-          <li><strong>Het restrisico-overzicht.</strong> Voor het team dat het werk doet. Alleen de nog openstaande bevindingen, geordend op ernst, met de opgeloste en niet-van-toepassing items bewust weggelaten. Dit is de to-dolijst voor de volgende ronde.</li>
-          <li><strong>De risk trend chart.</strong> Voor het management. Eén beeld: aantal per ernstniveau over elke rapportversie, zodat de bewegingsrichting duidelijk is zonder een woord proza te lezen.</li>
+          <li><strong>Het deltarapport.</strong> Voor de vastlegging. Per bevinding beschrijft het het oude niveau, het nieuwe niveau, de reden voor de verschuiving en het bewijs. Het bevat afsluitingen, verlagingen, heropeningen en nieuwe bevindingen, allemaal met hetzelfde gewicht. Dit is het document dat een auditor of een opvolgende engineer leest om de historie te begrijpen.</li>
+          <li><strong>Het restrisico-overzicht.</strong> Voor het team dat het werk uitvoert. Alleen de nog openstaande bevindingen, geordend op risico, waarbij opgeloste en niet-van-toepassing-zijnde items bewust zijn weggelaten. Dit is de to-dolijst voor de volgende ronde.</li>
+          <li><strong>De risk trend chart.</strong> Voor het management. Eén beeld met het aantal bevindingen per risiconiveau over elke rapportversie, zodat de richting van de ontwikkeling duidelijk is zonder een woord proza te hoeven lezen.</li>
         </ul>
-        <p>Het splitsen doet ertoe. Vouw je alles in één bestand, dan moet het team dat de lijst afwerkt door opgeloste historie waden, en moet het management engineering-detail lezen om het ene getal te vinden waar het om geeft. Drie artefacten, drie doelgroepen, gegenereerd uit één set metingen.</p>
+        <p>Die scheiding doet ertoe. Stop je alles in één bestand, dan moet het team dat de lijst afwerkt door opgeloste historie waden. Tegelijkertijd moet het management door engineering-detail heen om dat ene getal te vinden waar het om gaat. Drie samenhangende bouwstenen, drie doelgroepen, allemaal gebaseerd op dezelfde set metingen.</p>
 
-        <h2 id="nl-3">3. Het deltarapport: wat verschoof en waarom</h2>
-        <p>Het deltarapport is per bevinding opgebouwd, en elke bevinding die verschoof krijgt een klein blok: het nummer, de titel, de nieuwe ernst-badge, en een korte 'huidige situatie'-alinea die de meting aanhaalt die de verschuiving rechtvaardigt. De categorieën van beweging liggen vast:</p>
+        <h2 id="nl-3">3. Het deltarapport: wat is er veranderd en waarom?</h2>
+        <p>Het deltarapport is opgebouwd per bevinding. Elke bevinding die is verschoven krijgt een eigen blok: het nummer, de titel, het nieuwe risiconiveau en een gedetailleerde beschrijving. Die alinea's verwijzen naar de meting die de verschuiving rechtvaardigt. De categorieën van beweging liggen vast:</p>
         <ul>
-          <li><strong>Resolved.</strong> De root cause is gerepareerd en de hermeting bevestigt dat hij weg is. Voorbeeldvorm: een ontbrekende cumulatieve update staat nu op elke node geïnstalleerd en de buildnummers bewijzen het, dus de bevinding sluit.</li>
-          <li><strong>Lowered.</strong> Het risico is verminderd maar niet weggenomen. De bevinding blijft open op een lager niveau, met het restrisico expliciet benoemd.</li>
-          <li><strong>Reopened.</strong> Een bevinding die gesloten of laag was is weer omhooggegaan, meestal omdat een fix een bijwerking had of een onschuldig ogende conditie na onderhoud terugkwam. Dit wordt net zo prominent gerapporteerd als een afsluiting.</li>
-          <li><strong>New.</strong> Iets wat de laatste meting aan het licht bracht en wat niet in scope was of eerder niet aanwezig.</li>
+          <li><strong>Opgelost.</strong> De root cause is gerepareerd en de vervolgmeting bevestigt dat het probleem is verdwenen. Bijvoorbeeld: een ontbrekende cumulatieve update is nu op elke node geïnstalleerd en de buildnummers bewijzen dat. De bevinding kan worden gesloten.</li>
+          <li><strong>Verlaagd.</strong> Het risico is verminderd, maar niet weggenomen. De bevinding blijft open op een lager niveau, waarbij het restrisico expliciet wordt benoemd.</li>
+          <li><strong>Heropend.</strong> Een bevinding die gesloten was of op een laag niveau stond, is weer omhooggegaan. Meestal omdat een fix een bijwerking had of omdat een onschuldig ogende conditie na onderhoud opnieuw is ontstaan. Dit wordt net zo prominent gerapporteerd als een afsluiting.</li>
+          <li><strong>Nieuw.</strong> Iets wat de laatste meting aan het licht heeft gebracht en wat niet in scope was of eerder nog niet aanwezig was.</li>
         </ul>
-        <p>De eerlijkheid van het deltarapport zit in die 'huidige situatie'-regel. Je schrijft niet 'patchen klaar'. Je schrijft wat je hebt gemeten: het tijdstempel van de validatie-run, het aantal geslaagde tests en de waarschuwingen die resteren, en waarom de resterende waarschuwingen onschuldig zijn of niet. Een lezer die er niet bij was kan het oordeel uit het bewijs reconstrueren. Dat is het verschil tussen een statusupdate en een rapport.</p>
+        <p>De objectiviteit van het deltarapport zit in die regel met de 'huidige situatie'. Je schrijft niet: 'patchen klaar'. Je schrijft wat je daadwerkelijk hebt gemeten: het tijdstip van de validation run, het aantal geslaagde tests, de waarschuwingen die nog resteren en waarom die resterende waarschuwingen wel of niet onschuldig zijn. Een lezer die er niet bij was, moet het oordeel uit het bewijs kunnen reconstrueren. Dat is het verschil tussen een statusupdate en een deltarapport.</p>
 
-        <p>Een geanonimiseerd fragment uit een deltarapport toont de vier bewegingen in de eigen stem van het rapport. De bevindingsnummers en beschrijvingen zijn hier generiek, de vorm is het echte werk:</p>
+        <p>Een geanonimiseerd fragment uit een deltarapport laat de vier soorten beweging zien in de eigen stijl van het rapport. De bevindingsnummers en beschrijvingen zijn hier generiek; de vorm is het echte werk:</p>
 
-<pre><code>F12  Cumulative update missing on cluster nodes          HIGH -&gt; RESOLVED
-  Current situation: June CU installed on all nodes on 12 Jun; build numbers
-  verified after reboot. Root cause fixed. Finding closed.
+<pre><code>F12  Cumulatieve update ontbreekt op clusternodes         HOOG -&gt; OPGELOST
+  Huidige situatie: juni-CU op 12 juni op alle nodes geïnstalleerd; buildnummers
+  na reboot geverifieerd. Root cause gefixt. Bevinding gesloten.
 
-F08  Storage headroom imbalance across nodes             HIGH -&gt; MEDIUM
-  Current situation: in-site failover headroom restored (busiest node
-  442 -&gt; 204 GB used); cross-site skew remains. Risk lowered, not closed.
+F08  Storage-headroom ongelijk verdeeld over de nodes     HOOG -&gt; MIDDEL
+  Huidige situatie: failover-headroom binnen de site hersteld (drukste node
+  442 -&gt; 204 GB in gebruik); scheefstand tussen sites resteert. Risico verlaagd,
+  niet gesloten.
 
-F20  CSV ownership skewed onto one node after patching    RESOLVED -&gt; LOW
-  Current situation: Cluster-Aware Updating left most CSVs owned by the
-  last-patched node. Re-balanced and re-confirmed; kept at LOW as a recurring
-  post-maintenance check rather than left closed.
+F20  CSV-eigenaarschap scheef naar één node na patchen     OPGELOST -&gt; LAAG
+  Huidige situatie: Cluster-Aware Updating liet de meeste CSV's bij de laatst
+  gepatchte node. Opnieuw verdeeld en herbevestigd; op LAAG gehouden als
+  terugkerende post-onderhoudscheck in plaats van gesloten.
 
-F31  Backup exclusion path no longer reachable           MEDIUM -&gt; RESOLVED
-  Current situation: workload decommissioned and removed; re-scan confirms
-  the path is gone, not merely unreachable. Closed.</code></pre>
+F31  Backup-uitsluitingspad niet meer bereikbaar          MIDDEL -&gt; OPGELOST
+  Huidige situatie: workload gedecommissioneerd en verwijderd; herscan bevestigt
+  dat het pad weg is, niet slechts onbereikbaar. Gesloten.</code></pre>
 
-        <p>Elke regel draagt zijn eigen rechtvaardiging: een afsluiting steunt op een geverifieerd buildnummer, een verlaging benoemt het restrisico, een heropening wordt openlijk gesteld, en een Resolved wordt alleen toegekend wanneer het ding weg is in plaats van enkel buiten bereik. Samen gelezen laten ze een reviewer elke niveauwijziging auditen zonder één vergadering bij te wonen.</p>
+        <p>Elke regel bevat zijn eigen rechtvaardiging. Een afsluiting steunt op een geverifieerd buildnummer, een verlaging benoemt het restrisico, een heropening wordt openlijk gemeld en Opgelost wordt alleen toegekend wanneer het probleem daadwerkelijk weg is en niet alleen buiten bereik. Samen gelezen stellen deze regels een reviewer in staat om iedere niveauwijziging te auditen zonder één vergadering te hoeven bijwonen.</p>
+
+        <figure class="chart-figure">
+          <a href="../images/toolchain-delta-status.webp" target="_blank" rel="noopener" aria-label="Open de delta-rapportpagina op volledig formaat in een nieuw tabblad">
+            <img src="../images/toolchain-delta-status.webp" alt="Een deltarapport-registerpagina uit de voorbeeldopdracht: elke bevinding met een badge voor en na, en een verandering-verdict, meerdere op groen OPGELOST na de vervolgmeting." loading="lazy" width="1000" height="1294">
+          </a>
+          <figcaption>Deltarapport-register uit het Noorderlicht-voorbeeld: niveau voor en na per bevinding, met het verandering-verdict. <a href="../images/toolchain-delta-status.webp" target="_blank" rel="noopener">Open op volledig formaat</a>.</figcaption>
+        </figure>
 
         <div class="callout">
           <strong>Veldnotitie</strong>
-          Een bevinding mag alleen van niveau veranderen op grond van een meting die ná de fix is gedaan, nooit op grond van 'we hebben de wijziging uitgerold'. Het uitrollen is de actie. De hermeting is het bewijs. Het deltarapport haalt het tweede aan, niet het eerste.
+          Een bevinding mag alleen van niveau veranderen op basis van een meting die ná de fix is uitgevoerd. Nooit alleen omdat 'we de wijziging hebben uitgerold'. Het uitrollen is de actie. De vervolgmeting is het bewijs. Het deltarapport verwijst naar het tweede, niet naar het eerste.
         </div>
 
         <h2 id="nl-4">4. Het restrisico-overzicht: de werklijst</h2>
-        <p>Het restrisico-overzicht is qua geest de tegenpool van het deltarapport. Het deltarapport gaat over historie en is volledig. Het restrisico-overzicht gaat over het heden en is meedogenloos: het bevat alleen de bevindingen die nog open staan, geordend High, dan Medium, dan Low, en het laat bewust alles weg wat opgelost of niet van toepassing is, want een to-dolijst met afgerond werk erin is ruis.</p>
-        <p>Het is het document dat het team van de klant daadwerkelijk opent tijdens het volgende onderhoudsvenster. Elke openstaande bevinding draagt zijn huidig gemeten cijfers, niet de baseline-cijfers, zodat een bevinding die van High naar Medium is verlaagd de Medium-werkelijkheid toont en niet het oorspronkelijke alarm. Waar een bevinding deels is opgelost, bijvoorbeeld een storage-scheefstand die op de meeste volumes is gerepareerd maar niet op alle, toont het document de status per item, zodat het resterende werk zichtbaar is op de korrel van het werk, niet op de korrel van de bevinding.</p>
-        <p>De trend chart boven aan dit document zetten, vóór de openstaande bevindingen, geeft de lezer de context vóór het detail: hier staan we, dit is wat resteert. Het is een klein ding en het verandert hoe het document leest.</p>
+        <p>Het restrisico-overzicht is qua karakter de tegenpool van het deltarapport. Het deltarapport gaat over historie en is volledig. Het restrisico-overzicht gaat over het heden en is meedogenloos: het bevat alleen de bevindingen die nog openstaan, geordend op HOOG, daarna MIDDEL en vervolgens LAAG. Alles wat is opgelost of niet van toepassing is, wordt bewust weggelaten. Een to-dolijst waar afgerond werk nog tussen staat, is ruis.</p>
+        <p>Dit is het document dat het klantteam daadwerkelijk opent tijdens het volgende maintenance window. Elke openstaande bevinding bevat de meest recente meetgegevens, niet de cijfers uit de baseline. Een bevinding die van HOOG naar MIDDEL is verlaagd, laat dus de huidige MIDDEL-werkelijkheid zien en niet het oorspronkelijke alarm. Waar een bevinding gedeeltelijk is opgelost, bijvoorbeeld een storage-scheefstand die op de meeste volumes is hersteld, maar niet op alle, toont het document de status per item. Zo blijft het resterende werk zichtbaar op het niveau waarop het daadwerkelijk moet worden uitgevoerd, en niet alleen op het niveau van de oorspronkelijke bevinding.</p>
+        <p>De trend chart bovenaan dit document plaatsen, vóór de openstaande bevindingen, geeft de lezer eerst de context en daarna het detail: hier staan we, dit is wat er nog resteert. Het is een klein verschil, maar het verandert de manier waarop het document wordt gelezen.</p>
+
+        <figure class="chart-figure">
+          <a href="../images/blog-remaining-risks-nl.webp" target="_blank" rel="noopener" aria-label="Open de restrisico-pagina op volledig formaat in een nieuw tabblad">
+            <img src="../images/blog-remaining-risks-nl.webp" alt="Een restrisico-pagina uit de voorbeeldopdracht: de trendgrafiek bovenaan, dan een samenvattingstabel met alleen de nog openstaande bevindingen geordend MIDDEL dan LAAG, dan de eerste Middel-risico-bevinding in detail." loading="lazy" width="1100" height="1424">
+          </a>
+          <figcaption>Restrisico-overzicht uit het Noorderlicht-voorbeeld: eerst de trendgrafiek, dan alleen de openstaande bevindingen op ernst geordend. <a href="../images/blog-remaining-risks-nl.webp" target="_blank" rel="noopener">Open op volledig formaat</a>.</figcaption>
+        </figure>
 
         <div class="mid-cta">
-          <p>Was je laatste health check één PDF en leeft de remediatie sindsdien in iemands hoofd en een spreadsheet, dan heb je geen verdedigbaar beeld of het cluster beter werd of alleen drukker.</p>
-          <p>Een CloudLabs Hyper-V Cluster Health Check is opgebouwd als rondes met een deltarapport en een trend chart, zodat voortgang wordt gemeten, niet beweerd.</p>
+          <p>Was je laatste health check één PDF en leeft de remediatie sindsdien in iemands hoofd en een spreadsheet, dan heb je geen verdedigbaar beeld van de vraag of het cluster beter is geworden of alleen maar drukker.</p>
+          <p>Een CloudLabs Hyper-V Cluster Health Check is daarom opgebouwd uit rondes met een deltarapport en een trend chart, zodat voortgang wordt gemeten en niet alleen wordt beweerd.</p>
           <a href="../book.html">Plan een kennismaking voor een Health Check →</a>
         </div>
 
-        <h2 id="nl-5">5. De risk trend chart: het oogopslag-beeld</h2>
-        <p>De grafiek is het artefact dat het management onthoudt. Hij plot het aantal bevindingen per ernstniveau over elke rapportversie, als een gestapelde balk per versie met een trendlijn per niveau erbovenop. Eén blik beantwoordt de enige twee vragen die de leiding stelt: gaat High Risk naar nul, en kruipt er iets terug omhoog.</p>
-        <p>Een geanonimiseerd voorbeeld van de vorm, drie meetrondes over een opdracht van meerdere weken. Klik op de grafiek om te vergroten:</p>
+        <h2 id="nl-5">5. De risk trend chart: het beeld in één oogopslag</h2>
+        <p>De grafiek is het onderdeel dat het management onthoudt. Hij toont het aantal bevindingen per risiconiveau over iedere rapportversie: als een gestapelde balk per versie, met daarboven een trendlijn per niveau. Eén blik beantwoordt de twee vragen die het management uiteindelijk stelt: gaat HOOG naar nul, en kruipt er ergens iets weer omhoog?</p>
+        <p>Onderstaande grafiek komt uit de fictieve Noorderlicht-voorbeeldopdracht, met drie meetrondes over een opdracht van meerdere weken. Klik op de grafiek om deze te vergroten:</p>
 
         <figure class="chart-figure">
-          <a href="../images/risk-trend-example.png" target="_blank" rel="noopener" aria-label="Open de risk trend chart op volledig formaat in een nieuw tabblad">
-            <img src="../images/risk-trend-example.png" alt="Ontwikkeling van de risicostatus over drie rapportversies: een paneel met gestapelde balken voor bevindingen per risiconiveau per versie, en een paneel met trendlijnen per niveau. High Risk daalt 11, 6, 1 terwijl Resolved klimt 5, 10, 13 en Low stijgt 17, 19, 21." loading="lazy" width="1280" height="668">
+          <a href="../images/noorderlicht-risk-trend.png" target="_blank" rel="noopener" aria-label="Open de risk trend chart op volledig formaat in een nieuw tabblad">
+            <img src="../images/noorderlicht-risk-trend.png" alt="Ontwikkeling van de risicostatus over drie metingen uit het Noorderlicht-voorbeeld: een paneel met gestapelde balken voor bevindingen per risiconiveau per versie, en een paneel met trendlijnen per niveau. HOOG daalt 3, 1, 0 terwijl OPGELOST klimt 0, 5, 12 en MIDDEL daalt 11, 10, 5." loading="lazy" width="1300" height="690">
           </a>
-          <figcaption>Ontwikkeling van de risicostatus over drie rapportversies. Links: verdeling per versie (gestapelde balken). Rechts: trend per ernstniveau. <a href="../images/risk-trend-example.png" target="_blank" rel="noopener">Open op volledig formaat</a>.</figcaption>
+          <figcaption>Ontwikkeling van de risicostatus over drie metingen (Noorderlicht-voorbeeld). Links: de verdeling per versie met gestapelde balken. Rechts: de trend per risiconiveau. <a href="../images/noorderlicht-risk-trend.png" target="_blank" rel="noopener">Open op volledig formaat</a>.</figcaption>
         </figure>
 
         <p>Dezelfde cijfers in een tabel, voor schermlezers en snelle naslag:</p>
@@ -450,37 +483,37 @@ F31  Backup exclusion path no longer reachable           MEDIUM -&gt; RESOLVED
             <tr><th>Ernst</th><th>Baseline</th><th>Ronde 1</th><th>Ronde 2</th></tr>
           </thead>
           <tbody>
-            <tr><td><span class="badge b-high">HIGH</span></td><td>11</td><td>6</td><td>1</td></tr>
-            <tr><td><span class="badge b-med">MEDIUM</span></td><td>12</td><td>11</td><td>11</td></tr>
-            <tr><td><span class="badge b-low">LOW</span></td><td>17</td><td>19</td><td>21</td></tr>
-            <tr><td><span class="badge b-none">NONE</span></td><td>10</td><td>10</td><td>10</td></tr>
-            <tr><td><span class="badge b-res">RESOLVED</span></td><td>5</td><td>10</td><td>13</td></tr>
+            <tr><td><span class="badge b-high">HOOG</span></td><td>3</td><td>1</td><td>0</td></tr>
+            <tr><td><span class="badge b-med">MIDDEL</span></td><td>11</td><td>10</td><td>5</td></tr>
+            <tr><td><span class="badge b-low">LAAG</span></td><td>6</td><td>5</td><td>4</td></tr>
+            <tr><td><span class="badge b-none">GEEN</span></td><td>12</td><td>12</td><td>12</td></tr>
+            <tr><td><span class="badge b-res">OPGELOST</span></td><td>0</td><td>5</td><td>12</td></tr>
           </tbody>
         </table>
 
-        <p>Twee dingen in die tabel zijn het hardop zeggen waard, want het zijn de delen die mensen verkeerd doen. Ten eerste ging het Low-aantal <em>omhoog</em> terwijl de opdracht duidelijk slaagde. Dat is geen regressie. Het zijn High- en Medium-bevindingen die worden verlaagd in plaats van gesloten, en dat is eerlijke rapportage: een gemitigeerd risico zakt een niveau, het verdwijnt niet. Ten tweede is het Resolved-aantal een eigen kolom en groeit het alleen, want een bevinding die echt is gerepareerd hoort nooit stilletjes uit het rapport te verdwijnen. Hij gaat naar Resolved en blijft telbaar, zodat de trend niet kan worden bewerkt door gesloten items te verwijderen.</p>
-        <p>Bouw de grafiek met dezelfde ernst-kleuren die overal elders in de rapportage worden gebruikt, zodat een lezer die één badge heeft gezien de balk herkent. High Risk rood, Medium oranje, Low blauw, None grijs, Resolved groen. Consistentie over het deltarapport, het restrisico-overzicht en de grafiek is wat iemand in staat stelt om tussen de drie artefacten te bewegen zonder telkens de legenda opnieuw te leren.</p>
+        <p>Drie dingen in die tabel zijn het waard om hardop te zeggen. Ten eerste gaat HOOG over de drie rondes naar nul, precies het beeld waar het management om vraagt, maar niet doordat bevindingen verdwijnen: ze gaan naar OPGELOST en blijven meetellen. Ten tweede is OPGELOST een eigen kolom die alleen maar groeit (0, 5, 12). Een bevinding die daadwerkelijk is gerepareerd, hoort nooit stilletjes uit het rapport te verdwijnen; door haar zichtbaar te houden kan de trend niet worden gemanipuleerd door gesloten items simpelweg uit de rapportage te verwijderen. Ten derde blijft GEEN vlak op 12: dat zijn de items die bij de baseline zijn gecontroleerd en in orde bevonden, en dat ook blijven, het bewijs van wat is geverifieerd en geen stilte. Het totale aantal bevindingen beweegt nauwelijks (32, 33, 33) terwijl het risico erin wegloopt van rood naar groen, en dat is precies waarom je ieder niveau in iedere versie telt.</p>
+        <p>Bouw de grafiek met dezelfde risicokleuren die je overal elders in de rapportage gebruikt, zodat een lezer die één risicolabel heeft gezien diezelfde betekenis direct in de grafiek herkent. HOOG rood, MIDDEL oranje, LAAG blauw, GEEN grijs, OPGELOST groen. Die consistentie tussen het deltarapport, het restrisico-overzicht en de grafiek zorgt ervoor dat iemand tussen de drie samenhangende bouwstenen kan bewegen zonder telkens opnieuw de legenda te moeten leren.</p>
 
         <h2 id="nl-6">6. De discipline achter de kleuren</h2>
-        <p>Een vijf-niveau-taxonomie werkt alleen als de grenzen worden verdedigd. De twee die misbruikt worden zijn de top en de bodem van het 'goed nieuws'-bereik, dus die krijgen expliciete regels.</p>
-        <p><strong>Resolved versus Lowered.</strong> Resolved is gereserveerd voor een gerepareerde en herbevestigde root cause. Is het risico slechts ingeperkt, dan is de bevinding Lowered, niet Resolved. Een workload die achter een VLAN is geïsoleerd zodat niets er meer bij kan is een echte en waardevolle mitigatie, maar het onderliggende object bestaat nog, dus het is Low, niet Resolved, totdat het daadwerkelijk is gedecommissioneerd. De afwezigheid van blootstelling vanaf de plek waar je toevallig staat is niet hetzelfde als dat de oorzaak weg is. Die lijn vasthouden is de allerbelangrijkste rapportagebeslissing in de hele opdracht, want het is wat de trend chart ervan weerhoudt om iedereen te vleien.</p>
-        <p><strong>Reopened versus stayed-fixed.</strong> Een bevinding die terugkomt wordt openlijk heropend. Na een onderhoudsronde komt het vaak voor dat een onschuldig ogende conditie op elke node terugkeert, en de juiste zet is die op het passende niveau met uitleg terug in de lijst te rapporteren, niet stilletjes gesloten te laten omdat hij vorige ronde gesloten was. De lezer vertrouwt de trend juist omdat regressies erin opduiken.</p>
+        <p>Een taxonomie met vijf niveaus werkt alleen als de grenzen ervan worden bewaakt. De twee niveaus die het vaakst verkeerd worden gebruikt, zitten aan de boven- en onderkant van het 'goed nieuws'-bereik. Daarom krijgen juist die expliciete regels.</p>
+        <p><strong>Opgelost versus Verlaagd.</strong> Opgelost is gereserveerd voor een root cause die daadwerkelijk is gerepareerd en vervolgens opnieuw is bevestigd. Is het risico alleen ingeperkt, dan is de bevinding Verlaagd, niet Opgelost. Een workload die achter een VLAN is geïsoleerd zodat er niets meer bij kan, is een echte en waardevolle risicobeperking. Maar het onderliggende object bestaat nog steeds. Daarom is het LAAG en niet Opgelost, totdat het probleem werkelijk is opgelost. Het feit dat iets vanaf de plek waar je toevallig staat niet meer bereikbaar is, betekent niet dat de oorzaak is verdwenen. Die grens bewaken is misschien wel de belangrijkste rapportagebeslissing van de hele opdracht. Het is wat voorkomt dat de trend chart iedereen een mooier beeld voorschotelt dan de werkelijkheid rechtvaardigt.</p>
+        <p><strong>Heropend versus gefixt-gebleven.</strong> Een bevinding die terugkomt, wordt zichtbaar heropend. Na een maintenance ronde komt het regelmatig voor dat een op het eerste gezicht onschuldige issue op iedere node terugkeert. De juiste aanpak is dan om die bevinding op het passende niveau, met uitleg, opnieuw in de lijst op te nemen. Niet om haar stilletjes gesloten te laten omdat ze in de vorige ronde al was gesloten. De lezer vertrouwt de trend juist omdat regressies er ook in zichtbaar worden.</p>
 
-        <h2 id="nl-7">7. Hermeting maakt het eerlijk</h2>
-        <p>Elke ronde begint op dezelfde manier als bij de baseline: hetzelfde read-only inventarisatiescript, gedraaid vanaf de eigen management server van de klant, plus een verse cluster-validatie. Niets in het voortgangsrapport komt uit een vergadering of een herinnering. Een bevinding verschuift alleen op grond van een meting die na de wijziging is gedaan, en het rapport haalt die meting bij naam aan: het inventarisatiebestand, het validatie-tijdstempel, de specifieke counter.</p>
-        <p>Dit vangt ook de bewegende delen op die een statusupdate-stijl van rapporteren mist. Een domain controller die halverwege de opdracht is vervangen, een node die kort uit het management-subnet viel, een validatiewaarschuwing die vóór de patch-reboots is gemeten en bij de volgende ronde verouderd is. Omdat de meting opnieuw wordt gedraaid in plaats van onthouden, beschrijft het rapport het cluster zoals het is op de dag van oplevering, niet zoals het was toen het werk werd ingepland.</p>
-        <p>De mechaniek van die read-only inventarisatie en de pre-flight die hem zelfdocumenterend houdt, staat in <!--LINK:health-check-to-patch-night--><a href="health-check-to-patch-night.html">Van Health Check tot Patch Night: de CloudLabs-werkwijze in de praktijk</a><!--/LINK:health-check-to-patch-night-->. De voortgangsrapportage in dit artikel is de laag die over die metingen heen ligt, over meerdere rondes.</p>
+        <h2 id="nl-7">7. Vervolgmeting maakt het objectief</h2>
+        <p>Elke ronde begint op dezelfde manier als de baseline: met hetzelfde of een verbeterd read-only inventarisatiescript, uitgevoerd vanaf de eigen management server van de klant, aangevuld met een nieuwe cluster-validation. Niets in het voortgangsrapport komt uit een vergadering of uit iemands geheugen. Een bevinding verandert alleen van niveau op basis van een meting die na de wijziging is uitgevoerd. Het rapport verwijst daarbij expliciet naar die meting: het inventarisatiebestand, het tijdstip van de validatie en de specifieke counter.</p>
+        <p>Dit vangt ook de bewegende delen op die een statusupdate-achtige manier van rapporteren mist. Een domain controller die halverwege de opdracht is vervangen. Een node die tijdelijk uit het management-subnet viel. Een validatiewaarschuwing die vóór de patch-reboots is gemeten en in de volgende ronde alweer verouderd blijkt. Omdat de meting opnieuw wordt uitgevoerd in plaats van onthouden, beschrijft het rapport het cluster zoals het is op de dag van de vervolgmeting. Niet zoals het was toen het werk werd ingepland.</p>
+        <p>De mechaniek achter die read-only inventarisatie en de pre-flight die hem zelfdocumenterend maakt, staat beschreven in <!--LINK:health-check-to-patch-night--><a href="health-check-to-patch-night.html">Van Health Check tot Patch Night: de CloudLabs-werkwijze in de praktijk</a><!--/LINK:health-check-to-patch-night-->. De voortgangsrapportage in dit artikel is de laag die daar overheen ligt, over meerdere meetrondes heen.</p>
 
         <h2 id="nl-8">8. Het herhaalbaar maken</h2>
-        <p>De reden om de drie artefacten te standaardiseren is dat de volgende ronde, en de volgende opdracht, ze niet opnieuw moeten uitvinden. Het patroon dat standhoudt:</p>
+        <p>De reden om de drie samenhangende bouwstenen te standaardiseren, is eenvoudig: de volgende ronde en de volgende opdracht moeten ze niet opnieuw hoeven uitvinden. Het patroon dat standhoudt:</p>
         <ol>
-          <li>Houd het baseline-bevindingendocument als systeem van vastlegging en hernummer de bevindingen ervan nooit. Elk later rapport verwijst naar die nummers.</li>
-          <li>Genereer het deltarapport, het restrisico-overzicht en de trend chart uit dezelfde meetronde, zodat de drie elkaar nooit kunnen tegenspreken.</li>
-          <li>Gebruik één ernst-taxonomie en één kleurenset over alle drie, en verdedig de Resolved-grens strikt.</li>
-          <li>Zet de trend chart boven aan het restrisico-overzicht zodat context aan detail voorafgaat.</li>
-          <li>Haal de run achter elke niveauwijziging aan, zodat het rapport reconstrueerbaar is door iemand die er niet bij was.</li>
+          <li>Houd het baseline-bevindingendocument als systeem van vastlegging en hernummer de bevindingen nooit. Elk later rapport verwijst naar die oorspronkelijke nummers.</li>
+          <li>Genereer het deltarapport, het restrisico-overzicht en de trend chart vanuit dezelfde meetronde, zodat de drie elkaar nooit kunnen tegenspreken.</li>
+          <li>Gebruik één risicotaxonomie en één kleurenset voor alle drie, en bewaak de grens voor Opgelost strikt.</li>
+          <li>Zet de trend chart bovenaan het restrisico-overzicht, zodat de context vóór het detail komt.</li>
+          <li>Verwijs bij elke niveauwijziging naar de run die daar de basis voor vormt, zodat iemand die niet bij de uitvoering aanwezig was het rapport kan reconstrueren.</li>
         </ol>
-        <p>Doe dat en een health check houdt op een PDF te zijn die veroudert op een gedeelde schijf, en wordt een gemeten traject dat iedereen in één beeld kan lezen en in het detail kan vertrouwen. Dat is de oplevering die klanten daadwerkelijk bewaren.</p>
+        <p>Doe je dat, dan blijft een health check niet hangen als een PDF die langzaam veroudert op een gedeelde schijf. Het wordt een gemeten traject dat iedereen in één beeld kan lezen en waarop je in het detail kunt vertrouwen. Dat is de oplevering die klanten daadwerkelijk bewaren.</p>
 
         <p><a href="../book.html"><strong>Plan een kennismaking voor een Hyper-V Cluster Health Check →</strong></a></p>
 
@@ -488,19 +521,19 @@ F31  Backup exclusion path no longer reachable           MEDIUM -&gt; RESOLVED
           <h2>Veelgestelde vragen</h2>
 
           <div class="faq-q">Hoe vaak geef je een voortgangsrapport uit tijdens remediatie?</div>
-          <p>Eén per meetronde, wat in de praktijk betekent na elke batch fixes die groot genoeg is om het risicobeeld te veranderen. Bij een typische opdracht is dat elke twee tot vier weken. Elke ronde draait dezelfde read-only inventarisatie en validatie opnieuw, zodat elk rapport op een verse meting is gebouwd, niet op een statusvergadering.</p>
+          <p>Eén per meetronde. In de praktijk betekent dat: na iedere batch fixes die groot genoeg is om het risicobeeld te veranderen. Bij een typische opdracht gebeurt dat elke paar maanden, maar de klant kan om een hogere frequentie vragen, zeker als er veel issues zijn om op te lossen. Iedere ronde wordt dezelfde read-only inventarisatie en validatie opnieuw uitgevoerd, zodat elk rapport gebaseerd is op een verse meting en niet op een statusvergadering.</p>
 
-          <div class="faq-q">Wat is het verschil tussen een bevinding gemarkeerd als Resolved en een gemarkeerd als Lowered?</div>
-          <p>Resolved betekent dat de root cause echt is gerepareerd en bij hermeting weg is. Lowered betekent dat het risico is verminderd maar de oorzaak nog aanwezig is, bijvoorbeeld een workload die met een VLAN is geïsoleerd in plaats van volledig verwijderd. Mitigatie verlaagt een bevinding een niveau. Het sluit hem niet. Die lijn strikt houden is wat de trend chart eerlijk maakt.</p>
+          <div class="faq-q">Wat is het verschil tussen een bevinding met de status Opgelost en een bevinding met de status Verlaagd?</div>
+          <p>Opgelost betekent dat de root cause daadwerkelijk is gerepareerd en bij de vervolgmeting is verdwenen. Verlaagd betekent dat het risico is verminderd, maar dat de oorzaak nog steeds aanwezig is. Bijvoorbeeld een workload die met een VLAN is geïsoleerd in plaats van volledig verwijderd. Een risicoverlagende maatregel brengt een bevinding naar een lager niveau. Het sluit de bevinding niet. Die grens strikt bewaken voorkomt dat de trend chart een mooier beeld geeft dan de werkelijkheid rechtvaardigt.</p>
 
           <div class="faq-q">Waarom een apart restrisico-overzicht bijhouden in plaats van één groot rapport?</div>
-          <p>Het volledige rapport draagt historie, opgeloste items en context, en dat is wat je wilt voor het audit trail. Het restrisico-overzicht draagt alleen wat nog open staat, geordend op ernst, en dat is waar het team in de volgende ronde daadwerkelijk vanaf werkt. Twee doelgroepen, twee documenten.</p>
+          <p>Het volledige rapport bevat de historie, de opgeloste items en de context. Dat is wat je nodig hebt voor het audit trail. Het restrisico-overzicht bevat alleen wat nog openstaat, geordend op risico. Dat is waar het team in de volgende ronde daadwerkelijk mee aan de slag gaat. Twee doelgroepen, twee documenten.</p>
 
           <div class="faq-q">Hoe voorkom je dat je alleen de verbeteringen uitkiest?</div>
-          <p>Elke ronde rapporteert heropende en nieuw ontdekte bevindingen naast de opgeloste. Een bevinding kan een niveau terug omhoog als een fix een bijwerking introduceerde, en die heropening wordt met hetzelfde gewicht getoond als een afsluiting. De trend chart telt elk ernstniveau op elke versie, zodat een regressie zichtbaar is als een balk die groeide.</p>
+          <p>Elke ronde rapporteert naast opgeloste bevindingen ook heropende en nieuw ontdekte bevindingen. Een bevinding kan weer een niveau omhooggaan als een fix een bijwerking heeft geïntroduceerd. Die heropening wordt met hetzelfde gewicht getoond als een afsluiting. De trend chart telt ieder risiconiveau in iedere versie, zodat een regressie zichtbaar wordt als een balk die weer groeit.</p>
 
           <div class="faq-q">Kan de klant de trend over de hele opdracht zien?</div>
-          <p>Ja. De risk trend chart plot het aantal per ernstniveau over elke rapportversie, als gestapelde balken met een trendlijn per niveau. Eén beeld laat zien of High Risk naar nul gaat en of er iets terug omhoog kruipt. Hij wordt gegenereerd uit dezelfde cijfers die de gedetailleerde rapporten voeden.</p>
+          <p>Ja. De risk trend chart toont het aantal bevindingen per risiconiveau over iedere rapportversie, als gestapelde balken met een trendlijn per niveau. Eén beeld laat zien of HOOG naar nul gaat en of er ergens iets weer omhoog kruipt. De grafiek wordt gegenereerd uit dezelfde cijfers die de gedetailleerde rapporten voeden.</p>
         </div>
       </div>
 
@@ -521,7 +554,7 @@ F31  Backup exclusion path no longer reachable           MEDIUM -&gt; RESOLVED
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.4.4</span>
+    <span class="brand-version">v0.4.8</span>
   </footer>
 
 </div>
@@ -537,6 +570,29 @@ F31  Backup exclusion path no longer reachable           MEDIUM -&gt; RESOLVED
   </div>
 </div>
 
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Image preview" hidden>
+  <button class="lb-close" id="lbClose" aria-label="Close preview">✕</button>
+  <img id="lbImg" src="" alt="">
+</div>
+
 <script src="../script.js?v=0.4.7"></script>
+<script>
+(function(){
+  var lb=document.getElementById('lightbox'),img=document.getElementById('lbImg'),btn=document.getElementById('lbClose');
+  function close(){lb.hidden=true;img.src='';document.body.style.overflow=''}
+  document.querySelectorAll('.chart-figure a').forEach(function(a){
+    if(!/\.(png|webp|jpg|jpeg|gif)$/i.test(a.getAttribute('href')||''))return;
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      img.src=a.getAttribute('href');
+      var im=a.querySelector('img'); img.alt=im?im.alt:'';
+      lb.hidden=false;document.body.style.overflow='hidden';btn.focus();
+    });
+  });
+  btn.addEventListener('click',close);
+  lb.addEventListener('click',function(e){if(e.target===lb)close()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!lb.hidden)close()});
+})();
+</script>
 </body>
 </html>
