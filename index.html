@@ -1,5 +1,5 @@
 <!doctype html> 
-<!-- CloudLabs · v0.5.1 · Home -->
+<!-- CloudLabs · v0.5.2 · Home -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -47,9 +47,12 @@
 <link rel="stylesheet" href="style.css?v=0.4.8">
 <style>
   .home-grid{min-height:auto;align-items:center}
-  .cap-band{display:flex;flex-wrap:wrap;gap:8px;margin-top:34px;padding-top:22px;border-top:1px solid var(--line)}
-  .cap-band .cb-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);align-self:center;margin-right:4px}
-  .cap-chip{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-dim);background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:999px;padding:5px 12px}
+  .measure6{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:20px}
+  .measure6 .card{padding:15px 14px 16px}
+  .measure6 .card h3{font-size:15px;line-height:1.25;margin:2px 0 5px}
+  .measure6 .card p{font-size:12px;line-height:1.5;color:var(--ink-dim)}
+  @media(max-width:1200px){.measure6{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:680px){.measure6{grid-template-columns:repeat(2,1fr)}}
   .home-sec{margin-top:52px}
   .home-sec > .muted{max-width:64ch}
   .deliverables{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:20px}
@@ -154,54 +157,44 @@
       </div>
     </div>
 
-    <div class="cap-band anim-fade anim-up">
-      <span class="cb-label"><span lang="en">We measure</span><span lang="nl">We meten</span></span>
-      <span class="cap-chip"><span lang="en">Windows Server &amp; clusters</span><span lang="nl">Windows Server &amp; clusters</span></span>
-      <span class="cap-chip">Azure Local &amp; S2D</span>
-      <span class="cap-chip"><span lang="en">Server hardware</span><span lang="nl">Serverhardware</span></span>
-      <span class="cap-chip">Storage arrays</span>
-      <span class="cap-chip"><span lang="en">Switch fabric &amp; HBAs</span><span lang="nl">Switch fabric &amp; HBA's</span></span>
-      <span class="cap-chip"><span lang="en">Management &amp; backup</span><span lang="nl">Beheer &amp; back-up</span></span>
-      <span class="cap-chip"><span lang="en">RCA on call</span><span lang="nl">RCA op afroep</span></span>
-    </div>
 
     <div class="home-sec">
       <div class="eyebrow"><span lang="en">What we measure</span><span lang="nl">Wat we meten</span></div>
       <h2 style="font-size:clamp(20px,3.4vw,28px);font-weight:600;margin:6px 0 8px">
-        <span lang="en">The whole datacenter stack, not just Hyper-V</span>
-        <span lang="nl">De hele datacenterstack, niet alleen Hyper-V</span>
+        <span lang="en">We measure Hyper-V, and what we usually find around it</span>
+        <span lang="nl">We meten Hyper-V en wat we meestal tegenkomen bij de klant</span>
       </h2>
       <p class="muted"><span lang="en">One read-only measurement run, checked against Microsoft baselines, vendor firmware floors and known failure patterns.</span><span lang="nl">Eén read-only meetronde, getoetst aan Microsoft-baselines, minimale firmwareniveaus van leveranciers en bekende faalpatronen.</span></p>
-      <div class="services anim-stagger" style="margin-top:20px">
+      <div class="measure6 anim-stagger">
         <div class="card">
           <div class="ix">01</div><div class="tag">Platform</div>
           <h3><span lang="en">Windows Server &amp; clusters</span><span lang="nl">Windows Server en clusters</span></h3>
-          <p><span lang="en">Windows Server up to 2025, failover clustering, Hyper-V, Cluster-Aware Updating, live migration, time service, patch and OS lifecycle including ESU exposure.</span><span lang="nl">Windows Server tot en met 2025, failover clustering, Hyper-V, Cluster-Aware Updating, live migration, tijdservice, patch- en OS-levenscyclus inclusief ESU-blootstelling.</span></p>
+          <p><span lang="en">Windows Server to 2025, failover clustering, Hyper-V, CAU, live migration, patch and OS lifecycle.</span><span lang="nl">Windows Server tot 2025, failover clustering, Hyper-V, CAU, live migration, patch- en OS-levenscyclus.</span></p>
         </div>
         <div class="card">
           <div class="ix">02</div><div class="tag">Azure Local · HCI</div>
           <h3><span lang="en">Azure Local &amp; S2D</span><span lang="nl">Azure Local en S2D</span></h3>
-          <p><span lang="en">Storage Spaces Direct pool and disk health, Network ATC intents, Arc connectivity, secured-core posture and failover headroom.</span><span lang="nl">Storage Spaces Direct pool- en schijfgezondheid, Network ATC-intents, Arc-connectiviteit, secured-core-status en failovermarge.</span></p>
+          <p><span lang="en">S2D pool and disk health, Network ATC, Arc, secured-core, failover headroom.</span><span lang="nl">S2D pool- en schijfgezondheid, Network ATC, Arc, secured-core, failovermarge.</span></p>
         </div>
         <div class="card">
           <div class="ix">03</div><div class="tag">Hardware</div>
           <h3><span lang="en">Server hardware</span><span lang="nl">Serverhardware</span></h3>
-          <p><span lang="en">Dell, HPE and Lenovo, measured out-of-band through the BMC: firmware against security floors, power redundancy, hardware event logs, node uniformity.</span><span lang="nl">Dell, HPE en Lenovo, out-of-band gemeten via de BMC: firmware tegen security-floors, voedingsredundantie, hardware-eventlogs, uniformiteit tussen nodes.</span></p>
+          <p><span lang="en">Dell, HPE and Lenovo via the BMC: firmware, power redundancy, node uniformity.</span><span lang="nl">Dell, HPE en Lenovo via de BMC: firmware, voedingsredundantie, uniformiteit.</span></p>
         </div>
         <div class="card">
           <div class="ix">04</div><div class="tag">Storage</div>
           <h3><span lang="en">Storage arrays</span><span lang="nl">Storage arrays</span></h3>
-          <p><span lang="en">Pure Storage, HPE, Dell and Lenovo arrays, read-only. Host-to-array symmetry: does what the array serves match what the hosts see.</span><span lang="nl">Arrays van Pure Storage, HPE, Dell en Lenovo, read-only. Symmetrie tussen host en array: komt wat de array aanbiedt overeen met wat de hosts zien.</span></p>
+          <p><span lang="en">Pure, HPE, Dell and Lenovo, read-only. Host-to-array symmetry.</span><span lang="nl">Pure, HPE, Dell en Lenovo, read-only. Symmetrie tussen host en array.</span></p>
         </div>
         <div class="card">
           <div class="ix">05</div><div class="tag"><span lang="en">Network</span><span lang="nl">Netwerk</span></div>
           <h3><span lang="en">Switch fabric &amp; HBAs</span><span lang="nl">Switch fabric en HBA's</span></h3>
-          <p><span lang="en">Ethernet switches and HBAs. Host-versus-switch parity: PFC classes, VLAN trunks, the places where lossless RDMA quietly stops being lossless.</span><span lang="nl">Ethernet-switches en HBA's. Pariteit tussen host en switch: PFC-klassen, VLAN-trunks, de plekken waar lossless RDMA ongemerkt ophoudt lossless te zijn.</span></p>
+          <p><span lang="en">PFC classes, VLAN trunks, and where lossless RDMA quietly stops being lossless.</span><span lang="nl">PFC-klassen, VLAN-trunks, en waar lossless RDMA ongemerkt ophoudt lossless te zijn.</span></p>
         </div>
         <div class="card">
           <div class="ix">06</div><div class="tag"><span lang="en">Management</span><span lang="nl">Beheer</span></div>
           <h3><span lang="en">Management &amp; backup</span><span lang="nl">Beheer en back-up</span></h3>
-          <p><span lang="en">VMM, Windows Admin Center including WAC Virtualization Mode, Veeam and Commvault can all be taken into the measurement.</span><span lang="nl">VMM, Windows Admin Center inclusief WAC Virtualization Mode, Veeam en Commvault kunnen allemaal in de meting worden meegenomen.</span></p>
+          <p><span lang="en">VMM, Windows Admin Center, Veeam and Commvault, taken into the measurement.</span><span lang="nl">VMM, Windows Admin Center, Veeam en Commvault, meegenomen in de meting.</span></p>
         </div>
       </div>
       <div class="cta-row" style="margin-top:18px">
@@ -267,7 +260,7 @@
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="book.html" lang="en">Book</a><a href="book.html" lang="nl">Boek</a>
     <a href="privacy.html" lang="en">Privacy</a><a href="privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.5.1</span>
+    <span class="brand-version">v0.5.2</span>
   </footer>
 
 </div>
