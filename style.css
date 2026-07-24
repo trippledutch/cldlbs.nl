@@ -1,4 +1,4 @@
-/* CloudLabs · shared stylesheet · v0.4.8 */
+/* CloudLabs · shared stylesheet · v0.4.9 */
 :root{
   --bg:#0a1024;--bg-2:#0f1832;--panel:#121d3a;--panel-2:#162345;
   --line:rgba(120,160,255,.14);--line-strong:rgba(120,160,255,.28);
@@ -292,8 +292,10 @@ p strong{color:var(--ink);font-weight:600}
 .anim-fade{opacity:0;transition:opacity .55s ease,transform .55s ease}
 .anim-fade.is-visible{opacity:1;transform:none!important}
 
-/* Fade up (default) */
-.anim-up{transform:translateY(28px)}
+/* Fade up (default). No translateY: a positive offset extends the document's
+   scrollable area, so revealing the last element shrinks the page and the
+   browser corrects scrollTop, which reads as a jump down then back up. */
+.anim-up{transform:none}
 /* Fade in from left */
 .anim-left{transform:translateX(-28px)}
 /* Fade in from right */
@@ -304,7 +306,6 @@ p strong{color:var(--ink);font-weight:600}
 /* Staggered children: each child gets a delay via --i */
 .anim-stagger > *{
   opacity:0;
-  transform:translateY(22px);
   transition:opacity .45s ease,transform .45s ease;
   transition-delay:calc(var(--i,0) * 80ms);
 }
