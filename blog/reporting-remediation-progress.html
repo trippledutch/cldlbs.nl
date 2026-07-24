@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- CloudLabs · v0.4.11 · Blog · How we Follow Up on the Hyper-V Cluster Health Check -->
+<!-- CloudLabs · v0.4.12 · Blog · How we Follow Up on the Hyper-V Cluster Health Check -->
 <html lang="en" data-lang="en">
 <head>
 <meta charset="utf-8">
@@ -201,7 +201,7 @@
         <span lang="nl">Voortgang van remediatie rapporteren</span>
       </nav>
 
-      <h1><span lang="en">How we Follow Up on the Hyper-V Cluster Health Check</span><span lang="nl">Voortgang van remediatie rapporteren: deltarapport, restrisico-rapport en een Risico-trend grafiek</span></h1>
+      <h1><span lang="en">How we Follow Up on the Hyper-V Cluster Health Check</span><span lang="nl">Voortgang van remediatie rapporteren: delta-rapport, restrisico-rapport en een risico-trend grafiek</span></h1>
 
       <!-- ============= ENGLISH ============= -->
       <div lang="en">
@@ -375,16 +375,16 @@ F07  HW / PSU power feed B dead on AZLCL01N03                     MEDIUM -&gt; R
         <div class="meta">Door Hans Vredevoort · 18 juni 2026 · 11 minuten leestijd · Cluster Health</div>
 
         <p class="lede">Een Hyper-V cluster health check die eindigt met één PDF is een momentopname. En een momentopname begint te verouderen zodra je dingen gaat repareren. Het serieus aanpakken van risico's en bevindingen neemt weken in beslag en verloopt in meerdere rondes. De waarde van de opdracht wordt uiteindelijk bepaald door de vraag of iedereen kan zien wat er is veranderd, wat er nog openstaat en welke kant de trend opgaat. Dat is een rapportagediscipline, geen eenmalig document. Dit artikel gaat over hoe je die discipline toepast.</p>
-        <p class="lede">Het patroon dat CloudLabs bij elke terugkerende health check gebruikt, bestaat uit drie samenhangende bouwstenen: een deltarapport dat na een vervolgmeting laat zien wat er is veranderd en waarom, een restrisico-rapport dat als actuele to-dolijst dient, en een Risico-trend grafiek die het management in één oogopslag laat zien welke kant het opgaat. Geen van deze voorbeelden bevat in dit artikel een klantnaam. Het gaat om de werkwijze, en die is overdraagbaar.</p>
+        <p class="lede">Het patroon dat CloudLabs bij elke terugkerende health check gebruikt, bestaat uit drie samenhangende bouwstenen: een delta-rapport dat na een vervolgmeting laat zien wat er is veranderd en waarom, een restrisico-rapport dat als actuele to-dolijst dient, en een risico-trend grafiek die het management in één oogopslag laat zien welke kant het opgaat. Geen van deze voorbeelden bevat in dit artikel een klantnaam. Het gaat om de werkwijze, en die is overdraagbaar.</p>
 
         <div class="toc">
           <div class="toc-title">In dit artikel</div>
           <ol>
             <li><a href="#nl-1">Waarom één health check-rapport niet genoeg is</a></li>
             <li><a href="#nl-2">De drie samenhangende bouwstenen van een voortgangsrapport</a></li>
-            <li><a href="#nl-3">Het deltarapport: wat is er veranderd en waarom?</a></li>
+            <li><a href="#nl-3">Het delta-rapport: wat is er veranderd en waarom?</a></li>
             <li><a href="#nl-4">Het restrisico-rapport: de werklijst</a></li>
-            <li><a href="#nl-5">De Risico-trend grafiek: het beeld in één oogopslag</a></li>
+            <li><a href="#nl-5">De risico-trend grafiek: het beeld in één oogopslag</a></li>
             <li><a href="#nl-6">De discipline achter de kleuren</a></li>
             <li><a href="#nl-7">Vervolgmeting maakt het objectief</a></li>
             <li><a href="#nl-8">Het herhaalbaar maken</a></li>
@@ -399,23 +399,23 @@ F07  HW / PSU power feed B dead on AZLCL01N03                     MEDIUM -&gt; R
         <h2 id="nl-2">2. De drie samenhangende bouwstenen van een voortgangsrapport</h2>
         <p>Een voortgangsronde levert drie dingen op. Ze zijn bewust van elkaar gescheiden, omdat ze drie verschillende groepen lezers bedienen.</p>
         <ul>
-          <li><strong>Het deltarapport.</strong> Voor de vastlegging. Per bevinding beschrijft het het oude niveau, het nieuwe niveau, de reden voor de verschuiving en het bewijs. Het bevat afsluitingen, verlagingen, heropeningen en nieuwe bevindingen, allemaal met hetzelfde gewicht. Dit is het document dat een auditor of een opvolgende engineer leest om de historie te begrijpen.</li>
+          <li><strong>Het delta-rapport.</strong> Voor de vastlegging. Per bevinding beschrijft het het oude niveau, het nieuwe niveau, de reden voor de verschuiving en het bewijs. Het bevat afsluitingen, verlagingen, heropeningen en nieuwe bevindingen, allemaal met hetzelfde gewicht. Dit is het document dat een auditor of een opvolgende engineer leest om de historie te begrijpen.</li>
           <li><strong>Het restrisico-rapport.</strong> Voor het team dat het werk uitvoert. Alleen de nog openstaande bevindingen, geordend op risico, waarbij opgeloste en niet-van-toepassing-zijnde items bewust zijn weggelaten. Dit is de to-dolijst voor de volgende ronde.</li>
-          <li><strong>De Risico-trend grafiek.</strong> Voor het management. Eén beeld met het aantal bevindingen per risiconiveau over elke rapportversie, zodat de richting van de ontwikkeling duidelijk is zonder een woord proza te hoeven lezen.</li>
+          <li><strong>De risico-trend grafiek.</strong> Voor het management. Eén beeld met het aantal bevindingen per risiconiveau over elke rapportversie, zodat de richting van de ontwikkeling duidelijk is zonder een woord proza te hoeven lezen.</li>
         </ul>
         <p>Die scheiding doet ertoe. Stop je alles in één bestand, dan moet het team dat de lijst afwerkt door opgeloste historie waden. Tegelijkertijd moet het management door engineering-detail heen om dat ene getal te vinden waar het om gaat. Drie samenhangende bouwstenen, drie doelgroepen, allemaal gebaseerd op dezelfde set metingen.</p>
 
-        <h2 id="nl-3">3. Het deltarapport: wat is er veranderd en waarom?</h2>
-        <p>Het deltarapport is opgebouwd per bevinding. Elke bevinding die is verschoven krijgt een eigen blok: het nummer, de titel, het nieuwe risiconiveau en een gedetailleerde beschrijving. Die alinea's verwijzen naar de meting die de verschuiving rechtvaardigt. De categorieën van beweging liggen vast:</p>
+        <h2 id="nl-3">3. Het delta-rapport: wat is er veranderd en waarom?</h2>
+        <p>Het delta-rapport is opgebouwd per bevinding. Elke bevinding die is verschoven, krijgt een eigen blok: het nummer, de titel, het nieuwe risiconiveau en een gedetailleerde beschrijving. Die alinea's verwijzen naar de meting die de verschuiving rechtvaardigt. De categorieën van beweging liggen vast:</p>
         <ul>
           <li><strong>Opgelost.</strong> De root cause is gerepareerd en de vervolgmeting bevestigt dat het probleem is verdwenen. Bijvoorbeeld: een ontbrekende cumulatieve update is nu op elke node geïnstalleerd en de buildnummers bewijzen dat. De bevinding kan worden gesloten.</li>
           <li><strong>Verlaagd.</strong> Het risico is verminderd, maar niet weggenomen. De bevinding blijft open op een lager niveau, waarbij het restrisico expliciet wordt benoemd.</li>
           <li><strong>Heropend.</strong> Een bevinding die gesloten was of op een laag niveau stond, is weer omhooggegaan. Meestal omdat een fix een bijwerking had of omdat een onschuldig ogende conditie na onderhoud opnieuw is ontstaan. Dit wordt net zo prominent gerapporteerd als een afsluiting.</li>
           <li><strong>Nieuw.</strong> Iets wat de laatste meting aan het licht heeft gebracht en wat niet in scope was of eerder nog niet aanwezig was.</li>
         </ul>
-        <p>De objectiviteit van het deltarapport zit in die regel met de 'huidige situatie'. Je schrijft niet: 'patchen klaar'. Je schrijft wat je daadwerkelijk hebt gemeten: het tijdstip van de validation run, het aantal geslaagde tests, de waarschuwingen die nog resteren en waarom die resterende waarschuwingen wel of niet onschuldig zijn. Een lezer die er niet bij was, moet het oordeel uit het bewijs kunnen reconstrueren. Dat is het verschil tussen een statusupdate en een deltarapport.</p>
+        <p>De objectiviteit van het delta-rapport zit in die regel met de 'huidige situatie'. Je schrijft niet: 'patchen klaar'. Je schrijft wat je daadwerkelijk hebt gemeten: het tijdstip van de validation run, het aantal geslaagde tests, de waarschuwingen die nog resteren en waarom die resterende waarschuwingen wel of niet onschuldig zijn. Een lezer die er niet bij was, moet het oordeel uit het bewijs kunnen reconstrueren. Dat is het verschil tussen een statusupdate en een delta-rapport.</p>
 
-        <p>Een geanonimiseerd fragment uit een deltarapport laat de vier soorten beweging zien in de eigen stijl van het rapport. De bevindingsnummers en beschrijvingen zijn hier generiek; de vorm is het echte werk:</p>
+        <p>Een geanonimiseerd fragment uit een delta-rapport laat de vier soorten beweging zien in de eigen stijl van het rapport. De bevindingsnummers en beschrijvingen zijn hier generiek; de vorm is het echte werk:</p>
 
 <pre><code>F12  Cumulatieve update ontbreekt op clusternodes         HOOG -&gt; OPGELOST
   Huidige situatie: juni-CU op 12 juni op alle nodes geïnstalleerd; buildnummers
@@ -439,40 +439,40 @@ F31  Backup-uitsluitingspad niet meer bereikbaar          MIDDEL -&gt; OPGELOST
 
         <figure class="chart-figure">
           <a href="../images/toolchain-delta-status.webp" target="_blank" rel="noopener" aria-label="Open de delta-rapportpagina op volledig formaat in een nieuw tabblad">
-            <img src="../images/toolchain-delta-status.webp" alt="Een deltarapport-registerpagina uit de voorbeeldopdracht: elke bevinding met een badge voor en na, en een verandering-verdict, meerdere op groen OPGELOST na de vervolgmeting." loading="lazy" width="1000" height="1294">
+            <img src="../images/toolchain-delta-status.webp" alt="Een delta-rapport-registerpagina uit de voorbeeldopdracht: elke bevinding met een badge voor en na, en een verandering-verdict, meerdere op groen OPGELOST na de vervolgmeting." loading="lazy" width="1000" height="1294">
           </a>
           <figcaption>Deltarapport-register uit het Noorderlicht-voorbeeld: niveau voor en na per bevinding, met het verandering-verdict. <a href="../images/toolchain-delta-status.webp" target="_blank" rel="noopener">Open op volledig formaat</a>.</figcaption>
         </figure>
 
         <div class="callout">
           <strong>Veldnotitie</strong>
-          Een bevinding mag alleen van niveau veranderen op basis van een meting die ná de fix is uitgevoerd. Nooit alleen omdat 'we de wijziging hebben uitgerold'. Het uitrollen is de actie. De vervolgmeting is het bewijs. Het deltarapport verwijst naar het tweede, niet naar het eerste.
+          Een bevinding mag alleen van niveau veranderen op basis van een meting die ná de fix is uitgevoerd. Nooit alleen omdat 'we de wijziging hebben uitgerold'. Het uitrollen is de actie. De vervolgmeting is het bewijs. Het delta-rapport verwijst naar het tweede, niet naar het eerste.
         </div>
 
         <h2 id="nl-4">4. Het restrisico-rapport: de werklijst</h2>
-        <p>Het restrisico-rapport is qua karakter de tegenpool van het deltarapport. Het deltarapport gaat over historie en is volledig. Het restrisico-rapport gaat over het heden en is meedogenloos: het bevat alleen de bevindingen die nog openstaan, geordend op HOOG, daarna MIDDEL en vervolgens LAAG. Alles wat is opgelost of niet van toepassing is, wordt bewust weggelaten. Een to-dolijst waar afgerond werk nog tussen staat, is ruis.</p>
+        <p>Het restrisico-rapport is qua karakter de tegenpool van het delta-rapport. Het delta-rapport gaat over historie en is volledig. Het restrisico-rapport gaat over het heden en is meedogenloos: het bevat alleen de bevindingen die nog openstaan, geordend op HOOG, daarna MIDDEL en vervolgens LAAG. Alles wat is opgelost of niet van toepassing is, wordt bewust weggelaten. Een to-dolijst waar afgerond werk nog tussen staat, is ruis.</p>
         <p>Dit is het document dat het klantteam daadwerkelijk opent tijdens het volgende maintenance window. Elke openstaande bevinding bevat de meest recente meetgegevens, niet de cijfers uit de baseline. Een bevinding die van HOOG naar MIDDEL is verlaagd, laat dus de huidige MIDDEL-werkelijkheid zien en niet het oorspronkelijke alarm. Waar een bevinding gedeeltelijk is opgelost, bijvoorbeeld een storage-scheefstand die op de meeste volumes is hersteld, maar niet op alle, toont het document de status per item. Zo blijft het resterende werk zichtbaar op het niveau waarop het daadwerkelijk moet worden uitgevoerd, en niet alleen op het niveau van de oorspronkelijke bevinding.</p>
         <p>De trend chart bovenaan dit document plaatsen, vóór de openstaande bevindingen, geeft de lezer eerst de context en daarna het detail: hier staan we, dit is wat er nog resteert. Het is een klein verschil, maar het verandert de manier waarop het document wordt gelezen.</p>
 
         <figure class="chart-figure">
           <a href="../images/blog-remaining-risks-nl.webp" target="_blank" rel="noopener" aria-label="Open de restrisico-pagina op volledig formaat in een nieuw tabblad">
-            <img src="../images/blog-remaining-risks-nl.webp" alt="Een restrisico-pagina uit de voorbeeldopdracht: de Risico-trend grafiek bovenaan, dan een samenvattingstabel met alleen de nog openstaande bevindingen geordend MIDDEL dan LAAG, dan de eerste Middel-risico-bevinding in detail." loading="lazy" width="1100" height="1424">
+            <img src="../images/blog-remaining-risks-nl.webp" alt="Een restrisico-pagina uit de voorbeeldopdracht: de risico-trend grafiek bovenaan, dan een samenvattingstabel met alleen de nog openstaande bevindingen geordend MIDDEL dan LAAG, dan de eerste Middel-risico-bevinding in detail." loading="lazy" width="1100" height="1424">
           </a>
-          <figcaption>Restrisico-rapport uit het Noorderlicht-voorbeeld: eerst de Risico-trend grafiek, dan alleen de openstaande bevindingen op ernst geordend. <a href="../images/blog-remaining-risks-nl.webp" target="_blank" rel="noopener">Open op volledig formaat</a>.</figcaption>
+          <figcaption>Restrisico-rapport uit het Noorderlicht-voorbeeld: eerst de risico-trend grafiek, dan alleen de openstaande bevindingen op ernst geordend. <a href="../images/blog-remaining-risks-nl.webp" target="_blank" rel="noopener">Open op volledig formaat</a>.</figcaption>
         </figure>
 
         <div class="mid-cta">
           <p>Was je laatste health check één PDF en leeft de remediatie sindsdien in iemands hoofd en een spreadsheet, dan heb je geen verdedigbaar beeld van de vraag of het cluster beter is geworden of alleen maar drukker.</p>
-          <p>Een CloudLabs Hyper-V Cluster Health Check is daarom opgebouwd uit rondes met een deltarapport en een trend chart, zodat voortgang wordt gemeten en niet alleen wordt beweerd.</p>
+          <p>Een CloudLabs Hyper-V Cluster Health Check is daarom opgebouwd uit rondes met een delta-rapport en een trend chart, zodat de voortgang wordt gemeten en niet alleen wordt beweerd.</p>
           <a href="../book.html">Plan een kennismaking voor een Health Check →</a>
         </div>
 
-        <h2 id="nl-5">5. De Risico-trend grafiek: het beeld in één oogopslag</h2>
+        <h2 id="nl-5">5. De risico-trend grafiek: het beeld in één oogopslag</h2>
         <p>De grafiek is het onderdeel dat het management onthoudt. Hij toont het aantal bevindingen per risiconiveau over iedere rapportversie: als een gestapelde balk per versie, met daarboven een trendlijn per niveau. Eén blik beantwoordt de twee vragen die het management uiteindelijk stelt: gaat HOOG naar nul, en kruipt er ergens iets weer omhoog?</p>
         <p>Onderstaande grafiek komt uit de fictieve Noorderlicht-voorbeeldopdracht, met drie meetrondes over een opdracht van meerdere weken. Klik op de grafiek om deze te vergroten:</p>
 
         <figure class="chart-figure">
-          <a href="../images/noorderlicht-risk-trend.png" target="_blank" rel="noopener" aria-label="Open de Risico-trend grafiek op volledig formaat in een nieuw tabblad">
+          <a href="../images/noorderlicht-risk-trend.png" target="_blank" rel="noopener" aria-label="Open de risico-trend grafiek op volledig formaat in een nieuw tabblad">
             <img src="../images/noorderlicht-risk-trend.png" alt="Ontwikkeling van de risicostatus over drie metingen uit het Noorderlicht-voorbeeld: een paneel met gestapelde balken voor bevindingen per risiconiveau per versie, en een paneel met trendlijnen per niveau. HOOG daalt 3, 1, 0 terwijl OPGELOST klimt 0, 5, 12 en MIDDEL daalt 11, 10, 5." loading="lazy" width="1300" height="690">
           </a>
           <figcaption>Ontwikkeling van de risicostatus over drie metingen (Noorderlicht-voorbeeld). Links: de verdeling per versie met gestapelde balken. Rechts: de trend per risiconiveau. <a href="../images/noorderlicht-risk-trend.png" target="_blank" rel="noopener">Open op volledig formaat</a>.</figcaption>
@@ -494,7 +494,7 @@ F31  Backup-uitsluitingspad niet meer bereikbaar          MIDDEL -&gt; OPGELOST
         </table>
 
         <p>Drie dingen in die tabel zijn het waard om hardop te zeggen. Ten eerste gaat HOOG over de drie rondes naar nul, precies het beeld waar het management om vraagt, maar niet doordat bevindingen verdwijnen: ze gaan naar OPGELOST en blijven meetellen. Ten tweede is OPGELOST een eigen kolom die alleen maar groeit (0, 5, 12). Een bevinding die daadwerkelijk is gerepareerd, hoort nooit stilletjes uit het rapport te verdwijnen; door haar zichtbaar te houden kan de trend niet worden gemanipuleerd door gesloten items simpelweg uit de rapportage te verwijderen. Ten derde blijft GEEN vlak op 12: dat zijn de items die bij de baseline zijn gecontroleerd en in orde bevonden, en dat ook blijven, het bewijs van wat is geverifieerd en geen stilte. Het totale aantal bevindingen beweegt nauwelijks (32, 33, 33) terwijl het risico erin wegloopt van rood naar groen, en dat is precies waarom je ieder niveau in iedere versie telt.</p>
-        <p>Bouw de grafiek met dezelfde risicokleuren die je overal elders in de rapportage gebruikt, zodat een lezer die één risicolabel heeft gezien diezelfde betekenis direct in de grafiek herkent. HOOG rood, MIDDEL oranje, LAAG blauw, GEEN grijs, OPGELOST groen. Die consistentie tussen het deltarapport, het restrisico-rapport en de grafiek zorgt ervoor dat iemand tussen de drie samenhangende bouwstenen kan bewegen zonder telkens opnieuw de legenda te moeten leren.</p>
+        <p>Bouw de grafiek met dezelfde risicokleuren die je overal elders in de rapportage gebruikt, zodat een lezer die één risicolabel heeft gezien diezelfde betekenis direct in de grafiek herkent. HOOG rood, MIDDEL oranje, LAAG blauw, GEEN grijs, OPGELOST groen. Die consistentie tussen het delta-rapport, het restrisico-rapport en de grafiek zorgt ervoor dat iemand tussen de drie samenhangende bouwstenen kan bewegen zonder telkens opnieuw de legenda te moeten leren.</p>
 
         <h2 id="nl-6">6. De discipline achter de kleuren</h2>
         <p>Een taxonomie met vijf niveaus werkt alleen als de grenzen ervan worden bewaakt. De twee niveaus die het vaakst verkeerd worden gebruikt, zitten aan de boven- en onderkant van het 'goed nieuws'-bereik. Daarom krijgen juist die expliciete regels.</p>
@@ -502,15 +502,15 @@ F31  Backup-uitsluitingspad niet meer bereikbaar          MIDDEL -&gt; OPGELOST
         <p><strong>Heropend versus gefixt-gebleven.</strong> Een bevinding die terugkomt, wordt zichtbaar heropend. Na een maintenance ronde komt het regelmatig voor dat een op het eerste gezicht onschuldige issue op iedere node terugkeert. De juiste aanpak is dan om die bevinding op het passende niveau, met uitleg, opnieuw in de lijst op te nemen. Niet om haar stilletjes gesloten te laten omdat ze in de vorige ronde al was gesloten. De lezer vertrouwt de trend juist omdat regressies er ook in zichtbaar worden.</p>
 
         <h2 id="nl-7">7. Vervolgmeting maakt het objectief</h2>
-        <p>Elke ronde begint op dezelfde manier als de baseline: met hetzelfde of een verbeterd read-only inventarisatiescript, uitgevoerd vanaf de eigen management server van de klant, aangevuld met een nieuwe cluster-validation. Niets in het voortgangsrapport komt uit een vergadering of uit iemands geheugen. Een bevinding verandert alleen van niveau op basis van een meting die na de wijziging is uitgevoerd. Het rapport verwijst daarbij expliciet naar die meting: het inventarisatiebestand, het tijdstip van de validatie en de specifieke counter.</p>
+        <p>Elke ronde begint op dezelfde manier als de baseline: met hetzelfde of een verbeterd read-only inventarisatiescript, uitgevoerd vanaf de eigen management server van de klant, aangevuld met een nieuwe cluster-validation. Niets in het voortgangsrapport komt uit een vergadering of uit iemands geheugen. Een bevinding verandert alleen van niveau op basis van een meting die na de fix is uitgevoerd. Het rapport verwijst daarbij expliciet naar die meting: het inventarisatiebestand, het tijdstip van de validatie en de specifieke counter.</p>
         <p>Dit vangt ook de bewegende delen op die een statusupdate-achtige manier van rapporteren mist. Een domain controller die halverwege de opdracht is vervangen. Een node die tijdelijk uit het management-subnet viel. Een validatiewaarschuwing die vóór de patch-reboots is gemeten en in de volgende ronde alweer verouderd blijkt. Omdat de meting opnieuw wordt uitgevoerd in plaats van onthouden, beschrijft het rapport het cluster zoals het is op de dag van de vervolgmeting. Niet zoals het was toen het werk werd ingepland.</p>
-        <p>De mechaniek achter die read-only inventarisatie en de pre-flight die hem zelfdocumenterend maakt, staat beschreven in <!--LINK:health-check-to-patch-night--><a href="health-check-to-patch-night.html">Van Health Check tot Patch Night: de CloudLabs-werkwijze in de praktijk</a><!--/LINK:health-check-to-patch-night-->. De voortgangsrapportage in dit artikel is de laag die daar overheen ligt, over meerdere meetrondes heen.</p>
+        <p>De mechaniek achter die read-only inventarisatie en de pre-flight die hem zelfdocumenterend maakt, staat beschreven in <!--LINK:health-check-to-patch-night--><a href="health-check-to-patch-night.html">Van Health Check tot Patch Night: de CloudLabs-werkwijze in de praktijk</a><!--/LINK:health-check-to-patch-night-->. De voortgangsrapportage in dit artikel is de laag die daar overheen ligt en de ontwikkeling over meerdere meetrondes volgt.</p>
 
         <h2 id="nl-8">8. Het herhaalbaar maken</h2>
         <p>De reden om de drie samenhangende bouwstenen te standaardiseren, is eenvoudig: de volgende ronde en de volgende opdracht moeten ze niet opnieuw hoeven uitvinden. Het patroon dat standhoudt:</p>
         <ol>
           <li>Houd het baseline-bevindingendocument als systeem van vastlegging en hernummer de bevindingen nooit. Elk later rapport verwijst naar die oorspronkelijke nummers.</li>
-          <li>Genereer het deltarapport, het restrisico-rapport en de trend chart vanuit dezelfde meetronde, zodat de drie elkaar nooit kunnen tegenspreken.</li>
+          <li>Genereer het delta-rapport, het restrisico-rapport en de trend chart vanuit dezelfde meetronde, zodat de drie elkaar nooit kunnen tegenspreken.</li>
           <li>Gebruik één risicotaxonomie en één kleurenset voor alle drie, en bewaak de grens voor Opgelost strikt.</li>
           <li>Zet de trend chart bovenaan het restrisico-rapport, zodat de context vóór het detail komt.</li>
           <li>Verwijs bij elke niveauwijziging naar de run die daar de basis voor vormt, zodat iemand die niet bij de uitvoering aanwezig was het rapport kan reconstrueren.</li>
@@ -529,13 +529,13 @@ F31  Backup-uitsluitingspad niet meer bereikbaar          MIDDEL -&gt; OPGELOST
           <p>Opgelost betekent dat de root cause daadwerkelijk is gerepareerd en bij de vervolgmeting is verdwenen. Verlaagd betekent dat het risico is verminderd, maar dat de oorzaak nog steeds aanwezig is. Bijvoorbeeld een workload die met een VLAN is geïsoleerd in plaats van volledig verwijderd. Een risicoverlagende maatregel brengt een bevinding naar een lager niveau. Het sluit de bevinding niet. Die grens strikt bewaken voorkomt dat de trend chart een mooier beeld geeft dan de werkelijkheid rechtvaardigt.</p>
 
           <div class="faq-q">Waarom een apart restrisico-rapport bijhouden in plaats van één groot rapport?</div>
-          <p>Het volledige rapport bevat de historie, de opgeloste items en de context. Dat is wat je nodig hebt voor het audit trail. Het restrisico-rapport bevat alleen wat nog openstaat, geordend op risico. Dat is waar het team in de volgende ronde daadwerkelijk mee aan de slag gaat. Twee doelgroepen, twee documenten.</p>
+          <p>Het volledige rapport bevat de historie, de opgeloste items en de context. Dat is wat je nodig hebt voor de audit trail. Het restrisico-rapport bevat alleen wat nog openstaat, geordend op risico. Dat is waar het team in de volgende ronde daadwerkelijk mee aan de slag gaat. Twee doelgroepen, twee documenten.</p>
 
           <div class="faq-q">Hoe voorkom je dat je alleen de verbeteringen uitkiest?</div>
           <p>Elke ronde rapporteert naast opgeloste bevindingen ook heropende en nieuw ontdekte bevindingen. Een bevinding kan weer een niveau omhooggaan als een fix een bijwerking heeft geïntroduceerd. Die heropening wordt met hetzelfde gewicht getoond als een afsluiting. De trend chart telt ieder risiconiveau in iedere versie, zodat een regressie zichtbaar wordt als een balk die weer groeit.</p>
 
           <div class="faq-q">Kan de klant de trend over de hele opdracht zien?</div>
-          <p>Ja. De Risico-trend grafiek toont het aantal bevindingen per risiconiveau over iedere rapportversie, als gestapelde balken met een trendlijn per niveau. Eén beeld laat zien of HOOG naar nul gaat en of er ergens iets weer omhoog kruipt. De grafiek wordt gegenereerd uit dezelfde cijfers die de gedetailleerde rapporten voeden.</p>
+          <p>Ja. De risico-trend grafiek toont het aantal bevindingen per risiconiveau over iedere rapportversie, als gestapelde balken met een trendlijn per niveau. Eén beeld laat zien of HOOG naar nul gaat en of er ergens iets weer omhoog kruipt. De grafiek wordt gegenereerd uit dezelfde cijfers die de gedetailleerde rapporten voeden.</p>
         </div>
       </div>
 
@@ -556,7 +556,7 @@ F31  Backup-uitsluitingspad niet meer bereikbaar          MIDDEL -&gt; OPGELOST
     <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
     <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
     <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.4.11</span>
+    <span class="brand-version">v0.4.12</span>
   </footer>
 
 </div>
