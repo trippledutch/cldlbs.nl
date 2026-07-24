@@ -1,4 +1,4 @@
-/* CloudLabs · shared stylesheet · v0.4.9 */
+/* CloudLabs · shared stylesheet · v0.4.10 */
 :root{
   --bg:#0a1024;--bg-2:#0f1832;--panel:#121d3a;--panel-2:#162345;
   --line:rgba(120,160,255,.14);--line-strong:rgba(120,160,255,.28);
@@ -409,6 +409,10 @@ html[data-lang="nl"] [lang="en"]{display:none}
    centered). Article body keeps its natural 75ch width on the left. */
 .article-toc-sticky{display:none}
 @media (min-width:1200px){
+  /* Keep the article body clear of the fixed TOC on the right. Belt-and-suspenders:
+     cap the readable column (75ch) AND reserve the TOC gutter as right padding, with
+     box-sizing:border-box the content stays 75ch, so text can never run under the TOC. */
+  .article{max-width:calc(75ch + 340px)!important;padding-right:340px}
   .article-toc-sticky{
     display:block;
     position:fixed;top:90px;
