@@ -1,4 +1,4 @@
-/* CloudLabs · shared stylesheet · v0.4.12 */
+/* CloudLabs · shared stylesheet · v0.4.13 */
 :root{
   --bg:#0a1024;--bg-2:#0f1832;--panel:#121d3a;--panel-2:#162345;
   --line:rgba(120,160,255,.14);--line-strong:rgba(120,160,255,.28);
@@ -405,7 +405,7 @@ html[data-lang="nl"] [lang="en"]{display:none}
 .article .lede{max-width:none}
 
 /* Anchor jumps from the TOC land the heading below the sticky topbar, not under it. */
-.article h2[id],.article h3[id]{scroll-margin-top:120px}
+.article h2[id],.article h3[id]{scroll-margin-top:150px}
 
 /* Sticky TOC sidebar (blog articles, desktop only).
    Right-anchored to the .app container's right edge (the .app is max-width:1400px
