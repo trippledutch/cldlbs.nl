@@ -1,4 +1,4 @@
-/* CloudLabs · shared stylesheet · v0.4.10 */
+/* CloudLabs · shared stylesheet · v0.4.11 */
 :root{
   --bg:#0a1024;--bg-2:#0f1832;--panel:#121d3a;--panel-2:#162345;
   --line:rgba(120,160,255,.14);--line-strong:rgba(120,160,255,.28);
@@ -409,14 +409,16 @@ html[data-lang="nl"] [lang="en"]{display:none}
    centered). Article body keeps its natural 75ch width on the left. */
 .article-toc-sticky{display:none}
 @media (min-width:1200px){
-  /* Keep the article body clear of the fixed TOC on the right. Belt-and-suspenders:
-     cap the readable column (75ch) AND reserve the TOC gutter as right padding, with
-     box-sizing:border-box the content stays 75ch, so text can never run under the TOC. */
-  .article{max-width:calc(75ch + 340px)!important;padding-right:340px}
+  /* Keep the article as a readable column on the left so the TOC has room on the right. */
+  .article{max-width:75ch!important}
   .article-toc-sticky{
     display:block;
+    /* position:fixed here resolves against the nearest transformed ancestor (the .app/main
+       entrance animation creates a containing block), NOT the viewport. So anchor 32px from
+       that centered container's right edge; adding a (100vw-1400)/2 term double-counts the
+       centering and pushes the TOC into the article on wide screens (iMac 5K). */
     position:fixed;top:90px;
-    right:calc(max(0px, (100vw - 1400px) / 2) + 32px);
+    right:32px;
     width:280px;max-height:calc(100vh - 130px);overflow-y:auto;
     background:rgba(15,24,50,.5);border:1px solid var(--line);border-radius:8px;
     padding:18px 22px;font-size:13.5px;z-index:5;
