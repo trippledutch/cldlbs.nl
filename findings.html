@@ -44,12 +44,18 @@
   .lightbox img{max-width:min(1400px,94vw);max-height:92vh;width:auto;height:auto;border-radius:8px;background:#fff;box-shadow:0 24px 80px rgba(0,0,0,.7)}
   .lb-close{position:fixed;top:18px;right:18px;z-index:10001;width:44px;height:44px;border-radius:50%;border:1px solid var(--line-strong);background:rgba(10,16,36,.85);color:var(--ink);font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .2s,color .2s}
   .lb-close:hover{border-color:var(--cyan);color:var(--cyan)}
-  .chip.hoog,.chip.middel,.chip.laag,.chip.geen,.chip.opgelost{color:#fff;border:0;letter-spacing:.08em}
-  .chip.hoog{background:#c00000}
-  .chip.middel{background:#e36c0a}
-  .chip.laag{background:#2e74b5}
-  .chip.geen{background:#7f7f7f}
-  .chip.opgelost{background:#548235}
+  .chip.kritiek,.chip.hoog,.chip.middel,.chip.laag,.chip.geen,.chip.opgelost,.chip.geaccepteerd{color:#fff;border:0;letter-spacing:.08em}
+  /* Palette taken from the toolchain source (documents/Styles.json, decision E2
+     of 29 July 2026): one palette on every surface. KRITIEK is black with a red
+     ring rather than a deeper red, because black is the one value that reads on
+     a white page and on the dark cockpit alike. NONE is green, not grey. */
+  .chip.kritiek{background:#000;box-shadow:0 0 0 2px #ff3b30}
+  .chip.hoog{background:#e03131}
+  .chip.middel{background:#f76707}
+  .chip.laag{background:#1c7ed6}
+  .chip.geen{background:#2b8a3e}
+  .chip.opgelost{background:#0ca678}
+  .chip.geaccepteerd{background:#868e96}
 </style>
 </head>
 <body>
@@ -106,6 +112,7 @@
       <span lang="en">Methodology last updated:</span><span lang="nl">Methodologie bijgewerkt:</span> <span style="color:var(--cyan)">July 2026</span>
     </p>
     <div class="risk-legend anim-fade anim-up" style="margin-top:30px">
+      <span class="chip kritiek"><span lang="en">CRITICAL</span><span lang="nl">KRITIEK</span></span>
       <span class="chip hoog"><span lang="en">HIGH</span><span lang="nl">HOOG</span></span>
       <span class="chip middel"><span lang="en">MEDIUM</span><span lang="nl">MIDDEL</span></span>
       <span class="chip laag"><span lang="en">LOW</span><span lang="nl">LAAG</span></span>
@@ -198,7 +205,7 @@
     <div class="deliverables anim-stagger">
       <div class="deliv">
         <span lang="en"><a class="thumb" href="images/toolchain-findings-summary-en.webp"><img src="images/toolchain-findings-summary-en.webp" alt="Baseline findings summary page with colour-coded risk badges" loading="lazy"></a></span><span lang="nl"><a class="thumb" href="images/toolchain-findings-summary.webp"><img src="images/toolchain-findings-summary.webp" alt="Basismeting-overzichtstabel met kleurgecodeerde risicobadges" loading="lazy"></a></span>
-        <div class="cap"><div class="tag"><span lang="en">Baseline</span><span lang="nl">Basismeting</span></div><h3><span lang="en">Health check with risk analysis</span><span lang="nl">Health check met risicoanalyse</span></h3><p><span lang="en">Findings graded HIGH, MEDIUM, LOW, with a prioritised action plan.</span><span lang="nl">Findings met gradaties HOOG, MIDDEL, LAAG, en een geprioriteerd actieplan.</span></p></div>
+        <div class="cap"><div class="tag"><span lang="en">Baseline</span><span lang="nl">Basismeting</span></div><h3><span lang="en">Health check with risk analysis</span><span lang="nl">Health check met risicoanalyse</span></h3><p><span lang="en">Findings graded CRITICAL, HIGH, MEDIUM and LOW, with a prioritised action plan.</span><span lang="nl">Findings met de gradaties KRITIEK, HOOG, MIDDEL en LAAG, en een geprioriteerd actieplan.</span></p></div>
       </div>
       <div class="deliv">
         <span lang="en"><a class="thumb" href="images/toolchain-delta-status-en.webp"><img src="images/toolchain-delta-status-en.webp" alt="Delta report register with before and after risk badges" loading="lazy"></a></span><span lang="nl"><a class="thumb" href="images/toolchain-delta-status.webp"><img src="images/toolchain-delta-status.webp" alt="Delta-rapport register met badges voor en na" loading="lazy"></a></span>
