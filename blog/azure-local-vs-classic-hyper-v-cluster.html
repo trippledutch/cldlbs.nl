@@ -1,287 +1,151 @@
 <!doctype html>
-<!-- CloudLabs · v0.4.9 · Blog · Azure Local vs classic Hyper-V cluster -->
-<html lang="en" data-lang="en">
+<html lang="nl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0a1024">
-<link rel="icon" href="../favicon.png" type="image/png">
-<title>What's it gonna be: Classic Hyper-V or Azure Local? · CloudLabs</title>
-<meta name="description" content="Azure Stack HCI is gone, folded into Azure Local with Arc still mandatory. When a classic Hyper-V failover cluster beats Azure Local, and when it does not.">
+<!-- Omgezet naar de nieuwe huisstijl met blog-omzetten.py. De Engelse helft is
+     eruit; die krijgt later een eigen URL onder /en/. De inhoud is niet
+     herschreven. noindex staat aan zolang de nieuwe stijl niet live is. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>Wat gaat het worden: Klassiek Hyper-V of Azure Local? &middot; CloudLabs</title>
+<meta name="description" content="Bijna elke maand komt dezelfde vraag op tafel. Een klant staat voor een refresh, het oude cluster is afgeschreven, en iemand in het team heeft op een Microsoft-slide gezien dat alles naar Azure Local moet. “Of moeten we toch nog Azure Stack HCI doen?” Dan moeten we eerst een misverstand opruimen, wa">
 <link rel="canonical" href="https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html">
-<link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html">
 <link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html">
 <meta property="og:type" content="article">
+<meta property="og:locale" content="nl_NL">
 <meta property="og:url" content="https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html">
-<meta property="og:title" content="What's it gonna be: Classic Hyper-V or Azure Local?">
-<meta property="og:description" content="Azure Stack HCI is gone. When a classic Hyper-V failover cluster on shared storage beats Azure Local with Arc, and when it does not.">
-<meta property="og:image" content="https://cldlbs.com/images/cluster.jpg">
-<meta property="article:published_time" content="2026-06-25">
-<meta property="article:author" content="Hans Vredevoort">
-<meta property="article:section" content="Strategy">
-<meta property="article:tag" content="Azure Local">
-<meta property="article:tag" content="Hyper-V">
-<meta property="article:tag" content="Azure Arc">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="Wat gaat het worden: Klassiek Hyper-V of Azure Local?">
+<meta property="og:description" content="Bijna elke maand komt dezelfde vraag op tafel. Een klant staat voor een refresh, het oude cluster is afgeschreven, en iemand in het team heeft op een Microsoft-slide gezien dat alles naar Azure Local moet. “Of moeten we toch nog Azure Stack HCI doen?” Dan moeten we eerst een misverstand opruimen, wa">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css">
+<link rel="stylesheet" href="/huisstijl/artikel.css">
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "What's it gonna be: Classic Hyper-V or Azure Local?",
-  "description": "Azure Stack HCI is gone, folded into Azure Local with Arc still mandatory. When a classic Hyper-V failover cluster beats Azure Local, and when it does not.",
-  "image": "https://cldlbs.com/images/cluster.jpg",
-  "datePublished":"2026-06-25",
-  "dateModified":"2026-06-25",
-  "author": {
-    "@type": "Person",
-    "name": "Hans Vredevoort",
-    "url": "https://cldlbs.com/about.html",
-    "jobTitle": "Hyper-V & Cluster Consultant",
-    "worksFor": {
-      "@type": "Organization",
-      "name": "CloudLabs"
-    }
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "CloudLabs",
-    "url": "https://cldlbs.com/",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://cldlbs.com/favicon.png"
-    }
-  },
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html"
-  },
-  "articleSection": "Strategy",
-  "keywords": "Azure Local, Azure Stack HCI, Hyper-V, Failover Cluster, Azure Arc, Windows Server Datacenter, SAN"
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
+  "@graph": [
     {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "Home",
-      "item": "https://cldlbs.com/"
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://cldlbs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://cldlbs.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Wat gaat het worden: Klassiek Hyper-V of Azure Local?",
+          "item": "https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html"
+        }
+      ]
     },
     {
-      "@type": "ListItem",
-      "position": 2,
-      "name": "Blog",
-      "item": "https://cldlbs.com/blog.html"
+      "@type": "BlogPosting",
+      "@id": "https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html#artikel",
+      "headline": "Wat gaat het worden: Klassiek Hyper-V of Azure Local?",
+      "description": "Bijna elke maand komt dezelfde vraag op tafel. Een klant staat voor een refresh, het oude cluster is afgeschreven, en iemand in het team heeft op een Microsoft-slide gezien dat alles naar Azure Local moet. “Of moeten we toch nog Azure Stack HCI doen?” Dan moeten we eerst een misverstand opruimen, wa",
+      "inLanguage": "nl-NL",
+      "datePublished": "2026-06-25",
+      "dateModified": "2026-06-25",
+      "mainEntityOfPage": "https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html",
+      "articleSection": "Strategy",
+      "author": {
+        "@type": "Person",
+        "@id": "https://cldlbs.com/over-ons/#hans",
+        "name": "Hans Vredevoort",
+        "jobTitle": "Cluster- en virtualisatiespecialist",
+        "knowsAbout": [
+          "Hyper-V",
+          "Failover Clustering",
+          "Azure Local",
+          "Storage Spaces Direct",
+          "Windows Server"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://cldlbs.com/#organisatie",
+        "name": "CloudLabs",
+        "url": "https://cldlbs.com/"
+      }
     },
     {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Classic Hyper-V or Azure Local",
-      "item": "https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html"
+      "@type": "FAQPage",
+      "@id": "https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html#vragen",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Bestaat Azure Stack HCI nog?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nee. Microsoft hernoemde het in november 2024 tot Azure Local en zette bestaande clusters automatisch om. Azure Arc bleef verplicht, dus er is geen onafhankelijke, niet-Azure HCI meer te koop."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Haalt de disconnected-modus van Azure Local de Azure-afhankelijkheid weg?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Niet echt. Disconnected operations host de Arc control plane lokaal in een virtuele appliance, dus het draait zonder cloudverbinding, maar het is nog steeds Arc van boven tot onder, het vraagt extra fysieke machines, en het is preview, met AKS dat nog niet volledig air-gapped werkt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan ik VM's later tussen een klassiek cluster en Azure Local verplaatsen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Beide draaien Hyper-V, dus de gasten en hun VHDX-bestanden verhuizen. Je migreert de VM's, niet je hele applicatielandschap, waardoor de keuze omkeerbaar blijft."
+          }
+        }
+      ]
     }
   ]
 }
 </script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Is Azure Stack HCI still available?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. Microsoft renamed it Azure Local in November 2024 and moved existing clusters over automatically. Azure Arc remained mandatory, so there is no independent, non-Azure HCI to buy anymore."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Does Azure Local's disconnected mode remove the Azure dependency?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Not really. Disconnected operations hosts the Arc control plane locally in a virtual appliance, so it runs without a cloud connection, but it is still Arc end to end, needs extra physical machines, and is in preview with AKS not working fully air-gapped yet."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can I move VMs between a classic cluster and Azure Local later?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Both run Hyper-V, so the guests and their VHDX files move. You migrate the VMs, not your whole application estate, which keeps the decision reversible."
-      }
-    }
-  ]
-}
-</script>
-<!-- Google tag (gtag.js) with Consent Mode v2 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BETH09PH6C"></script>
-<script>
-  window.dataLayer=window.dataLayer||[];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});
-  gtag('js',new Date());
-  gtag('config','G-BETH09PH6C',{'anonymize_ip':true});
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=0.4.15">
-<style>
-  .article{max-width:75ch;margin-top:8px}
-  .article .breadcrumb{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.06em;margin-bottom:18px}
-  .article .breadcrumb a{color:var(--ink-dim);text-decoration:none}
-  .article .breadcrumb a:hover{color:var(--cyan)}
-  .article h1{font-size:clamp(24px,4.4vw,36px);font-weight:600;line-height:1.2;margin:0 0 14px}
-  .article .meta{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.06em;margin-bottom:28px}
-  .article .lede{font-size:17px;line-height:1.6;color:var(--ink-dim);margin-bottom:18px}
-  .article h2{font-size:21px;font-weight:600;line-height:1.3;margin:40px 0 14px;color:var(--ink)}
-  .article h3{font-size:16px;font-weight:600;margin:24px 0 8px;color:var(--ink)}
-  .article p{font-size:15px;line-height:1.7;color:var(--ink-dim);margin:0 0 14px}
-  .article ul,.article ol{font-size:15px;line-height:1.7;color:var(--ink-dim);padding-left:22px;margin:0 0 14px}
-  .article li{margin-bottom:6px}
-  .article a{color:var(--cyan);text-decoration:none;border-bottom:1px dotted var(--cyan)}
-  .article strong{color:var(--ink)}
-  .article code{font-family:var(--mono);font-size:13px;background:rgba(95,227,255,.08);color:var(--cyan);padding:1px 6px;border-radius:4px}
-  .article pre{background:rgba(15,24,50,.7);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;color:var(--ink);margin:0 0 18px;line-height:1.55}
-  .article pre code{background:none;color:inherit;padding:0}
-  .article blockquote{border-left:2px solid var(--cyan);padding:6px 18px;margin:18px 0;color:var(--ink);font-style:italic;background:rgba(95,227,255,.04)}
-  .callout{border:1px solid var(--line-strong);border-radius:10px;padding:14px 18px;margin:18px 0;background:rgba(95,227,255,.04)}
-  .callout strong{color:var(--cyan);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:6px}
-  .mid-cta{border:1px solid var(--cyan);border-radius:12px;padding:22px 24px;margin:32px 0;background:linear-gradient(135deg,rgba(95,227,255,.08),rgba(95,227,255,.02))}
-  .mid-cta p{font-size:15px;line-height:1.65;color:var(--ink);margin:0 0 12px}
-  .mid-cta a{color:var(--cyan);font-weight:600;font-size:15px;text-decoration:none;border-bottom:0;display:inline-flex;align-items:center;gap:6px}
-  .mid-cta a:hover{color:var(--ink)}
-  .toc{border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:0 0 28px;background:rgba(255,255,255,.02)}
-  .toc-title{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px}
-  .toc ol{padding-left:20px;margin:0;font-size:14px;line-height:1.7}
-  .toc a{color:var(--ink-dim);text-decoration:none;border-bottom:0}
-  .toc a:hover{color:var(--cyan)}
-  .faq-block{margin-top:40px}
-  .faq-block h2{margin-bottom:18px}
-  .faq-q{font-size:16px;font-weight:600;color:var(--ink);margin:18px 0 6px}
-  .related{margin-top:48px;padding-top:24px;border-top:1px solid var(--line)}
-  .related h3{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.14em;text-transform:uppercase;margin:0 0 14px}
-  .related ul{list-style:none;padding:0;margin:0}
-  .related li{margin-bottom:8px;font-size:14px}
-</style>
 </head>
+
 <body>
-<a class="skip-link" href="#main-content"><span lang="en">Skip to content</span><span lang="nl">Naar inhoud</span></a>
-<div class="app">
+<a class="skip" href="#main">Naar inhoud</a>
 
-  <div class="topbar">
-  <header>
-    <a class="brand" href="../index.html">
-      <span class="word">
-        <b><span class="wm-cloud">Cloud</span><span class="wm-labs">Labs</span></b>
-        <small>Decades of server expertise</small>
-      </span>
-    </a>
-    <span class="spacer"></span>
-    <div class="top-right">
-      <span class="status-dot"><span lang="en">Available · remote-first</span><span lang="nl">Beschikbaar · remote</span></span>
-      <div class="lang-toggle" role="group" aria-label="Language">
-        <button data-set-lang="en" aria-pressed="true">EN</button>
-        <button data-set-lang="nl" aria-pressed="false">NL</button>
-      </div>
-      <button id="consentReopen" class="consent-reopen" aria-label="Cookie preferences">
-        <span lang="en">Cookies</span><span lang="nl">Cookies</span>
-      </button>
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/blog/" aria-current="page">Blog</a></div>
+    <div class="nav-actions">
+      <button class="search" aria-label="Zoeken">&#8981;</button>
+      <a class="btn primary" href="/triage/">Start gratis triage</a>
+      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
     </div>
-  </header>
-
-  <div class="nav-wrap">
-  <nav class="tabs" aria-label="Main navigation">
-    <a href="../index.html"><span class="n">01</span><span lang="en">Home</span><span lang="nl">Home</span></a>
-    <a href="../blog.html" aria-current="page"><span class="n">02</span><span lang="en">Blog</span><span lang="nl">Blog</span></a>
-    <a href="../services.html"><span class="n">03</span><span lang="en">Services</span><span lang="nl">Diensten</span></a>
-    <a href="../method.html"><span class="n">04</span><span lang="en">Method</span><span lang="nl">Werkwijze</span></a>
-    <a href="../findings.html"><span class="n">05</span><span lang="en">Findings</span><span lang="nl">Findings</span></a>
-    <a href="../engagement.html"><span class="n">06</span><span lang="en">Engagement</span><span lang="nl">Inzet</span></a>
-    <a href="../about.html"><span class="n">07</span><span lang="en">About</span><span lang="nl">Profiel</span></a>
-    <a href="../book.html"><span class="n">08</span><span lang="en">Book</span><span lang="nl">Boek</span></a>
-    <a href="../faq.html"><span class="n">09</span><span lang="en">FAQ</span><span lang="nl">FAQ</span></a>
   </nav>
-  </div>
-  </div>
+</header>
 
-  <main id="main-content">
-    <article class="article">
-      <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="../index.html"><span lang="en">Home</span><span lang="nl">Home</span></a> ·
-        <a href="../blog.html">Blog</a> ·
-        <span lang="en">Classic Hyper-V or Azure Local</span>
-        <span lang="nl">Klassiek Hyper-V of Azure Local</span>
-      </nav>
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+  <article class="artikelpagina">
 
-            <h1><span lang="en">What's it gonna be: Classic Hyper-V or Azure Local?</span><span lang="nl">Wat gaat het worden: Klassiek Hyper-V of Azure Local?</span></h1>
+    <p class="kruimelpad"><a href="/">CloudLabs</a> / <a href="/blog/">Blog</a> / Strategy</p>
 
-      <!-- ============= ENGLISH ============= -->
-      <div lang="en">
-        <div class="meta">By Hans Vredevoort · 25 June 2026 · 5 minute read · Strategy</div>
-
-        <p class="lede">Almost every month the same question lands on the table. A customer is facing a refresh, the old cluster is written off, and someone on the team saw a Microsoft slide saying everything should move to Azure Local. “Or should we still do Azure Stack HCI?” The first thing we have to clear up is a misunderstanding, because Azure Stack HCI no longer exists.</p>
-        <p class="lede">Microsoft renamed it Azure Local in November 2024. Existing clusters moved over automatically, and Azure Arc stayed mandatory. The independent, on-prem variant that a lot of admins actually have in mind, an HCI cluster that runs without a constant connection to Azure, is off the table. What remains is a real choice: Azure Local with Arc, or a classic Hyper-V failover cluster on shared storage. And in a surprising number of cases, we recommend the second.</p>
-
-        <div class="toc">
-          <div class="toc-title">In this article</div>
-          <ol>
-            <li><a href="#en-1">Not an anti-cloud reflex</a></li>
-            <li><a href="#en-2">Start with the runtime</a></li>
-            <li><a href="#en-3">The cost: once versus every month</a></li>
-            <li><a href="#en-4">Maturity and the people who know it</a></li>
-            <li><a href="#en-5">How long a classic cluster lasts</a></li>
-            <li><a href="#en-6">The disconnected argument</a></li>
-            <li><a href="#en-7">Less final than it feels</a></li>
-            <li><a href="#en-8">Our advice</a></li>
-          </ol>
-        </div>
-
-        <h2 id="en-1">1. Not an anti-cloud reflex</h2>
-        <p>That is not an anti-cloud reflex. We build Azure environments, we run Arc where it fits, and we have customers for whom Azure Local is exactly the right answer. But the reasons people think they need Azure Local often do not match what they actually need.</p>
-        <h2 id="en-2">2. Start with the runtime</h2>
-        <p>Start with the runtime. A Hyper-V failover cluster on a SAN runs whether the internet is up or not. No registration, no external control plane, no subscription that expires. We have seen environments where an Azure outage on the other side of the world caused no ripple in production, simply because nothing in the chain had to talk to Azure. For a hospital, a production line, or a ship at sea, that is not a detail. That is the whole business case.</p>
-        <h2 id="en-3">3. The cost: once versus every month</h2>
-        <p>Then the cost. You buy Windows Server Datacenter once, perpetually, licensed per physical core, and on that host it covers unlimited VMs. However, with Azure Local you rent: about ten dollars per physical core per month, on top of your hardware, with guest Windows licensed separately. Take two nodes of 32 cores each. That is roughly 640 dollars a month in host fees alone, before you license a single VM, and it keeps running whether you grow or stand still. We model it in every advisory round, and for stable, predictable workloads the one-time purchase often wins. Not always, but more often than the slides suggest. One genuine exception, and it cuts the other way: if you already hold Software Assurance on Datacenter, Azure Hybrid Benefit can waive the Azure Local host fee, but only on a cloud-connected, Storage Spaces Direct deployment, not on a SAN and not disconnected. The buyer who wants to stay off Azure gets nothing from it.</p>
-        <h2 id="en-4">4. Maturity and the people who know it</h2>
-        <p>And maybe the most important one: maturity. Failover Clustering has been around since 2008. The pitfalls are known, the runbooks exist, and your people know the stack inside out. And you are not alone with it: there is an army of people who know Hyper-V and SAN out there. You can hire it, bring in a consultant, or search a forum and find someone who already solved your exact problem. Your storage team knows how the multipathing, the zoning, and the firmware of that SAN behave, because they have run it for years. With Azure Local you switch to a completely new update model, the so-called solution updates. On top of that come a new dependency on validated hardware from the catalog, and a far smaller pool of people who know it. All learnable, but it is a new stack with new ways to break, and you pay that bill in the first few years.</p>
-        <h2 id="en-5">5. How long a classic cluster lasts</h2>
-        <p>In our health checks we mostly see how long a classic cluster lasts. Most enterprises depreciate servers over about five years. A well-built Hyper-V cluster on a decent SAN comfortably outlives that, running six or seven years on little more than firmware updates, patch rounds, and the odd replaced disk. That is not nostalgia for the old. It is a low TCO and few surprises. We name the downside too. You do those patch rounds yourself, node by node, with Cluster-Aware Updating and your own maintenance window. Your SAN is a design choice you have to get right, because the zoning, the multipathing, and the redundancy decide your uptime, and nobody catches that centrally for you. And you get no Azure control plane showing all your sites at a glance. Anyone who genuinely needs that last part is buying something real with Azure Local.</p>
-        <h2 id="en-6">6. The disconnected argument</h2>
-        <p>About the “but it runs disconnected now” argument, because it comes up every time. We checked it again. Azure Local's disconnected operations does let you run without a cloud connection, but it does that by hosting the entire Arc control plane locally, inside a virtual appliance. So it is still Arc, all the way down. You just run Arc on your own iron. And that appliance is not free: it needs physical machines, at least three for the management instance, hundreds of gigabytes of headroom, and it is still in preview. The marquee feature, AKS, does not work in a fully air-gapped deployment yet. So if your reason for wanting offline is that you do not want the Azure operating model in the first place, disconnected Azure Local does not remove that model. It moves it into your rack and hands you the bill for running it. A classic cluster has run offline since day one, no fine print.</p>
-        <h2 id="en-7">7. Less final than it feels</h2>
-        <p>Good news for the undecided: the choice is less final than it feels. Both platforms run Hyper-V. Your guests and their VHDX files move from one to the other, so if you start classic and want Azure Local in three years, you migrate the VMs, not your whole application estate.</p>
-        <h2 id="en-8">8. Our advice</h2>
-        <p>Our advice, short. Do you want to own the infrastructure, run offline, know your costs up front, and build on a stack your team already masters? Build the Hyper-V cluster on your own SAN, and keep the control plane in your own server room. Do you want to bring Azure services and central management to your edge, and do you knowingly accept the dependence on Arc and the monthly bill? Then Azure Local is a fine choice, as long as you make it for that reason. What we want to steer you away from: do not pick Azure Local because you actually mean the old Azure Stack HCI. It is gone. The question is not new HCI or old HCI. The question is whether you want to lift your infrastructure into Azure, yes or no.</p>
-
-        <p><strong>So, your turn.</strong> You are facing the next refresh. Classic Hyper-V cluster on shared storage, Azure Local with Arc, or both for different jobs? Tell us where you land, and why. We put the same question to <a href="https://www.linkedin.com/posts/hans-vredevoort-9531b5385_hyperv-failovercluster-azurelocal-activity-7475915225859375105-09CF" rel="noopener">a vote on LinkedIn</a>. Cast yours, add your reasoning in the comments, and we will fold the best arguments from both sides into a follow-up.</p>
-
-        <div class="faq-block">
-          <h2>Frequently asked questions</h2>
-          <div class="faq-q">Is Azure Stack HCI still available?</div>
-          <p>No. Microsoft renamed it Azure Local in November 2024 and moved existing clusters over automatically. Azure Arc remained mandatory, so there is no independent, non-Azure HCI to buy anymore.</p>
-          <div class="faq-q">Does Azure Local's disconnected mode remove the Azure dependency?</div>
-          <p>Not really. Disconnected operations hosts the Arc control plane locally in a virtual appliance, so it runs without a cloud connection, but it is still Arc end to end, needs extra physical machines, and is in preview with AKS not working fully air-gapped yet.</p>
-          <div class="faq-q">Can I move VMs between a classic cluster and Azure Local later?</div>
-          <p>Yes. Both run Hyper-V, so the guests and their VHDX files move. You migrate the VMs, not your whole application estate, which keeps the decision reversible.</p>
-        </div>
-      </div>
-
-      <!-- ============= NEDERLANDS ============= -->
-      <div lang="nl">
-        <div class="meta">Door Hans Vredevoort · 25 juni 2026 · 5 minuten leestijd · Strategy</div>
-
-        <p class="lede">Bijna elke maand komt dezelfde vraag op tafel. Een klant staat voor een refresh, het oude cluster is afgeschreven, en iemand in het team heeft op een Microsoft-slide gezien dat alles naar Azure Local moet. “Of moeten we toch nog Azure Stack HCI doen?” Dan moeten we eerst een misverstand opruimen, want Azure Stack HCI bestaat niet meer.</p>
+    <header class="artikelkop">
+      <h1>Wat gaat het worden: Klassiek Hyper-V of Azure Local?</h1>
+      <p class="lede">Bijna elke maand komt dezelfde vraag op tafel. Een klant staat voor een refresh, het oude cluster is afgeschreven, en iemand in het team heeft op een Microsoft-slide gezien dat alles naar Azure Local moet. “Of moeten we toch nog Azure Stack HCI doen?” Dan moeten we eerst een misverstand opruimen, want Azure Stack HCI bestaat niet meer.</p>
         <p class="lede">Microsoft hernoemde het in november 2024 tot Azure Local. Bestaande clusters zijn automatisch meegegaan, en Azure Arc bleef onverkort verplicht. De onafhankelijke, on-prem variant die veel beheerders eigenlijk in hun hoofd hebben, een HCI-cluster dat draait zonder een constante verbinding met Azure, is daarmee van tafel. Wat overblijft is een echte keuze: Azure Local met Arc, of een klassiek Hyper-V failover cluster op gedeelde storage. En in een verrassend groot deel van de gevallen adviseren wij dat tweede.</p>
+      <p class="artikelmeta"><b>Door Hans Vredevoort</b> <i>&middot;</i> <b>25 juni 2026</b> <i>&middot;</i> <b>5 minuten leestijd</b> <i>&middot;</i> <b>Strategy</b></p>
+    </header>
 
-        <div class="toc">
-          <div class="toc-title">In dit artikel</div>
-          <ol>
+    <div class="artikelbody">
+      <nav class="toc" aria-label="Inhoud van dit artikel">
+        <p class="toc-title">In dit artikel</p>
+        <ol>
             <li><a href="#nl-1">Geen anti-cloud-reflex</a></li>
             <li><a href="#nl-2">Kijk eerst naar de runtime</a></li>
             <li><a href="#nl-3">De kosten: eenmalig versus elke maand</a></li>
@@ -291,9 +155,10 @@
             <li><a href="#nl-7">Minder definitief dan het voelt</a></li>
             <li><a href="#nl-8">Ons advies</a></li>
           </ol>
-        </div>
+      </nav>
 
-        <h2 id="nl-1">1. Geen anti-cloud-reflex</h2>
+      <div class="tekst">
+<h2 id="nl-1">1. Geen anti-cloud-reflex</h2>
         <p>Dat is geen anti-cloud-reflex. We bouwen Azure-omgevingen, we draaien Arc waar het past, en we hebben klanten waar Azure Local precies het juiste antwoord is. Maar de redenen waarom mensen denken Azure Local nodig te hebben, kloppen lang niet altijd met wat ze daadwerkelijk nodig hebben.</p>
         <h2 id="nl-2">2. Kijk eerst naar de runtime</h2>
         <p>Kijk eerst naar de runtime zelf. Een Hyper-V failover cluster op een SAN draait of er nu internet is of niet. Geen registratie, geen externe control plane, geen abonnement dat verloopt. We hebben omgevingen gezien waar een Azure-storing aan de andere kant van de wereld geen enkele rimpeling gaf in de productie, simpelweg omdat er in die keten niets zat dat naar Azure hoefde te praten. Voor een ziekenhuis, een productielijn of een schip op zee is dat geen detail, dat is de hele businesscase.</p>
@@ -321,41 +186,31 @@
           <div class="faq-q">Kan ik VM's later tussen een klassiek cluster en Azure Local verplaatsen?</div>
           <p>Ja. Beide draaien Hyper-V, dus de gasten en hun VHDX-bestanden verhuizen. Je migreert de VM's, niet je hele applicatielandschap, waardoor de keuze omkeerbaar blijft.</p>
         </div>
-      </div>
-
-      <div class="related">
-        <h3><span lang="en">Related articles</span><span lang="nl">Gerelateerde artikelen</span></h3>
+<div class="related">
+        <h3>Gerelateerde artikelen</h3>
         <ul>
-          <!--LINK:azure-local-documented-flaws-exit-strategy--><li><a href="azure-local-documented-flaws-exit-strategy.html"><span lang="en">Azure Local in 2026: The Flaws Are Documented</span><span lang="nl">Azure Local in 2026: de gebreken zijn gedocumenteerd</span></a></li><!--/LINK:azure-local-documented-flaws-exit-strategy-->
-          <!--LINK:azure-local-migration-readiness--><li><a href="azure-local-migration-readiness.html"><span lang="en">Azure Local Migration Readiness Checklist</span><span lang="nl">Azure Local migratie readiness checklist</span></a></li><!--/LINK:azure-local-migration-readiness-->
-          <!--LINK:san-vs-s2d-vs-azure-local-hyper-v-storage--><!--draft:<li><a href="san-vs-s2d-vs-azure-local-hyper-v-storage.html"><span lang="en">SAN vs S2D vs Azure Local: Choosing Hyper-V Storage in 2026</span><span lang="nl">SAN vs S2D vs Azure Local: Hyper-V storage kiezen in 2026</span></a></li>--><!--/LINK:san-vs-s2d-vs-azure-local-hyper-v-storage-->
-          <!--LINK:top-10-hyper-v-cluster-issues--><li><a href="top-10-hyper-v-cluster-issues.html"><span lang="en">Hyper-V Cluster Health Check: Top 10 Issues We Find in 2026</span><span lang="nl">Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026</span></a></li><!--/LINK:top-10-hyper-v-cluster-issues-->
+          <!--LINK:azure-local-documented-flaws-exit-strategy--><li><a href="azure-local-documented-flaws-exit-strategy.html">Azure Local in 2026: de gebreken zijn gedocumenteerd</a></li><!--/LINK:azure-local-documented-flaws-exit-strategy-->
+          <!--LINK:azure-local-migration-readiness--><li><a href="azure-local-migration-readiness.html">Azure Local migratie readiness checklist</a></li><!--/LINK:azure-local-migration-readiness-->
+          <!--LINK:san-vs-s2d-vs-azure-local-hyper-v-storage--><!--draft:<li><a href="san-vs-s2d-vs-azure-local-hyper-v-storage.html">SAN vs S2D vs Azure Local: Hyper-V storage kiezen in 2026</a></li>--><!--/LINK:san-vs-s2d-vs-azure-local-hyper-v-storage-->
+          <!--LINK:top-10-hyper-v-cluster-issues--><li><a href="top-10-hyper-v-cluster-issues.html">Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026</a></li><!--/LINK:top-10-hyper-v-cluster-issues-->
         </ul>
       </div>
-    </article>
-  </main>
+      </div>
+    </div>
 
-  <footer>
-    <span>&copy; 2026 CloudLabs</span>
-    <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
-    <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
-    <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.4.9</span>
-  </footer>
+  </article>
+</section>
+</main>
 
-</div>
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
 
-<div id="consentBanner" class="consent-banner" role="dialog" aria-label="Cookie consent" aria-live="polite">
-  <p>
-    <span lang="en">We use Google Analytics to understand how visitors use this site. Analytics cookies are only set if you accept.</span>
-    <span lang="nl">Wij gebruiken Google Analytics om te zien hoe bezoekers deze site gebruiken. Analytische cookies worden alleen geplaatst als u akkoord gaat.</span>
-  </p>
-  <div class="consent-row">
-    <button class="btn-accept" id="consentAccept"><span lang="en">Accept analytics</span><span lang="nl">Accepteer analytics</span></button>
-    <button class="btn-decline" id="consentDecline"><span lang="en">Decline</span><span lang="nl">Weigeren</span></button>
-  </div>
-</div>
 
-<script src="../script.js?v=0.4.9"></script>
+<script>
+(function(){
+  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
+  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
+})();
+</script>
+<script src="/huisstijl/pagina.js"></script>
 </body>
 </html>

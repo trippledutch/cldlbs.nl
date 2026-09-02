@@ -1,0 +1,689 @@
+/* MEER LUCHT TUSSEN KOP EN TEKST (Hans, 27 aug 2026, na het lezen van het
+   eerste rapport met de juiste lettertypen erin). Alle vier de afstanden staan
+   hier bij elkaar, want ze doen samen een ding: een kop mag niet aan zijn eigen
+   alinea plakken. Los verhoogd raakt de een de ander niet en wordt het scheef.
+
+       sectiekop -> eerste alinea      .85  -> 1.35rem
+       bevindingskop -> eerste veld    .90  -> 1.70rem  (ruimst: hier
+                                       botst een titel op een label)
+       veldnaam -> zijn alinea         .25  ->  .45rem
+       tussen twee velden              .85  -> 1.15rem
+
+   EN DE PRINTWAARDEN MOETEN MEE, want die overschrijven deze. Dat ging hier
+   fout: de vier schermwaarden waren verruimd en het PDF veranderde niet, omdat
+   @media print .bevkop op 5pt zette. Wie hier iets wijzigt, wijzigt twee keer:
+
+       .bevkop     5pt -> 13pt        .veldnaam    - -> 4pt
+       .veld       5pt ->  9pt        h2           - -> 11pt
+
+   break-after:avoid op koppen en veldnamen blijft zoals het was: dat gaat over
+   paginagrenzen en is een andere vraag dan witruimte. */
+
+/* DE DRIE ROLLEN OP EEN PLEK. Welke face welke rol doet is een KEUZE en
+   geen eigenschap van de tekst. Door ze hier te binden is Robs vraag -
+   schreeuwloze kop en serif lopende tekst, of andersom - een regel in
+   plaats van veertien zoek-vervangacties. */
+:root{
+  /* SANS OP DE KOPPEN, SERIF OP DE LOPENDE TEKST, en dat is de omgekeerde
+     verdeling van de eerste versie. Die zette serif op de koppen omdat dat de
+     boekconventie is; op de drie PDF's die Hans op 27 aug 2026 naast elkaar
+     las won deze. Een bevindingskop is een LABEL - een id, een onderwerp, een
+     chip op dezelfde regel - en dat leest als een label, niet als een titel.
+     De alinea eronder wordt wel gelezen, en daar draagt de serif. */
+  --kop:    "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --tekst:  "IBM Plex Serif", Georgia, serif;
+  --meting: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+:root{
+  --ground:#FBFCFD; --surface:#FFFFFF; --sunk:#F4F6F9;
+  --ink:#0A1024; --dim:#3A4255; --faint:#6B7285; --rule:#D3D8E0;
+  --accent:#0A7E9E; --accent-soft:#E6F2F6;
+  --crit:#0A1024; --high:#E03131; --med:#C55205; --low:#1A78CD; --none:#2B8A3E;
+  --chip-ink:#FFFFFF;
+  --maxw:52rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0B0F1A; --surface:#121826; --sunk:#0F1421;
+    --ink:#E8ECF3; --dim:#AEB7C7; --faint:#7B849A; --rule:#232B3B;
+    --accent:#3FB6D8; --accent-soft:#102A33;
+    --crit:#E8ECF3; --high:#FF6B6B; --med:#FF922B; --low:#4DABF7; --none:#51CF66;
+    --chip-ink:#0B0F1A;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0B0F1A; --surface:#121826; --sunk:#0F1421;
+  --ink:#E8ECF3; --dim:#AEB7C7; --faint:#7B849A; --rule:#232B3B;
+  --accent:#3FB6D8; --accent-soft:#102A33;
+  --crit:#E8ECF3; --high:#FF6B6B; --med:#FF922B; --low:#4DABF7; --none:#51CF66;
+  --chip-ink:#0B0F1A;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--tekst);
+  font-size:16px; line-height:1.62; -webkit-font-smoothing:antialiased;
+}
+/* 6rem onderaan hield ruimte vrij voor een voettekst die er niet meer is
+   (Hans, 26 aug 2026). Wat overbleef was een lege strook onder de laatste
+   bevinding, op het scherm en op de laatste gedrukte pagina. */
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 1.5rem 2.5rem}
+code{
+  font-family:var(--meting);
+  font-size:.88em; background:var(--sunk); border:1px solid var(--rule);
+  border-radius:3px; padding:.05em .3em; overflow-wrap:anywhere;
+}
+a{color:var(--accent); text-decoration-thickness:1px; text-underline-offset:2px; overflow-wrap:anywhere}
+a:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:2px}
+
+/* ---- masthead ---- */
+.mast{border-bottom:1px solid var(--rule); background:var(--surface)}
+.mast .wrap{padding-top:3.25rem; padding-bottom:2rem}
+.eyebrow{
+  font-family:var(--meting); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin:0 0 .9rem;
+}
+h1{
+  font-family:var(--kop); font-weight:600;
+  font-size:clamp(1.85rem,4.4vw,2.6rem); line-height:1.14; margin:0 0 1rem;
+  text-wrap:balance; letter-spacing:-.012em;
+}
+/* De tweede titelregel begint bij de clusternaam; zie html_report.py voor
+   waarom daar en niet op een woordtelling of een streepje. display:block
+   breekt de regel zonder een <br> in de tekst te zetten, zodat de titel
+   een string blijft voor wie hem kopieert of doorzoekt. */
+h1 .regel2{ display:block; }
+
+.meta{
+  display:flex; flex-wrap:wrap; gap:.4rem 1.6rem; margin:0;
+  font-size:.86rem; color:var(--faint);
+  font-family:var(--meting);
+}
+.meta b{color:var(--dim); font-weight:500}
+
+/* ---- scale ---- */
+.scale{margin:2.25rem 0 0}
+.bar{display:flex; height:.5rem; border-radius:999px; overflow:hidden; gap:2px; background:transparent}
+.seg{display:block; border-radius:999px}
+.seg.crit{background:var(--crit)} .seg.high{background:var(--high)}
+.seg.med{background:var(--med)} .seg.low{background:var(--low)} .seg.none{background:var(--none)}
+.tellers{display:flex; flex-wrap:wrap; gap:.35rem 1.4rem; margin-top:.95rem}
+.teller{
+  display:flex; align-items:baseline; gap:.45rem; text-decoration:none;
+  color:var(--dim); font-size:.82rem;
+}
+.teller b{
+  font-family:var(--meting); font-size:1.15rem; font-weight:500;
+  font-variant-numeric:tabular-nums;
+}
+.teller.high b{color:var(--high)} .teller.med b{color:var(--med)}
+.teller.low b{color:var(--low)} .teller.none b{color:var(--none)}
+.teller:hover span{color:var(--ink)}
+
+/* ---- table of contents ----
+   DE PUNTJESLIJN IS EEN ACHTERGROND, GEEN TEKEN. Met een rij punten als tekst
+   ("....") breekt de regel op een willekeurige punt zodra de titel lang is, en
+   in de PDF vallen ze net anders dan op het scherm. Een repeating gradient op
+   een flex-vak dat de resterende ruimte opvult, kan dat niet: hij is precies zo
+   lang als er over is en breekt nooit.
+
+   Het paginanummervak is LEEG bij het renderen. html_pdf.py vult het in nadat
+   hij de afgedrukte PDF gelezen heeft; de renderer weet niet waar een pagina
+   eindigt. min-width houdt de kolom recht terwijl het nog leeg is, anders
+   verspringt de hele lijst tussen de eerste en de tweede drukgang. */
+.inh{margin:3.2rem 0 0}
+.inh h2{
+  font-family:var(--kop); font-weight:600;
+  font-size:1.22rem; letter-spacing:-.005em; margin:0 0 1.35rem;
+  padding-bottom:.5rem; border-bottom:1px solid var(--rule);
+}
+.inh ol{list-style:none; margin:0; padding:0}
+.inh li{display:flex; align-items:baseline; gap:.6rem; margin:.28rem 0;
+        color:var(--dim); font-size:.94rem}
+.inh li.g{
+  display:block; margin:1.5rem 0 .55rem; color:var(--faint);
+  font-family:var(--meting); font-size:.72rem;
+  letter-spacing:.14em; text-transform:uppercase;
+}
+.inh li.g:first-child{margin-top:.4rem}
+.inh .fid{
+  font-family:var(--meting); font-size:.8rem; color:var(--faint);
+  min-width:2.6rem; flex:none;
+}
+.inh .t{flex:none; max-width:calc(100% - 7rem)}
+.inh li.s .t{color:var(--ink); font-weight:500}
+/* DE HOOFDSTUKTITEL IN DE LIJST DRAAGT DE MAAT DIE HIJ IN HET DOCUMENT HEEFT
+   (Hans, 29 aug 2026). De lijst was een vlakke reeks regels van .94rem waarin
+   een hoofdstuk en een bijlage er hetzelfde uitzagen; nu leest de indeling van
+   het document van de lijst af. Alleen in de RCA: het bevindingenrapport heeft
+   vier secties en tientallen bevindingen, en daar zou een kop van 1.22rem de
+   lijst uit elkaar trekken in plaats van hem leesbaar maken. */
+.rca .inh li.s .t{font-family:var(--kop); font-size:1.22rem; font-weight:600}
+.rca .inh li.s{margin:.75rem 0 .1rem}
+.rca .inh li.sub{margin:.1rem 0 .1rem 1.6rem; font-size:.92rem}
+.rca .inh li.sub .t{color:var(--dim)}
+@media print{
+  .rca .inh li.s .t{font-size:12pt}
+  .rca .inh li.s{margin:5pt 0 1pt}
+  .rca .inh li.sub{margin:0 0 0 12pt; font-size:9pt}
+}
+.inh .v{
+  flex:1 1 auto; align-self:flex-end; height:1px; min-width:1.5rem;
+  margin-bottom:.28rem; border-bottom:1px dotted var(--rule);
+}
+.inh .p{
+  flex:none; min-width:1.6rem; text-align:right;
+  font-family:var(--meting); font-size:.82rem; color:var(--faint);
+  font-variant-numeric:tabular-nums;
+}
+
+/* De kopvelden onder elkaar, label en waarde in twee uitgelijnde kolommen.
+   Alleen waar de klasse erbij staat: het bevindingenrapport houdt zijn vier
+   velden op een rij, en dat is goedgekeurd. */
+.meta.kolom{
+  display:grid; grid-template-columns:max-content 1fr;
+  gap:.18rem .9rem; align-items:baseline;
+}
+.meta.kolom b{font-family:var(--tekst); font-weight:600; color:var(--dim)}
+.meta.kolom span{font-family:var(--meting)}
+@media print{
+  .meta.kolom{gap:1pt .7rem}
+}
+
+/* De huisopsomming binnen de RCA erft ul.opsom, alleen de kleur van het label
+   volgt hier de RCA-tekstkleur. */
+.rca ul.opsom{margin:0 0 1.3rem; padding-left:1.15rem; color:var(--dim)}
+.rca ul.opsom li{margin:.24rem 0}
+.rca b.dpkop{font-weight:600; color:var(--ink)}
+@media print{
+  .rca ul.opsom{margin:0 0 10pt; padding-left:11pt; font-size:9.5pt}
+  .rca ul.opsom li{margin:1.5pt 0}
+}
+
+/* ---- de RCA ----
+   HETZELFDE DOCUMENT, ANDERE INHOUD. De RCA loopt door dezelfde stylesheet als
+   het bevindingenrapport: dezelfde lettertypen, dezelfde kleuren, dezelfde
+   drukregels. Wat hij nodig heeft staat hier met een eigen klasse erbij, en
+   niet als een tweede stylesheet - twee stylesheets over een huisstijl lopen
+   binnen een maand uit elkaar op precies de dingen die een lezer over twee
+   opleveringen heen vergelijkt.
+
+   WAAROM DIT BLOK BESTAAT. De eerste HTML-RCA stuurde kale <h2> en <p> uit, en
+   findings.css richt zich op ".front h2" en ".front p". Er kwam dus vrijwel
+   geen enkele regel bij aan: de koppen stonden in de browserstandaard en de
+   tekst had geen kleur. Hans zag het meteen (29 aug 2026: "lijkt niet dezelfde
+   fonts te gebruiken"). Een selector die net naast het element valt is stiller
+   dan een ontbrekende stylesheet - de pagina rendert, alleen verkeerd. */
+/* 58rem, EN DAT IS GEEN SMAAKKEUZE. De kolomwegingen in rca.py zijn
+   percentages van 5,9 inch A4-tekstbreedte, en daar zijn ze op GEMETEN: gelijke
+   kolommen maakten de tabellen 54 procent hoger. Die percentages over 76rem
+   uitrekenen - ruim het dubbele - laat een kolom van 34% uitgroeien tot een
+   veelvoud van wat er in staat, terwijl een kolom van 12% te smal blijft. Hans
+   zag beide tegelijk (29 aug 2026): de node-tabel met gaten, de tijdlijn met
+   "System/St oragePath" door het woord heen.
+
+   58rem ligt dicht bij de 5,9 inch waar de wegingen voor gemeten zijn, en laat
+   de RCA toch ruimer zijn dan de prozakolom van 52rem. */
+.wrap.breed{max-width:58rem}
+
+.rca h2{
+  font-family:var(--kop); font-weight:600;
+  font-size:1.22rem; letter-spacing:-.005em; margin:3.6rem 0 1.3rem;
+  padding-bottom:.5rem; border-bottom:1px solid var(--rule); text-wrap:balance;
+}
+/* RUIMTE BOVEN EEN HOOFDSTUK (Hans, 29 aug 2026). Een hoofdstukkop stond bijna
+   even dicht op de tabel erboven als op zijn eigen eerste alinea, en dan hoort
+   hij visueel bij het verkeerde blok. De afstand erboven is nu bijna drie keer
+   de afstand eronder: dat is wat een kop tot een BEGIN maakt in plaats van een
+   scheiding.
+
+   In druk dezelfde verhouding, in punten. Beide zetten, want een maat in rem
+   krimpt niet mee met een drukmaat - dat is hier vandaag drie keer misgegaan. */
+.rca h2:first-child{margin-top:.6rem}
+/* KLEINER DAN DE HOOFDSTUKTITEL, OOK IN DRUK. Op het scherm was 1.02rem al
+   kleiner dan de 1.22rem van h2, maar in druk kreeg h2 een expliciete 12pt en
+   h3 niet: die erfde de schermmaat, 1.02rem = 16,3px = ruim 12pt, en werd op
+   papier dus GROTER dan het hoofdstuk erboven. Hans zag het (29 aug 2026).
+   Dezelfde vorm als de betekeniskolom die eerder uitsprong: een maat in rem
+   krimpt niet mee met een drukmaat in punten. */
+.rca h3, .rca h3.subkop{
+  font-family:var(--kop); font-weight:600; font-size:.98rem;
+  color:var(--ink); margin:1.5rem 0 .45rem; break-after:avoid;
+}
+.rca p{margin:0 0 .95rem; color:var(--dim); max-width:62rem}
+/* EEN BIJSCHRIFT HOORT BIJ ZIJN TABEL en niet bij de lopende tekst, dus zijn
+   maat komt van de tabel af en ligt eronder. Het stond op .78rem terwijl de
+   tabel op .88rem staat - kleiner op het scherm, maar in druk kreeg de tabel
+   7.5pt en het bijschrift 9.5pt van ".rca p", en dan is het bijschrift groter
+   dan waar het bij hoort. */
+.rca p.bijschrift{
+  font-family:var(--meting); font-size:.8rem; color:var(--faint);
+  margin:-1.4rem 0 1.7rem; max-width:none;
+}
+.rca b.dpkop{font-weight:600; color:var(--ink)}
+
+/* De tabellen. DE KOLOMBREEDTES KOMEN UIT <col> en niet uit de inhoud: rca.py
+   weegt ze zelf, en die weging is daar gemeten (gelijke kolommen maakten de
+   tabellen 54 procent hoger). table-layout:fixed is wat die <col> laat gelden -
+   zonder dat negeert de browser hem zodra een cel breder wil. */
+.rca table{
+  table-layout:fixed; width:100%; border-collapse:collapse;
+  margin:.2rem 0 1.9rem; font-size:.88rem;
+}
+.rca th{
+  text-align:left; vertical-align:bottom;
+  font-family:var(--meting); font-weight:500; font-size:.7rem;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--faint);
+  padding:.3rem .55rem .45rem; border-bottom:1px solid var(--rule);
+}
+.rca td{
+  vertical-align:top; padding:.34rem .55rem; color:var(--dim);
+  border-bottom:1px solid var(--sunk);
+  overflow-wrap:break-word; hyphens:none;
+}
+.rca tr:last-child td{border-bottom:none}
+
+/* DE DAGKOP. Hij hoort BIJ de regels eronder, dus hij staat er dicht tegenaan en
+   heeft lucht erboven - anders leest hij als een titel van de hele tabel. */
+.rca tr.dagkop td{
+  font-family:var(--kop); font-weight:600; font-size:.9em; color:var(--ink);
+  padding:.9rem .55rem .2rem; border-bottom:none;
+}
+.rca tr.dagkop:first-child td{padding-top:.2rem}
+
+/* ACCENT OP DE ZWAARSTE REGELS. Een streep aan de linkerkant en het signaalwoord
+   in dezelfde kleur - niet de hele rij gekleurd, want dan is een tabel van
+   vijftig regels een verkeerslicht en leest de tekst slechter.
+
+   De kleuren komen uit Styles.json via de tokens die het bevindingenrapport ook
+   gebruikt: --high is HOOG, --med is MIDDEL. Een lezer die beide documenten
+   kent hoeft geen tweede code te leren.
+
+   print-color-adjust:exact, anders drukt de streep wit op wit - dezelfde regel
+   die de risicochips in het bevindingenrapport al nodig hadden. */
+/* LUCHT TUSSEN DE STREEP EN DE TEKST (Hans, 29 aug 2026). De streep is een
+   inset-schaduw en neemt dus geen ruimte in; met de gewone celvulling van
+   .55rem stond "E0708" er tegenaan. De eerste cel van een geaccentueerde rij
+   krijgt de streepbreedte er bovenop plus lucht - de kolom zelf verschuift
+   niet, want de andere rijen houden hun eigen vulling en de tabel is fixed. */
+.rca tr.acc-high td:first-child, .rca tr.acc-med td:first-child{
+  padding-left:1.05rem;
+}
+.rca tr.acc-high td:first-child{box-shadow:inset 3px 0 0 var(--high)}
+.rca tr.acc-med td:first-child{box-shadow:inset 3px 0 0 var(--med)}
+.rca tr.acc-high td, .rca tr.acc-med td{background:var(--surface)}
+/* Het signaalwoord in zijn eigen kleur. nowrap omdat "medium" en straks
+   "unbekannt" een woord zijn: liever een kolom die zijn breedte opeist dan een
+   woord dat door de helft breekt. De kolombreedte is daarop gemeten. */
+/* OP DE KLASSE, NIET OP DE POSITIE. td:nth-child(6) is de signaalkolom in de
+   zevenkoloms tabel en de BETEKENISkolom in de zeskoloms bijlage; de nowrap
+   hieronder landde daar op een hele zin en duwde de tabel breder dan het papier.
+   De renderer zegt nu welke kolom het is. */
+.rca td.sig{white-space:nowrap; font-weight:500}
+/* EEN TIJDSTIP IS EEN WOORD. "20:19:49" brak af tot "20:19:4" en "9" op de
+   volgende regel, omdat de kolom net te smal was en <wbr> na de dubbele punt
+   een breekkans gaf. Een klok breekt niet: liever een kolom die zijn breedte
+   opeist dan een tijd die je twee keer moet lezen. */
+.rca td.klok{white-space:nowrap}
+.rca tr.acc-high td.sig{color:var(--high)}
+.rca tr.acc-med td.sig{color:var(--med)}
+@media print{
+  .rca tr.acc-high td:first-child, .rca tr.acc-med td:first-child{
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .rca td.sig{-webkit-print-color-adjust:exact; print-color-adjust:exact}
+}
+/* een tijdstempel, een node, een event-id en een telling zijn MACHINEWAARDEN:
+   mono, en cijfers die onder elkaar uitlijnen. Zonder tabular-nums springt een
+   kolom tijden bij elke regel een halve teken op. */
+/* EEN MAAT VOOR DE HELE TABEL, alleen het LETTERTYPE verschilt. De eerste
+   versie zette de betekeniskolom een slag groter dan de machinekolommen, en in
+   druk werd dat erger in plaats van gelijk: die maat stond in rem, en rem
+   krimpt niet mee met de drukmaat van de tabel. De @media print-regel
+   verkleinde de eerste zes kolommen en liet de zevende op schermmaat staan.
+   Hans zag het meteen (29 aug 2026: "Tijdlijn heeft een grotere letter dan de
+   standaard tabelvorm").
+
+   Een verschil in FAMILIE zegt al wat het moet zeggen - mono is wat de machine
+   rapporteerde, serif is wat een mens ervan schreef - en een verschil in maat
+   erbovenop leest als twee tabellen in een. */
+/* GEEN POSITIEREGEL MEER. Hier stond ".rca td:nth-child(-n+6)" - de eerste zes
+   kolommen zijn machinewaarden - en dat is een aanname over elke tabel die ooit
+   nog komt. Bij de oorzaakketen, vier kolommen, viel de zin in kolom 3 daardoor
+   in mono. De renderer zegt nu welke kolom proza draagt (issue 749 wp3).
+   Machinewaarde is de STANDAARD, want dat is wat een RCA-tabel meestal draagt. */
+.rca td{
+  font-family:var(--meting); font-variant-numeric:tabular-nums;
+}
+/* DE LAATSTE KOLOM DRAAGT EEN ZIN EN LIJNT LINKS UIT (Hans, 29 aug 2026).
+   Expliciet en niet door afwezigheid: zodra een andere regel ooit rechts
+   uitlijnt, wint die stilzwijgend. */
+/* Een zin: serif, links, en hij mag afbreken zoals lopende tekst dat doet.
+   Machinekolommen breken op hun eigen scheidingsteken via <wbr> uit de bouwer
+   en hebben hyphens:auto juist NIET nodig - dat zou een streepje midden in een
+   node-naam zetten. */
+.rca td.proza{
+  font-family:var(--tekst); font-variant-numeric:normal;
+  text-align:left; white-space:normal;
+  overflow-wrap:break-word; hyphens:auto;
+}
+/* GEEN TWEEDE MAAT BINNEN HETZELFDE DOCUMENT. small=True is een PAPIER-
+   beslissing uit rca.py: een punt kleiner om meer regels op een bladzij te
+   krijgen. Op een scherm bestaat die bladzij niet, en het gevolg was dat twee
+   tabellen in een document zichtbaar verschilden - Hans zag de tijdlijn naast
+   de node-tabel (29 aug 2026). De vlag komt nog steeds binnen, hij verandert op
+   het scherm alleen niets meer; in druk doet de drukregel hem wel. */
+.rca table.rcatab.klein{font-size:inherit}
+
+@media print{
+  .wrap.breed{max-width:none}
+  /* 7.5pt is Fonts.TableBodySizePt uit de huislaag: dezelfde maat die de
+     bevindingentabellen op papier dragen. GEEN per-kolom maat meer, want dat
+     was precies de regel die de laatste kolom liet uitspringen. */
+  .rca table{font-size:7.5pt; margin:2pt 0 12pt}
+  .rca table.rcatab.klein{font-size:6.8pt}
+  .rca th{font-size:6.5pt; padding:2pt 3pt}
+  .rca td{padding:2pt 3pt}
+  .rca tr.acc-high td:first-child, .rca tr.acc-med td:first-child{padding-left:7pt}
+  .rca tr.dagkop td{padding:7pt 3pt 1pt; font-size:8pt}
+  .rca tr.dagkop{break-after:avoid}
+  .rca thead{display:table-header-group}
+  .rca tr{break-inside:avoid}
+  .rca h2{font-size:12pt; break-after:avoid; margin:24pt 0 8pt}
+  .rca h2:first-child{margin-top:4pt}
+  .rca h3, .rca h3.subkop{font-size:10pt; break-after:avoid; margin:10pt 0 4pt}
+  .rca p{font-size:9.5pt}
+  .rca p.bijschrift{font-size:7pt; margin:-9pt 0 12pt}
+}
+
+/* ---- front matter ---- */
+.front{margin:4rem 0 0}
+.front + .front{margin-top:3rem}
+.front h2, .groep h2{
+  font-family:var(--kop); font-weight:600;
+  font-size:1.22rem; letter-spacing:-.005em; margin:0 0 1.35rem;
+  padding-bottom:.5rem; border-bottom:1px solid var(--rule); text-wrap:balance;
+}
+.front p{margin:0 0 .95rem; color:var(--dim)}
+.front ul{margin:0 0 1rem; padding-left:1.15rem; color:var(--dim)}
+.front li{margin:.2rem 0}
+
+/* ---- subheading inside a narrative section ----
+   Een niveau onder .front h2 en boven de tekst. De schaal is dezelfde als in de
+   .docx - sectiekop, subkop, tekst - zodat een lezer die beide documenten naast
+   elkaar legt dezelfde drie niveaus ziet.
+
+   h3 en niet h2, want h2 is de sectiekop. De klasse staat erbij omdat een
+   bevinding ook een h3 draagt; die zit in een <article> en deze niet, en een
+   telling die dat verschil niet maakt telt twee dingen als een. */
+h3.subkop{
+  font-family:var(--kop); font-weight:600; font-size:1.02rem;
+  color:var(--ink); margin:1.7rem 0 .5rem; letter-spacing:-.003em;
+  break-after:avoid; text-wrap:balance;
+}
+.front > h3.subkop:first-of-type{margin-top:.2rem}
+
+/* ---- small table inside a narrative section ----
+   Hans, 25 aug 2026: bullets, of een tabel "als het vooral cijfervergelijkingen
+   betreft". Getallen lijnen daarom rechts uit en dragen tabular-nums; een kolom
+   cijfers die niet uitlijnt is precies de vergelijking niet die de tabel moest
+   maken. De eerste kolom is het label en blijft links.
+
+   overflow-x op de wikkel en niet op de tabel: een brede tabel mag binnen zijn
+   eigen vak schuiven, de bladzij eronder nooit. */
+table.tab{
+  width:100%; border-collapse:collapse; margin:.2rem 0 1.5rem;
+  font-size:.92rem; break-inside:avoid;
+}
+table.tab th{
+  text-align:left; font-family:var(--meting); font-weight:500;
+  font-size:.74rem; letter-spacing:.08em; text-transform:uppercase;
+  color:var(--faint); padding:.35rem .6rem;
+  border-bottom:1px solid var(--rule);
+}
+table.tab td{
+  padding:.35rem .6rem; color:var(--dim);
+  border-bottom:1px solid var(--sunk);
+}
+table.tab td + td{
+  font-family:var(--meting); font-variant-numeric:tabular-nums;
+  text-align:right; white-space:nowrap;
+}
+table.tab th + th{text-align:right}
+table.tab tr:last-child td{border-bottom:none}
+
+/* ---- lists inside narrative text ----
+   Alleen HIER, niet in de bevindingen: die dragen genummerde stappen en een
+   tweede lijstvorm ernaast is twee talen voor hetzelfde (Hans, 27 aug 2026).
+
+   De noot is een aantekening BIJ het blok erboven, geen zevende niveau. Hij
+   staat op de bulletkolom, kleiner en in de dimkleur, met een negatieve
+   bovenmarge zodat hij tegen zijn eigen lijst aan hangt en niet als losse
+   regel tussen twee koppen leest (Hans, 28 aug 2026, op "Onderscheid met
+   hoog" tussen Kritiek en Hoog). */
+p.opsomkop{font-weight:600; color:var(--ink); margin:0 0 .35rem; break-after:avoid}
+ul.opsom{margin:0; padding:0 0 1.35rem 1.15rem; color:var(--dim); break-inside:avoid}
+ul.opsom li{margin:.22rem 0}
+ul.opsom:last-child{padding-bottom:0}
+b.dpkop{font-weight:600; color:var(--ink)}
+p.noot{margin:-.9rem 0 1.35rem 1.15rem; font-size:.9rem; color:var(--dim)}
+p.noot b.dpkop{font-weight:600; color:var(--dim)}
+
+/* ---- groups ---- */
+.groep{margin:3.5rem 0 0; scroll-margin-top:1rem}
+.groep h2{display:flex; align-items:baseline; gap:.7rem; padding-left:0}
+/* HET GROEPSNUMMER IS VERDWENEN uit de kop, niet uit de opmaak: de
+   inhoudsopgave nummert de bladzij al en twee nummeringen naast elkaar botsen.
+   De span blijft staan zodat een anker naar #g<n> blijft werken. */
+.gnr{display:none}
+.gnr{
+  font-family:var(--meting); font-size:.8rem; color:var(--faint);
+  font-weight:400;
+}
+.gaantal{
+  margin-left:auto; font-family:var(--meting); font-size:.8rem;
+  color:var(--faint); font-variant-numeric:tabular-nums; font-weight:400;
+}
+
+/* ---- finding ---- */
+.bev{
+  background:var(--surface); border:1px solid var(--rule); border-left:3px solid var(--rule);
+  /* 1.6rem links en niet 1.35: de gekleurde rand is 3px en die telt niet mee in
+     de vulling, dus het label stond er dichter op dan de tekst rechts (Hans,
+     29 aug 2026, naast de RCA gelegd). */
+  border-radius:4px; margin:1rem 0; padding:1.15rem 1.35rem 1.25rem 1.6rem;
+  scroll-margin-top:1rem;
+}
+.bev.crit{border-left-color:var(--crit)} .bev.high{border-left-color:var(--high)}
+.bev.med{border-left-color:var(--med)} .bev.low{border-left-color:var(--low)}
+.bev.none{border-left-color:var(--none)}
+/* DE KOPBALK DRAAGT ZIJN EIGEN RISICOKLEUR, licht. Zonder tint moest de lezer
+   de chip aan de rechterkant zoeken om te weten wat hij voor zich had; met de
+   volle kleur werd de bladzij een verkeerslicht. 9% op het scherm, 12% in druk
+   omdat papier hem lichter teruggeeft. */
+.bev.crit{--risk:var(--crit)} .bev.high{--risk:var(--high)}
+.bev.med{--risk:var(--med)}   .bev.low{--risk:var(--low)}
+.bev.none{--risk:var(--none)} .bev.res{--risk:var(--none)}
+.bev.acc{--risk:var(--faint)}
+.bevkop{
+  display:flex; align-items:flex-start; gap:.85rem; margin-bottom:1.7rem;
+  background:color-mix(in srgb, var(--risk) 9%, transparent);
+  padding:.6rem .85rem; border-radius:2px;
+}
+.bevkop .chip, .bevkop .fid{align-self:center}
+.bevkop .fid{font-weight:600; padding-top:0; color:var(--ink)}
+.fid{
+  font-family:var(--meting); font-size:.82rem; font-weight:500;
+  color:var(--faint); padding-top:.18rem; min-width:2.6rem;
+  font-variant-numeric:tabular-nums;
+}
+.bevtitel{flex:1; min-width:0}
+.onderwerp{
+  display:block; font-family:var(--meting); font-size:.68rem;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin-bottom:.2rem;
+}
+.bevtitel h3{
+  font-family:var(--kop); font-weight:600; font-size:1.02rem;
+  line-height:1.35; margin:0; text-wrap:balance;
+}
+.chip{
+  flex:0 0 auto; min-width:4.6rem; text-align:center;
+  font-family:var(--meting); font-size:.66rem; font-weight:500;
+  letter-spacing:.09em; padding:.28rem .5rem; border-radius:3px;
+  color:var(--chip-ink); background:var(--faint);
+}
+.chip.crit{background:var(--crit)} .chip.high{background:var(--high)}
+.chip.med{background:var(--med)} .chip.low{background:var(--low)}
+.chip.none{background:var(--none)}
+
+.veld{margin:0 0 1.15rem}
+.veld:last-child{margin-bottom:0}
+.veldnaam{
+  display:block; font-family:var(--meting); font-size:.67rem;
+  letter-spacing:.11em; text-transform:uppercase; color:var(--accent);
+  margin-bottom:.45rem;
+}
+.veld p{margin:0; color:var(--dim)}
+ol.stappen{margin:.5rem 0 0; padding-left:1.3rem; color:var(--dim)}
+ol.stappen li{margin:.35rem 0}
+
+@media (max-width:640px){
+  .bevkop{flex-wrap:wrap}
+  .chip{order:3}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+
+/* ---- print: the same document on paper -------------------------------- */
+/* RUIMTE OM DE VOUW, en de onderrand draagt de stempel (Hans, 27 aug 2026:
+   "rond de pagina break te weinig whitespace"). De ondermarge is 22mm omdat de
+   voettekst met bestandsnaam en paginanummer daar op 30pt vanaf de rand wordt
+   gestempeld: minder marge zet de laatste tekstregel er bovenop. De bovenmarge
+   is even ruim, zodat een pagina niet met tekst tegen de snijrand begint. */
+@page{
+  /* A4 EN NIET WAT DE BROWSER TOEVALLIG KIEST (Hans, 27 aug 2026: "dat is
+     gangbaar in Europa"). Zonder size koos Chrome US Letter, 215,9 x 279,4 mm:
+     6 mm smaller en 18 mm korter dan A4, dus de regellengte EN het aantal
+     regels per pagina schoven allebei. Een proefafdruk was daarmee een andere
+     indeling dan wat de klant krijgt.
+
+     Wil een Amerikaanse klant ooit Letter, dan is dit de ene regel die
+     verandert - en dan hoort het een instelling in het engagementprofiel te
+     worden en geen tweede stijlblad. */
+  size: A4;
+  margin: 22mm 16mm 22mm;
+}
+@media print{
+  /* de inhoudsopgave krijgt zijn eigen bladzij, en de tekst begint daarna vers.
+     Zonder deze twee schuift de eerste sectie tegen de laatste regel van de
+     lijst aan en leest die regel als een kop erboven. */
+  .inh{margin-top:29pt; break-after:page}
+  .inh li{font-size:9.5pt; margin:.12rem 0}
+  .inh li.g{font-size:7pt; margin:.85rem 0 .3rem}
+  .inh h2{font-size:11pt}
+  .inh .fid, .inh .p{font-size:8.5pt}
+  .inh li, .inh h2{break-inside:avoid}
+  .inh h2{break-after:avoid}
+
+  /* THE LIGHT PALETTE, ALWAYS. A viewer whose system is dark would otherwise
+     print a dark page: the tokens are redefined here rather than relying on
+     the browser to ignore the dark rules, because it does not. */
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
+    --ground:#FFFFFF; --surface:#FFFFFF; --sunk:#F4F6F9;
+    --ink:#0A1024; --dim:#2B3245; --faint:#5C6478; --rule:#C9CFD9;
+    --accent:#0A6A85;
+    --crit:#0A1024; --high:#C42B2B; --med:#B04A05; --low:#1667B5; --none:#256F33;
+    --chip-ink:#FFFFFF;
+  }
+  html,body{background:#FFFFFF}
+  body{font-size:10.5pt; line-height:1.45}
+  .wrap{max-width:none; padding:0}
+  .groep:last-child .bev:last-child{padding-bottom:0}
+  .mast{border-bottom:1.5pt solid var(--ink); break-after:avoid}
+  .mast .wrap{padding:0 0 8pt}
+  h1{font-size:19pt; margin-bottom:6pt}
+  .meta{font-size:8.5pt}
+  .scale{margin-top:10pt}
+
+  /* A FINDING IS THE UNIT THAT MUST NOT SPLIT, which is the same rule the
+     .docx enforces with cantSplit and keepNext. A finding longer than a page
+     is still allowed to break: break-inside:avoid is a request, not a
+     guarantee, and forcing it would push oversized content off the page. */
+  /* GEEN break-inside OP DE HELE BEVINDING (Hans, 26 aug 2026: "it has a lot
+     of whitespace"). Het leek de juiste regel - een bevinding hoort bij
+     elkaar - maar de meeste bevindingen zijn langer dan een halve pagina, dus
+     hij schoof ze in hun geheel door en liet de rest van de pagina leeg.
+     Gemeten op de eerste versie: 11 van de 58 pagina's droegen minder dan 60%
+     van de tekst, sommige vier regels, tegen 5 van de 49 in de docx-versie.
+
+     De docx doet het anders en beter, en dat is nu ook hier de regel: de
+     KOPRIJ mag niet splitsen en houdt zich vast aan wat erop volgt, een
+     veldnaam laat zijn eerste regel niet los, en een alinea houdt twee regels
+     aan elke kant van de vouw. Alles mag breken; niets breekt lelijk. */
+  .bev{
+    border:none; border-left:2.5pt solid var(--rule);
+    border-radius:0; padding:2pt 0 8pt 9pt; margin:8pt 0 0;
+    background:transparent;
+  }
+  .bevkop{margin-bottom:13pt; break-inside:avoid; break-after:avoid}
+
+  /* NO LINE GETS SLICED IN HALF. break-inside on the finding keeps a short one
+     whole, but a finding longer than a page still has to break somewhere, and
+     without these three the browser cuts through the middle of a line: the top
+     half of the glyphs on one page and the bottom half on the next (Hans,
+     26 aug 2026, from a printed copy).
+
+     Three rules, each for a different granularity. A field block moves whole
+     rather than leaving its label stranded above the break; orphans/widows
+     keep at least two lines of a paragraph on each side, which is what stops
+     the slice; and a heading never ends a page. */
+  .veldnaam{break-after:avoid; margin-bottom:4pt}
+  p, li{orphans:2; widows:2}
+  h1,h2,h3{break-after:avoid; break-inside:avoid}
+
+  .bevtitel h3{font-size:11pt}
+  .veld{margin-bottom:9pt}
+  .groep{margin-top:16pt; break-before:auto}
+  /* ELKE RISICOKLASSE BEGINT OP EEN NIEUWE PAGINA (Hans, 27 aug 2026). Een
+     lezer die de hoge risico's doorneemt en dan de middelhoge, wil die grens
+     zien; nu liep de ene groep midden op een pagina in de volgende over.
+
+     NIET DE EERSTE, want die staat al bovenaan na de voorkant: break-before op
+     .groep zonder deze uitzondering levert een lege pagina tussen de
+     voorkantsecties en de eerste groep. */
+  .groep{break-before:page}
+  .groep:first-of-type{break-before:auto}
+  .groep h2{break-after:avoid; font-size:13pt; margin-bottom:11pt}
+  /* EEN REGEL EXTRA ONDER DE MASTHEAD (Hans, 27 aug 2026), en alleen daar:
+     de zware lijn onder de titelblok en de eerste sectiekop stonden op elkaar.
+     Regelhoogte hier is 10,5pt x 1,45 = ongeveer 15pt, dus 14 + 15 = 29pt.
+     De AFSTAND TUSSEN sectiekoppen onderling verandert niet: die zit op
+     .front + .front, zodat alleen de eerste extra lucht krijgt. */
+  .front{margin-top:29pt}
+  .front + .front{margin-top:14pt}
+  .front h2{break-after:avoid; font-size:13pt; margin-bottom:11pt}
+
+  /* The chip prints its fill: without this every badge comes out white on
+     white, which is the whole severity scale gone. */
+  .chip, .seg{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .chip{min-width:auto; padding:1.5pt 4pt; font-size:7.5pt}
+  .bevkop{
+    background:color-mix(in srgb, var(--risk) 12%, transparent);
+    padding:5pt 7pt; -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  p.opsomkop{margin-bottom:3pt}
+  ul.opsom{padding:0 0 11pt 12pt}
+  ul.opsom li{margin:1.5pt 0}
+  p.noot{margin:-8pt 0 11pt 12pt; font-size:9.5pt}
+  h3.subkop{font-size:12pt; margin:13pt 0 3pt; break-after:avoid}
+  table.tab{font-size:9pt; margin:2pt 0 12pt}
+  table.tab th{font-size:7pt; padding:2pt 4pt}
+  table.tab td{padding:2pt 4pt}
+  table.tab thead{display:table-header-group}
+  .bar{height:4pt}
+
+  /* The counts are jump links on screen and plain figures on paper. */
+  .teller{color:var(--dim)}
+  a{color:var(--ink); text-decoration:none}
+  .veld a{text-decoration:underline}
+  code{background:transparent; border:none; padding:0}
+}

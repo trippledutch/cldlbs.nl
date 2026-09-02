@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- LET OP: noindex staat aan zolang de waarden met klasse .invul nog
+     invulvelden zijn. Zodra Hans de echte meetwaarden heeft aangeleverd:
+     deze regel verwijderen, de datums in het schema bijwerken en de URL
+     opnemen in sitemap.xml. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>Quorum in een stretch-cluster, aangetroffen voor de rolling upgrade begon &middot; Praktijkvoorbeeld &middot; CloudLabs</title>
+<meta name="description" content="Een ziekenhuisgroep plande een rolling upgrade van Windows Server 2019 naar 2022 over twee locaties. De meting vond een stemverdeling die het verlies van de tweede locatie niet zou hebben overleefd.">
+<link rel="canonical" href="https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html">
+<link rel="alternate" hreflang="nl" href="https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html">
+<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:url" content="https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html">
+<meta property="og:title" content="Een quorum dat de tweede locatie niet zou overleven &middot; CloudLabs">
+<meta property="og:description" content="Een ziekenhuisgroep plande een rolling upgrade van Windows Server 2019 naar 2022 over twee locaties. De meting vond een stemverdeling die het verlies van de tweede locatie niet zou hebben overleefd.">
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../huisstijl/pagina.css">
+<link rel="stylesheet" href="/huisstijl/bevinding.css">
+<link rel="stylesheet" href="../huisstijl/voorbeeld.css">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://cldlbs.com/"},
+        {"@type":"ListItem","position":2,"name":"Praktijkvoorbeelden","item":"https://cldlbs.com/praktijkvoorbeelden.html"},
+        {"@type":"ListItem","position":3,"name":"Quorum in een stretch-cluster","item":"https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html"}
+      ]
+    },
+    {
+      "@type":"Article",
+      "@id":"https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html#artikel",
+      "headline":"Een quorum dat de tweede locatie niet zou overleven, aangetroffen voor de rolling upgrade begon",
+      "description":"Een ziekenhuisgroep met twee datacenterlocaties plande een rolling upgrade van Windows Server 2019 naar 2022. De meting keek eerst naar het quorum en vond een stemverdeling die het verlies van locatie B niet zou hebben overleefd.",
+      "inLanguage":"nl-NL",
+      "datePublished":"2026-09-01",
+      "dateModified":"2026-09-01",
+      "mainEntityOfPage":"https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html",
+      "genre":"Praktijkvoorbeeld",
+      "about":[
+        {"@type":"Thing","name":"Failover Clustering"},
+        {"@type":"Thing","name":"Quorum"},
+        {"@type":"Thing","name":"Cluster witness"},
+        {"@type":"Thing","name":"Windows Server"}
+      ],
+      "keywords":"quorum, witness, stretch cluster, multisite failover cluster, rolling upgrade, Windows Server 2019 2022, Hyper-V",
+      "author":{
+        "@type":"Person","@id":"https://cldlbs.com/about.html#hans","name":"Hans Vredevoort",
+        "jobTitle":"Cluster- en virtualisatiespecialist",
+        "knowsAbout":["Hyper-V","Failover Clustering","Azure Local","Storage Spaces Direct","Windows Server"],
+        "worksFor":{"@id":"https://cldlbs.com/#organisatie"}
+      },
+      "publisher":{"@type":"Organization","@id":"https://cldlbs.com/#organisatie","name":"CloudLabs","url":"https://cldlbs.com/"}
+    },
+    {
+      "@type":"FAQPage",
+      "@id":"https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html#vragen",
+      "mainEntity":[
+        {"@type":"Question","name":"Waarom is quorum in een cluster over twee locaties lastiger dan in een cluster op een locatie?",
+         "acceptedAnswer":{"@type":"Answer","text":"Omdat de vraag niet is hoeveel nodes er uitvallen, maar welke. Een cluster met een even aantal nodes verdeeld over twee locaties heeft aan beide kanten evenveel stemmen. Valt de verbinding tussen de locaties weg, dan houdt geen van beide helften een meerderheid, tenzij een derde stem elders staat. Staat de witness op een van de twee locaties, dan bepaalt de witness feitelijk welke locatie mag doordraaien: verliest u die locatie, dan stopt het hele cluster. Een getuige hoort op een derde plek te staan, los van beide datacenters."}},
+        {"@type":"Question","name":"Waarom controleert een rolling upgrade het quorum niet zelf?",
+         "acceptedAnswer":{"@type":"Answer","text":"Een cluster rolling upgrade van Windows Server 2019 naar 2022 kijkt naar de functionaliteitsversie van het cluster en naar de nodes die meedoen, niet naar de vraag of de stemverdeling een locatieverlies overleeft. Tijdens de upgrade staat er bovendien telkens een node uit de rotatie, waardoor de marge in het quorum kleiner is dan normaal. Een configuratie die in dagelijks bedrijf net goed gaat, kan tijdens de upgrade precies de stem missen die hij nodig heeft."}},
+        {"@type":"Question","name":"Hoe lang duurt zo'n meting en heeft het gevolgen voor de productie?",
+         "acceptedAnswer":{"@type":"Answer","text":"Het verzamelscript draait ongeveer een kwartier vanaf de beheerserver van de klant over WinRM naar de nodes. Het leest uitsluitend, installeert niets, verwerkt geen wachtwoorden en laat niets achter. Er is geen onderhoudsvenster nodig en de productie merkt er niets van."}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Naar inhoud</a>
+
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="../preview-home.html">Cloud<span>Labs</span></a>
+    <div class="navlinks" id="navlinks"><a href="../triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="../preview-home.html#modules">Omgevingen</a><a href="../praktijkvoorbeelden.html" aria-current="page">Praktijkvoorbeelden</a><a href="../preview-home.html#kennis">Kennis</a></div>
+    <div class="nav-actions">
+      <button class="search" aria-label="Zoeken">&#8981;</button>
+      <a class="btn primary" href="../triage/">Start gratis triage</a>
+      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+<article class="artikel">
+
+  <p class="kruimel"><a href="../">CloudLabs</a> / <a href="../praktijkvoorbeelden.html">Praktijkvoorbeelden</a> / 02</p>
+
+  <div class="voorbeeldkop">
+    <p class="eyebrow">Praktijkvoorbeeld 02 &middot; basismeting</p>
+    <h1>Een quorum dat de tweede locatie niet zou overleven</h1>
+    <div class="regel">
+      <b>Zorg</b><i>&middot;</i>
+      <b>Twee datacenterlocaties</b><i>&middot;</i>
+      <b>Failover Cluster</b><i>&middot;</i>
+      <b>Windows Server 2019 &rarr; 2022</b><i>&middot;</i>
+      <b>Basismeting <span class="invul">kwartaal</span></b>
+    </div>
+  </div>
+
+  <div class="inleiding">
+    <p>Een ziekenhuisgroep met twee datacenterlocaties plande een rolling upgrade van Windows Server 2019 naar 2022, met behoud van beschikbaarheid voor klinische systemen. Gevraagd werd om een onafhankelijk oordeel over de volgorde van de upgrade. De meting keek eerst ergens anders naar en vond daar de zwaarste bevinding: de stemverdeling over de twee locaties zou het verlies van locatie B niet hebben overleefd. En tijdens een rolling upgrade, met telkens een node uit de rotatie, was die marge nog kleiner. Het quorum is gecorrigeerd voordat de eerste node werd aangeraakt.</p>
+  </div>
+
+  <table class="meetgegevens">
+      <caption>Meetgegevens</caption>
+      <tbody>
+        <tr><th scope="row">Locaties, met een gedeelde stemverdeling</th><td>2</td></tr>
+        <tr><th scope="row">Nodes die tijdens de upgrade uit de rotatie zijn</th><td><span class="invul">n</span></td></tr>
+        <tr><th scope="row">Ongeplande onderbrekingen tijdens de upgrade</th><td>0</td></tr>
+      </tbody>
+    </table>
+
+  <section class="deel">
+    <p class="deel-nr">01</p>
+    <div class="deel-tekst">
+      <h2>De situatie</h2>
+  <p>Twee datacenterlocaties, klinische systemen die niet stil mogen liggen en een upgradepad dat een keer gelopen moest worden. Het interne team had de rolling upgrade zelf uitgewerkt en wilde weten of de volgorde klopte: welke node eerst, hoe lang tussen de stappen en waar de terugweg lag als een node niet terugkwam.</p>
+  <p>Dat is een verstandige vraag. Het was alleen niet de vraag die het meest opleverde. Een rolling upgrade verandert tijdelijk de samenstelling van het cluster: er staat telkens een node uit de rotatie. Of dat veilig is, hangt niet af van de volgorde maar van wat er overblijft als er tijdens die periode ook nog iets anders misgaat.</p>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">02</p>
+    <div class="deel-tekst">
+      <h2>De meting</h2>
+  <p>Het verzamelscript draaide vanaf de beheerserver over WinRM naar alle nodes op beide locaties: uitsluitend lezend, ongeveer een kwartier. De zwaarste bevinding ging niet over de upgrade.</p>
+
+  <div class="bev crit">
+    <div class="bevkop">
+      <span class="fid">F01</span>
+      <div class="bevtitel">
+        <span class="onderwerp">Quorum &amp; witness</span>
+        <h3>De stemverdeling over de twee locaties overleeft het verlies van locatie B niet</h3>
+      </div>
+      <span class="chip crit">KRITIEK</span>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Gemeten</span>
+      <p class="meting">Nodes locatie A &middot; <span class="invul">n</span> &middot; stemmen <span class="invul">n</span><br>
+      Nodes locatie B &middot; <span class="invul">n</span> &middot; stemmen <span class="invul">n</span><br>
+      Witness &middot; <span class="invul">type</span>, geplaatst op <span class="invul">locatie</span><br>
+      Uitkomst bij verlies locatie B &middot; <span class="invul">bevinding</span></p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Waarom dit telt</span>
+      <p>In een cluster over twee locaties is de vraag niet hoeveel nodes er uitvallen, maar welke. Staat de getuige op een van de twee locaties, dan bepaalt die getuige feitelijk welke locatie mag doordraaien. Verliest u de locatie waar hij staat, dan stopt het hele cluster, ook de nodes die het op de andere locatie prima doen. Een getuige hoort op een derde plek te staan, los van beide datacenters.</p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Actiepunt</span>
+      <p>De getuige verplaatsen naar een plek die losstaat van beide locaties en de stemverdeling opnieuw vaststellen, vóór de upgrade begint. Zie ook de vergelijking van <a href="../blog/cluster-witness-comparison.html">witness-vormen</a>.</p>
+    </div>
+  </div>
+
+  <div class="bev med">
+    <div class="bevkop">
+      <span class="fid">F02</span>
+      <div class="bevtitel">
+        <span class="onderwerp">Upgradevolgorde</span>
+        <h3>De voorgenomen volgorde laat op één moment beide locaties met een minderheid achter</h3>
+      </div>
+      <span class="chip med">MIDDEL</span>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Gemeten</span>
+      <p class="meting">Stap in de voorgenomen volgorde &middot; <span class="invul">n</span><br>
+      Actieve stemmen op dat moment &middot; <span class="invul">n</span> van <span class="invul">n</span><br>
+      Marge &middot; <span class="invul">bevinding</span></p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Waarom dit telt</span>
+      <p>Een rolling upgrade is geen kort moment maar een periode van dagen. In die periode is de marge in het quorum kleiner dan normaal. Dan hoeft een tweede gebeurtenis niet groot te zijn om het cluster stil te zetten: een node die niet terugkomt, of een netwerkonderbreking tussen de locaties.</p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Actiepunt</span>
+      <p>De volgorde herschikken zodat er op geen enkel moment twee stemmen tegelijk ontbreken op dezelfde locatie, met per stap vastgelegd wat de terugweg is.</p>
+    </div>
+  </div>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">03</p>
+    <div class="deel-tekst">
+      <h2>Wat niet gemeten kon worden</h2>
+  <p>In elk CloudLabs-rapport staat wat er buiten bereik bleef, met de reden erbij. Niet omdat het mooi staat, maar omdat een lezer anders niet weet hoe compleet het beeld is.</p>
+  <div class="nietgemeten">
+    <ul>
+      <li>De verbinding tussen de twee locaties: beheerd door een derde partij; buiten scope</li>
+      <li>Switchconfiguratie: buiten scope van de basismeting; valt onder module M1</li>
+      <li>Gedrag van de opslag bij locatieverlies: <span class="invul">reden</span></li>
+    </ul>
+  </div>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">04</p>
+    <div class="deel-tekst">
+      <h2>Het herstel</h2>
+  <ul>
+    <li>De getuige is verplaatst naar een plek los van beide locaties; de stemverdeling is opnieuw vastgesteld en getoetst.</li>
+    <li>De upgradevolgorde is herschikt, met per stap een vastgelegde terugweg.</li>
+    <li>Er is een node-voor-node playbook opgeleverd, dat het interne team zelf heeft uitgevoerd.</li>
+    <li>Na afloop is een validatierapport opgeleverd waarin staat dat het cluster op functionaliteitsversie 2022 draait en het quorum staat zoals bedoeld.</li>
+  </ul>
+  <p>Wat de klant heeft laten liggen: <span class="invul">bevinding die niet is opgepakt, met de reden van de klant</span>. Dat staat er, omdat een voorbeeld waarin alles is opgelost geen voorbeeld is maar een advertentie.</p>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">05</p>
+    <div class="deel-tekst">
+      <h2>De uitkomst</h2>
+  <p>De upgrade is afgerond zonder ongeplande onderbreking. Dat is de uitkomst die het team wilde, maar niet de belangrijkste: de kritieke bevinding stond los van de upgrade en zat er al jaren in. Zonder meting was hij pas gevonden op het moment dat locatie B daadwerkelijk was weggevallen, niet als bevinding maar als storing.</p>
+  <p>Voor de IT-manager zat de waarde in het validatierapport: een document dat aan de raad van bestuur laat zien dat de upgrade is gedaan, wat er is gecontroleerd en wat er in orde bleek.</p>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">06</p>
+    <div class="deel-tekst">
+      <h2>Vragen</h2>
+
+  <div class="vraag">
+    <h3>Waarom is quorum over twee locaties lastiger dan op één locatie?</h3>
+    <p>Omdat de vraag niet is hoeveel nodes er uitvallen, maar welke. Een cluster met een even aantal nodes verdeeld over twee locaties heeft aan beide kanten evenveel stemmen. Valt de verbinding tussen de locaties weg, dan houdt geen van beide helften een meerderheid, tenzij er een derde stem elders staat.</p>
+    <p>Staat de getuige op een van de twee locaties, dan bepaalt hij feitelijk welke locatie mag doordraaien. Verliest u die locatie, dan stopt het hele cluster.</p>
+  </div>
+
+  <div class="vraag">
+    <h3>Waarom controleert een rolling upgrade het quorum niet zelf?</h3>
+    <p>Een cluster rolling upgrade kijkt naar de functionaliteitsversie van het cluster en naar de nodes die meedoen, niet naar de vraag of de stemverdeling een locatieverlies overleeft.</p>
+    <p>Tijdens de upgrade staat er bovendien telkens een node uit de rotatie. Een configuratie die in dagelijks bedrijf net goed gaat, kan tijdens de upgrade precies de stem missen die hij nodig heeft.</p>
+  </div>
+
+  <div class="vraag">
+    <h3>Heeft de meting gevolgen voor de productie?</h3>
+    <p>Nee. Het script draait ongeveer een kwartier vanaf de beheerserver over WinRM, leest uitsluitend, installeert niets en laat niets achter. Er is geen onderhoudsvenster nodig.</p>
+  </div>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">07</p>
+    <div class="deel-tekst">
+      <h2>Verder lezen</h2>
+  <div class="verwant">
+    <a href="../blog/cluster-witness-comparison.html"><span>Achtergrond</span><b>Welke witness past bij welk cluster</b></a>
+    <a href="../blog/top-10-hyper-v-cluster-issues.html"><span>Achtergrond</span><b>De tien meest voorkomende clusterproblemen</b></a>
+    <a href="firmware-drift-en-csv-eigenaarsonbalans.html"><span>Praktijkvoorbeeld 01</span><b>Zes nodes, twee firmwareversies</b></a>
+    <a href="../findings.html"><span>Het document</span><b>Hoe een bevindingenrapport eruitziet</b></a>
+  </div>
+
+
+    </div>
+  </section>
+  </article>
+</section>
+
+<section class="cta">
+  <div class="inner">
+  <p class="eyebrow" style="justify-content:center">Uw eigen cluster</p>
+  <h2>Wat zou een meting<br>bij u aantreffen?</h2>
+  <p>De gratis Cluster Triage leest uitsluitend en verandert niets. U ontvangt de vijf zwaarste signalen rond uw incidentvenster, met de gemeten waarde, de node en het tijdstip erbij.</p>
+  <div class="actions">
+    <a class="btn primary" data-icon="script" href="../triage/">Start gratis Cluster Triage &rarr;</a>
+    <a class="btn ghost" data-icon="rapport" href="../praktijkvoorbeelden.html">Alle praktijkvoorbeelden</a>
+  </div>
+</div>
+</section>
+</main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+
+<script>
+(function(){
+  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
+  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
+})();
+</script>
+<script src="../huisstijl/pagina.js"></script>
+</body>
+</html>

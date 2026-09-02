@@ -1,0 +1,54 @@
+/* CloudLabs · over-ons.css · de opmaak van de pagina Over ons
+   ==========================================================================
+   Hangt onder huisstijl/pagina.css. Elke kleur komt uit de tokens daar.
+   Laadvolgorde: pagina.css -> over-ons.css
+
+   Marges gelijk aan de rest van de nieuwe site: .section geeft de zijmarge
+   (--gutter), .inner houdt de kolom op --max (1190px), en waar een blok een
+   kantlijn heeft is die 200px met 60px ertussen. */
+
+.profiel{display:grid;grid-template-columns:380px minmax(0,1fr);gap:0 60px;align-items:start}
+
+.portret{margin:0}
+.portret img{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:4px}
+.portret figcaption{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+                    color:var(--faint);margin-top:12px;line-height:1.6}
+
+/* De gegevensregels. Mono links, want het zijn vaste gegevens en geen zinnen. */
+.gegevens{margin:26px 0 0;border-top:1px solid var(--rule)}
+.gegevens div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:14px;
+              padding:11px 0;border-bottom:1px solid var(--rule)}
+.gegevens dt{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+             color:var(--faint);padding-top:3px}
+.gegevens dd{margin:0;font-size:14.5px;line-height:1.5;color:var(--dim)}
+.gegevens dd a{color:var(--accent);text-decoration:none}
+.gegevens dd a:hover{text-decoration:underline}
+
+.profiel-tekst p{font-family:var(--serif);font-size:19px;line-height:1.7;color:var(--dim);margin:0 0 22px}
+.profiel-tekst p:last-of-type{margin-bottom:0}
+.profiel-rol{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+             color:var(--faint);border-bottom:1px solid var(--rule);padding-bottom:16px;margin:0 0 26px}
+.profiel-rol b{display:block;font-family:var(--serif);font-weight:400;font-size:30px;letter-spacing:-.01em;
+               text-transform:none;color:var(--ink);margin-bottom:8px}
+
+/* ---- specialisaties ------------------------------------------------------ */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.chips li{font-family:var(--mono);font-size:12px;color:var(--dim);
+          border:1px solid var(--rule);border-radius:3px;padding:7px 11px;background:var(--surface)}
+
+/* ---- de erkenningen ------------------------------------------------------ */
+.erkenningen{display:grid;grid-template-columns:repeat(2,1fr);gap:0 60px}
+.erkenning{border-top:1px solid var(--rule);padding:24px 0}
+.erkenning h3{font-size:17px;font-weight:600;margin:0 0 8px}
+.erkenning p{font-family:var(--serif);font-size:16px;line-height:1.65;color:var(--dim);margin:0}
+
+@media(max-width:1040px){
+  .profiel{grid-template-columns:300px minmax(0,1fr);gap:0 40px}
+}
+@media(max-width:820px){
+  .profiel{grid-template-columns:1fr;gap:34px 0}
+  .portret img{max-width:340px}
+  .erkenningen{grid-template-columns:1fr;gap:0}
+  .profiel-tekst p{font-size:17px}
+  .profiel-rol b{font-size:25px}
+}

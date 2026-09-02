@@ -1,423 +1,167 @@
 <!doctype html>
-<!-- CloudLabs · v0.3.6 · Blog · Cluster Witness Comparison -->
-<html lang="en" data-lang="en">
+<html lang="nl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0a1024">
-<link rel="icon" href="../favicon.png" type="image/png">
-<title>File Share Witness vs Cloud Witness vs Disk Witness: Which Type Fits Your Cluster? · CloudLabs</title>
-<meta name="description" content="File Share vs Cloud vs Disk Witness compared in production terms: failure modes, topology fit, and the five config mistakes that quietly remove resilience.">
+<!-- Omgezet naar de nieuwe huisstijl met blog-omzetten.py. De Engelse helft is
+     eruit; die krijgt later een eigen URL onder /en/. De inhoud is niet
+     herschreven. noindex staat aan zolang de nieuwe stijl niet live is. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster? &middot; CloudLabs</title>
+<meta name="description" content="Quorum is het onzichtbare stuk dat een Windows Server Failover Cluster overeind houdt wanneer nodes verdwijnen. Witness-configuratie is ook een van de top drie gebieden waar CloudLabs Hyper-V Cluster Health Checks stille resilience-gaten vinden. De witness bestaat, het cluster rapporteert gezond, va">
 <link rel="canonical" href="https://cldlbs.com/blog/cluster-witness-comparison.html">
-<link rel="alternate" hreflang="en" href="https://cldlbs.com/blog/cluster-witness-comparison.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/cluster-witness-comparison.html">
 <link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/cluster-witness-comparison.html">
 <meta property="og:type" content="article">
+<meta property="og:locale" content="nl_NL">
 <meta property="og:url" content="https://cldlbs.com/blog/cluster-witness-comparison.html">
-<meta property="og:title" content="File Share Witness vs Cloud Witness vs Disk Witness: Which Type Fits Your Cluster?">
-<meta property="og:description" content="Failover Cluster witness types compared in production terms, by CloudLabs.">
-<meta property="og:image" content="https://cldlbs.com/images/cluster.jpg">
-<meta property="article:published_time" content="2026-05-24">
-<meta property="article:author" content="Hans Vredevoort">
-<meta property="article:section" content="Quorum">
-<meta property="article:tag" content="Witness">
-<meta property="article:tag" content="Quorum">
-<meta property="article:tag" content="Failover Cluster">
-<meta name="twitter:card" content="summary_large_image">
+<meta property="og:title" content="File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster?">
+<meta property="og:description" content="Quorum is het onzichtbare stuk dat een Windows Server Failover Cluster overeind houdt wanneer nodes verdwijnen. Witness-configuratie is ook een van de top drie gebieden waar CloudLabs Hyper-V Cluster Health Checks stille resilience-gaten vinden. De witness bestaat, het cluster rapporteert gezond, va">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css">
+<link rel="stylesheet" href="/huisstijl/artikel.css">
+
 <script type="application/ld+json">
 {
-  "@context":"https://schema.org",
-  "@type":"BlogPosting",
-  "headline":"File Share Witness vs Cloud Witness vs Disk Witness: Which Type Fits Your Cluster?",
-  "description":"Failover Cluster witness types compared in production terms: File Share, Cloud, and Disk Witness: failure modes, topology fit, and the five configuration mistakes that quietly remove resilience.",
-  "image":"https://cldlbs.com/images/cluster.jpg",
-  "datePublished":"2026-05-24",
-  "dateModified":"2026-05-24",
-  "author":{"@type":"Person","name":"Hans Vredevoort","url":"https://cldlbs.com/about.html","jobTitle":"Hyper-V & Cluster Consultant","worksFor":{"@type":"Organization","name":"CloudLabs"}},
-  "publisher":{"@type":"Organization","name":"CloudLabs","url":"https://cldlbs.com/","logo":{"@type":"ImageObject","url":"https://cldlbs.com/favicon.png"}},
-  "mainEntityOfPage":{"@type":"WebPage","@id":"https://cldlbs.com/blog/cluster-witness-comparison.html"},
-  "articleSection":"Quorum",
-  "keywords":"Witness, File Share Witness, Cloud Witness, Disk Witness, Quorum, Failover Cluster, Dynamic Quorum, Dynamic Witness"
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"BreadcrumbList",
-  "itemListElement":[
-    {"@type":"ListItem","position":1,"name":"Home","item":"https://cldlbs.com/"},
-    {"@type":"ListItem","position":2,"name":"Blog","item":"https://cldlbs.com/blog.html"},
-    {"@type":"ListItem","position":3,"name":"Cluster Witness Comparison","item":"https://cldlbs.com/blog/cluster-witness-comparison.html"}
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"FAQPage",
-  "mainEntity":[
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@type":"Question",
-      "name":"Does a three-node cluster also need a witness?",
-      "acceptedAnswer":{"@type":"Answer","text":"Strictly speaking no, because odd node counts give natural majorities. But the moment you lose one node, you are in a two-node state where Dynamic Quorum substantially improves survival odds with a witness. We always configure a witness, regardless of node count."}
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://cldlbs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://cldlbs.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster?",
+          "item": "https://cldlbs.com/blog/cluster-witness-comparison.html"
+        }
+      ]
     },
     {
-      "@type":"Question",
-      "name":"Can I have a Cloud Witness and a File Share Witness at the same time?",
-      "acceptedAnswer":{"@type":"Answer","text":"No, a cluster has only one witness at a time. You can switch types with Set-ClusterQuorum without downtime."}
+      "@type": "BlogPosting",
+      "@id": "https://cldlbs.com/blog/cluster-witness-comparison.html#artikel",
+      "headline": "File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster?",
+      "description": "Quorum is het onzichtbare stuk dat een Windows Server Failover Cluster overeind houdt wanneer nodes verdwijnen. Witness-configuratie is ook een van de top drie gebieden waar CloudLabs Hyper-V Cluster Health Checks stille resilience-gaten vinden. De witness bestaat, het cluster rapporteert gezond, va",
+      "inLanguage": "nl-NL",
+      "datePublished": "2026-05-24",
+      "dateModified": "2026-05-24",
+      "mainEntityOfPage": "https://cldlbs.com/blog/cluster-witness-comparison.html",
+      "articleSection": "Quorum",
+      "author": {
+        "@type": "Person",
+        "@id": "https://cldlbs.com/over-ons/#hans",
+        "name": "Hans Vredevoort",
+        "jobTitle": "Cluster- en virtualisatiespecialist",
+        "knowsAbout": [
+          "Hyper-V",
+          "Failover Clustering",
+          "Azure Local",
+          "Storage Spaces Direct",
+          "Windows Server"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://cldlbs.com/#organisatie",
+        "name": "CloudLabs",
+        "url": "https://cldlbs.com/"
+      }
     },
     {
-      "@type":"Question",
-      "name":"What happens if the Cloud Witness is temporarily unreachable?",
-      "acceptedAnswer":{"@type":"Answer","text":"Dynamic Witness adjusts the witness vote weight as soon as the cluster detects unreachability. The cluster keeps running as long as a majority of remaining votes (nodes plus any witness) holds. The witness is automatically reweighted as soon as connectivity returns."}
-    },
-    {
-      "@type":"Question",
-      "name":"Does Cloud Witness work with Azure Government or sovereign clouds?",
-      "acceptedAnswer":{"@type":"Answer","text":"Yes, the -Endpoint parameter supports different Azure cloud endpoints. For Azure Government use core.usgovcloudapi.net, for Azure China core.chinacloudapi.cn. Sovereign clouds with data residency requirements can use Cloud Witness as long as the Azure tenant lives in the correct cloud."}
-    },
-    {
-      "@type":"Question",
-      "name":"How much does witness latency impact cluster performance?",
-      "acceptedAnswer":{"@type":"Answer","text":"Negligibly under normal operation. The cluster only touches the witness during quorum events (node failure, reboot, witness state change). For stretched clusters with latency between sites, witness location matters for failover times, but not for steady-state performance."}
+      "@type": "FAQPage",
+      "@id": "https://cldlbs.com/blog/cluster-witness-comparison.html#vragen",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Heeft een drie-node cluster ook een witness nodig?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Strikt genomen nee, omdat oneven nodes natuurlijke meerderheden geven. Maar zodra je één node verliest, zit je in een twee-node toestand waar Dynamic Quorum de overlevingskansen flink verbetert mét een witness. Wij configureren altijd een witness, ongeacht het aantal nodes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan ik een Cloud Witness en een File Share Witness tegelijk hebben?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nee, een cluster heeft maar één witness tegelijk. Je kunt wel switchen tussen types met Set-ClusterQuorum, zonder downtime."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wat gebeurt er als de Cloud Witness tijdelijk onbereikbaar is?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dynamic Witness past het stemgewicht van de witness aan zodra het cluster detecteert dat hij onbereikbaar is. Het cluster blijft draaien zolang een meerderheid van de overige stemmen (nodes plus eventuele witness) intact is. De witness wordt automatisch weer meegerekend zodra connectivity terug is."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Werkt Cloud Witness met Azure Government of sovereign clouds?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, de -Endpoint parameter ondersteunt verschillende Azure-cloud endpoints. Voor Azure Government gebruik je core.usgovcloudapi.net, voor Azure China core.chinacloudapi.cn. Sovereign clouds met data residency-eisen kunnen Cloud Witness gebruiken zolang de Azure-tenant in de juiste cloud zit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hoe groot is de impact van witness-latency op clusterperformance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Verwaarloosbaar in normale werking. Het cluster raakt de witness alleen aan tijdens quorum-events (node-failure, reboot, witness-state verandering). Voor stretched clusters met latency tussen sites is de witness-locatie wel belangrijk voor failover-tijden, maar niet voor steady-state performance."
+          }
+        }
+      ]
     }
   ]
 }
 </script>
-<!-- Google tag (gtag.js) with Consent Mode v2 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BETH09PH6C"></script>
-<script>
-  window.dataLayer=window.dataLayer||[];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});
-  gtag('js',new Date());
-  gtag('config','G-BETH09PH6C',{'anonymize_ip':true});
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css?v=0.4.15">
-<style>
-  .article{max-width:75ch;margin-top:8px}
-  .article .breadcrumb{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.06em;margin-bottom:18px}
-  .article .breadcrumb a{color:var(--ink-dim);text-decoration:none}
-  .article .breadcrumb a:hover{color:var(--cyan)}
-  .article h1{font-size:clamp(24px,4.4vw,36px);font-weight:600;line-height:1.2;margin:0 0 14px}
-  .article .meta{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.06em;margin-bottom:28px}
-  .article .lede{font-size:17px;line-height:1.6;color:var(--ink-dim);margin-bottom:18px}
-  .article h2{font-size:21px;font-weight:600;line-height:1.3;margin:40px 0 14px;color:var(--ink)}
-  .article h3{font-size:16px;font-weight:600;margin:24px 0 8px;color:var(--ink)}
-  .article p{font-size:15px;line-height:1.7;color:var(--ink-dim);margin:0 0 14px}
-  .article ul,.article ol{font-size:15px;line-height:1.7;color:var(--ink-dim);padding-left:22px;margin:0 0 14px}
-  .article li{margin-bottom:6px}
-  .article a{color:var(--cyan);text-decoration:none;border-bottom:1px dotted var(--cyan)}
-  .article strong{color:var(--ink)}
-  .article code{font-family:var(--mono);font-size:13px;background:rgba(95,227,255,.08);color:var(--cyan);padding:1px 6px;border-radius:4px}
-  .article pre{background:rgba(15,24,50,.7);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;color:var(--ink);margin:0 0 18px;line-height:1.55}
-  .article pre code{background:none;color:inherit;padding:0}
-  .article blockquote{border-left:2px solid var(--cyan);padding:6px 18px;margin:18px 0;color:var(--ink);font-style:italic;background:rgba(95,227,255,.04)}
-  .article table{width:100%;border-collapse:collapse;margin:14px 0 22px;font-size:14px}
-  .article th,.article td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);color:var(--ink-dim);vertical-align:top}
-  .article th{color:var(--ink);font-weight:600;background:rgba(255,255,255,.02)}
-  .callout{border:1px solid var(--line-strong);border-radius:10px;padding:14px 18px;margin:18px 0;background:rgba(95,227,255,.04)}
-  .callout strong{color:var(--cyan);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;display:block;margin-bottom:6px}
-  .mid-cta{border:1px solid var(--cyan);border-radius:12px;padding:22px 24px;margin:32px 0;background:linear-gradient(135deg,rgba(95,227,255,.08),rgba(95,227,255,.02))}
-  .mid-cta p{font-size:15px;line-height:1.65;color:var(--ink);margin:0 0 12px}
-  .mid-cta a{color:var(--cyan);font-weight:600;font-size:15px;text-decoration:none;border-bottom:0;display:inline-flex;align-items:center;gap:6px}
-  .mid-cta a:hover{color:var(--ink)}
-  .toc{border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:0 0 28px;background:rgba(255,255,255,.02)}
-  .toc-title{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:10px}
-  .toc ol{padding-left:20px;margin:0;font-size:14px;line-height:1.7}
-  .toc a{color:var(--ink-dim);text-decoration:none;border-bottom:0}
-  .toc a:hover{color:var(--cyan)}
-  .faq-block{margin-top:40px}
-  .faq-block h2{margin-bottom:18px}
-  .faq-q{font-size:16px;font-weight:600;color:var(--ink);margin:18px 0 6px}
-  .related{margin-top:48px;padding-top:24px;border-top:1px solid var(--line)}
-  .related h3{font-family:var(--mono);font-size:11px;color:var(--ink-faint);letter-spacing:.14em;text-transform:uppercase;margin:0 0 14px}
-  .related ul{list-style:none;padding:0;margin:0}
-  .related li{margin-bottom:8px;font-size:14px}
-</style>
 </head>
+
 <body>
-<a class="skip-link" href="#main-content"><span lang="en">Skip to content</span><span lang="nl">Naar inhoud</span></a>
-<div class="app">
+<a class="skip" href="#main">Naar inhoud</a>
 
-  <div class="topbar">
-  <header>
-    <a class="brand" href="../index.html">
-      <span class="word">
-        <b><span class="wm-cloud">Cloud</span><span class="wm-labs">Labs</span></b>
-        <small>Decades of server expertise</small>
-      </span>
-    </a>
-    <span class="spacer"></span>
-    <div class="top-right">
-      <span class="status-dot"><span lang="en">Available · remote-first</span><span lang="nl">Beschikbaar · remote</span></span>
-      <div class="lang-toggle" role="group" aria-label="Language">
-        <button data-set-lang="en" aria-pressed="true">EN</button>
-        <button data-set-lang="nl" aria-pressed="false">NL</button>
-      </div>
-      <button id="consentReopen" class="consent-reopen" aria-label="Cookie preferences">
-        <span lang="en">Cookies</span><span lang="nl">Cookies</span>
-      </button>
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/blog/" aria-current="page">Blog</a></div>
+    <div class="nav-actions">
+      <button class="search" aria-label="Zoeken">&#8981;</button>
+      <a class="btn primary" href="/triage/">Start gratis triage</a>
+      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
     </div>
-  </header>
-
-  <div class="nav-wrap">
-  <nav class="tabs" aria-label="Main navigation">
-    <a href="../index.html"><span class="n">01</span><span lang="en">Home</span><span lang="nl">Home</span></a>
-    <a href="../blog.html" aria-current="page"><span class="n">02</span><span lang="en">Blog</span><span lang="nl">Blog</span></a>
-    <a href="../services.html"><span class="n">03</span><span lang="en">Services</span><span lang="nl">Diensten</span></a>
-    <a href="../method.html"><span class="n">04</span><span lang="en">Method</span><span lang="nl">Werkwijze</span></a>
-    <a href="../findings.html"><span class="n">05</span><span lang="en">Findings</span><span lang="nl">Findings</span></a>
-    <a href="../engagement.html"><span class="n">06</span><span lang="en">Engagement</span><span lang="nl">Inzet</span></a>
-    <a href="../about.html"><span class="n">07</span><span lang="en">About</span><span lang="nl">Profiel</span></a>
-    <a href="../book.html"><span class="n">08</span><span lang="en">Book</span><span lang="nl">Boek</span></a>
-    <a href="../faq.html"><span class="n">09</span><span lang="en">FAQ</span><span lang="nl">FAQ</span></a>
   </nav>
-  </div>
-  </div>
+</header>
 
-  <main id="main-content">
-    <article class="article">
-      <nav class="breadcrumb" aria-label="Breadcrumb">
-        <a href="../index.html"><span lang="en">Home</span><span lang="nl">Home</span></a> ·
-        <a href="../blog.html">Blog</a> ·
-        <span lang="en">Cluster Witness Comparison</span>
-        <span lang="nl">Cluster witness vergelijking</span>
-      </nav>
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+  <article class="artikelpagina">
 
-      <h1><span lang="en">File Share Witness vs Cloud Witness vs Disk Witness: Which Type Fits Your Cluster?</span><span lang="nl">File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster?</span></h1>
+    <p class="kruimelpad"><a href="/">CloudLabs</a> / <a href="/blog/">Blog</a> / Quorum</p>
 
-      <!-- ============= ENGLISH ============= -->
-      <div lang="en">
-        <div class="meta">By Hans Vredevoort · 24 May 2026 · 14 minute read · Quorum</div>
-
-        <p class="lede">Quorum is the invisible thing keeping a Windows Server Failover Cluster alive when nodes go away. Witness configuration is also one of the top three areas where CloudLabs Hyper-V Cluster Health Checks find quiet resilience gaps. The witness exists, the cluster reports healthy, validation passes, and one fault domain still takes the cluster down because the witness sits exactly in the wrong place.</p>
-        <p class="lede">This article compares the three witness types in production terms: failure modes, topology fit, the configuration mistakes we keep finding, and the decisions you want to get right once.</p>
-
-        <div class="toc">
-          <div class="toc-title">In this article</div>
-          <ol>
-            <li><a href="#en-1">Short primer, quorum and Dynamic Quorum</a></li>
-            <li><a href="#en-2">The three witness types at a glance</a></li>
-            <li><a href="#en-3">File Share Witness, where it fits and where it fails</a></li>
-            <li><a href="#en-4">Cloud Witness, the modern default</a></li>
-            <li><a href="#en-5">Disk Witness, still relevant in specific cases</a></li>
-            <li><a href="#en-6">Decision matrix per topology</a></li>
-            <li><a href="#en-7">Five configuration mistakes we keep running into</a></li>
-            <li><a href="#en-8">PowerShell, configuring and verifying</a></li>
-          </ol>
-        </div>
-
-        <h2 id="en-1">1. Short primer, quorum and Dynamic Quorum</h2>
-        <p>A cluster votes on its own health. Every running node gets a vote, the witness (if configured) gets a vote, and the cluster needs a majority of votes to stay alive. Loss of majority means the Cluster Service stops to prevent split-brain.</p>
-        <p>Dynamic Quorum (introduced in Windows Server 2012 R2, default on since) adjusts the vote count as nodes leave the cluster. Lose one node from a five-node cluster, the cluster reduces vote count and keeps running. In a two-node cluster with witness you can lose either node and survive on the remaining node plus the witness. Lose the witness and a node simultaneously, and Dynamic Witness has already adjusted the witness vote weight to maximise survival odds.</p>
-        <p>The witness exists to break tie votes, and to keep a majority alive in even-numbered counts where natural majorities are impossible. Without a witness in an even-node cluster, any 50/50 split takes the cluster down.</p>
-
-        <div class="callout"><strong>The two-node case</strong>
-        Two-node clusters <em>require</em> a witness for any reliable resilience. Dynamic Quorum alone gives you survival on the right surviving node, but you cannot predict which one. The witness makes survival deterministic.</div>
-
-        <h2 id="en-2">2. The three witness types at a glance</h2>
-
-        <table>
-          <thead>
-            <tr><th>Witness type</th><th>Where it lives</th><th>Best for</th><th>Worst for</th></tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Disk Witness</strong></td>
-              <td>Shared SAN LUN visible to all nodes</td>
-              <td>Single-site clusters with SAN where the witness LUN is on independent storage relative to the data</td>
-              <td>Multisite/stretched clusters (cannot span sites), S2D clusters (no shared SAN), small clusters where the SAN is the data path</td>
-            </tr>
-            <tr>
-              <td><strong>File Share Witness</strong></td>
-              <td>Network SMB share on a server outside the cluster</td>
-              <td>Two-site clusters with the share in a third site, disconnected environments, large environments with a witness fileserver</td>
-              <td>Single site if the share sits in the same fault domain as the cluster</td>
-            </tr>
-            <tr>
-              <td><strong>Cloud Witness</strong></td>
-              <td>Azure Storage Account, reached over HTTPS</td>
-              <td>Any cluster with reliable Azure connectivity, including two-node, stretched, and disaster recovery clusters</td>
-              <td>Clusters with no permitted outbound Azure connectivity</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <h2 id="en-3">3. File Share Witness, where it fits and where it fails</h2>
-        <p>The File Share Witness is the oldest non-disk witness and still the right answer in disconnected or strict-policy environments. It is also the type where we find the most configuration mistakes, because it looks like "just a file share" and gets treated that way.</p>
-        <p>What it actually is: a small file on an SMB share that the cluster periodically touches to claim its quorum vote. The share itself does not need to be highly available, just available, period. And critically: in a different fault domain than any of the cluster nodes.</p>
-
-        <p><strong>What we find in CloudLabs Hyper-V Cluster Health Checks:</strong></p>
-        <ul>
-          <li>File Share Witness on a single physical server, no UPS, in the same rack as half the cluster. The rack PDU then becomes a single point of failure for the entire cluster.</li>
-          <li>File Share Witness on a NAS that is itself a single-node appliance. Reboot the NAS for firmware, lose the witness during a critical maintenance window.</li>
-          <li>File Share Witness on one of the cluster nodes itself. We have seen this in production. The admin was short on fileservers and "had room left on HV03". That is not a witness, that is a permanently broken configuration.</li>
-          <li>FSW path configured with a NetBIOS name resolving to multiple IPs (DFS namespace), where some targets sit in the wrong site.</li>
-        </ul>
-
-        <p><strong>Requirements for a usable File Share Witness:</strong></p>
-        <ul>
-          <li>Hosted on Windows Server 2012 R2 or newer (older versions miss the required SMB features).</li>
-          <li>SMB 3.0 or newer, not on a NAS that only speaks SMB 2.x.</li>
-          <li>In a fault domain genuinely independent from the cluster: different rack, different power feed, ideally a different site.</li>
-          <li>Cluster computer object with Full Control on the share folder (not just Read/Write).</li>
-          <li>Share path uses a stable name, FQDN or short name not dependent on DNS aliases.</li>
-        </ul>
-
-        <h2 id="en-4">4. Cloud Witness, the modern default</h2>
-        <p>Cloud Witness was introduced in Windows Server 2016 and is the witness type CloudLabs recommends for nearly every modern deployment with permitted Azure connectivity. It is a small file in an Azure Storage Account, reached by every node over HTTPS to <code>*.blob.core.windows.net</code>.</p>
-
-        <p><strong>Why this is the default answer:</strong></p>
-        <ul>
-          <li>By definition outside the cluster's fault domain. Whatever burns down at the customer site, the witness in Azure keeps running.</li>
-          <li>Costs essentially nothing, fractions of a cent per month for storage, no egress because the file is tiny.</li>
-          <li>Works for two-node, multi-node, and stretched clusters identically.</li>
-          <li>Requires no separate fileserver, share permissions, or DNS configuration.</li>
-        </ul>
-
-        <p><strong>When it is the wrong answer:</strong></p>
-        <ul>
-          <li>The cluster sits in a network segment without outbound internet and security policy forbids adding it. Hard-air-gapped environments.</li>
-          <li>The cluster runs on a hardware platform that cannot reliably reach Azure (rare, but we have seen it on industrial control systems).</li>
-          <li>Latency from cluster to Azure exceeds the cluster heartbeat threshold, extremely rare, requires intercontinental links without peering.</li>
-        </ul>
-
-        <p>Configuration is one PowerShell command (see the configuration section below). The only real planning decision is which Azure subscription and which storage account region. Pick one close to the cluster, preferably with a stable link.</p>
-
-        <h2 id="en-5">5. Disk Witness, still relevant in specific cases</h2>
-        <p>Disk Witness is older than the other two and remains the only option in a few specific scenarios. It is a small clustered disk resource, typically a 1 GB LUN, visible to every node through the SAN.</p>
-
-        <p><strong>When this is still the right answer:</strong></p>
-        <ul>
-          <li>Single-site cluster with shared SAN storage where the SAN genuinely delivers independent storage paths relative to the data LUNs (different storage controllers, ideally different physical arrays).</li>
-          <li>The customer is heavily invested in SAN-based clustering and there is no operational appetite for Azure connectivity.</li>
-        </ul>
-
-        <p><strong>When it is the wrong answer:</strong></p>
-        <ul>
-          <li>Stretched/multisite, Disk Witness cannot span sites.</li>
-          <li>S2D / Azure Local, there is no shared SAN.</li>
-          <li>Witness LUN on the same SAN array as the CSVs. Lose the array, lose the witness, lose the cluster. We see this surprisingly often.</li>
-          <li>Witness LUN on a SAN volume with its own quorum logic (some active/passive arrays do unexpected things during controller failover).</li>
-        </ul>
-
-        <h2 id="en-6">6. Decision matrix per topology</h2>
-
-        <table>
-          <thead>
-            <tr><th>Topology</th><th>First choice</th><th>Acceptable alternative</th><th>Avoid</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Two-node, single site, SAN</td><td>Cloud Witness</td><td>Disk Witness on independent SAN</td><td>FSW on the SAN-attached fileserver</td></tr>
-            <tr><td>Two-node, single site, S2D</td><td>Cloud Witness</td><td>FSW on independent infrastructure</td><td>Anything on the cluster nodes themselves</td></tr>
-            <tr><td>3 to 8 nodes, single site, SAN</td><td>Cloud Witness</td><td>FSW or Disk Witness on independent storage</td><td>Disk Witness on the same array as the CSVs</td></tr>
-            <tr><td>3 to 8 nodes, single site, S2D / Azure Local</td><td>Cloud Witness</td><td>FSW in a different fault domain</td><td>Anything internal to the cluster</td></tr>
-            <tr><td>Two-site stretched cluster</td><td>Cloud Witness</td><td>FSW in a third physical site</td><td>FSW in either of the two cluster sites</td></tr>
-            <tr><td>Disconnected / air-gapped</td><td>FSW on independent storage and power</td><td>Disk Witness on independent SAN (where applicable)</td><td>Witness on cluster nodes or shared fault domain</td></tr>
-          </tbody>
-        </table>
-
-        <div class="mid-cta">
-          <p>Witness topology is a subject monitoring stays silent on. The cluster is healthy, validation passes, the report is green. Only during a real failure does it surface that the witness shared a fault domain with half the cluster.</p>
-          <p>A CloudLabs Hyper-V Cluster Health Check tests witness placement against your actual topology and documents the gap with severity and remediation steps.</p>
-          <a href="../book.html">Schedule a Health Check intro call →</a>
-        </div>
-
-        <h2 id="en-7">7. Five configuration mistakes we keep running into</h2>
-        <ol>
-          <li><strong>Witness in the same fault domain as the cluster.</strong> FSW on a fileserver in the same rack with the same PDU. Disk Witness on the same SAN as the CSVs. The witness exists, but adds no resilience.</li>
-          <li><strong>Cluster computer object lacks Full Control on the file share.</strong> The witness looks configured, quorum operations fail when the cluster tries to claim it.</li>
-          <li><strong>Cloud Witness in an Azure region geographically far away.</strong> Witness latency spikes during regional issues. Pick a region close to the cluster.</li>
-          <li><strong>No witness at all on a two-node cluster.</strong> Dynamic Quorum does its best, that is not enough for any predictable outcome.</li>
-          <li><strong>Witness configured but Dynamic Witness off.</strong> The cluster then cannot adjust witness weight as topology degrades. We see this on older clusters carried through multiple upgrades.</li>
-        </ol>
-
-        <h2 id="en-8">8. PowerShell, configuring and verifying</h2>
-
-        <p><strong>Inspect current state:</strong></p>
-<pre><code># Current quorum configuration
-Get-ClusterQuorum | Format-List *
-
-# Witness resource detail
-Get-ClusterResource | Where-Object {$_.OwnerGroup -eq 'Cluster Group'} |
-    Format-Table Name, State, OwnerNode, ResourceType
-
-# Verify Dynamic Quorum and Dynamic Witness
-(Get-Cluster).DynamicQuorum
-(Get-Cluster).WitnessDynamicWeight</code></pre>
-
-        <p><strong>Configure Cloud Witness:</strong></p>
-<pre><code># Requires the Azure storage account name and one of the access keys
-Set-ClusterQuorum -CloudWitness `
-    -AccountName 'sthcwitnessprodweu' `
-    -AccessKey '...' `
-    -Endpoint 'core.windows.net'
-
-# Verify
-Get-ClusterResource 'Cloud Witness' | Format-List *
-Test-NetConnection sthcwitnessprodweu.blob.core.windows.net -Port 443</code></pre>
-
-        <p><strong>Configure File Share Witness:</strong></p>
-<pre><code># Requires Full Control on the share for the cluster computer account
-Set-ClusterQuorum -FileShareWitness '\\fs01.corp.example\witness$\hv-cluster'
-
-# Verify
-Get-ClusterResource 'File Share Witness' | Format-List *
-
-# Verify share permissions from a cluster node
-Get-Acl '\\fs01.corp.example\witness$\hv-cluster' | Format-List Access</code></pre>
-
-        <p><strong>Configure Disk Witness:</strong></p>
-<pre><code># Witness LUN must already be a clustered disk resource
-Get-ClusterAvailableDisk | Add-ClusterDisk
-Set-ClusterQuorum -DiskWitness 'Cluster Disk Witness'</code></pre>
-
-        <p><strong>End-to-end validation:</strong></p>
-<pre><code>Test-Cluster -Include 'Inventory','Quorum Configuration','Network' `
-    -ReportName witness-check</code></pre>
-
-        <h2>The bottom line</h2>
-        <p>For nearly every modern cluster CloudLabs reviews, Cloud Witness is the right answer and implementation takes one command. The most common Health Check finding is not "no witness", it is "witness that adds no resilience because it shares a fault domain with the cluster". Closing that gap is one of the highest-leverage remediation steps in a typical engagement.</p>
-
-        <blockquote>A witness in the same fault domain as the cluster is not a witness, it is decoration.</blockquote>
-
-        <p>The CloudLabs Hyper-V Cluster Health Check includes witness topology analysis in standard scope. If the witness does not fit the topology, that is documented with severity scaling to blast radius, and the remediation step lands on the action list.</p>
-        <p><a href="../book.html"><strong>Schedule a Hyper-V Cluster Health Check intro call →</strong></a></p>
-
-        <div class="faq-block">
-          <h2>Frequently asked questions</h2>
-
-          <div class="faq-q">Does a three-node cluster also need a witness?</div>
-          <p>Strictly speaking no, because odd node counts give natural majorities. But the moment you lose one node, you are in a two-node state where Dynamic Quorum substantially improves survival odds with a witness. We always configure a witness, regardless of node count.</p>
-
-          <div class="faq-q">Can I have a Cloud Witness and a File Share Witness at the same time?</div>
-          <p>No, a cluster has only one witness at a time. You can switch types with <code>Set-ClusterQuorum</code> without downtime.</p>
-
-          <div class="faq-q">What happens if the Cloud Witness is temporarily unreachable?</div>
-          <p>Dynamic Witness adjusts the witness vote weight as soon as the cluster detects unreachability. The cluster keeps running as long as a majority of remaining votes (nodes plus any witness) holds. The witness is automatically reweighted as soon as connectivity returns.</p>
-
-          <div class="faq-q">Does Cloud Witness work with Azure Government or sovereign clouds?</div>
-          <p>Yes, the <code>-Endpoint</code> parameter supports different Azure cloud endpoints. For Azure Government use <code>core.usgovcloudapi.net</code>, for Azure China <code>core.chinacloudapi.cn</code>. Sovereign clouds with data residency requirements can use Cloud Witness as long as the Azure tenant lives in the correct cloud.</p>
-
-          <div class="faq-q">How much does witness latency impact cluster performance?</div>
-          <p>Negligibly under normal operation. The cluster only touches the witness during quorum events (node failure, reboot, witness state change). For stretched clusters with latency between sites, witness location matters for failover times, but not for steady-state performance.</p>
-        </div>
-      </div>
-
-      <!-- ============= DUTCH ============= -->
-      <div lang="nl">
-        <div class="meta">Door Hans Vredevoort · 24 mei 2026 · 14 minuten leestijd · Quorum</div>
-
-        <p class="lede">Quorum is het onzichtbare stuk dat een Windows Server Failover Cluster overeind houdt wanneer nodes verdwijnen. Witness-configuratie is ook een van de top drie gebieden waar CloudLabs Hyper-V Cluster Health Checks stille resilience-gaten vinden. De witness bestaat, het cluster rapporteert gezond, validatie komt door, en één fault domain legt het cluster alsnog plat omdat de witness precies op de verkeerde plek staat.</p>
+    <header class="artikelkop">
+      <h1>File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster?</h1>
+      <p class="lede">Quorum is het onzichtbare stuk dat een Windows Server Failover Cluster overeind houdt wanneer nodes verdwijnen. Witness-configuratie is ook een van de top drie gebieden waar CloudLabs Hyper-V Cluster Health Checks stille resilience-gaten vinden. De witness bestaat, het cluster rapporteert gezond, validatie komt door, en één fault domain legt het cluster alsnog plat omdat de witness precies op de verkeerde plek staat.</p>
         <p class="lede">Dit artikel vergelijkt de drie witness-types in productie-termen: failure modes, topologie-fit, de configuratiefouten die wij blijven vinden, en de beslissingen die je in één keer goed wilt maken.</p>
+      <p class="artikelmeta"><b>Door Hans Vredevoort</b> <i>&middot;</i> <b>24 mei 2026</b> <i>&middot;</i> <b>14 minuten leestijd</b> <i>&middot;</i> <b>Quorum</b></p>
+    </header>
 
-        <div class="toc">
-          <div class="toc-title">In dit artikel</div>
-          <ol>
+    <div class="artikelbody">
+      <nav class="toc" aria-label="Inhoud van dit artikel">
+        <p class="toc-title">In dit artikel</p>
+        <ol>
             <li><a href="#nl-1">Korte primer, quorum en Dynamic Quorum</a></li>
             <li><a href="#nl-2">De drie witness-types in vogelvlucht</a></li>
             <li><a href="#nl-3">File Share Witness, waar het past en waar het faalt</a></li>
@@ -427,9 +171,10 @@ Set-ClusterQuorum -DiskWitness 'Cluster Disk Witness'</code></pre>
             <li><a href="#nl-7">Vijf configuratiefouten die we blijven tegenkomen</a></li>
             <li><a href="#nl-8">PowerShell, configureren en verifiëren</a></li>
           </ol>
-        </div>
+      </nav>
 
-        <h2 id="nl-1">1. Korte primer, quorum en Dynamic Quorum</h2>
+      <div class="tekst">
+<h2 id="nl-1">1. Korte primer, quorum en Dynamic Quorum</h2>
         <p>Een cluster stemt over zijn eigen gezondheid. Elke draaiende node krijgt een stem, de witness (indien geconfigureerd) krijgt een stem, en het cluster heeft een meerderheid van stemmen nodig om te blijven draaien. Verlies van de meerderheid betekent dat de Cluster Service stopt om split-brain te voorkomen.</p>
         <p>Dynamic Quorum (geïntroduceerd in Windows Server 2012 R2, sindsdien default aan) past het aantal stemmen aan terwijl nodes het cluster verlaten. Verlies één node uit een vijf-node cluster, het cluster reduceert het stemmenaantal en draait door. In een twee-node cluster met witness kun je elk van beide nodes verliezen en op één node plus de witness overleven. Verlies de witness en één node tegelijk, en Dynamic Witness heeft het stemgewicht van de witness al aangepast om de overlevingskans te maximaliseren.</p>
         <p>De witness bestaat om patstellingen op te breken, en om een meerderheid te behouden bij even-aantallen waar natuurlijke meerderheden onmogelijk zijn. Zonder witness in een even-node cluster legt elke 50/50 splitsing het cluster plat.</p>
@@ -624,41 +369,31 @@ Set-ClusterQuorum -DiskWitness 'Cluster Disk Witness'</code></pre>
           <div class="faq-q">Hoe groot is de impact van witness-latency op clusterperformance?</div>
           <p>Verwaarloosbaar in normale werking. Het cluster raakt de witness alleen aan tijdens quorum-events (node-failure, reboot, witness-state verandering). Voor stretched clusters met latency tussen sites is de witness-locatie wel belangrijk voor failover-tijden, maar niet voor steady-state performance.</p>
         </div>
-      </div>
-
-      <div class="related">
-        <h3><span lang="en">Related articles</span><span lang="nl">Gerelateerde artikelen</span></h3>
+<div class="related">
+        <h3>Gerelateerde artikelen</h3>
         <ul>
-          <!--LINK:top-10-hyper-v-cluster-issues--><li><a href="top-10-hyper-v-cluster-issues.html"><span lang="en">Hyper-V Cluster Health Check: Top 10 Issues We Find in 2026</span><span lang="nl">Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026</span></a></li><!--/LINK:top-10-hyper-v-cluster-issues-->
-          <!--LINK:azure-local-migration-readiness--><li><a href="azure-local-migration-readiness.html"><span lang="en">Azure Local migration readiness checklist</span><span lang="nl">Azure Local migratie readiness checklist</span></a></li><!--/LINK:azure-local-migration-readiness-->
-          <!--LINK:csv-ownership-imbalance--><li><a href="csv-ownership-imbalance.html"><span lang="en">CSV ownership imbalance: causes and fixes</span><span lang="nl">CSV ownership onbalans: oorzaken en oplossingen</span></a></li><!--/LINK:csv-ownership-imbalance-->
-          <!--LINK:live-migration-wrong-network--><li><a href="live-migration-wrong-network.html"><span lang="en">Live Migration on the wrong network</span><span lang="nl">Live Migration over het verkeerde netwerk</span></a></li><!--/LINK:live-migration-wrong-network-->
+          <!--LINK:top-10-hyper-v-cluster-issues--><li><a href="top-10-hyper-v-cluster-issues.html">Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026</a></li><!--/LINK:top-10-hyper-v-cluster-issues-->
+          <!--LINK:azure-local-migration-readiness--><li><a href="azure-local-migration-readiness.html">Azure Local migratie readiness checklist</a></li><!--/LINK:azure-local-migration-readiness-->
+          <!--LINK:csv-ownership-imbalance--><li><a href="csv-ownership-imbalance.html">CSV ownership onbalans: oorzaken en oplossingen</a></li><!--/LINK:csv-ownership-imbalance-->
+          <!--LINK:live-migration-wrong-network--><li><a href="live-migration-wrong-network.html">Live Migration over het verkeerde netwerk</a></li><!--/LINK:live-migration-wrong-network-->
         </ul>
       </div>
-    </article>
-  </main>
+      </div>
+    </div>
 
-  <footer>
-    <span>&copy; 2026 CloudLabs</span>
-    <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
-    <a href="../book.html" lang="en">Book</a><a href="../book.html" lang="nl">Boek</a>
-    <a href="../privacy.html" lang="en">Privacy</a><a href="../privacy.html" lang="nl">Privacy</a>
-    <span class="brand-version">v0.3.6</span>
-  </footer>
+  </article>
+</section>
+</main>
 
-</div>
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
 
-<div id="consentBanner" class="consent-banner" role="dialog" aria-label="Cookie consent" aria-live="polite">
-  <p>
-    <span lang="en">We use Google Analytics to understand how visitors use this site. Analytics cookies are only set if you accept.</span>
-    <span lang="nl">Wij gebruiken Google Analytics om te zien hoe bezoekers deze site gebruiken. Analytische cookies worden alleen geplaatst als u akkoord gaat.</span>
-  </p>
-  <div class="consent-row">
-    <button class="btn-accept" id="consentAccept"><span lang="en">Accept analytics</span><span lang="nl">Accepteer analytics</span></button>
-    <button class="btn-decline" id="consentDecline"><span lang="en">Decline</span><span lang="nl">Weigeren</span></button>
-  </div>
-</div>
 
-<script src="../script.js?v=0.4.9"></script>
+<script>
+(function(){
+  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
+  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
+})();
+</script>
+<script src="/huisstijl/pagina.js"></script>
 </body>
 </html>

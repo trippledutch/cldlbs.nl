@@ -1,0 +1,3762 @@
+{
+  "_comment": "Single style source for every CloudLabs deliverable (decision Hans 3 Jul 2026: Calibri 10.5, five-level palette). JSON so both the python docengine and PowerShell (ConvertFrom-Json) read the same file natively. Change values here, never in builder code.",
+  "Fonts": {
+    "Body": "Calibri",
+    "BodySizePt": 10.5,
+    "TitleSizePt": 20,
+    "HeadingSizePt": 15,
+    "SubheadingSizePt": 12,
+    "TableBodySizePt": 7.5,
+    "TableHeaderSizePt": 7.5,
+    "FooterSizePt": 8,
+    "FindingHeadGapPt": 5
+  },
+  "Colors": {
+    "Ink": "0A1024",
+    "Cyan": "0A7E9E",
+    "Dim": "3A4255",
+    "Faint": "6B7285",
+    "HeaderFill": "0A1024",
+    "Border": "D3D8E0"
+  },
+  "Vocabulary": {
+    "_comment": "Taxonomy vocabulary control block. Languages is the authoritative language list: the validator requires every severity, scope, coverage and verdict value in every language named here, so adding a fourth language is one entry plus one set of label entries, with no resolver, renderer or layout change. Version moves with the catalogue: a vocabulary release and a catalogue release are the same release (see docs/Taxonomy-Vocabulary.md). PrimaryLanguage is the language authored prose is written in when a register does not say, which is every register written before content became multilingual. It is a fact of its own and NOT the first entry of DeliveryLanguages: reordering the delivery list would otherwise silently reinterpret every existing register as carrying a language nobody wrote in it. ReviewedLanguages (issue 271, section 6 punt 3) is a language a real reviewer can check a translation into - a DIFFERENT question from DeliveryLanguages (are the labels and catalogue complete): a language can be technically deliverable and still have nobody who can review a translation into it, and promoting it to DeliveryLanguages without also adding it here is a measured error (tests/multilingual_checks.py m31).",
+    "Version": "1.1",
+    "CatalogueVersion": "0.47",
+    "Languages": [
+      "Dutch",
+      "English",
+      "German"
+    ],
+    "DeliveryLanguages": [
+      "Dutch",
+      "English",
+      "German"
+    ],
+    "ReviewedLanguages": [
+      "Dutch",
+      "English",
+      "German"
+    ],
+    "PrimaryLanguage": "Dutch",
+    "LanguageCodes": {
+      "_comment": "How a language is written in a FILENAME. A separate fact from the language name, and deliberately so: a register key is read by a human editing JSON, where 'English' is clearer than 'en', while a filename suffix has to be short and stable. Both live here, so neither is invented at a call site. A rendered artifact carries its language because that is part of what the file IS, not as a uniqueness trick: a delta document for one measurement in two languages is two deliverables and must read as two, so the code is part of the name.",
+      "Dutch": "nl",
+      "English": "en",
+      "German": "de"
+    }
+  },
+  "DoNotTranslate": {
+    "_comment": "Terms that must read identically in every language. Enforced is checked mechanically across the whole label surface by the vocabulary validator. ProseOnly holds generic technical nouns that are do-not-translate in AUTHORED PROSE (remediation texts, findings, annotations) but ARE legitimately localised in the label surface, where NODE renders as Knoten in German; enforcing them there would forbid a correct translation.",
+    "Enforced": [
+      "SBD",
+      "STONITH",
+      "Pacemaker",
+      "Corosync",
+      "LifeKeeper",
+      "DataKeeper",
+      "HANA",
+      "HSR",
+      "Hyper-V",
+      "Azure Local",
+      "S2D",
+      "Veeam",
+      "Commvault",
+      "ASCS",
+      "ERS",
+      "ENSA",
+      "CIB",
+      "ARK"
+    ],
+    "ProseOnly": [
+      "cluster",
+      "node",
+      "witness"
+    ],
+    "AsBuiltTerms": [
+      "Adapter",
+      "Appliance",
+      "Appliances ({n})",
+      "Array (plane C)",
+      "Azure Local platform",
+      "Azure Local stamp per node ({n})",
+      "BIOS",
+      "Build",
+      "Bus",
+      "Cluster Shared Volumes ({n})",
+      "Cluster-Aware Updating ({n})",
+      "Cluster:",
+      "Config",
+      "Cores per socket",
+      "Custom location:",
+      "Device Guard / VBS ({n})",
+      "Fabric",
+      "Fabric (plane F)",
+      "Firmware",
+      "GB",
+      "Host",
+      "Id",
+      "Intent",
+      "Interface",
+      "Jumbo frames per adapter ({n})",
+      "LAG",
+      "LAPS",
+      "Load balancing",
+      "MTU",
+      "Machine",
+      "Medium",
+      "Model",
+      "Modules:",
+      "NOS",
+      "Native VLAN",
+      "Node",
+      "Nodes",
+      "PDU",
+      "Peers",
+      "Pool",
+      "Processor",
+      "Provider",
+      "Provisioning",
+      "RDMA per adapter ({n})",
+      "RPO",
+      "Rack",
+      "Racks ({n})",
+      "Remote support:",
+      "Resiliency",
+      "Resource",
+      "Resource bridge ({n})",
+      "SET",
+      "Secure Boot",
+      "Service",
+      "Site",
+      "Sockets",
+      "Spanning tree ({n})",
+      "Status",
+      "Storage Spaces Direct",
+      "Support Connectivity",
+      "Switch",
+      "Switches",
+      "Switches ({n})",
+      "Team",
+      "Tier",
+      "Tier 0",
+      "Type",
+      "UBR",
+      "Uniform",
+      "Update",
+      "VLAN",
+      "VLANs ({n})",
+      "VM",
+      "VMM",
+      "VMs",
+      "Volume",
+      "Volumes ({n})",
+      "Windows Admin Center gateways ({n})",
+      "Witness ({n})",
+      "Zone",
+      "himds",
+      "vNIC",
+      "vSwitch"
+    ],
+    "_AsBuiltComment": [
+      "Labels that read IDENTICALLY in Dutch and English on the as-built surface, and",
+      "are meant to. Product names (Windows Admin Center, Cluster-Aware Updating,",
+      "Storage Spaces Direct), technology terms (VLAN, MTU, RDMA, LAG, NOS, RPO) and",
+      "nouns that are the same word in both languages (Node, Model, Status, Interface).",
+      "",
+      "IT IS AN INVENTORY, NOT A PROHIBITION (6 aug 2026). Before this, 134 as-built",
+      "labels were identical in both languages and NONE was recorded as deliberate, so",
+      "an intended English term and a forgotten translation looked exactly alike. This",
+      "list freezes the 134; the 135th has to be added on purpose, and the check in",
+      "tests/asbuilt_content_checks.py refuses an untidy new one.",
+      "",
+      "MEASURED VALUES ARE NOT IN SCOPE HERE and never will be. What a system reported",
+      "is rendered as it reported it: an English event text, service state or product",
+      "string from an English-language OS stays English in a Dutch document, because",
+      "translating a measured value would be changing the measurement."
+    ]
+  },
+  "Risk": {
+    "_comment": "Severity colour tokens, and only severity: how bad a finding is. ONE palette since 28 Jul 2026 and one SET of tokens since decision E2 (29 Jul 2026): the document and the Studio carry these same four values on every surface, with no dark/light variant, because they are read side by side and the same colour meaning two levels is a misreading an assessor can make. E2 reversed the ramp rather than tuning it: KRITIEK is black, which is the one value that is unmistakable on a white page and on the dark cockpit alike, and the level below it takes the red. That black cannot stand out on a dark surface, so it carries a ring; see Styles.RiskRing. Re-balanced 26 Jul 2026 to make room for KRITIEK above HOOG. OPGELOST, GEEN and n.v.t. left this block at 0.47 with the status axis; the first two are in Styles.Status, n.v.t. was dropped because the coverage group already carries not-applicable. Documents rendered before a change keep their old colours until they are re-rendered.",
+    "KRITIEK": "000000",
+    "HOOG": "E03131",
+    "MIDDEL": "F76707",
+    "LAAG": "1C7ED6"
+  },
+  "RiskRing": {
+    "_comment": "Ring colour per severity, for the levels that have one. Only KRITIEK does, and the ring is what makes its black fill visible on a dark surface (1.18 against the cockpit; the ring is 5.01 there and 5.92 against the fill itself). It is a component rule of the badge and not a fourth colour in the ramp, which is why it lives in its own block: a level named here has a ring, a level absent has none, and the check that accepts KRITIEK's fill contrast does so ONLY where the ring is present and itself clears the floor. Applies to the severity badge and to the board dot, in every output channel.",
+    "KRITIEK": "FF3B30"
+  },
+  "Status": {
+    "_comment": "Status colour tokens: where a finding stands, independently of what it is worth. OPEN carries the 'inherit' sentinel because an open finding's badge shows the colour of its severity; the sentinel is declared rather than left out so the rule stays 'every value has a token'. The validator accepts it on OPEN and refuses it anywhere else. GEEN is green because no deviation is a good state; ACCEPTED is neutral grey because a knowingly carried risk is neither cleared nor open. NOTE: GEEN was grey 7F7F7F while it was a severity value, so a re-rendered report changes that badge from grey to green.",
+    "OPEN": "inherit",
+    "OPGELOST": "0CA678",
+    "ACCEPTED": "868E96",
+    "GEEN": "2B8A3E"
+  },
+  "RiskLabels": {
+    "_comment": "Severity badge labels. Machine values are Dutch and never change (KRITIEK, HOOG, MIDDEL, LAAG); only the rendered label localises. KRITIEK: availability or data protection is compromised now, or failure is certain under normal operation. Tiebreaker against HOOG: does this break failover today? If yes, KRITIEK. If only under a specific trigger, HOOG. Where a finding STANDS is StatusLabels, a separate group since 0.47.",
+    "Dutch": {
+      "KRITIEK": "KRITIEK",
+      "HOOG": "HOOG",
+      "MIDDEL": "MIDDEL",
+      "LAAG": "LAAG"
+    },
+    "English": {
+      "KRITIEK": "CRITICAL",
+      "HOOG": "HIGH",
+      "MIDDEL": "MEDIUM",
+      "LAAG": "LOW"
+    },
+    "German": {
+      "KRITIEK": "KRITISCH",
+      "HOOG": "HOCH",
+      "MIDDEL": "MITTEL",
+      "LAAG": "NIEDRIG"
+    }
+  },
+  "StatusLabels": {
+    "_comment": "Status badge labels, upper case like RiskLabels because they share the badge surface. Machine values are Dutch except ACCEPTED, which entered the registers in English and stays; its Dutch label is GEACCEPTEERD. ACCEPTED never renders as solved: they are opposite statements about the same risk.",
+    "Dutch": {
+      "OPEN": "OPEN",
+      "OPGELOST": "OPGELOST",
+      "ACCEPTED": "GEACCEPTEERD",
+      "GEEN": "GEEN"
+    },
+    "English": {
+      "OPEN": "OPEN",
+      "OPGELOST": "RESOLVED",
+      "ACCEPTED": "ACCEPTED",
+      "GEEN": "NONE"
+    },
+    "German": {
+      "OPEN": "OFFEN",
+      "OPGELOST": "BEHOBEN",
+      "ACCEPTED": "AKZEPTIERT",
+      "GEEN": "KEINE"
+    }
+  },
+  "StatusNotes": {
+    "_comment": "The status as a NOTE under a finding title, lower case and muted, instead of a badge beside the severity. A badge column that carries GEACCEPTEERD next to one that carries MIDDEL presents level and state as before and after of one thing, which is the axis conflation removed from the registers, the renderer, the delta report and the cockpit; this block is what replaces it. OPEN is DELIBERATELY ABSENT: an open finding's state is already said by the severity badge on the same row, so a note there would repeat it. The other three are present in every declared language, resolved like every other label and never hardcoded in a renderer. The wording is not the badge label lower-cased: GEEN reads as 'geen' on its own, which says nothing, and the note has to be a statement.",
+    "Dutch": {
+      "OPGELOST": "opgelost",
+      "ACCEPTED": "geaccepteerd",
+      "GEEN": "geen afwijking"
+    },
+    "English": {
+      "OPGELOST": "resolved",
+      "ACCEPTED": "accepted",
+      "GEEN": "no deviation"
+    },
+    "German": {
+      "OPGELOST": "behoben",
+      "ACCEPTED": "akzeptiert",
+      "GEEN": "keine Abweichung"
+    }
+  },
+  "ConfirmNote": {
+    "_comment": "The bulk-confirmation note, per language (issue 301). It is MACHINE TEXT with a fixed template - the studio writes it, no assessor types it - so it belongs in the layer beside AcceptanceNote rather than in a Dutch string in studio/shell.py. That distinction is the whole point: authored assessor prose is never machine-translated, and this is not authored prose. {run} is the round key. The Assessor prefix is the same word in all three languages (docs/Duitse-Terminologie.md settles assessor -> Assessor) and lives here so no caller spells it out. TranslationReviewed is the naleesronde's own note (issue 301, 19 aug 2026), and it is here for exactly the reason Bulk is: Confirm-TranslatedText.ps1 wrote it as a plain Dutch string, so reviewing the German halves was the very act that made the German render refuse with \"history note is a plain string\". {language} is the half that was read, {source} the language it was translated from, {who} the person who read it - the reviewer's NAME is data, not text to translate. TranslationReviewedBulk is the SAME act taken over many halves at once (Hans, 19 aug 2026): the reviewer accepts a batch on the strength of the translation chain rather than reading every line. It is a different sentence on purpose - a record that says 'read' about halves nobody read line by line makes check 20 green without meaning, and the bulk value confirmation has named itself for exactly this reason since issue 301. DE SAMMEL-FAMILIE EN NIET 'im Stapel' (batch 7 op #413, 19 aug): 'Stapel' leest in het Duits als een fysieke stapel of oude batchverwerking. Deze zinnen worden als MOMENTOPNAME in registernoten geschreven, dus een latere laagveeg heelt ze niet - daarom hier meteen goed. THE REGISTER RULE FOR THE NEXT TEMPLATE WRITER (R1, issue 561/575, 22 Aug 2026): Bulk is a MACHINE STAMP on many findings at once and stays telegram-style, never expanded into a full sentence describing an action - there is no action to describe, only a value that did not move. TranslationReviewed and TranslationReviewedBulk are full sentences because they report something a PERSON did (read a translation, or accepted a batch of them on the strength of the chain). The register is not accidental: pick telegram for a machine stamp, a full sentence for a human act, and it is the same choice every field in this block already makes.",
+    "Dutch": {
+      "AssessorPrefix": "Assessor: ",
+      "Bulk": "Bevestigd bij ronde {run}: waarde ongewijzigd, geen nieuwe waarneming. Bevestiging in bulk, geen afzonderlijke afweging.",
+      "TranslationReviewed": "Assessor ({who}): de vertaling ({language}, uit {source}) is nagelezen en klopt met de bron. De tekst is ongewijzigd; alleen de naleesmarker is gezet.",
+      "TranslationReviewedBulk": "Assessor ({who}): de vertaling ({language}, uit {source}) is in bulk bevestigd, niet regel voor regel nagelezen. De tekst is ongewijzigd; alleen de naleesmarker is gezet."
+    },
+    "English": {
+      "AssessorPrefix": "Assessor: ",
+      "Bulk": "Confirmed in review round {run}: value unchanged, no new observation. Confirmed in bulk, no separate deliberation.",
+      "TranslationReviewed": "Assessor ({who}): the {language} translation (from {source}) has been reviewed and matches its source. The wording is unchanged; only the review marker was set.",
+      "TranslationReviewedBulk": "Assessor ({who}): the {language} translation (from {source}) was confirmed in bulk, not read line by line. The wording is unchanged; only the review marker was set."
+    },
+    "German": {
+      "AssessorPrefix": "Assessor: ",
+      "Bulk": "Bestätigt in Runde {run}: Wert unverändert, keine neue Beobachtung. Im Rahmen einer Sammelbestätigung, ohne gesonderte Bewertung.",
+      "TranslationReviewed": "Assessor ({who}): Die Übersetzung ({language}, aus {source}) wurde geprüft und stimmt mit der Quelle überein. Der Wortlaut ist unverändert; es wurde nur die Prüfmarkierung gesetzt.",
+      "TranslationReviewedBulk": "Assessor ({who}): Die Übersetzung ({language}, aus {source}) wurde im Rahmen einer Sammelbestätigung akzeptiert, nicht Zeile für Zeile geprüft. Der Wortlaut ist unverändert; es wurde nur die Prüfmarkierung gesetzt."
+    }
+  },
+  "AcceptanceNote": {
+    "_comment": "The Status line of a borne risk, built from the ACCEPTANCE RECORD and not from the last history note. It used to be the note, which is why accepted findings read 'Assessor: <reason> [run 20260728]': a machine word the customer never asked for, a run key that answers nothing at that point in the sentence, and no sign of who decided or when it is looked at again. The record carries By, On, Why and ReviewOn, so the sentence can say all four. An authored Status annotation still overrides this, because an assessor who writes the paragraph out has said something the record cannot hold. Standing and Dated are two templates and not one with an optional tail: 'no review date' is a decision and has to read as one, not as an absence. Why is a plain string typed at accept time and is NOT a language map, so it renders in the language it was typed in; that is the same limitation the history note always had, and it is visible here rather than hidden. Months are spelled out because an ISO date in a customer paragraph reads as a machine field.",
+    "Dutch": {
+      "DateForm": "{day} {month} {year}",
+      "Dated": "Op {on} geaccepteerd door {by}, te herzien op {review}.",
+      "Standing": "Op {on} geaccepteerd door {by} als staand besluit, zonder herzieningsdatum.",
+      "Why": "Reden: {why}",
+      "Months": [
+        "januari",
+        "februari",
+        "maart",
+        "april",
+        "mei",
+        "juni",
+        "juli",
+        "augustus",
+        "september",
+        "oktober",
+        "november",
+        "december"
+      ]
+    },
+    "English": {
+      "DateForm": "{day} {month} {year}",
+      "Dated": "Accepted on {on} by {by}, to be reviewed on {review}.",
+      "Standing": "Accepted on {on} by {by} as a standing decision, with no review date.",
+      "Why": "Reason: {why}",
+      "Months": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ]
+    },
+    "German": {
+      "DateForm": "{day}. {month} {year}",
+      "Dated": "Am {on} von {by} akzeptiert, zu überprüfen am {review}.",
+      "Standing": "Am {on} von {by} als stehende Entscheidung akzeptiert, ohne Überprüfungsdatum.",
+      "Why": "Grund: {why}",
+      "Months": [
+        "Januar",
+        "Februar",
+        "März",
+        "April",
+        "Mai",
+        "Juni",
+        "Juli",
+        "August",
+        "September",
+        "Oktober",
+        "November",
+        "Dezember"
+      ]
+    }
+  },
+  "ScopeLabels": {
+    "_comment": "Scope answers what a finding says something about, so a single workload finding cannot set the severity of a cluster-wide verdict. Machine values are Dutch for consistency with the severity enum, except where the term is identical or already a loanword in Dutch technical usage. NODE versus CLUSTER follows the ownership principle: owned and remediated on one node is NODE, a component or path shared by all nodes is CLUSTER. WORKLOAD and BEHEER can never carry KRITIEK; their ceiling is HOOG and the vocabulary validator enforces it from SCOPE_KRITIEK_FORBIDDEN.",
+    "Dutch": {
+      "CLUSTER": "Cluster",
+      "GAST-CLUSTER": "Gastcluster",
+      "NODE": "Node",
+      "HA-INFRA": "HA-infrastructuur",
+      "BEHEER": "Beheer",
+      "GEGEVENSBESCHERMING": "Gegevensbescherming",
+      "CAPACITEIT": "Capaciteit",
+      "WORKLOAD": "Workload"
+    },
+    "English": {
+      "CLUSTER": "Cluster",
+      "GAST-CLUSTER": "Guest cluster",
+      "NODE": "Node",
+      "HA-INFRA": "HA infrastructure",
+      "BEHEER": "Management plane",
+      "GEGEVENSBESCHERMING": "Data protection",
+      "CAPACITEIT": "Capacity",
+      "WORKLOAD": "Workload"
+    },
+    "German": {
+      "CLUSTER": "Cluster",
+      "GAST-CLUSTER": "Gastcluster",
+      "NODE": "Knoten",
+      "HA-INFRA": "HA-Infrastruktur",
+      "BEHEER": "Verwaltungsebene",
+      "GEGEVENSBESCHERMING": "Datensicherung",
+      "CAPACITEIT": "Kapazität",
+      "WORKLOAD": "Workload"
+    }
+  },
+  "ScopeOverrides": {
+    "_comment": "Module-family display overrides for a scope value: WORKLOAD reads poorly in a report that talks about virtual machines. Resolution is module override if present, otherwise the generic ScopeLabels entry. That is the one intended fallback in the system and it never crosses a language. Display only: the machine value stays WORKLOAD everywhere.",
+    "Hyper-V": {
+      "Dutch": {
+        "WORKLOAD": "Virtuele machine"
+      },
+      "English": {
+        "WORKLOAD": "Virtual machine"
+      },
+      "German": {
+        "WORKLOAD": "Virtuelle Maschine"
+      }
+    },
+    "Azure Local": {
+      "Dutch": {
+        "WORKLOAD": "Virtuele machine"
+      },
+      "English": {
+        "WORKLOAD": "Virtual machine"
+      },
+      "German": {
+        "WORKLOAD": "Virtuelle Maschine"
+      }
+    },
+    "HANA-HA": {
+      "Dutch": {
+        "WORKLOAD": "Database-instantie"
+      },
+      "English": {
+        "WORKLOAD": "Database instance"
+      },
+      "German": {
+        "WORKLOAD": "Datenbankinstanz"
+      }
+    }
+  },
+  "CoverageLabels": {
+    "_comment": "Coverage state to report term. not-applicable renders as Not applicable; every skipped-* state AND collection-failed render as Not assessed. The two are never collapsed in stored data or in aggregate counts: skipped means we decided not to measure, collection-failed means the environment prevented measurement, and only the second is a signal about the environment itself.",
+    "Dutch": {
+      "checked": "Beoordeeld",
+      "not-applicable": "Niet van toepassing",
+      "skipped-resume": "Niet beoordeeld",
+      "skipped-onlysections": "Niet beoordeeld",
+      "skipped-excludesections": "Niet beoordeeld",
+      "collection-failed": "Niet beoordeeld"
+    },
+    "English": {
+      "checked": "Assessed",
+      "not-applicable": "Not applicable",
+      "skipped-resume": "Not assessed",
+      "skipped-onlysections": "Not assessed",
+      "skipped-excludesections": "Not assessed",
+      "collection-failed": "Not assessed"
+    },
+    "German": {
+      "checked": "Bewertet",
+      "not-applicable": "Nicht zutreffend",
+      "skipped-resume": "Nicht bewertet",
+      "skipped-onlysections": "Nicht bewertet",
+      "skipped-excludesections": "Nicht bewertet",
+      "collection-failed": "Nicht bewertet"
+    }
+  },
+  "Layout": {
+    "UsableWidthIn": 6.0,
+    "LogoWidthIn": 1.95,
+    "HeaderLogoWidthIn": 1.0,
+    "FindingHeaderIn": [
+      0.85,
+      4.06,
+      0.6
+    ],
+    "OverviewNumIn": 0.65,
+    "PageWidthIn": 8.268,
+    "PageHeightIn": 11.693,
+    "SideMarginIn": 1.134,
+    "TopMarginIn": 1.0,
+    "FigureWidthIn": 5.9,
+    "FigureWidthLandscapeIn": 9.3,
+    "_comment": [
+      "A4, set explicitly (6 aug 2026). Nobody had ever set a page size, so every",
+      "document came out US Letter, which is what python-docx ships. On A4 the 5.9",
+      "inch tables and figures stuck 3.3 mm past the right margin, which is the few",
+      "millimetres that were visible. Side margins are 1.134 in so the usable width",
+      "stays exactly 6.0 in and no width in this file had to move.",
+      "FigureWidthLandscapeIn (issue 130, 13 aug 2026): the same -0.1in breathing",
+      "room FigureWidthIn already takes off UsableWidthIn, applied to a LANDSCAPE",
+      "page instead - PageHeightIn minus two SideMarginIn minus 0.1 = 9.3. A",
+      "landscape page reuses the portrait page's own dimensions and margins",
+      "(swapped), so this is the only new number the landscape section needed."
+    ]
+  },
+  "Assets": {
+    "Logo": "assets/cloudlabs_logo.png"
+  },
+  "Footer": {
+    "Dutch": "(c) {year} CloudLabs  -  Hyper-V Cluster Health Check {cluster}  -  Read-only diagnose",
+    "English": "(c) {year} CloudLabs  -  Hyper-V Cluster Health Check {cluster}  -  Read-only diagnostics",
+    "German": "(c) {year} CloudLabs  -  Hyper-V Cluster Health Check {cluster}  -  Schreibgeschützte Diagnose"
+  },
+  "PageOf": {
+    "Dutch": "pagina {page} van {pages}",
+    "English": "page {page} of {pages}",
+    "German": "Seite {page} von {pages}"
+  },
+  "Verdicts": {
+    "_comment": "Comparer verdict to report rendering: which badge to show and the change-column text. Verdict tokens are language neutral; the per-language keys are the reader-facing phrases. The Change* labels in Styles.Labels carried a trailing (assessor) to mark a register decision apart from a machine verdict. It came off on 29 Jul 2026: the change text is now ALWAYS derived from the register axes and the machine verdict rides along in brackets only when it adds something, so the qualifier said nothing the sentence did not, appeared on 40 of 55 rows of a delivered table including every row where nothing happened, and produced two brackets in a row on the three rows where a verdict did ride along.",
+    "OPGELOST-HOUDT": {
+      "Badge": "OPGELOST",
+      "Dutch": "Opgelost, houdt stand",
+      "English": "Resolved, holding",
+      "German": "Behoben, hält stand"
+    },
+    "OPGELOST-KANDIDAAT": {
+      "Badge": "OPGELOST",
+      "Dutch": "Opgelost-kandidaat, wacht op bevestiging",
+      "English": "Resolved candidate, awaiting confirmation",
+      "German": "Behoben-Kandidat, Bestätigung ausstehend"
+    },
+    "HEROPEND-KANDIDAAT": {
+      "Badge": null,
+      "Dutch": "Heropend-kandidaat",
+      "English": "Reopened candidate",
+      "German": "Erneut aufgetreten"
+    },
+    "ONGEWIJZIGD-OPEN": {
+      "Badge": null,
+      "Dutch": "Meting ongewijzigd, blijft open",
+      "English": "Measurement unchanged, still open",
+      "German": "Messung unverändert, weiterhin offen"
+    },
+    "GEEN-BEWIJS": {
+      "Badge": "GEEN",
+      "Dutch": "Geen bewijs in deze meting",
+      "English": "No evidence in this measurement",
+      "German": "Kein Nachweis in dieser Messung"
+    },
+    "GEACCEPTEERD": {
+      "Badge": "OPGELOST",
+      "Dutch": "Formeel geaccepteerd risico, staand",
+      "English": "Formally accepted risk, standing",
+      "German": "Formell akzeptiertes Risiko, bestehend"
+    },
+    "HANDMATIG": {
+      "Badge": null,
+      "Dutch": "Handmatige beoordeling",
+      "English": "Manual assessment",
+      "German": "Manuelle Beurteilung"
+    },
+    "NIEUW-KANDIDAAT": {
+      "Badge": null,
+      "Dutch": "Ongebonden kandidaat",
+      "English": "Unbound candidate",
+      "German": "Ungebundener Kandidat"
+    },
+    "ASSESSOR-OVERRULE": {
+      "_comment": "The machine proposed something and the assessor decided otherwise. The seventh measured verdict, 31 July 2026. Badge is null because the row's badge comes from the FINDING's value, which is exactly the thing the assessor decided; a badge here would restate the machine's proposal beside the decision that rejected it. The phrase names the DECISION and not the disagreement: 'assessorbesluit wijkt af van de machinelezing' would put the machine first, and the whole point is that the register is what stands. What the machine said is kept in its own field on the row and renders as the second line, so nothing is hidden.",
+      "Badge": null,
+      "Dutch": "Oordeel assessor, machinelezing afgewezen",
+      "English": "Assessor judgement, machine reading rejected",
+      "German": "Assessor-Entscheidung, Maschinenlesung abgelehnt"
+    },
+    "GEEN-VERGELIJKING": {
+      "Badge": null,
+      "Dutch": "Geen vergelijking, bestond bij de vorige meting niet",
+      "English": "No comparison, absent at the previous measurement",
+      "German": "Kein Vergleich, bei der vorherigen Messung nicht vorhanden"
+    }
+  },
+  "Labels": {
+    "Dutch": {
+      "Trend": {
+        "Total": "totaal",
+        "CountAxis": "Aantal bevindingen",
+        "Distribution": "Verdeling per versie",
+        "PerLevel": "Trend per niveau",
+        "ExcludedMigrated": "{n} bevinding(en) zijn buiten deze grafiek gelaten: hun oorspronkelijke niveau was bij de migratie niet uit de historie te herleiden, dus er is geen band om ze in te tellen.",
+        "ExcludedOutOfScope": "{n} bevinding(en) zijn buiten deze grafiek gelaten: buiten de opdracht voor deze levering. Zie de scope-beperkingen.",
+        "MeasuredAtRun": "Onder elke datum: het aantal bevindingen dat op die datum is gemeten, van het aantal dat toen in de historie stond.",
+        "BarsOnly": "{label} (alleen in de staven)"
+      },
+      "DeltaTitle": "Health Check {cluster}, delta-sectie meetmoment {date}",
+      "OverviewHeading": "Overzicht van de wijzigingen",
+      "Overview": [
+        "Bevinding",
+        "Onderwerp",
+        "Vorige meting",
+        "Nu",
+        "Wijziging"
+      ],
+      "DeltaGroups": {
+        "OPEN": "Open",
+        "OPGELOST": "Opgelost",
+        "ACCEPTED": "Geaccepteerd",
+        "GEEN": "Geen afwijking"
+      },
+      "NewHeading": "Kandidaat-bevindingen",
+      "FindingsHeading": "Bevindingen in detail",
+      "Status": "Status:",
+      "CurrentSituation": "Huidige situatie:",
+      "BestPractice": "Best practice:",
+      "Deviation": "Afwijking:",
+      "Recommendation": "Aanbeveling:",
+      "ActionItem": "Actiepunt:",
+      "Goal": "Doel:",
+      "Reference": "Referentie:",
+      "MeasuredIntro": "Meting {current}: {currentResult}. Basismeting {baseline}: {baselineResult}.",
+      "IntroSummary": "Deze delta-sectie vergelijkt de meting van {current} met de vorige meting van {baseline}. De verdicten hieronder verdelen zich als volgt: {counts}.",
+      "RemainingTitle": "Health Check {cluster}, overgebleven risico's per {date}",
+      "BaselineTitle": "Health Check {cluster}, bevindingenrapport per {date}",
+      "RiskDevelopmentHeading": "Ontwikkeling RISK-status",
+      "HistoryReach": "Deze historie reikt terug tot {first}. Wat daarvoor ligt staat niet in dit register.",
+      "OutOfScopeNotice": "{count} bevinding(en) niet in dit document: buiten de opdracht voor deze levering. Zie de scope-beperkingen hierboven.",
+      "SummaryHeading": "Samenvatting",
+      "SummaryCols": [
+        "Bevinding",
+        "Onderwerp",
+        "Risico"
+      ],
+      "FrontKlant": "Klant:",
+      "FrontAuteur": "Auteur:",
+      "FrontVersie": "Versie:",
+      "FrontDatum": "Datum:",
+      "FrontDocScope": "Document scope",
+      "FrontEnvClass": "Omgevingsclassificatie",
+      "FrontScopeLimits": "Scope-beperkingen",
+      "FrontMethodology": "Methodiek en taxonomie",
+      "MethodologyDefault": [
+        "Elke bevinding volgt een vaste structuur: Huidige situatie, Best practice, Afwijking, Aanbeveling, Actiepunt en Referentie. De diepgang schaalt met het risico: hoog en middel krijgen alle onderdelen inclusief een concreet actiepunt, laag de kern (situatie, best practice, afwijking, aanbeveling), geen risico bevestigt wat is gemeten.",
+        "Kritiek: beschikbaarheid of gegevensbescherming is nu aangetast, of uitval is zeker bij normaal gebruik. Onderscheid met hoog: breekt dit vandaag de failover? Zo ja, kritiek. Alleen bij een specifieke trigger, hoog.",
+        "Hoog: dataverlies, ongeplande downtime, clusterinstabiliteit, niet-ondersteunde configuratie of eenvoudig uit te buiten security-blootstelling.",
+        "Middel: supportability-impact (Microsoft kan support weigeren), meetbare performance-degradatie, single points of failure die niet direct de uptime bedreigen, afwijking van vendor compatibility matrices.",
+        "Laag: hygiene, documentatielacunes, naam- en taginconsistenties, kleine inefficienties, cosmetische afwijkingen.",
+        "Geen risico / geen afwijking: conform best practice en nooit eerder een bevinding geweest, of inventarislacunes die buiten de huidige scope vallen.",
+        "Opgelost: een eerder vastgestelde bevinding waarvan het herstel in deze meting is gemeten; de historie (wanneer open, op welk niveau) blijft in het register zodat de voortgang meetbaar is."
+      ],
+      "MethodologyLabels": [
+        "Kritiek",
+        "Hoog",
+        "Middel",
+        "Laag",
+        "Geen risico / geen afwijking",
+        "Opgelost"
+      ],
+      "GroupHeadings": {
+        "KRITIEK": "Kritiek risico",
+        "HOOG": "Hoog risico",
+        "MIDDEL": "Middel risico",
+        "LAAG": "Laag risico",
+        "GEEN": "Geen risico",
+        "OPGELOST": "Opgelost",
+        "ACCEPTED": "Geaccepteerd risico"
+      },
+      "ChangeResolved": "Opgelost",
+      "ChangeAccepted": "Formeel geaccepteerd in deze ronde",
+      "ChangeLowered": "Verlaagd naar {to}",
+      "ChangeRaised": "Verhoogd naar {to}",
+      "ChangeUnchanged": "Ongewijzigd",
+      "ChangeReopened": "Heropend",
+      "ChangeNoDeviation": "Geen afwijking",
+      "ChangeReopenedAt": "Heropend op {to}",
+      "AsBuilt": {
+        "Title": "Systeemdocumentatie {cluster}",
+        "Freshness": "As built, zoals gemeten op {date}",
+        "FooterTag": "As-built documentatie",
+        "MeasuredOn": "Meetmoment:",
+        "Cluster": "Cluster:",
+        "ProfileHash": "Profielhash:",
+        "Tool": "Meetinstrument:",
+        "Unknown": "(onbekend)",
+        "NietGemeten": "niet gemeten",
+        "NietInDezeMeting": "niet in deze meting",
+        "MeasuredNone": "gemeten, niets aangetroffen",
+        "NoEvidence": "Voor dit hoofdstuk is in deze meting geen configuratie vastgelegd.",
+        "VmSummary": "De omgeving telt {vms} virtuele machines verdeeld over {nodes} nodes, waarvan {running} actief.",
+        "IscsiSummary": "Er zijn {sessions} iSCSI-sessies gemeten over {nodes} nodes, waarvan {persistent} persistent.",
+        "IscsiPersistenceSummary": "Er zijn {sessions} iSCSI-sessies gemeten over {nodes} nodes; de doelregistratie is persistent op {ok} van de {tnodes} nodes.",
+        "Gemeten": "gemeten",
+        "ArraySub": "Array (plane C)",
+        "FabricSub": "Fabric (plane F)",
+        "FabricLifecycle": "Levensduur",
+        "S2dSub": "Storage Spaces Direct",
+        "PhysicalChassisSub": "Chassis en serienummers (gemeten)",
+        "PhysicalIntakeSub": "Rack, voeding en bekabeling (intakeformulier)",
+        "ArrayProtectionSummary": "Er zijn {policies} beschermingsbeleidsregels en {rules} snapshotregels vastgelegd.",
+        "PhysicalSiteLabel": "Locatie:",
+        "PhysicalPlaceholder": "Voor rackindeling, voedingspaden, bekabeling en out-of-band-adressering is geen ingevuld intakeformulier aangeleverd. Deze gegevens zijn niet vanaf het cluster meetbaar; de gemeten chassisgegevens staan hierboven.",
+        "PlaneArray": "Array (plane C)",
+        "PlaneFabric": "Fabric (plane F)",
+        "PlanePhysical": "Fysieke laag (intake)",
+        "ScopeNotApplicable": "niet van toepassing",
+        "ScopeRequested": "aangevraagd, niet ontvangen",
+        "ScopeDeclined": "geweigerd door klant, vastgelegd als beperking",
+        "AzlStampSub": "Stamp en registratie",
+        "AzlAtcSub": "Network ATC-intents",
+        "AzlDeploymentSub": "Implementatie",
+        "AzlTargetSub": "Doelplatform (plane E)",
+        "AzlSupportWindow": "De support volgt het Azure Local solution-train-venster; zie de lifecycle-pack voor de actuele train en het venster.",
+        "AzlSbeLabel": "SBE-versie:",
+        "AzlRemoteSupportLabel": "Remote support:",
+        "AzlDeploymentDate": "Implementatiedatum:",
+        "AzlEndState": "Eindtoestand:",
+        "AzlCustomLocation": "Custom location:",
+        "AzlMigrateSub": "Migratie",
+        "MigProjectLabel": "Migratieproject:",
+        "MigCountsLabel": "Ontdekt / beoordeeld / repliceren / gemigreerd:",
+        "MigTargetJoin": "Doelzijde-koppeling met de plane-E ARM-node: resource bridge {bridge}, logische netwerken {ln}, opslagpaden {sp}.",
+        "MigTargetJoinReady": "Doelzijde-koppeling met de plane-E ARM-node: resource bridge {bridge}, logische netwerken geprovisioneerd {ln}, opslagpaden geprovisioneerd {sp}.",
+        "Chapters": {
+          "1": "1. Omgeving en scope",
+          "2": "2. Cluster en quorum",
+          "3": "3. Hosts en hardware",
+          "4": "4. Opslag",
+          "5": "5. Netwerk",
+          "6": "6. Virtuele machines",
+          "7": "7. Beheer en updates",
+          "8": "8. Beveiligingsconfiguratie",
+          "9": "9. DR en replicatie",
+          "10": "10. Fysieke laag",
+          "AzL": "Azure Local platform",
+          "A": "Bijlage A. Volledige tabellen",
+          "B": "Bijlage B. Meetverantwoording"
+        },
+        "SectionNames": {
+          "0": "Bereikbaarheid",
+          "1": "Cluster en quorum",
+          "2": "Opslag",
+          "3": "Netwerk",
+          "4": "Validatierapporten",
+          "5": "Hosthardware",
+          "6": "Besturingssysteem",
+          "7": "Tijdsynchronisatie",
+          "8": "VM-hostinstellingen",
+          "9": "Virtuele machines",
+          "10": "Beveiliging",
+          "11": "Cluster-updates (CAU)",
+          "12": "VMM"
+        },
+        "ProvCols": [
+          "Sectie",
+          "Status",
+          "Bron",
+          "Onbereikbare nodes"
+        ],
+        "Cap": {
+          "Nodes": "Nodes in het cluster ({n})",
+          "Quorum": "Quorumconfiguratie",
+          "VmmCluster": "Cluster functioneel niveau",
+          "Hardware": "Hosthardware ({n})",
+          "Cpu": "Processoren per node ({n})",
+          "Dimm": "Geheugenopbouw per node ({n})",
+          "FcHbas": "Fibre Channel-HBA's ({n})",
+          "Nics": "Netwerkadapters ({n})",
+          "S2dPool": "Opslagpool ({n})",
+          "S2dVirtualDisks": "Virtuele schijven ({n})",
+          "S2dCsvFs": "Clustervolumes ({n})",
+          "S2dCache": "Cacheconfiguratie ({n})",
+          "DiskModels": "Fysieke schijven per model ({n})",
+          "PhysicalDisks": "Fysieke schijven per node ({n})",
+          "PhysicalChassis": "Chassis en serienummers ({n})",
+          "Os": "Besturingssysteem per node ({n})",
+          "Csv": "Cluster Shared Volumes ({n})",
+          "Mpio": "MPIO-instellingen ({n})",
+          "VmSwitches": "Virtuele switches ({n})",
+          "VmPerNode": "Virtuele machines per node ({n})",
+          "Generation": "VM-generaties ({n})",
+          "ConfigVersion": "VM-configuratieversies ({n})",
+          "VmmServer": "VMM-beheerserver",
+          "Wac": "Windows Admin Center gateways ({n})",
+          "SecureBoot": "Secure Boot en TPM ({n})",
+          "DeviceGuard": "Device Guard / VBS ({n})",
+          "SmbSecurity": "SMB-configuratie ({n})",
+          "VmInventory": "Volledige VM-inventaris ({n})",
+          "ArrayIdentity": "Array-identiteit",
+          "ArraySoftware": "Array-software",
+          "ArrayAppliances": "Appliances ({n})",
+          "ArrayHosts": "Geregistreerde hosts ({n})",
+          "ArrayVolumes": "Volumes ({n})",
+          "ArrayCapacity": "Array-capaciteit",
+          "ArraySupport": "Support Connectivity",
+          "ArrayReplication": "Array-replicatiesessies ({n})",
+          "FabricSwitches": "Switches ({n})",
+          "FabricVlans": "VLANs ({n})",
+          "FabricLags": "Link-aggregaties ({n})",
+          "FabricStp": "Spanning tree ({n})",
+          "FabricZoning": "FC-zonering ({n})",
+          "PhysicalRacks": "Racks ({n})",
+          "PhysicalPower": "Voedingspaden ({n})",
+          "PhysicalCabling": "Bekabeling ({n})",
+          "PhysicalOob": "OOB-adressen ({n})",
+          "AzlStamp": "Azure Local stamp per node ({n})",
+          "AzlRegistration": "Registratie per node ({n})",
+          "AzlArc": "Arc-agent per node ({n})",
+          "AtcIntents": "Network ATC-intents ({n})",
+          "AtcStatus": "ATC-intentstatus per host ({n})",
+          "DepPhases": "Implementatiefasen en duur ({n})",
+          "ArmBridge": "Resource bridge ({n})",
+          "ArmLogical": "Logische netwerken ({n})",
+          "ArmStorage": "Opslagpaden ({n})",
+          "MigAppliances": "Migratie-appliances ({n})",
+          "MigProviders": "Replicatieproviders ({n})",
+          "SetTeam": "SET-teams ({n})",
+          "ManagementVnics": "Host-vNICs en VLAN ({n})",
+          "ClusterNetworks": "Clusternetwerken ({n})",
+          "ClusterNetworkIfaces": "IP-adressen per node ({n})",
+          "Jumbo": "Jumbo frames per adapter ({n})",
+          "Rdma": "RDMA per adapter ({n})",
+          "FabricPorts": "Switchpoorten ({n})",
+          "WindowsUpdatePolicy": "Windows Update-beleid per node ({n})",
+          "CauRole": "Cluster-Aware Updating ({n})",
+          "Hotfixes": "Geïnstalleerde updates ({n})",
+          "AdTierNodes": "Clusternodes in Active Directory ({n})",
+          "AdTierAdminGroups": "Beheergroepen en leden ({n})",
+          "LocalAdmins": "Lokale beheerders per node ({n})",
+          "VmReplication": "VM-replicatie ({n})",
+          "S2dStorageTiers": "Opslagtiers ({n})",
+          "Witness": "Witness ({n})"
+        },
+        "Cols": {
+          "Nodes": [
+            "Node",
+            "Status",
+            "Stemgewicht",
+            "Foutdomein"
+          ],
+          "ArrayIdentity": [
+            "Eigenschap",
+            "Waarde"
+          ],
+          "ArraySoftware": [
+            "Eigenschap",
+            "Waarde"
+          ],
+          "ArrayAppliances": [
+            "Id",
+            "Model",
+            "Modus",
+            "Gezondheid"
+          ],
+          "ArrayHosts": [
+            "Host",
+            "OS-type",
+            "Hostgroep",
+            "Connectiviteit"
+          ],
+          "ArrayVolumes": [
+            "Volume",
+            "Grootte (GB)",
+            "Status",
+            "Replicatiedoel"
+          ],
+          "ArrayCapacity": [
+            "Eigenschap",
+            "Waarde"
+          ],
+          "ArraySupport": [
+            "Eigenschap",
+            "Waarde"
+          ],
+          "ArrayReplication": [
+            "Resource",
+            "Status",
+            "RPO",
+            "Rol"
+          ],
+          "FabricSwitches": [
+            "Switch",
+            "Leverancier",
+            "Model",
+            "NOS",
+            "Versie",
+            "Rol",
+            "Beheer-IP",
+            "Serienummer"
+          ],
+          "FabricVlans": [
+            "VLAN",
+            "Naam",
+            "Switches"
+          ],
+          "FabricLags": [
+            "Switch",
+            "Id",
+            "Soort",
+            "Peers"
+          ],
+          "FabricStp": [
+            "Switch",
+            "STP-modus",
+            "Edge-poorten",
+            "BPDU-guard"
+          ],
+          "FabricZoning": [
+            "Fabric",
+            "Zone",
+            "Leden",
+            "Single-initiator"
+          ],
+          "PhysicalRacks": [
+            "Rack",
+            "Locatie",
+            "Hoogte",
+            "Notities"
+          ],
+          "PhysicalPower": [
+            "Rack",
+            "Voeding A",
+            "Voeding B",
+            "PDU",
+            "Notities"
+          ],
+          "PhysicalCabling": [
+            "Pad",
+            "Beschrijving",
+            "Medium"
+          ],
+          "PhysicalOob": [
+            "Node",
+            "Type",
+            "Adres",
+            "VLAN"
+          ],
+          "Quorum": [
+            "Eigenschap",
+            "Waarde"
+          ],
+          "VmmCluster": [
+            "Eigenschap",
+            "Waarde"
+          ],
+          "Hardware": [
+            "Node",
+            "Fabrikant",
+            "Serie",
+            "Model",
+            "Serienummer",
+            "BIOS",
+            "BIOS-datum"
+          ],
+          "Cpu": [
+            "Node",
+            "Processor",
+            "Sockets",
+            "Cores per socket",
+            "Logische processors"
+          ],
+          "Dimm": [
+            "Node",
+            "Aantal DIMM's",
+            "Capaciteit (GB)",
+            "Snelheid (MT/s)",
+            "Uniform"
+          ],
+          "FcHbas": [
+            "Node",
+            "Fabrikant",
+            "Model",
+            "Driverversie",
+            "Firmware"
+          ],
+          "Nics": [
+            "Node",
+            "Adapter",
+            "Beschrijving",
+            "Leverancier",
+            "Driverversie",
+            "Snelheid"
+          ],
+          "S2dPool": [
+            "Pool",
+            "Gezondheid",
+            "Status",
+            "Versie",
+            "Grootte (GB)",
+            "Toegewezen (GB)"
+          ],
+          "S2dVirtualDisks": [
+            "Virtuele schijf",
+            "Resiliency",
+            "Datacopies",
+            "Foutdomein",
+            "Grootte (GB)",
+            "Beslag op pool (GB)",
+            "Gezondheid"
+          ],
+          "S2dCsvFs": [
+            "Volume",
+            "Bestandssysteem",
+            "Onderliggend FS",
+            "Grootte (GB)",
+            "Vrij (GB)",
+            "Status"
+          ],
+          "S2dCache": [
+            "Deploymentklasse",
+            "Cachestatus",
+            "Modus SSD",
+            "Modus HDD",
+            "Paginagrootte (KB)"
+          ],
+          "DiskModels": [
+            "Model",
+            "Mediatype",
+            "Bus",
+            "Grootte (GB)",
+            "Firmware",
+            "Aantal"
+          ],
+          "PhysicalDisks": [
+            "Node",
+            "Model",
+            "Mediatype",
+            "Bus",
+            "Grootte (GB)",
+            "Firmware",
+            "Gezondheid"
+          ],
+          "PhysicalChassis": [
+            "Node",
+            "Fabrikant",
+            "Serie",
+            "Model",
+            "Serienummer"
+          ],
+          "Os": [
+            "Node",
+            "Editie",
+            "Versie",
+            "Build",
+            "UBR"
+          ],
+          "Csv": [
+            "Volume",
+            "Status",
+            "Eigenaar",
+            "Grootte (GB)",
+            "Vrij (GB)"
+          ],
+          "Mpio": [
+            "Node",
+            "Padverificatie",
+            "PDO-periode",
+            "Schijftime-out"
+          ],
+          "VmSwitches": [
+            "Node",
+            "Switch",
+            "Type",
+            "SET",
+            "Management-OS"
+          ],
+          "VmPerNode": [
+            "Node",
+            "VMs",
+            "Actief"
+          ],
+          "Generation": [
+            "Generatie",
+            "Aantal"
+          ],
+          "ConfigVersion": [
+            "Configuratieversie",
+            "Aantal"
+          ],
+          "VmmServer": [
+            "Eigenschap",
+            "Waarde"
+          ],
+          "Wac": [
+            "Machine",
+            "Generatie",
+            "Versie",
+            "Service",
+            "Poort"
+          ],
+          "SecureBoot": [
+            "Node",
+            "Secure Boot",
+            "TPM gereed"
+          ],
+          "DeviceGuard": [
+            "Node",
+            "VBS-status",
+            "Services actief"
+          ],
+          "SmbSecurity": [
+            "Node",
+            "Signing vereist",
+            "Encryptie"
+          ],
+          "VmInventory": [
+            "VM",
+            "Eigenaar",
+            "Generatie",
+            "Config",
+            "Status",
+            "Geheugen (GB)"
+          ],
+          "AzlStamp": [
+            "Node",
+            "Stampversie",
+            "OEM-versie",
+            "Deployment-id"
+          ],
+          "AzlRegistration": [
+            "Node",
+            "Registratie",
+            "Verbinding",
+            "Azure-resource"
+          ],
+          "AzlArc": [
+            "Node",
+            "himds",
+            "Agentstatus",
+            "Agentversie"
+          ],
+          "AtcIntents": [
+            "Intent",
+            "Type",
+            "Opslag",
+            "Beheer"
+          ],
+          "AtcStatus": [
+            "Host",
+            "Intent",
+            "Configuratie",
+            "Provisioning"
+          ],
+          "DepPhases": [
+            "Stap",
+            "Interface",
+            "Duur (s)",
+            "Status"
+          ],
+          "ArmBridge": [
+            "Naam",
+            "Status"
+          ],
+          "ArmLogical": [
+            "Naam",
+            "VLAN",
+            "Adresruimte"
+          ],
+          "ArmStorage": [
+            "Naam",
+            "Pad"
+          ],
+          "MigAppliances": [
+            "Appliance",
+            "Site",
+            "Agentversie",
+            "Laatste heartbeat"
+          ],
+          "MigProviders": [
+            "Provider",
+            "Versie",
+            "Versiestatus",
+            "Verbinding"
+          ],
+          "SetTeam": [
+            "Node",
+            "Team",
+            "Teamingmodus",
+            "Load balancing"
+          ],
+          "ManagementVnics": [
+            "Node",
+            "vNIC",
+            "vSwitch",
+            "VLAN-modus",
+            "VLAN",
+            "Status"
+          ],
+          "ClusterNetworks": [
+            "Netwerk",
+            "Rol",
+            "Adres",
+            "Status",
+            "Metriek"
+          ],
+          "ClusterNetworkIfaces": [
+            "Node",
+            "Netwerk",
+            "Interface",
+            "IPv4-adres",
+            "Status"
+          ],
+          "Jumbo": [
+            "Node",
+            "Adapter",
+            "Waarde"
+          ],
+          "Rdma": [
+            "Node",
+            "Adapter",
+            "Omschrijving",
+            "Ingeschakeld"
+          ],
+          "FabricPorts": [
+            "Switch",
+            "Poort",
+            "Rol",
+            "Modus",
+            "Native VLAN",
+            "MTU",
+            "LAG"
+          ],
+          "WindowsUpdatePolicy": [
+            "Node",
+            "WSUS-server",
+            "WSUS actief",
+            "Auto-update uit",
+            "AU-optie"
+          ],
+          "CauRole": [
+            "Uitvoermodus",
+            "Ingeschakeld",
+            "Dagen",
+            "Startdatum"
+          ],
+          "Hotfixes": [
+            "Node",
+            "Update",
+            "Omschrijving",
+            "Geïnstalleerd op"
+          ],
+          "AdTierNodes": [
+            "Naam",
+            "Rol",
+            "Bovenliggende OU",
+            "Ingeschakeld",
+            "Besturingssysteem",
+            "LAPS"
+          ],
+          "AdTierAdminGroups": [
+            "Groep",
+            "Lid",
+            "Soort",
+            "Genest",
+            "Tier 0"
+          ],
+          "LocalAdmins": [
+            "Node",
+            "Groep",
+            "Lid",
+            "Soort",
+            "Herkomst"
+          ],
+          "VmReplication": [
+            "Node",
+            "VM",
+            "Status",
+            "Gezondheid",
+            "Modus",
+            "Laatste replicatie"
+          ],
+          "S2dStorageTiers": [
+            "Tier",
+            "Virtuele schijf",
+            "Mediatype",
+            "Resiliency",
+            "Kopieen",
+            "GB"
+          ],
+          "Witness": [
+            "Soort",
+            "Pad",
+            "Nodes",
+            "Geconfigureerd",
+            "In orde"
+          ]
+        },
+        "DiagCluster": "Figuur: clusteroverzicht",
+        "DiagNodeNetwork": "Figuur: netwerk per node",
+        "DiagFabric": "Figuur: fabric",
+        "DiagStorage": "Figuur: opslagstapel",
+        "DiagArray": "Figuur: pad van host naar volume",
+        "DiagUnmeasured": "{n} element(en) gestippeld, want niet gemeten",
+        "EnvNodes": "Het cluster telt {n} nodes.",
+        "EnvSites": "Zij staan op {n} locaties: {sites}.",
+        "EnvHardware": "De hardware is {make} {model}.",
+        "EnvStorageS2d": "De opslag is Storage Spaces Direct met pool {pool} en {n} clustervolumes.",
+        "EnvStorageSan": "De opslag komt van een extern array, met {n} clustervolumes.",
+        "EnvStorageSanVendor": "De opslag komt van een extern {vendor}-array, met {n} clustervolumes.",
+        "EnvVms": "Er draaien {n} virtuele machines, waarvan {running} actief op het meetmoment.",
+        "EnvPlanes": "Naast de clusternodes is ook gemeten: {planes}.",
+        "EnvPlanesNone": "Buiten de clusternodes is niets aanvullends gemeten.",
+        "EnvPlaneFabric": "de Ethernet-fabric",
+        "EnvPlaneArray": "het storage-array",
+        "EnvPlaneBmc": "de out-of-band hardwarelaag",
+        "EnvPlaneArm": "het Azure control plane",
+        "EnvSite": "Zij staan op locatie {sites}.",
+        "EnvNode": "Het cluster telt 1 node.",
+        "EnvVm": "Er draait 1 virtuele machine, {running} actief op het meetmoment.",
+        "Modules": "Modules:",
+        "FreshnessUnknown": "As built; het bewijs vermeldt niet wanneer er gemeten is"
+      },
+      "Rca": {
+        "Title": "Root-cause analyse {cluster}",
+        "Freshness": "Opgesteld op {date}",
+        "WindowLabel": "Incidentvenster:",
+        "WindowNotSupplied": "niet opgegeven (leg het incidentvenster vast bij intake)",
+        "OverflowNoteCondensed": "De tabel toont de eerste {shown} van {total} beslissende regels; de overige {dropped} staan in de bijlage.",
+        "OverflowNoteFull": "De tabel toont de eerste {shown} van {total} rijen; de overige {dropped} staan niet in dit document maar wel volledig in {csv} naast dit bestand.",
+        "CsvBesideThisFile": "het bijgeleverde CSV-bestand",
+        "FooterTag": "Root-cause analyse",
+        "MeasuredOn": "Meetdatum:",
+        "Cluster": "Cluster:",
+        "Tool": "Toestandsmeting:",
+        "Summary": "Samenvatting analyse:",
+        "GeenBewijs": "GEEN-BEWIJS: incidentbewijs ontbreekt; de analyse is niet uitgevoerd. Draai Get-IncidentEvidence.ps1 voor een IncidentForensics-opdracht.",
+        "NoEvidence": "Voor dit onderdeel is in deze analyse niets vastgelegd.",
+        "MeasuredNone": "gemeten, niets aangetroffen",
+        "ScopePlaceholder": "Incidentsamenvatting (nog te redigeren)",
+        "ScopePlaceholderNote": "De geredigeerde incidentsamenvatting is nog niet aangeleverd. Dit document toont de machinaal samengestelde tijdlijn, volgorde en het bewijs; de assessor voegt de samenvatting en de causale duiding toe.",
+        "TimelineCondensedCap": "Beslissende gebeurtenissen in gecorrigeerde volgorde ({n})",
+        "TimelineFullCap": "Volledige tijdlijn na storm-dedup ({n})",
+        "TimelineCols": [
+          "Bewijs",
+          "Tijd (UTC)",
+          "Node",
+          "Kanaal",
+          "Event",
+          "Sign.",
+          "Betekenis"
+        ],
+        "FirstNodeOutHead": "Eerste uitvaller",
+        "FirstNodeOutCols": [
+          "Bevinding",
+          "Bewijs"
+        ],
+        "FirstNodeOutUndetermined": "Eerste uitvaller: niet eenduidig bepaald uit de gebeurtenislogboeken.",
+        "ArbitrationLabel": "Arbitrage:",
+        "MembershipFlapsCap": "Lidmaatschapsflappen per node ({n})",
+        "FlapsCols": [
+          "Node",
+          "Aantal",
+          "Bewijs"
+        ],
+        "CsvChainCap": "CSV-pauzeketen en corruptiestaart in gecorrigeerde volgorde ({n})",
+        "CsvCols": [
+          "Bewijs",
+          "Tijd (UTC)",
+          "Event",
+          "Betekenis"
+        ],
+        "PauseStormLabel": "Pause-frame overlay:",
+        "BackupLabel": "Back-up overlay:",
+        "RecurrenceWideningLabel": "Recidiefverbreding:",
+        "ChainHead": "Oorzaakketen",
+        "ChainCols": [
+          "Stap",
+          "Tijd",
+          "Oorzaak en gevolg",
+          "Bewijs"
+        ],
+        "ChainPlaceholder": "De causale keten is nog niet geredigeerd. De assessor voegt de oorzaak-gevolgketen toe, elk met een verwijzing naar tijdlijnbewijs.",
+        "RootCauseLabel": "Hoofdoorzaak:",
+        "ConfidenceLabel": "Vertrouwen:",
+        "AlternativesHeading": "Gewogen alternatieven",
+        "AltRejected": "verworpen op grond van:",
+        "NotFiredLabel": "Niet-geactiveerde detectoren (afgewogen, geen ondersteunend bewijs in het venster):",
+        "CannotConcludeLabel": "Geen sluitende hoofdoorzaak",
+        "WouldDecideLabel": "Beslissend bewijs:",
+        "RootCausePlaceholder": "De hoofdoorzaak is nog niet geredigeerd. De assessor benoemt de hoofdoorzaak met vertrouwensniveau en weegt de alternatieven.",
+        "PostureIntro": "Toestandsfactoren uit de toestandsmeting (laag 1) die het incident hebben versterkt:",
+        "PostureCols": [
+          "Bevinding",
+          "Titel",
+          "Catalogus",
+          "Risico",
+          "Hypothese",
+          "Toelichting"
+        ],
+        "PostureNone": "Geen register aangeleverd bij de analyse; onderstaande zijn kandidaat-kruisverwijzingen (GEEN-BEWIJS) om tegen het register te toetsen.",
+        "PostureEmpty": "Geen toestandsfactoren gekoppeld aan de gerangschikte hypotheses.",
+        "PostureMeasuredLabel": "Toestandsregister gemeten op {registerUtc}; incidentvenster {window}.",
+        "PostureMeasuredAbsent": "Geen meetdatum voor het toestandsregister beschikbaar (GEEN-BEWIJS: register niet aangeleverd bij de analyse).",
+        "GapsHeading": "Bewijsgaten",
+        "GapsCols": [
+          "Bron",
+          "Node",
+          "Kanaal",
+          "Toelichting"
+        ],
+        "GapsNone": "Geen bewijsgaten vastgelegd in deze analyse.",
+        "EvidenceScopeHeading": "Bewijsdekking",
+        "EvidenceScopeCols": [
+          "Bewijsonderdeel",
+          "Klasse",
+          "Toelichting"
+        ],
+        "EvidenceScopeNone": "Geen bewijsonderdelen vastgelegd voor deze analyse.",
+        "EvidenceScopeOverrideNote": "Gedragen gat(en) geaccepteerd: {reason} (door {by}, {when}).",
+        "DumpJoinsHeading": "Dumps gekoppeld aan het clusterlog",
+        "DumpJoinsCols": [
+          "Bron",
+          "Node",
+          "Pad",
+          "Tijdstip (UTC)",
+          "Clusterlog-koppeling"
+        ],
+        "DumpJoinsNone": "Geen dumps of crashrapporten gevonden om aan het clusterlog te koppelen.",
+        "DumpJoinsMatchedNote": "Gekoppeld, {delta}s van de patroontreffer.",
+        "CoverageHeading": "Log-dekkingskaart",
+        "CoverageChannelsCols": [
+          "Kanaal",
+          "Status"
+        ],
+        "CoverageNodesCols": [
+          "Node",
+          "Status"
+        ],
+        "CoverageNotSupplied": "De log-dekkingskaart is niet meegeleverd (analyse-only render); zie de bewijsgaten hieronder.",
+        "FullTimelineHeading": "Beslissende tijdlijn, volledig",
+        "DeploymentHeading": "Implementatietijdlijn (deployment forensics)",
+        "DeploymentIntro": "Deze meting bevat een Deployment-node; de tijdlijn en het bewijs hieronder zijn machinaal samengesteld door Get-HcDeploymentAnalysis. Detectoren rangschikken en concluderen niet; de assessor benoemt de hoofdoorzaak.",
+        "DeploymentOnlyNote": "Dit is een deployment-forensische analyse zonder runtime-incidentbewijs; de incidenthoofdstukken vervallen en de hoofdoorzaak wordt door de assessor benoemd tegen de onderstaande tijdlijn.",
+        "DepPhaseLabel": "Afgeleide fase:",
+        "DepStepCols": [
+          "Bewijs-id",
+          "Stap",
+          "Interface",
+          "Duur (s)",
+          "Status"
+        ],
+        "DepStepCap": "Deployment-stapboom in emissievolgorde ({n})",
+        "DepStepNone": "Geen deployment-stappen vastgelegd in deze analyse.",
+        "DepStallLabel": "Vastloper:",
+        "DepStallNone": "Geen stall-signatuur vastgelegd in deze analyse.",
+        "DepWatchdogLabel": "Watchdog-oordeel:",
+        "DepWatchdogNone": "Geen watchdog-oordeel beschikbaar (plane E niet verzameld; zie de bewijsgaten).",
+        "DepToleratedCols": [
+          "Bewijs-id",
+          "Klasse",
+          "Aantal",
+          "Eerste (UTC)",
+          "Laatste (UTC)"
+        ],
+        "DepToleratedCap": "Getolereerde-foutinventaris als context ({n})",
+        "DepToleratedNone": "Geen getolereerde-foutklassen vastgelegd.",
+        "DepGapsHeading": "Deployment bewijsgaten",
+        "DepGapsCols": [
+          "Bron",
+          "Gebied",
+          "Item",
+          "Toelichting"
+        ],
+        "Chapters": {
+          "1": "1. Incidentsamenvatting",
+          "2": "2. Tijdlijn",
+          "3": "3. Eerste uitvaller en volgorde",
+          "4": "4. Oorzaakketen",
+          "5": "5. Hoofdoorzaak",
+          "6": "6. Bijdragende toestandsfactoren",
+          "7": "7. Herstelmaatregelen",
+          "8": "8. Bijlagen"
+        },
+        "EnglishNote": "De regels hieronder citeren de meldingen zoals Windows ze schrijft. Die zijn Engelstalig omdat de servers Engelstalig Windows draaien; ze worden niet vertaald, want dan zijn ze niet meer terug te vinden in de logs.",
+        "ClusterLogCols": [
+          "Node",
+          "Log begint (UTC)",
+          "Dekt het venster",
+          "Vastgehouden",
+          "Herkomst"
+        ],
+        "ClusterLogProvenanceCollected": "gemeten",
+        "ClusterLogProvenanceSupplied": "aangeleverd",
+        "ClusterLogSuppliedAll": "Alle {0} clusterlog(s) hierboven zijn na de meting aangeleverd; deze run heeft er geen zelf verzameld.",
+        "ClusterLogSuppliedPartial": "{0} van {1} clusterlog(s) hierboven is na de meting aangeleverd en niet door deze run zelf gemeten.",
+        "ClusterLogCoversYes": "ja",
+        "ClusterLogCoversNo": "dekt het venster niet",
+        "ClusterLogCoversUnknown": "onbekend (geen leesbare tijdstempel)",
+        "ClusterLogMinutes": "{0} min",
+        "ClusterLogSettings": "Clusterlog-instellingen: {0}. Deze bepalen hoe ver het log terugreikt; een hoger niveau laat de service sneller schrijven en verkort de dekking.",
+        "ClusterLogSettingsUnknown": "Clusterlog-instellingen zijn niet gemeten, dus de gemeten dekking staat hier zonder de oorzaak ernaast.",
+        "ClusterLogNotCollected": "De clusterlog is niet verzameld, dus over de dekking ervan is niets te zeggen.",
+        "ClusterLogSizeOne": "ClusterLogSize {0} MB",
+        "ClusterLogSizeRange": "ClusterLogSize {0} tot {1} MB over {2} van {3} nodes",
+        "ClusterLogLevelOne": "ClusterLogLevel {0}",
+        "ClusterLogLevelRange": "ClusterLogLevel {0} tot {1} over {2} van {3} nodes",
+        "ClusterLogSettingsMissing": "{0} node(s) meldden hun clusterlog-instellingen niet en erven hier geen waarde van een buurnode.",
+        "ClusterLogSizeOnePartial": "ClusterLogSize {0} MB, gemeld door {1} van {2} nodes",
+        "ClusterLogLevelOnePartial": "ClusterLogLevel {0}, gemeld door {1} van {2} nodes",
+        "CrashEvidenceHeading": "Dumps en crashconfiguratie",
+        "DumpsCols": [
+          "Node",
+          "Pad",
+          "Grootte (MB)",
+          "Geschreven (UTC)",
+          "Type",
+          "Route"
+        ],
+        "DumpsNone": "Geen dumpbestanden aangetroffen op de gemeten nodes.",
+        "CrashReportsCols": [
+          "Node",
+          "Module",
+          "Type gebeurtenis",
+          "Ticks",
+          "Appversie",
+          "Tijdstip (UTC)"
+        ],
+        "CrashReportsNone": "Geen WER-crashrapporten aangetroffen op de gemeten nodes.",
+        "CrashConfigCols": [
+          "Node",
+          "Dumptype",
+          "Doelvolume",
+          "Vrij (MB)",
+          "Totaal (MB)",
+          "Bestanden gevonden"
+        ],
+        "CrashConfigNone": "De crashdumpconfiguratie is voor geen enkele node gemeten.",
+        "CrashEvidenceNone": "Geen dumpbestanden, WER-crashrapporten of crashdumpconfiguratie gemeten in deze analyse.",
+        "NietGemeten": "niet gemeten",
+        "TriggerLabel": "Trigger:",
+        "ImpactLabel": "Impact:",
+        "WhyMonitoringMissedLabel": "Waarom monitoring het miste:",
+        "CorrectiveActionsPlaceholder": "De herstelmaatregelen zijn nog niet geredigeerd. De assessor ordent de maatregelen naar effect.",
+        "CorrectiveEffectLabel": "Effect:",
+        "CorrectiveWhyLabel": "Waarom:",
+        "CorrectivePriorityLabel": "Prioriteit:",
+        "CorrectiveVerifyLabel": "Verificatie:",
+        "RedundancyFindingLabel": "Redundantiebevinding:",
+        "FollowUpIntro": "Vervolgvoorstellen (voorstel aan de assessor, geen gestarte run):",
+        "AppendixLabel": "Bijlage {letter}: {titel}",
+        "RootCauseHeading": "Hoofdoorzaak",
+        "ConfidenceHeading": "Vertrouwen",
+        "EvidenceCsvNote": "Alle {n} bewijsregels staan volledig in {file}, dat naast dit rapport wordt meegeleverd. Die uitvoer draagt dertien kolommen; de tabel hieronder toont er zes.",
+        "DecisiveFullCap": "Alle {n} beslissende gebeurtenissen in gecorrigeerde volgorde.",
+        "ReportDateLabel": "Rapportdatum:",
+        "PostureSourceLabel": "De bevindingen hieronder komen uit {titel}, versie {versie} van {datum}.",
+        "PostureSourcePlain": "De bevindingen hieronder komen uit het bevindingenrapport van deze opdracht.",
+        "IncidentToolLabel": "Incidentcollector:"
+      },
+      "SeverityNotReconstructable": "niveau niet herleidbaar",
+      "ChangeByAssessor": "{change}, oordeel assessor {date}",
+      "ChangeJoin": " en ",
+      "MachineProposedReopen": "machine stelde heropening voor",
+      "MachineProposedResolve": "machine stelde oplossing voor",
+      "DeltaCounts": "Van de {total} bevindingen zijn er {unchanged} ongewijzigd; {measured} bewogen door de meting, {judged} door een oordeel van de assessor en {derived} bewogen zonder meetpost en zonder oordeel.",
+      "ChangeJoinLowercases": true,
+      "DocKindFindings": "Bevindingen-rapport",
+      "DocKindDelta": "Delta-rapport",
+      "DocKindRemaining": "Restrisico-rapport",
+      "RemainingPartOpen": "Openstaande risico's (TO-DO)",
+      "RemainingPartBorne": "Bewust gedragen risico's",
+      "ChangeRevoked": "Acceptatie ingetrokken",
+      "ChangeNew": "Nieuw in deze meting",
+      "NewIntro": "Geconstateerde afwijkingen die nog niet in het register zijn opgenomen. Zij dragen daarom geen vorige WAARDE; wat er bij beide metingen is aangetroffen staat in de toelichting per bevinding.",
+      "NewMarker": "(kandidaat)",
+      "MeasuredIntroNew": "Meting {current}: {currentResult}. Deze bevinding bestond bij de vorige meting nog niet.",
+      "ValueDerived": "waarde afgeleid uit een dubbelzinnige historiepost",
+      "IntroConfirmed": "De assessor bevestigt de verdicten van deze {findings} bevindingen.",
+      "IntroNotConfirmed": "Deze ronde is niet de nieuwste in dit register, dus de auteurscontrole is er niet op toegepast. Het document zegt daarom niet dat de assessor deze {findings} verdicten bevestigt.",
+      "IntroCandidatesUnjudged": "De {candidates} ongebonden kandidaten zijn machinemeldingen waarover nog geen oordeel is gegeven.",
+      "DeltaDerivedNote": "Bij {n} van deze {total} bevindingen rust de getoonde waarde op een afleiding uit een dubbelzinnige historiepost; de rij zegt het er ook bij.",
+      "Topology": {
+        "ClusterOverviewTitle": "Clusteroverzicht",
+        "VmCountRunning": "%d VM, %d actief",
+        "VmCountZero": "0 VM",
+        "VmInventoryNotMeasured": "VM-inventaris niet in deze meting",
+        "VoteWeight": "stemgewicht %s",
+        "VoteWeightNotMeasured": "stemgewicht niet in deze meting",
+        "PathLine": "pad: %s",
+        "PathNotMeasured": "pad niet in deze meting",
+        "VmOwnerOrphanNote": "%d van de %d VM's staan op een node in dit cluster; %d hebben een eigenaar die geen clusternode is.",
+        "NoFaultDomainLabel": "geen faultdomain vastgelegd",
+        "PrivateSwitchNote": "De vSwitch %s is privé en staat hier niet als doos (geen fysieke uplink, geen productienetwerk).",
+        "FabricMeasuredSub": "gemeten - zie de fabric-figuur",
+        "NotMeasured": "niet in deze meting",
+        "VswitchNotMeasured": "de vSwitch van deze vNIC is niet gemeten",
+        "SwitchportNotMeasured": "welke NIC op welke switchpoort landt, is hier niet gemeten",
+        "NodePortNotMeasured": "welke node op welke poort landt, is niet gemeten",
+        "NoInitiatorIdentity": "voor deze node is geen initiator-identiteit (WWPN/IQN) gemeten",
+        "ControllerPortNotRecorded": "op welke controllerpoort een sessie landt, is in deze meting niet vastgelegd",
+        "VolumeNotMapped": "voor dit volume is geen koppeling gemeten",
+        "MappingUnknownHost": "de koppeling noemt %s, die niet in de hosttabel van deze array staat",
+        "MappingUnknownHostAt": "de koppeling op %s noemt %s, die niet in de hosttabel van deze array staat",
+        "SwitchTypePrivate": "privé",
+        "SwitchTypeInternal": "intern",
+        "NoPhysicalUplink": "%s - geen fysieke uplink",
+        "NodeNetworkTitle": "Netwerk per node: %s",
+        "LldpPeerLabel": "LLDP-buur",
+        "HostPortCount": "%d poort(en)",
+        "NativeVlanLine": "native VLAN %s",
+        "HostPortsLabel": "hostpoorten %s",
+        "ClusterNodesLabel": "clusternodes",
+        "NoLldpFromNodes": "nodes adverteren geen LLDP",
+        "NoLldpSectionSeen": "geen LLDP van de nodes",
+        "NoSiteRecorded": "geen site vastgelegd",
+        "FabricTitle": "Fabric",
+        "Unknown": "onbekend",
+        "DiskCount": "%d schijven",
+        "PerDiskSize": "%s GB per schijf",
+        "VirtualDiskCount": "%d virtuele schijven",
+        "CopiesCount": "%s kopieen",
+        "NoTiersMeasured": "geen tiers gemeten",
+        "TierSilentToo": "ook de tier zegt niets",
+        "VolumeCount": "%d volumes",
+        "MixedFilesystems": "gemengd: %s",
+        "FilesystemNotMeasured": "bestandssysteem niet in deze meting",
+        "ClusterVolumesLabel": "clustervolumes",
+        "AndMoreCount": "; en %d meer",
+        "TiersNotRead": "de opslagtiers zijn in deze meting niet uitgelezen",
+        "TiersSilentOnResiliency": "de gemeten tiers noemen voor deze volumes geen resiliency",
+        "WithoutResiliencyNote": "Zonder resiliency: %s. Reden: %s.",
+        "VirtualDisksNoVolumesNote": "Er zijn virtuele schijven gemeten maar geen clustervolumes.",
+        "StorageStackTitle": "Opslagstapel",
+        "DisksPathsEach": "%d disks, %d paden elk",
+        "DisksPathsRange": "%d disks, %d tot %d paden",
+        "DisksCount": "%d disks",
+        "BootLine": "boot: %s",
+        "InitiatorenLabel": "initiatoren",
+        "InitiatorCount": "%d initiator(en)",
+        "OnArrayLine": "op de array: %s",
+        "HostCount": "%d host(s)",
+        "LosseHost": "losse host",
+        "ReplicaTarget": "replicadoel",
+        "KoppelingOnbekend": "koppeling onbekend",
+        "UnregisteredNodesNote": "%d van de %d nodes zijn niet aan een host van deze array te koppelen: %s.",
+        "UnmappedVolumesNote": "%d volume(s) zijn gemeten en aan niets gekoppeld: %s.",
+        "UnmeasuredMappingNote": "Voor %d volume(s) is de koppeling niet gemeten.",
+        "PathHostToVolumeTitle": "Pad host naar volume",
+        "KnownOnBothArrays": "bekend op beide arrays",
+        "KnownOnNArrays": "bekend op %d arrays",
+        "SiteLine": "site: %s",
+        "ArrayFallbackLabel": "array %d",
+        "OnArrayNamedLine": "op %s: %s",
+        "StretchedBothArrays": "gestrekt: beide arrays",
+        "UnregisteredNodesMultiNote": "%d van de %d nodes zijn niet aan een host van een array te koppelen: %s.",
+        "UnmappedVolumesPerArrayNote": "%s: %d volume(s) zijn gemeten en aan niets gekoppeld: %s.",
+        "UnmeasuredMappingPerArrayNote": "%s: voor %d volume(s) is de koppeling niet gemeten.",
+        "SharedVolumesNote": "%d volume(s) zijn op meer dan een array gemeten onder dezelfde naam (gestrekte pod) en staan hier eenmaal.",
+        "StrippedPodNote": "%d volume(s) tonen alleen hun eigen naam; het pod-voorvoegsel is voor elk volume in dezelfde pod gelijk en staat hier eenmaal per pod: %s.",
+        "FoldedHostgroupNote": "%d hostgroep(en) zijn op meer dan een array gemeten onder dezelfde identiteit (bevestigd op de initiatorverzameling) en staan hier eenmaal: %s.",
+        "LldpNeighborsLabel": "LLDP-buren",
+        "UnmeasuredLegend": "gestippeld = niet gemeten (%d)"
+      },
+      "DocKindRca": "Root-cause analyse"
+    },
+    "English": {
+      "Trend": {
+        "Total": "total",
+        "CountAxis": "Number of findings",
+        "Distribution": "Distribution per version",
+        "PerLevel": "Trend per level",
+        "ExcludedMigrated": "{n} finding(s) are left out of this chart: their original level could not be derived from history at migration, so there is no band to count them in.",
+        "ExcludedOutOfScope": "{n} finding(s) are left out of this chart: out of scope for this delivery. See the scope limitations.",
+        "MeasuredAtRun": "Below each date: the number of findings measured on that date, out of the number the history held at that point.",
+        "BarsOnly": "{label} (bars only)"
+      },
+      "DeltaTitle": "Health Check {cluster}, delta section measurement {date}",
+      "OverviewHeading": "Overview of changes",
+      "Overview": [
+        "Finding",
+        "Subject",
+        "Previous measurement",
+        "Now",
+        "Change"
+      ],
+      "DeltaGroups": {
+        "OPEN": "Open",
+        "OPGELOST": "Resolved",
+        "ACCEPTED": "Accepted",
+        "GEEN": "No deviation"
+      },
+      "NewHeading": "Candidate findings",
+      "FindingsHeading": "Findings in detail",
+      "Status": "Status:",
+      "CurrentSituation": "Current situation:",
+      "BestPractice": "Best practice:",
+      "Deviation": "Deviation:",
+      "Recommendation": "Recommendation:",
+      "ActionItem": "Action item:",
+      "Goal": "Goal:",
+      "Reference": "Reference:",
+      "MeasuredIntro": "Measurement {current}: {currentResult}. Baseline {baseline}: {baselineResult}.",
+      "IntroSummary": "This delta section compares the measurement of {current} with the previous measurement of {baseline}. The verdicts below break down as follows: {counts}.",
+      "RemainingTitle": "Health Check {cluster}, remaining risks as of {date}",
+      "BaselineTitle": "Health Check {cluster}, findings report as of {date}",
+      "RiskDevelopmentHeading": "RISK status development",
+      "HistoryReach": "This history reaches back to {first}. Anything before that is not in this register.",
+      "OutOfScopeNotice": "{count} finding(s) not in this document: out of scope for this delivery. See the scope limitations above.",
+      "SummaryHeading": "Summary",
+      "SummaryCols": [
+        "Finding",
+        "Subject",
+        "Risk"
+      ],
+      "FrontKlant": "Customer:",
+      "FrontAuteur": "Author:",
+      "FrontVersie": "Version:",
+      "FrontDatum": "Date:",
+      "FrontDocScope": "Document scope",
+      "FrontEnvClass": "Environment classification",
+      "FrontScopeLimits": "Scope limitations",
+      "FrontMethodology": "Methodology and taxonomy",
+      "MethodologyDefault": [
+        "Each finding follows a fixed structure: Current situation, Best practice, Deviation, Recommendation, Action item and Reference. Depth scales with risk: high and medium carry every part including a concrete action item, low the core (situation, best practice, deviation, recommendation), no risk confirms what was measured.",
+        "Critical: availability or data protection is compromised now, or failure is certain under normal operation. Tiebreaker against high: does this break failover today? If yes, critical. If only under a specific trigger, high.",
+        "High: data loss, unplanned downtime, cluster instability, unsupported configuration or easily exploitable security exposure.",
+        "Medium: supportability impact (Microsoft can refuse support), measurable performance degradation, single points of failure that do not directly threaten uptime, deviation from vendor compatibility matrices.",
+        "Low: hygiene, documentation gaps, naming and tagging inconsistencies, minor inefficiencies, cosmetic deviations.",
+        "No risk / no deviation: conforms to best practice and was never a finding, or inventory gaps that fall outside the current scope.",
+        "Resolved: a previously established finding whose repair was measured in this run; the history (when open, at what level) stays in the register so progress is measurable."
+      ],
+      "MethodologyLabels": [
+        "Critical",
+        "High",
+        "Medium",
+        "Low",
+        "No risk / no deviation",
+        "Resolved"
+      ],
+      "GroupHeadings": {
+        "KRITIEK": "Critical risk",
+        "HOOG": "High risk",
+        "MIDDEL": "Medium risk",
+        "LAAG": "Low risk",
+        "GEEN": "No risk",
+        "OPGELOST": "Resolved",
+        "ACCEPTED": "Accepted risk"
+      },
+      "ChangeResolved": "Resolved",
+      "ChangeAccepted": "Formally accepted at this round",
+      "ChangeLowered": "Lowered to {to}",
+      "ChangeRaised": "Raised to {to}",
+      "ChangeUnchanged": "Unchanged",
+      "ChangeReopened": "Reopened",
+      "ChangeNoDeviation": "No deviation",
+      "ChangeReopenedAt": "Reopened at {to}",
+      "AsBuilt": {
+        "Title": "System documentation {cluster}",
+        "Freshness": "As built, as measured on {date}",
+        "FooterTag": "As-built documentation",
+        "MeasuredOn": "Measured on:",
+        "Cluster": "Cluster:",
+        "ProfileHash": "Profile hash:",
+        "Tool": "Measurement tool:",
+        "Unknown": "(unknown)",
+        "NietGemeten": "not measured",
+        "NietInDezeMeting": "not in this measurement",
+        "MeasuredNone": "measured, none present",
+        "NoEvidence": "No configuration was recorded for this chapter in this measurement.",
+        "VmSummary": "The environment holds {vms} virtual machines across {nodes} nodes, {running} of them running.",
+        "IscsiSummary": "{sessions} iSCSI sessions were measured across {nodes} nodes, {persistent} of them persistent.",
+        "IscsiPersistenceSummary": "{sessions} iSCSI sessions were measured across {nodes} nodes; target registration is persistent on {ok} of {tnodes} nodes.",
+        "Gemeten": "measured",
+        "ArraySub": "Array (plane C)",
+        "FabricSub": "Fabric (plane F)",
+        "FabricLifecycle": "Lifecycle",
+        "S2dSub": "Storage Spaces Direct",
+        "PhysicalChassisSub": "Chassis and serials (measured)",
+        "PhysicalIntakeSub": "Rack, power and cabling (intake form)",
+        "ArrayProtectionSummary": "{policies} protection policies and {rules} snapshot rules were recorded.",
+        "PhysicalSiteLabel": "Site:",
+        "PhysicalPlaceholder": "No completed intake form was supplied for rack layout, power feeds, cabling and out-of-band addressing. These cannot be measured from the cluster; the measured chassis data is shown above.",
+        "PlaneArray": "Array (plane C)",
+        "PlaneFabric": "Fabric (plane F)",
+        "PlanePhysical": "Physical layer (intake)",
+        "ScopeNotApplicable": "not applicable",
+        "ScopeRequested": "requested, not received",
+        "ScopeDeclined": "declined by customer, recorded as a limitation",
+        "AzlStampSub": "Stamp and registration",
+        "AzlAtcSub": "Network ATC intents",
+        "AzlDeploymentSub": "Deployment",
+        "AzlTargetSub": "Target platform (plane E)",
+        "AzlSupportWindow": "Support follows the Azure Local solution-train window; see the lifecycle pack for the current train and window.",
+        "AzlSbeLabel": "SBE version:",
+        "AzlRemoteSupportLabel": "Remote support:",
+        "AzlDeploymentDate": "Deployment date:",
+        "AzlEndState": "End state:",
+        "AzlCustomLocation": "Custom location:",
+        "AzlMigrateSub": "Migration",
+        "MigProjectLabel": "Migration project:",
+        "MigCountsLabel": "Discovered / assessed / replicating / migrated:",
+        "MigTargetJoin": "Target-side join with the plane-E ARM node: resource bridge {bridge}, logical networks {ln}, storage paths {sp}.",
+        "MigTargetJoinReady": "Target-side join with the plane-E ARM node: resource bridge {bridge}, logical networks provisioned {ln}, storage paths provisioned {sp}.",
+        "Chapters": {
+          "1": "1. Environment and scope",
+          "2": "2. Cluster and quorum",
+          "3": "3. Hosts and hardware",
+          "4": "4. Storage",
+          "5": "5. Network",
+          "6": "6. Virtual machines",
+          "7": "7. Management and updates",
+          "8": "8. Security configuration",
+          "9": "9. DR and replication",
+          "10": "10. Physical layer",
+          "AzL": "Azure Local platform",
+          "A": "Appendix A. Full tables",
+          "B": "Appendix B. Measurement provenance"
+        },
+        "SectionNames": {
+          "0": "Reachability",
+          "1": "Cluster and quorum",
+          "2": "Storage",
+          "3": "Network",
+          "4": "Validation reports",
+          "5": "Host hardware",
+          "6": "Operating system",
+          "7": "Time synchronisation",
+          "8": "VM host settings",
+          "9": "Virtual machines",
+          "10": "Security",
+          "11": "Cluster updates (CAU)",
+          "12": "VMM"
+        },
+        "ProvCols": [
+          "Section",
+          "Status",
+          "Source",
+          "Unreachable nodes"
+        ],
+        "Cap": {
+          "Nodes": "Cluster nodes ({n})",
+          "Quorum": "Quorum configuration",
+          "VmmCluster": "Cluster functional level",
+          "Hardware": "Host hardware ({n})",
+          "Cpu": "Processors per node ({n})",
+          "Dimm": "Memory population per node ({n})",
+          "FcHbas": "Fibre Channel HBAs ({n})",
+          "Nics": "Network adapters ({n})",
+          "S2dPool": "Storage pool ({n})",
+          "S2dVirtualDisks": "Virtual disks ({n})",
+          "S2dCsvFs": "Cluster volumes ({n})",
+          "S2dCache": "Cache configuration ({n})",
+          "DiskModels": "Physical disks by model ({n})",
+          "PhysicalDisks": "Physical disks per node ({n})",
+          "PhysicalChassis": "Chassis and serials ({n})",
+          "Os": "Operating system per node ({n})",
+          "Csv": "Cluster Shared Volumes ({n})",
+          "Mpio": "MPIO settings ({n})",
+          "VmSwitches": "Virtual switches ({n})",
+          "VmPerNode": "Virtual machines per node ({n})",
+          "Generation": "VM generations ({n})",
+          "ConfigVersion": "VM configuration versions ({n})",
+          "VmmServer": "VMM management server",
+          "Wac": "Windows Admin Center gateways ({n})",
+          "SecureBoot": "Secure Boot and TPM ({n})",
+          "DeviceGuard": "Device Guard / VBS ({n})",
+          "SmbSecurity": "SMB configuration ({n})",
+          "VmInventory": "Full VM inventory ({n})",
+          "ArrayIdentity": "Array identity",
+          "ArraySoftware": "Array software",
+          "ArrayAppliances": "Appliances ({n})",
+          "ArrayHosts": "Registered hosts ({n})",
+          "ArrayVolumes": "Volumes ({n})",
+          "ArrayCapacity": "Array capacity",
+          "ArraySupport": "Support Connectivity",
+          "ArrayReplication": "Array replication sessions ({n})",
+          "FabricSwitches": "Switches ({n})",
+          "FabricVlans": "VLANs ({n})",
+          "FabricLags": "Link aggregations ({n})",
+          "FabricStp": "Spanning tree ({n})",
+          "FabricZoning": "FC zoning ({n})",
+          "PhysicalRacks": "Racks ({n})",
+          "PhysicalPower": "Power feeds ({n})",
+          "PhysicalCabling": "Cabling ({n})",
+          "PhysicalOob": "OOB addresses ({n})",
+          "AzlStamp": "Azure Local stamp per node ({n})",
+          "AzlRegistration": "Registration per node ({n})",
+          "AzlArc": "Arc agent per node ({n})",
+          "AtcIntents": "Network ATC intents ({n})",
+          "AtcStatus": "ATC intent status per host ({n})",
+          "DepPhases": "Deployment phases and duration ({n})",
+          "ArmBridge": "Resource bridge ({n})",
+          "ArmLogical": "Logical networks ({n})",
+          "ArmStorage": "Storage paths ({n})",
+          "MigAppliances": "Migration appliances ({n})",
+          "MigProviders": "Replication providers ({n})",
+          "SetTeam": "SET teams ({n})",
+          "ManagementVnics": "Host vNICs and VLAN ({n})",
+          "ClusterNetworks": "Cluster networks ({n})",
+          "ClusterNetworkIfaces": "IP addresses per node ({n})",
+          "Jumbo": "Jumbo frames per adapter ({n})",
+          "Rdma": "RDMA per adapter ({n})",
+          "FabricPorts": "Switch ports ({n})",
+          "WindowsUpdatePolicy": "Windows Update policy per node ({n})",
+          "CauRole": "Cluster-Aware Updating ({n})",
+          "Hotfixes": "Installed updates ({n})",
+          "AdTierNodes": "Cluster nodes in Active Directory ({n})",
+          "AdTierAdminGroups": "Administrative groups and members ({n})",
+          "LocalAdmins": "Local administrators per node ({n})",
+          "VmReplication": "VM replication ({n})",
+          "S2dStorageTiers": "Storage tiers ({n})",
+          "Witness": "Witness ({n})"
+        },
+        "Cols": {
+          "Nodes": [
+            "Node",
+            "State",
+            "Vote",
+            "Fault domain"
+          ],
+          "ArrayIdentity": [
+            "Property",
+            "Value"
+          ],
+          "ArraySoftware": [
+            "Property",
+            "Value"
+          ],
+          "ArrayAppliances": [
+            "Id",
+            "Model",
+            "Mode",
+            "Health"
+          ],
+          "ArrayHosts": [
+            "Host",
+            "OS type",
+            "Host group",
+            "Connectivity"
+          ],
+          "ArrayVolumes": [
+            "Volume",
+            "Size (GB)",
+            "State",
+            "Replication target"
+          ],
+          "ArrayCapacity": [
+            "Property",
+            "Value"
+          ],
+          "ArraySupport": [
+            "Property",
+            "Value"
+          ],
+          "ArrayReplication": [
+            "Resource",
+            "State",
+            "RPO",
+            "Role"
+          ],
+          "FabricSwitches": [
+            "Switch",
+            "Vendor",
+            "Model",
+            "NOS",
+            "Version",
+            "Role",
+            "Management IP",
+            "Serial"
+          ],
+          "FabricVlans": [
+            "VLAN",
+            "Name",
+            "Switches"
+          ],
+          "FabricLags": [
+            "Switch",
+            "Id",
+            "Kind",
+            "Peers"
+          ],
+          "FabricStp": [
+            "Switch",
+            "STP mode",
+            "Edge ports",
+            "BPDU guard"
+          ],
+          "FabricZoning": [
+            "Fabric",
+            "Zone",
+            "Members",
+            "Single initiator"
+          ],
+          "PhysicalRacks": [
+            "Rack",
+            "Location",
+            "Units",
+            "Notes"
+          ],
+          "PhysicalPower": [
+            "Rack",
+            "Feed A",
+            "Feed B",
+            "PDU",
+            "Notes"
+          ],
+          "PhysicalCabling": [
+            "Path",
+            "Description",
+            "Medium"
+          ],
+          "PhysicalOob": [
+            "Node",
+            "Type",
+            "Address",
+            "VLAN"
+          ],
+          "Quorum": [
+            "Property",
+            "Value"
+          ],
+          "VmmCluster": [
+            "Property",
+            "Value"
+          ],
+          "Hardware": [
+            "Node",
+            "Manufacturer",
+            "Family",
+            "Model",
+            "Serial",
+            "BIOS",
+            "BIOS date"
+          ],
+          "Cpu": [
+            "Node",
+            "Processor",
+            "Sockets",
+            "Cores per socket",
+            "Logical processors"
+          ],
+          "Dimm": [
+            "Node",
+            "DIMM count",
+            "Capacity (GB)",
+            "Speed (MT/s)",
+            "Uniform"
+          ],
+          "FcHbas": [
+            "Node",
+            "Manufacturer",
+            "Model",
+            "Driver version",
+            "Firmware"
+          ],
+          "Nics": [
+            "Node",
+            "Adapter",
+            "Description",
+            "Provider",
+            "Driver version",
+            "Speed"
+          ],
+          "S2dPool": [
+            "Pool",
+            "Health",
+            "Status",
+            "Version",
+            "Size (GB)",
+            "Allocated (GB)"
+          ],
+          "S2dVirtualDisks": [
+            "Virtual disk",
+            "Resiliency",
+            "Data copies",
+            "Fault domain",
+            "Size (GB)",
+            "Pool footprint (GB)",
+            "Health"
+          ],
+          "S2dCsvFs": [
+            "Volume",
+            "File system",
+            "Underlying FS",
+            "Size (GB)",
+            "Free (GB)",
+            "State"
+          ],
+          "S2dCache": [
+            "Deployment class",
+            "Cache state",
+            "SSD mode",
+            "HDD mode",
+            "Page size (KB)"
+          ],
+          "DiskModels": [
+            "Model",
+            "Media type",
+            "Bus",
+            "Size (GB)",
+            "Firmware",
+            "Count"
+          ],
+          "PhysicalDisks": [
+            "Node",
+            "Model",
+            "Media type",
+            "Bus",
+            "Size (GB)",
+            "Firmware",
+            "Health"
+          ],
+          "PhysicalChassis": [
+            "Node",
+            "Manufacturer",
+            "Family",
+            "Model",
+            "Serial"
+          ],
+          "Os": [
+            "Node",
+            "Edition",
+            "Version",
+            "Build",
+            "UBR"
+          ],
+          "Csv": [
+            "Volume",
+            "State",
+            "Owner",
+            "Size (GB)",
+            "Free (GB)"
+          ],
+          "Mpio": [
+            "Node",
+            "Path verification",
+            "PDO period",
+            "Disk timeout"
+          ],
+          "VmSwitches": [
+            "Node",
+            "Switch",
+            "Type",
+            "SET",
+            "Management OS"
+          ],
+          "VmPerNode": [
+            "Node",
+            "VMs",
+            "Running"
+          ],
+          "Generation": [
+            "Generation",
+            "Count"
+          ],
+          "ConfigVersion": [
+            "Configuration version",
+            "Count"
+          ],
+          "VmmServer": [
+            "Property",
+            "Value"
+          ],
+          "Wac": [
+            "Machine",
+            "Generation",
+            "Version",
+            "Service",
+            "Port"
+          ],
+          "SecureBoot": [
+            "Node",
+            "Secure Boot",
+            "TPM ready"
+          ],
+          "DeviceGuard": [
+            "Node",
+            "VBS status",
+            "Services running"
+          ],
+          "SmbSecurity": [
+            "Node",
+            "Signing required",
+            "Encryption"
+          ],
+          "VmInventory": [
+            "VM",
+            "Owner",
+            "Generation",
+            "Config",
+            "State",
+            "Memory (GB)"
+          ],
+          "AzlStamp": [
+            "Node",
+            "Stamp version",
+            "OEM version",
+            "Deployment id"
+          ],
+          "AzlRegistration": [
+            "Node",
+            "Registration",
+            "Connection",
+            "Azure resource"
+          ],
+          "AzlArc": [
+            "Node",
+            "himds",
+            "Agent status",
+            "Agent version"
+          ],
+          "AtcIntents": [
+            "Intent",
+            "Type",
+            "Storage",
+            "Management"
+          ],
+          "AtcStatus": [
+            "Host",
+            "Intent",
+            "Configuration",
+            "Provisioning"
+          ],
+          "DepPhases": [
+            "Step",
+            "Interface",
+            "Duration (s)",
+            "Status"
+          ],
+          "ArmBridge": [
+            "Name",
+            "Status"
+          ],
+          "ArmLogical": [
+            "Name",
+            "VLAN",
+            "Address space"
+          ],
+          "ArmStorage": [
+            "Name",
+            "Path"
+          ],
+          "MigAppliances": [
+            "Appliance",
+            "Site",
+            "Agent version",
+            "Last heartbeat"
+          ],
+          "MigProviders": [
+            "Provider",
+            "Version",
+            "Version state",
+            "Connection"
+          ],
+          "SetTeam": [
+            "Node",
+            "Team",
+            "Teaming mode",
+            "Load balancing"
+          ],
+          "ManagementVnics": [
+            "Node",
+            "vNIC",
+            "vSwitch",
+            "VLAN mode",
+            "VLAN",
+            "Status"
+          ],
+          "ClusterNetworks": [
+            "Network",
+            "Role",
+            "Address",
+            "State",
+            "Metric"
+          ],
+          "ClusterNetworkIfaces": [
+            "Node",
+            "Network",
+            "Interface",
+            "IPv4 address",
+            "State"
+          ],
+          "Jumbo": [
+            "Node",
+            "Adapter",
+            "Value"
+          ],
+          "Rdma": [
+            "Node",
+            "Adapter",
+            "Description",
+            "Enabled"
+          ],
+          "FabricPorts": [
+            "Switch",
+            "Port",
+            "Role",
+            "Mode",
+            "Native VLAN",
+            "MTU",
+            "LAG"
+          ],
+          "WindowsUpdatePolicy": [
+            "Node",
+            "WSUS server",
+            "WSUS in use",
+            "Auto update off",
+            "AU option"
+          ],
+          "CauRole": [
+            "Run mode",
+            "Enabled",
+            "Days",
+            "Start date"
+          ],
+          "Hotfixes": [
+            "Node",
+            "Update",
+            "Description",
+            "Installed on"
+          ],
+          "AdTierNodes": [
+            "Name",
+            "Role",
+            "Parent OU",
+            "Enabled",
+            "Operating system",
+            "LAPS"
+          ],
+          "AdTierAdminGroups": [
+            "Group",
+            "Member",
+            "Class",
+            "Nested",
+            "Tier 0"
+          ],
+          "LocalAdmins": [
+            "Node",
+            "Group",
+            "Member",
+            "Class",
+            "Source"
+          ],
+          "VmReplication": [
+            "Node",
+            "VM",
+            "State",
+            "Health",
+            "Mode",
+            "Last replication"
+          ],
+          "S2dStorageTiers": [
+            "Tier",
+            "Virtual disk",
+            "Media type",
+            "Resiliency",
+            "Copies",
+            "GB"
+          ],
+          "Witness": [
+            "Type",
+            "Path",
+            "Nodes",
+            "Configured",
+            "Fit"
+          ]
+        },
+        "DiagCluster": "Figure: cluster overview",
+        "DiagNodeNetwork": "Figure: network per node",
+        "DiagFabric": "Figure: fabric",
+        "DiagStorage": "Figure: storage stack",
+        "DiagArray": "Figure: path from host to volume",
+        "DiagUnmeasured": "{n} element(s) dashed, because not measured",
+        "EnvNodes": "The cluster has {n} nodes.",
+        "EnvSites": "They sit at {n} sites: {sites}.",
+        "EnvHardware": "The hardware is {make} {model}.",
+        "EnvStorageS2d": "Storage is Storage Spaces Direct with pool {pool} and {n} cluster volumes.",
+        "EnvStorageSan": "Storage comes from an external array, with {n} cluster volumes.",
+        "EnvStorageSanVendor": "Storage comes from an external {vendor} array, with {n} cluster volumes.",
+        "EnvVms": "There are {n} virtual machines, {running} of them running at the time of measurement.",
+        "EnvPlanes": "Beyond the cluster nodes, these were measured as well: {planes}.",
+        "EnvPlanesNone": "Nothing beyond the cluster nodes was measured.",
+        "EnvPlaneFabric": "the Ethernet fabric",
+        "EnvPlaneArray": "the storage array",
+        "EnvPlaneBmc": "the out-of-band hardware layer",
+        "EnvPlaneArm": "the Azure control plane",
+        "EnvSite": "They sit at site {sites}.",
+        "EnvNode": "The cluster has 1 node.",
+        "EnvVm": "There is 1 virtual machine, {running} running at the time of measurement.",
+        "Modules": "Modules:",
+        "FreshnessUnknown": "As built; the evidence does not say when it was measured"
+      },
+      "Rca": {
+        "Title": "Root-cause analysis {cluster}",
+        "Freshness": "Compiled on {date}",
+        "WindowLabel": "Incident window:",
+        "WindowNotSupplied": "not supplied (record the incident window at intake)",
+        "OverflowNoteCondensed": "The table shows the first {shown} of {total} decisive rows; the remaining {dropped} are in the appendix.",
+        "OverflowNoteFull": "The table shows the first {shown} of {total} rows; the remaining {dropped} are not in this document but are complete in {csv} beside this file.",
+        "CsvBesideThisFile": "the CSV beside it",
+        "FooterTag": "Root-cause analysis",
+        "MeasuredOn": "Measurement date:",
+        "Cluster": "Cluster:",
+        "Tool": "Posture instrument:",
+        "Summary": "Analysis summary:",
+        "GeenBewijs": "NO EVIDENCE: incident evidence absent; the analysis was not performed. Run Get-IncidentEvidence.ps1 for an IncidentForensics engagement.",
+        "NoEvidence": "Nothing was recorded for this part in this analysis.",
+        "MeasuredNone": "measured, none present",
+        "ScopePlaceholder": "Incident summary (to be authored)",
+        "ScopePlaceholderNote": "The authored incident summary has not been supplied yet. This document shows the machine-assembled timeline, sequence and evidence; the assessor adds the summary and the causal reasoning.",
+        "TimelineCondensedCap": "Decisive events in corrected order ({n})",
+        "TimelineFullCap": "Full timeline after storm dedup ({n})",
+        "TimelineCols": [
+          "Evid.",
+          "Time (UTC)",
+          "Node",
+          "Channel",
+          "Event",
+          "Sig.",
+          "Meaning"
+        ],
+        "FirstNodeOutHead": "First node out",
+        "FirstNodeOutCols": [
+          "Finding",
+          "Evidence"
+        ],
+        "FirstNodeOutUndetermined": "First node out: not uniquely determined from the event logs.",
+        "ArbitrationLabel": "Arbitration:",
+        "MembershipFlapsCap": "Membership flaps per node ({n})",
+        "FlapsCols": [
+          "Node",
+          "Count",
+          "Evidence"
+        ],
+        "CsvChainCap": "CSV pause chain and corruption tail in corrected order ({n})",
+        "CsvCols": [
+          "Evid.",
+          "Time (UTC)",
+          "Event",
+          "Meaning"
+        ],
+        "PauseStormLabel": "Pause-frame overlay:",
+        "BackupLabel": "Backup overlay:",
+        "RecurrenceWideningLabel": "Recurrence widening:",
+        "ChainHead": "Cause-effect chain",
+        "ChainCols": [
+          "Step",
+          "When",
+          "Cause and effect",
+          "Evidence"
+        ],
+        "ChainPlaceholder": "The causal chain has not been authored yet. The assessor adds the cause-effect chain, each link referencing timeline evidence.",
+        "RootCauseLabel": "Root cause:",
+        "ConfidenceLabel": "Confidence:",
+        "AlternativesHeading": "Weighed alternatives",
+        "AltRejected": "rejected on the grounds of:",
+        "NotFiredLabel": "Detectors that did not fire (weighed, no supporting evidence in the window):",
+        "CannotConcludeLabel": "No conclusive root cause",
+        "WouldDecideLabel": "Deciding evidence:",
+        "RootCausePlaceholder": "The root cause has not been authored yet. The assessor names the root cause with a confidence level and weighs the alternatives.",
+        "PostureIntro": "Posture factors from the layer-1 measurement that amplified the incident:",
+        "PostureCols": [
+          "Finding",
+          "Title",
+          "Catalogue",
+          "Risk",
+          "Hypothesis",
+          "Note"
+        ],
+        "PostureNone": "No register supplied to the analysis; the entries below are candidate cross-references (no evidence) to check against the register.",
+        "PostureEmpty": "No posture factors linked to the ranked hypotheses.",
+        "PostureMeasuredLabel": "Posture register measured on {registerUtc}; incident window {window}.",
+        "PostureMeasuredAbsent": "No measurement date available for the posture register (no evidence: register not supplied to the analysis).",
+        "GapsHeading": "Evidence gaps",
+        "GapsCols": [
+          "Source",
+          "Node",
+          "Channel",
+          "Note"
+        ],
+        "GapsNone": "No evidence gaps were recorded in this analysis.",
+        "EvidenceScopeHeading": "Evidence coverage",
+        "EvidenceScopeCols": [
+          "Evidence line",
+          "Class",
+          "Note"
+        ],
+        "EvidenceScopeNone": "No evidence lines were recorded for this analysis.",
+        "EvidenceScopeOverrideNote": "Accepted gap(s): {reason} (by {by}, {when}).",
+        "DumpJoinsHeading": "Dumps matched to the cluster log",
+        "DumpJoinsCols": [
+          "Source",
+          "Node",
+          "Path",
+          "Timestamp (UTC)",
+          "Cluster-log match"
+        ],
+        "DumpJoinsNone": "No dumps or crash reports were found to match against the cluster log.",
+        "DumpJoinsMatchedNote": "Matched, {delta}s from the pattern hit.",
+        "CoverageHeading": "Log-coverage map",
+        "CoverageChannelsCols": [
+          "Channel",
+          "Status"
+        ],
+        "CoverageNodesCols": [
+          "Node",
+          "Status"
+        ],
+        "CoverageNotSupplied": "The log-coverage map was not supplied (analysis-only render); see the evidence gaps below.",
+        "FullTimelineHeading": "Decisive timeline, complete",
+        "DeploymentHeading": "Deployment timeline (deployment forensics)",
+        "DeploymentIntro": "This measurement carries a Deployment node; the timeline and evidence below are machine-assembled by Get-HcDeploymentAnalysis. Detectors rank and do not conclude; the assessor names the root cause.",
+        "DeploymentOnlyNote": "This is a deployment-forensics analysis without runtime incident evidence; the incident chapters do not apply and the root cause is named by the assessor against the timeline below.",
+        "DepPhaseLabel": "Derived phase:",
+        "DepStepCols": [
+          "Evidence id",
+          "Step",
+          "Interface",
+          "Duration (s)",
+          "Status"
+        ],
+        "DepStepCap": "Deployment step tree in emission order ({n})",
+        "DepStepNone": "No deployment steps recorded in this analysis.",
+        "DepStallLabel": "Stall point:",
+        "DepStallNone": "No stall signature recorded in this analysis.",
+        "DepWatchdogLabel": "Watchdog verdict:",
+        "DepWatchdogNone": "No watchdog verdict available (plane E not collected; see the evidence gaps).",
+        "DepToleratedCols": [
+          "Evidence id",
+          "Class",
+          "Count",
+          "First (UTC)",
+          "Last (UTC)"
+        ],
+        "DepToleratedCap": "Tolerated-error inventory as context ({n})",
+        "DepToleratedNone": "No tolerated-error classes recorded.",
+        "DepGapsHeading": "Deployment evidence gaps",
+        "DepGapsCols": [
+          "Source",
+          "Area",
+          "Item",
+          "Note"
+        ],
+        "Chapters": {
+          "1": "1. Incident summary",
+          "2": "2. Timeline",
+          "3": "3. First node out and sequence",
+          "4": "4. Cause-effect chain",
+          "5": "5. Root cause",
+          "6": "6. Contributing posture factors",
+          "7": "7. Corrective actions",
+          "8": "8. Appendices"
+        },
+        "EnglishNote": "The lines below quote the messages as Windows writes them. They are not translated, so that they can still be searched for in the logs.",
+        "ClusterLogCols": [
+          "Node",
+          "Log begins (UTC)",
+          "Covers the window",
+          "Held",
+          "Provenance"
+        ],
+        "ClusterLogProvenanceCollected": "measured",
+        "ClusterLogProvenanceSupplied": "supplied",
+        "ClusterLogSuppliedAll": "All {0} cluster log(s) above were supplied after the measurement; this run collected none of them itself.",
+        "ClusterLogSuppliedPartial": "{0} of {1} cluster log(s) above were supplied after the measurement and not measured by this run itself.",
+        "ClusterLogCoversYes": "yes",
+        "ClusterLogCoversNo": "does not cover the window",
+        "ClusterLogCoversUnknown": "unknown (no readable timestamp)",
+        "ClusterLogMinutes": "{0} min",
+        "ClusterLogSettings": "Cluster log settings: {0}. These decide how far the log reaches back; a higher level makes the service write faster and shortens the coverage.",
+        "ClusterLogSettingsUnknown": "The cluster log settings were not measured, so the coverage below stands without the cause beside it.",
+        "ClusterLogNotCollected": "The cluster log was not collected, so nothing can be said about its coverage.",
+        "ClusterLogSizeOne": "ClusterLogSize {0} MB",
+        "ClusterLogSizeRange": "ClusterLogSize {0} to {1} MB across {2} of {3} nodes",
+        "ClusterLogLevelOne": "ClusterLogLevel {0}",
+        "ClusterLogLevelRange": "ClusterLogLevel {0} to {1} across {2} of {3} nodes",
+        "ClusterLogSettingsMissing": "{0} node(s) did not report their cluster log settings, and inherit no value from a neighbour here.",
+        "ClusterLogSizeOnePartial": "ClusterLogSize {0} MB, reported by {1} of {2} nodes",
+        "ClusterLogLevelOnePartial": "ClusterLogLevel {0}, reported by {1} of {2} nodes",
+        "CrashEvidenceHeading": "Dumps and crash-dump configuration",
+        "DumpsCols": [
+          "Node",
+          "Path",
+          "Size (MB)",
+          "Written (UTC)",
+          "Type",
+          "Route"
+        ],
+        "DumpsNone": "No dump files were found on the measured nodes.",
+        "CrashReportsCols": [
+          "Node",
+          "Module",
+          "Event type",
+          "Ticks",
+          "App version",
+          "Time (UTC)"
+        ],
+        "CrashReportsNone": "No WER crash reports were found on the measured nodes.",
+        "CrashConfigCols": [
+          "Node",
+          "Dump type",
+          "Target volume",
+          "Free (MB)",
+          "Total (MB)",
+          "Files found"
+        ],
+        "CrashConfigNone": "The crash-dump configuration was not measured for any node.",
+        "CrashEvidenceNone": "No dump files, WER crash reports or crash-dump configuration were measured in this analysis.",
+        "NietGemeten": "not measured",
+        "TriggerLabel": "Trigger:",
+        "ImpactLabel": "Impact:",
+        "WhyMonitoringMissedLabel": "Why monitoring missed it:",
+        "CorrectiveActionsPlaceholder": "The corrective actions have not been authored yet. The assessor orders the actions by effect.",
+        "CorrectiveEffectLabel": "Effect:",
+        "CorrectiveWhyLabel": "Why:",
+        "CorrectivePriorityLabel": "Priority:",
+        "CorrectiveVerifyLabel": "Verification:",
+        "RedundancyFindingLabel": "Redundancy finding:",
+        "FollowUpIntro": "Follow-up proposals (a proposal to the assessor, not a started run):",
+        "AppendixLabel": "Appendix {letter}: {titel}",
+        "RootCauseHeading": "Root cause",
+        "ConfidenceHeading": "Confidence",
+        "EvidenceCsvNote": "All {n} evidence rows are in {file}, delivered alongside this report. That export carries thirteen columns; the table below shows six.",
+        "DecisiveFullCap": "All {n} decisive events in corrected order.",
+        "ReportDateLabel": "Report date:",
+        "PostureSourceLabel": "The findings below come from {titel}, version {versie} of {datum}.",
+        "PostureSourcePlain": "The findings below come from this engagement's findings report.",
+        "IncidentToolLabel": "Incident collector:"
+      },
+      "SeverityNotReconstructable": "level not derivable",
+      "ChangeByAssessor": "{change}, assessor judgement {date}",
+      "ChangeJoin": " and ",
+      "MachineProposedReopen": "machine proposed a reopening",
+      "MachineProposedResolve": "machine proposed a resolution",
+      "DeltaCounts": "Of the {total} findings, {unchanged} are unchanged; {measured} moved through measurement, {judged} through an assessor judgement and {derived} moved with neither a measurement entry nor a judgement.",
+      "ChangeJoinLowercases": true,
+      "DocKindFindings": "Findings report",
+      "DocKindDelta": "Delta report",
+      "DocKindRemaining": "Remaining-risk report",
+      "RemainingPartOpen": "Open risks (TO-DO)",
+      "RemainingPartBorne": "Knowingly borne risks",
+      "ChangeRevoked": "Acceptance withdrawn",
+      "ChangeNew": "New in this measurement",
+      "NewIntro": "Deviations that have been established and are not in the register yet. They therefore carry no previous VALUE; what was found at both measurements is stated in the detail per finding.",
+      "NewMarker": "(candidate)",
+      "MeasuredIntroNew": "Measurement {current}: {currentResult}. This finding did not yet exist at the previous measurement.",
+      "ValueDerived": "value derived from an ambiguous history entry",
+      "IntroConfirmed": "The assessor confirms the verdicts of these {findings} findings.",
+      "IntroNotConfirmed": "This round is not the newest in this register, so the authoring contract was not applied to it. The document therefore does not state that the assessor confirms these {findings} verdicts.",
+      "IntroCandidatesUnjudged": "The {candidates} unbound candidates are machine signals that carry no judgement yet.",
+      "DeltaDerivedNote": "On {n} of these {total} findings the value shown rests on a derivation from an ambiguous history entry; the row says so as well.",
+      "Topology": {
+        "ClusterOverviewTitle": "Cluster overview",
+        "VmCountRunning": "%d VM, %d running",
+        "VmCountZero": "0 VM",
+        "VmInventoryNotMeasured": "VM inventory not in this measurement",
+        "VoteWeight": "vote weight %s",
+        "VoteWeightNotMeasured": "vote weight not in this measurement",
+        "PathLine": "path: %s",
+        "PathNotMeasured": "path not in this measurement",
+        "VmOwnerOrphanNote": "%d of the %d VMs sit on a node in this cluster; %d have an owner that is not a cluster node.",
+        "NoFaultDomainLabel": "no fault domain recorded",
+        "PrivateSwitchNote": "vSwitch %s is private and is not drawn as a box here (no physical uplink, no production network).",
+        "FabricMeasuredSub": "measured - see the fabric figure",
+        "NotMeasured": "not in this measurement",
+        "VswitchNotMeasured": "the vSwitch of this vNIC was not measured",
+        "SwitchportNotMeasured": "which NIC lands on which switch port was not measured here",
+        "NodePortNotMeasured": "which node lands on which port was not measured",
+        "NoInitiatorIdentity": "no initiator identity (WWPN/IQN) was measured for this node",
+        "ControllerPortNotRecorded": "which controller port a session lands on was not recorded in this measurement",
+        "VolumeNotMapped": "no mapping was measured for this volume",
+        "MappingUnknownHost": "the mapping names %s, which is not in this arrays host table",
+        "MappingUnknownHostAt": "the mapping at %s names %s, which is not in this arrays host table",
+        "SwitchTypePrivate": "private",
+        "SwitchTypeInternal": "internal",
+        "NoPhysicalUplink": "%s - no physical uplink",
+        "NodeNetworkTitle": "Network per node: %s",
+        "LldpPeerLabel": "LLDP peer",
+        "HostPortCount": "%d port(s)",
+        "NativeVlanLine": "native VLAN %s",
+        "HostPortsLabel": "host ports %s",
+        "ClusterNodesLabel": "cluster nodes",
+        "NoLldpFromNodes": "nodes do not advertise LLDP",
+        "NoLldpSectionSeen": "no LLDP from the nodes",
+        "NoSiteRecorded": "no site recorded",
+        "FabricTitle": "Fabric",
+        "Unknown": "unknown",
+        "DiskCount": "%d disks",
+        "PerDiskSize": "%s GB per disk",
+        "VirtualDiskCount": "%d virtual disks",
+        "CopiesCount": "%s copies",
+        "NoTiersMeasured": "no tiers measured",
+        "TierSilentToo": "the tier is silent too",
+        "VolumeCount": "%d volumes",
+        "MixedFilesystems": "mixed: %s",
+        "FilesystemNotMeasured": "filesystem not in this measurement",
+        "ClusterVolumesLabel": "cluster volumes",
+        "AndMoreCount": "; and %d more",
+        "TiersNotRead": "the storage tiers were not read in this measurement",
+        "TiersSilentOnResiliency": "the measured tiers name no resiliency for these volumes",
+        "WithoutResiliencyNote": "Without resiliency: %s. Reason: %s.",
+        "VirtualDisksNoVolumesNote": "Virtual disks were measured but no cluster volumes.",
+        "StorageStackTitle": "Storage stack",
+        "DisksPathsEach": "%d disks, %d paths each",
+        "DisksPathsRange": "%d disks, %d to %d paths",
+        "DisksCount": "%d disks",
+        "BootLine": "boot: %s",
+        "InitiatorenLabel": "initiators",
+        "InitiatorCount": "%d initiator(s)",
+        "OnArrayLine": "on the array: %s",
+        "HostCount": "%d host(s)",
+        "LosseHost": "standalone host",
+        "ReplicaTarget": "replication target",
+        "KoppelingOnbekend": "mapping unknown",
+        "UnregisteredNodesNote": "%d of the %d nodes cannot be mapped to a host of this array: %s.",
+        "UnmappedVolumesNote": "%d volume(s) were measured and mapped to nothing: %s.",
+        "UnmeasuredMappingNote": "For %d volume(s) the mapping was not measured.",
+        "PathHostToVolumeTitle": "Path from host to volume",
+        "KnownOnBothArrays": "known on both arrays",
+        "KnownOnNArrays": "known on %d arrays",
+        "SiteLine": "site: %s",
+        "ArrayFallbackLabel": "array %d",
+        "OnArrayNamedLine": "on %s: %s",
+        "StretchedBothArrays": "stretched: both arrays",
+        "UnregisteredNodesMultiNote": "%d of the %d nodes cannot be mapped to a host of an array: %s.",
+        "UnmappedVolumesPerArrayNote": "%s: %d volume(s) were measured and mapped to nothing: %s.",
+        "UnmeasuredMappingPerArrayNote": "%s: for %d volume(s) the mapping was not measured.",
+        "SharedVolumesNote": "%d volume(s) were measured on more than one array under the same name (a stretched pod) and are shown here once.",
+        "StrippedPodNote": "%d volume(s) show only their own name; the pod prefix is the same for every volume in the same pod and is shown here once per pod: %s.",
+        "FoldedHostgroupNote": "%d host group(s) were measured on more than one array under the same identity (confirmed on the initiator set) and are shown here once: %s.",
+        "LldpNeighborsLabel": "LLDP neighbours",
+        "UnmeasuredLegend": "dashed = not measured (%d)"
+      },
+      "DocKindRca": "Root-cause analysis"
+    },
+    "German": {
+      "Trend": {
+        "Total": "gesamt",
+        "CountAxis": "Anzahl der Feststellungen",
+        "Distribution": "Verteilung pro Version",
+        "PerLevel": "Trend pro Stufe",
+        "ExcludedMigrated": "{n} Feststellungen fehlen in dieser Grafik: ihre ursprüngliche Stufe ließ sich bei der Migration nicht aus der Historie herleiten, daher gibt es kein Band, in dem sie gezählt werden können.",
+        "ExcludedOutOfScope": "{n} Feststellungen fehlen in dieser Grafik: außerhalb des Umfangs dieser Lieferung. Siehe die Umfangseinschränkungen.",
+        "MeasuredAtRun": "Unter jedem Datum: die Anzahl der an diesem Datum gemessenen Feststellungen, von der Anzahl, die die Historie zu diesem Zeitpunkt enthielt.",
+        "BarsOnly": "{label} (nur in den Balken)"
+      },
+      "DeltaTitle": "Health Check {cluster}, Delta-Abschnitt Messung {date}",
+      "OverviewHeading": "Übersicht der Änderungen",
+      "Overview": [
+        "Feststellung",
+        "Gegenstand",
+        "Vorherige Messung",
+        "Jetzt",
+        "Änderung"
+      ],
+      "DeltaGroups": {
+        "OPEN": "Offen",
+        "OPGELOST": "Behoben",
+        "ACCEPTED": "Akzeptiert",
+        "GEEN": "Keine Abweichung"
+      },
+      "NewHeading": "Kandidaten-Feststellungen",
+      "FindingsHeading": "Feststellungen im Detail",
+      "Status": "Status:",
+      "CurrentSituation": "Aktuelle Situation:",
+      "BestPractice": "Best Practice:",
+      "Deviation": "Abweichung:",
+      "Recommendation": "Empfehlung:",
+      "ActionItem": "Maßnahme:",
+      "Goal": "Ziel:",
+      "Reference": "Referenz:",
+      "MeasuredIntro": "Messung {current}: {currentResult}. Basismessung {baseline}: {baselineResult}.",
+      "IntroSummary": "Dieser Delta-Abschnitt vergleicht die Messung vom {current} mit der vorherigen Messung vom {baseline}. Die Beurteilungen unten verteilen sich wie folgt: {counts}.",
+      "RemainingTitle": "Health Check {cluster}, Restrisiken vom {date}",
+      "BaselineTitle": "Health Check {cluster}, Feststellungsbericht vom {date}",
+      "RiskDevelopmentHeading": "Entwicklung des RISK-Status",
+      "HistoryReach": "Diese Historie reicht bis {first} zurück. Alles davor steht nicht in diesem Register.",
+      "OutOfScopeNotice": "{count} Feststellungen nicht in diesem Bericht: außerhalb des Umfangs dieser Lieferung. Siehe die Umfangseinschränkungen oben.",
+      "SummaryHeading": "Zusammenfassung",
+      "SummaryCols": [
+        "Feststellung",
+        "Gegenstand",
+        "Risiko"
+      ],
+      "FrontKlant": "Kunde:",
+      "FrontAuteur": "Autor:",
+      "FrontVersie": "Version:",
+      "FrontDatum": "Datum:",
+      "FrontDocScope": "Berichtsumfang",
+      "FrontEnvClass": "Umgebungsklassifizierung",
+      "FrontScopeLimits": "Umfangseinschränkungen",
+      "FrontMethodology": "Methodik und Taxonomie",
+      "MethodologyDefault": [
+        "Jede Feststellung folgt einem festen Aufbau: Aktuelle Situation, Best Practice, Abweichung, Empfehlung, Maßnahme und Referenz. Die Tiefe richtet sich nach dem Risiko: hoch und mittel tragen jeden Teil einschließlich einer konkreten Maßnahme, niedrig den Kern (Situation, Best Practice, Abweichung, Empfehlung), kein Risiko bestätigt das Gemessene.",
+        "Kritisch: Verfügbarkeit oder Datenschutz sind jetzt beeinträchtigt, oder ein Ausfall ist im Normalbetrieb sicher. Abgrenzung zu hoch: Bricht dies das Failover heute? Wenn ja, kritisch. Nur bei einem bestimmten Auslöser, dann hoch.",
+        "Hoch: Datenverlust, ungeplante Ausfallzeit, Clusterinstabilität, nicht unterstützte Konfiguration oder leicht ausnutzbare Sicherheitslücke.",
+        "Mittel: Auswirkung auf die Supportfähigkeit (Microsoft kann den Support verweigern), messbare Leistungseinbußen, Single Points of Failure, die die Verfügbarkeit nicht unmittelbar gefährden, Abweichung von den Kompatibilitätsmatrizen des Herstellers.",
+        "Niedrig: Hygiene, Dokumentationslücken, Inkonsistenzen bei Benennung und Tagging, kleinere Ineffizienzen, kosmetische Abweichungen.",
+        "Kein Risiko / keine Abweichung: entspricht der Best Practice und war nie eine Feststellung, oder Inventarlücken außerhalb des aktuellen Umfangs.",
+        "Behoben: eine zuvor erhobene Feststellung, deren Behebung in diesem Lauf gemessen wurde; die Historie (wann offen, auf welcher Stufe) bleibt im Register, damit der Fortschritt messbar bleibt."
+      ],
+      "MethodologyLabels": [
+        "Kritisch",
+        "Hoch",
+        "Mittel",
+        "Niedrig",
+        "Kein Risiko / keine Abweichung",
+        "Behoben"
+      ],
+      "GroupHeadings": {
+        "KRITIEK": "Kritisches Risiko",
+        "HOOG": "Hohes Risiko",
+        "MIDDEL": "Mittleres Risiko",
+        "LAAG": "Niedriges Risiko",
+        "GEEN": "Kein Risiko",
+        "OPGELOST": "Behoben",
+        "ACCEPTED": "Akzeptiertes Risiko"
+      },
+      "ChangeResolved": "Behoben",
+      "ChangeAccepted": "In dieser Runde formell akzeptiert",
+      "ChangeLowered": "Gesenkt auf {to}",
+      "ChangeRaised": "Angehoben auf {to}",
+      "ChangeUnchanged": "Unverändert",
+      "ChangeReopened": "Wieder geöffnet",
+      "ChangeNoDeviation": "Keine Abweichung",
+      "ChangeReopenedAt": "Wieder geöffnet bei {to}",
+      "AsBuilt": {
+        "Title": "Systemdokumentation {cluster}",
+        "Freshness": "Wie gebaut, gemessen am {date}",
+        "FooterTag": "As-built-Dokumentation",
+        "MeasuredOn": "Messzeitpunkt:",
+        "Cluster": "Cluster:",
+        "ProfileHash": "Profil-Hash:",
+        "Tool": "Messinstrument:",
+        "Unknown": "(unbekannt)",
+        "NietGemeten": "nicht gemessen",
+        "NietInDezeMeting": "nicht in dieser Messung",
+        "MeasuredNone": "gemessen, nichts vorhanden",
+        "NoEvidence": "Für dieses Kapitel wurde in dieser Messung keine Konfiguration erfasst.",
+        "VmSummary": "Die Umgebung enthält {vms} virtuelle Maschinen auf {nodes} Knoten, {running} davon aktiv.",
+        "IscsiSummary": "{sessions} iSCSI-Sitzungen wurden auf {nodes} Knoten gemessen, {persistent} davon persistent.",
+        "IscsiPersistenceSummary": "{sessions} iSCSI-Sitzungen wurden auf {nodes} Knoten gemessen; die Zielregistrierung ist auf {ok} von {tnodes} Knoten persistent.",
+        "Gemeten": "gemessen",
+        "ArraySub": "Array (Plane C)",
+        "FabricSub": "Fabric (Plane F)",
+        "FabricLifecycle": "Lebenszyklus",
+        "S2dSub": "Storage Spaces Direct",
+        "PhysicalChassisSub": "Gehäuse und Seriennummern (gemessen)",
+        "PhysicalIntakeSub": "Rack, Strom und Verkabelung (Aufnahmeformular)",
+        "ArrayProtectionSummary": "{policies} Schutzrichtlinien und {rules} Snapshot-Regeln wurden erfasst.",
+        "PhysicalSiteLabel": "Standort:",
+        "PhysicalPlaceholder": "Für Rackaufbau, Stromeinspeisungen, Verkabelung und Out-of-Band-Adressierung wurde kein ausgefülltes Aufnahmeformular bereitgestellt. Diese lassen sich nicht aus dem Cluster messen; die gemessenen Gehäusedaten stehen oben.",
+        "PlaneArray": "Array (Plane C)",
+        "PlaneFabric": "Fabric (Plane F)",
+        "PlanePhysical": "Physische Schicht (Aufnahme)",
+        "ScopeNotApplicable": "nicht zutreffend",
+        "ScopeRequested": "angefordert, nicht erhalten",
+        "ScopeDeclined": "vom Kunden abgelehnt, als Einschränkung erfasst",
+        "AzlStampSub": "Stamp und Registrierung",
+        "AzlAtcSub": "Network ATC-Intents",
+        "AzlDeploymentSub": "Bereitstellung",
+        "AzlTargetSub": "Zielplattform (Plane E)",
+        "AzlSupportWindow": "Der Support folgt dem Solution-Train-Zeitfenster von Azure Local; das aktuelle Train und Zeitfenster steht im Lifecycle-Pack.",
+        "AzlSbeLabel": "SBE-Version:",
+        "AzlRemoteSupportLabel": "Remote Support:",
+        "AzlDeploymentDate": "Bereitstellungsdatum:",
+        "AzlEndState": "Endzustand:",
+        "AzlCustomLocation": "Custom Location:",
+        "AzlMigrateSub": "Migration",
+        "MigProjectLabel": "Migrationsprojekt:",
+        "MigCountsLabel": "Erkannt / bewertet / repliziert / migriert:",
+        "MigTargetJoin": "Zielseitige Verknüpfung mit dem Plane-E-ARM-Knoten: Resource Bridge {bridge}, logische Netzwerke {ln}, Speicherpfade {sp}.",
+        "MigTargetJoinReady": "Zielseitige Verknüpfung mit dem Plane-E-ARM-Knoten: Resource Bridge {bridge}, logische Netzwerke provisioniert {ln}, Speicherpfade provisioniert {sp}.",
+        "Chapters": {
+          "1": "1. Umgebung und Umfang",
+          "2": "2. Cluster und Quorum",
+          "3": "3. Hosts und Hardware",
+          "4": "4. Speicher",
+          "5": "5. Netzwerk",
+          "6": "6. Virtuelle Maschinen",
+          "7": "7. Verwaltung und Updates",
+          "8": "8. Sicherheitskonfiguration",
+          "9": "9. DR und Replikation",
+          "10": "10. Physische Schicht",
+          "AzL": "Azure Local Plattform",
+          "A": "Anhang A. Vollständige Tabellen",
+          "B": "Anhang B. Herkunft der Messung"
+        },
+        "SectionNames": {
+          "0": "Erreichbarkeit",
+          "1": "Cluster und Quorum",
+          "2": "Speicher",
+          "3": "Netzwerk",
+          "4": "Validierungsberichte",
+          "5": "Host-Hardware",
+          "6": "Betriebssystem",
+          "7": "Zeitsynchronisation",
+          "8": "VM-Hosteinstellungen",
+          "9": "Virtuelle Maschinen",
+          "10": "Sicherheit",
+          "11": "Cluster-Updates (CAU)",
+          "12": "VMM"
+        },
+        "ProvCols": [
+          "Abschnitt",
+          "Status",
+          "Quelle",
+          "Nicht erreichbare Knoten"
+        ],
+        "Cap": {
+          "Nodes": "Clusterknoten ({n})",
+          "Quorum": "Quorumkonfiguration",
+          "VmmCluster": "Cluster-Funktionsebene",
+          "Hardware": "Host-Hardware ({n})",
+          "Cpu": "Prozessoren pro Knoten ({n})",
+          "Dimm": "Speicherbestückung pro Knoten ({n})",
+          "FcHbas": "Fibre-Channel-HBAs ({n})",
+          "Nics": "Netzwerkadapter ({n})",
+          "S2dPool": "Speicherpool ({n})",
+          "S2dVirtualDisks": "Virtuelle Datenträger ({n})",
+          "S2dCsvFs": "Clustervolumes ({n})",
+          "S2dCache": "Cache-Konfiguration ({n})",
+          "DiskModels": "Physische Datenträger nach Modell ({n})",
+          "PhysicalDisks": "Physische Datenträger pro Knoten ({n})",
+          "PhysicalChassis": "Gehäuse und Seriennummern ({n})",
+          "Os": "Betriebssystem pro Knoten ({n})",
+          "Csv": "Cluster Shared Volumes ({n})",
+          "Mpio": "MPIO-Einstellungen ({n})",
+          "VmSwitches": "Virtuelle Switches ({n})",
+          "VmPerNode": "Virtuelle Maschinen pro Knoten ({n})",
+          "Generation": "VM-Generationen ({n})",
+          "ConfigVersion": "VM-Konfigurationsversionen ({n})",
+          "VmmServer": "VMM-Verwaltungsserver",
+          "Wac": "Windows Admin Center Gateways ({n})",
+          "SecureBoot": "Secure Boot und TPM ({n})",
+          "DeviceGuard": "Device Guard / VBS ({n})",
+          "SmbSecurity": "SMB-Konfiguration ({n})",
+          "VmInventory": "Vollständiges VM-Inventar ({n})",
+          "ArrayIdentity": "Array-Identität",
+          "ArraySoftware": "Array-Software",
+          "ArrayAppliances": "Appliances ({n})",
+          "ArrayHosts": "Registrierte Hosts ({n})",
+          "ArrayVolumes": "Volumes ({n})",
+          "ArrayCapacity": "Array-Kapazität",
+          "ArraySupport": "Support Connectivity",
+          "ArrayReplication": "Array-Replikationssitzungen ({n})",
+          "FabricSwitches": "Switches ({n})",
+          "FabricVlans": "VLANs ({n})",
+          "FabricLags": "Link-Aggregationen ({n})",
+          "FabricStp": "Spanning Tree ({n})",
+          "FabricZoning": "FC-Zoning ({n})",
+          "PhysicalRacks": "Racks ({n})",
+          "PhysicalPower": "Stromeinspeisungen ({n})",
+          "PhysicalCabling": "Verkabelung ({n})",
+          "PhysicalOob": "OOB-Adressen ({n})",
+          "AzlStamp": "Azure Local Stamp pro Knoten ({n})",
+          "AzlRegistration": "Registrierung pro Knoten ({n})",
+          "AzlArc": "Arc-Agent pro Knoten ({n})",
+          "AtcIntents": "Network ATC-Intents ({n})",
+          "AtcStatus": "ATC-Intent-Status pro Host ({n})",
+          "DepPhases": "Bereitstellungsphasen und Dauer ({n})",
+          "ArmBridge": "Resource Bridge ({n})",
+          "ArmLogical": "Logische Netzwerke ({n})",
+          "ArmStorage": "Speicherpfade ({n})",
+          "MigAppliances": "Migrations-Appliances ({n})",
+          "MigProviders": "Replikationsanbieter ({n})",
+          "SetTeam": "SET-Teams ({n})",
+          "ManagementVnics": "Host-vNICs und VLAN ({n})",
+          "ClusterNetworks": "Clusternetzwerke ({n})",
+          "ClusterNetworkIfaces": "IP-Adressen pro Knoten ({n})",
+          "Jumbo": "Jumbo Frames pro Adapter ({n})",
+          "Rdma": "RDMA pro Adapter ({n})",
+          "FabricPorts": "Switchports ({n})",
+          "WindowsUpdatePolicy": "Windows Update-Richtlinie pro Knoten ({n})",
+          "CauRole": "Cluster-Aware Updating ({n})",
+          "Hotfixes": "Installierte Updates ({n})",
+          "AdTierNodes": "Clusterknoten im Active Directory ({n})",
+          "AdTierAdminGroups": "Administrative Gruppen und Mitglieder ({n})",
+          "LocalAdmins": "Lokale Administratoren pro Knoten ({n})",
+          "VmReplication": "VM-Replikation ({n})",
+          "S2dStorageTiers": "Speicherebenen ({n})",
+          "Witness": "Witness ({n})"
+        },
+        "Cols": {
+          "Nodes": [
+            "Knoten",
+            "Zustand",
+            "Stimmgewicht",
+            "Fehlerdomäne"
+          ],
+          "ArrayIdentity": [
+            "Eigenschaft",
+            "Wert"
+          ],
+          "ArraySoftware": [
+            "Eigenschaft",
+            "Wert"
+          ],
+          "ArrayAppliances": [
+            "ID",
+            "Modell",
+            "Modus",
+            "Integrität"
+          ],
+          "ArrayHosts": [
+            "Host",
+            "OS-Typ",
+            "Hostgruppe",
+            "Konnektivität"
+          ],
+          "ArrayVolumes": [
+            "Volume",
+            "Größe (GB)",
+            "Zustand",
+            "Replikationsziel"
+          ],
+          "ArrayCapacity": [
+            "Eigenschaft",
+            "Wert"
+          ],
+          "ArraySupport": [
+            "Eigenschaft",
+            "Wert"
+          ],
+          "ArrayReplication": [
+            "Ressource",
+            "Zustand",
+            "RPO",
+            "Rolle"
+          ],
+          "FabricSwitches": [
+            "Switch",
+            "Hersteller",
+            "Modell",
+            "NOS",
+            "Version",
+            "Rolle",
+            "Verwaltungs-IP",
+            "Seriennummer"
+          ],
+          "FabricVlans": [
+            "VLAN",
+            "Name",
+            "Switches"
+          ],
+          "FabricLags": [
+            "Switch",
+            "ID",
+            "Art",
+            "Peers"
+          ],
+          "FabricStp": [
+            "Switch",
+            "STP-Modus",
+            "Edge-Ports",
+            "BPDU-Guard"
+          ],
+          "FabricZoning": [
+            "Fabric",
+            "Zone",
+            "Mitglieder",
+            "Single-Initiator"
+          ],
+          "PhysicalRacks": [
+            "Rack",
+            "Standort",
+            "Höheneinheiten",
+            "Anmerkungen"
+          ],
+          "PhysicalPower": [
+            "Rack",
+            "Einspeisung A",
+            "Einspeisung B",
+            "PDU",
+            "Anmerkungen"
+          ],
+          "PhysicalCabling": [
+            "Pfad",
+            "Beschreibung",
+            "Mittel"
+          ],
+          "PhysicalOob": [
+            "Knoten",
+            "Typ",
+            "Adresse",
+            "VLAN"
+          ],
+          "Quorum": [
+            "Eigenschaft",
+            "Wert"
+          ],
+          "VmmCluster": [
+            "Eigenschaft",
+            "Wert"
+          ],
+          "Hardware": [
+            "Knoten",
+            "Hersteller",
+            "Serie",
+            "Modell",
+            "Seriennummer",
+            "BIOS",
+            "BIOS-Datum"
+          ],
+          "Cpu": [
+            "Knoten",
+            "Prozessor",
+            "Sockel",
+            "Kerne pro Sockel",
+            "Logische Prozessoren"
+          ],
+          "Dimm": [
+            "Knoten",
+            "Anzahl DIMMs",
+            "Kapazität (GB)",
+            "Geschwindigkeit (MT/s)",
+            "Einheitlich"
+          ],
+          "FcHbas": [
+            "Knoten",
+            "Hersteller",
+            "Modell",
+            "Treiberversion",
+            "Firmware"
+          ],
+          "Nics": [
+            "Knoten",
+            "Adapter",
+            "Beschreibung",
+            "Anbieter",
+            "Treiberversion",
+            "Geschwindigkeit"
+          ],
+          "S2dPool": [
+            "Pool",
+            "Integrität",
+            "Status",
+            "Version",
+            "Größe (GB)",
+            "Zugewiesen (GB)"
+          ],
+          "S2dVirtualDisks": [
+            "Virtueller Datenträger",
+            "Resilienz",
+            "Datenkopien",
+            "Fehlerdomäne",
+            "Größe (GB)",
+            "Belegung im Pool (GB)",
+            "Integrität"
+          ],
+          "S2dCsvFs": [
+            "Volume",
+            "Dateisystem",
+            "Zugrundeliegendes FS",
+            "Größe (GB)",
+            "Frei (GB)",
+            "Zustand"
+          ],
+          "S2dCache": [
+            "Bereitstellungsklasse",
+            "Cache-Zustand",
+            "SSD-Modus",
+            "HDD-Modus",
+            "Seitengröße (KB)"
+          ],
+          "DiskModels": [
+            "Modell",
+            "Medientyp",
+            "Bus",
+            "Größe (GB)",
+            "Firmware",
+            "Anzahl"
+          ],
+          "PhysicalDisks": [
+            "Knoten",
+            "Modell",
+            "Medientyp",
+            "Bus",
+            "Größe (GB)",
+            "Firmware",
+            "Integrität"
+          ],
+          "PhysicalChassis": [
+            "Knoten",
+            "Hersteller",
+            "Serie",
+            "Modell",
+            "Seriennummer"
+          ],
+          "Os": [
+            "Knoten",
+            "Edition",
+            "Version",
+            "Build",
+            "UBR"
+          ],
+          "Csv": [
+            "Volume",
+            "Zustand",
+            "Besitzer",
+            "Größe (GB)",
+            "Frei (GB)"
+          ],
+          "Mpio": [
+            "Knoten",
+            "Pfadprüfung",
+            "PDO-Zeitraum",
+            "Datenträger-Timeout"
+          ],
+          "VmSwitches": [
+            "Knoten",
+            "Switch",
+            "Typ",
+            "SET",
+            "Management-OS"
+          ],
+          "VmPerNode": [
+            "Knoten",
+            "VMs",
+            "Aktiv"
+          ],
+          "Generation": [
+            "Generation",
+            "Anzahl"
+          ],
+          "ConfigVersion": [
+            "Konfigurationsversion",
+            "Anzahl"
+          ],
+          "VmmServer": [
+            "Eigenschaft",
+            "Wert"
+          ],
+          "Wac": [
+            "Maschine",
+            "Generation",
+            "Version",
+            "Dienst",
+            "Port"
+          ],
+          "SecureBoot": [
+            "Knoten",
+            "Secure Boot",
+            "TPM bereit"
+          ],
+          "DeviceGuard": [
+            "Knoten",
+            "VBS-Status",
+            "Dienste aktiv"
+          ],
+          "SmbSecurity": [
+            "Knoten",
+            "Signierung erforderlich",
+            "Verschlüsselung"
+          ],
+          "VmInventory": [
+            "VM",
+            "Besitzer",
+            "Generation",
+            "Konfig",
+            "Zustand",
+            "Arbeitsspeicher (GB)"
+          ],
+          "AzlStamp": [
+            "Knoten",
+            "Stamp-Version",
+            "OEM-Version",
+            "Bereitstellungs-ID"
+          ],
+          "AzlRegistration": [
+            "Knoten",
+            "Registrierung",
+            "Verbindung",
+            "Azure-Ressource"
+          ],
+          "AzlArc": [
+            "Knoten",
+            "himds",
+            "Agentstatus",
+            "Agentversion"
+          ],
+          "AtcIntents": [
+            "Intent",
+            "Typ",
+            "Speicher",
+            "Verwaltung"
+          ],
+          "AtcStatus": [
+            "Host",
+            "Intent",
+            "Konfiguration",
+            "Provisionierung"
+          ],
+          "DepPhases": [
+            "Schritt",
+            "Schnittstelle",
+            "Dauer (s)",
+            "Status"
+          ],
+          "ArmBridge": [
+            "Name",
+            "Status"
+          ],
+          "ArmLogical": [
+            "Name",
+            "VLAN",
+            "Adressraum"
+          ],
+          "ArmStorage": [
+            "Name",
+            "Pfad"
+          ],
+          "MigAppliances": [
+            "Appliance",
+            "Standort",
+            "Agentversion",
+            "Letzter Heartbeat"
+          ],
+          "MigProviders": [
+            "Anbieter",
+            "Version",
+            "Versionszustand",
+            "Verbindung"
+          ],
+          "SetTeam": [
+            "Knoten",
+            "Team",
+            "Teaming-Modus",
+            "Lastverteilung"
+          ],
+          "ManagementVnics": [
+            "Knoten",
+            "vNIC",
+            "vSwitch",
+            "VLAN-Modus",
+            "VLAN",
+            "Status"
+          ],
+          "ClusterNetworks": [
+            "Netzwerk",
+            "Rolle",
+            "Adresse",
+            "Zustand",
+            "Metrik"
+          ],
+          "ClusterNetworkIfaces": [
+            "Knoten",
+            "Netzwerk",
+            "Schnittstelle",
+            "IPv4-Adresse",
+            "Zustand"
+          ],
+          "Jumbo": [
+            "Knoten",
+            "Adapter",
+            "Wert"
+          ],
+          "Rdma": [
+            "Knoten",
+            "Adapter",
+            "Beschreibung",
+            "Aktiviert"
+          ],
+          "FabricPorts": [
+            "Switch",
+            "Port",
+            "Rolle",
+            "Modus",
+            "Native VLAN",
+            "MTU",
+            "LAG"
+          ],
+          "WindowsUpdatePolicy": [
+            "Knoten",
+            "WSUS-Server",
+            "WSUS aktiv",
+            "Auto-Update aus",
+            "AU-Option"
+          ],
+          "CauRole": [
+            "Ausführungsmodus",
+            "Aktiviert",
+            "Tage",
+            "Startdatum"
+          ],
+          "Hotfixes": [
+            "Knoten",
+            "Update",
+            "Beschreibung",
+            "Installiert am"
+          ],
+          "AdTierNodes": [
+            "Name",
+            "Rolle",
+            "Übergeordnete OU",
+            "Aktiviert",
+            "Betriebssystem",
+            "LAPS"
+          ],
+          "AdTierAdminGroups": [
+            "Gruppe",
+            "Mitglied",
+            "Klasse",
+            "Geschachtelt",
+            "Tier 0"
+          ],
+          "LocalAdmins": [
+            "Knoten",
+            "Gruppe",
+            "Mitglied",
+            "Klasse",
+            "Quelle"
+          ],
+          "VmReplication": [
+            "Knoten",
+            "VM",
+            "Zustand",
+            "Integrität",
+            "Modus",
+            "Letzte Replikation"
+          ],
+          "S2dStorageTiers": [
+            "Speicherebene",
+            "Virtueller Datenträger",
+            "Medientyp",
+            "Resilienz",
+            "Kopien",
+            "GB"
+          ],
+          "Witness": [
+            "Typ",
+            "Pfad",
+            "Knoten",
+            "Konfiguriert",
+            "In Ordnung"
+          ]
+        },
+        "DiagCluster": "Abbildung: Clusterübersicht",
+        "DiagNodeNetwork": "Abbildung: Netzwerk pro Knoten",
+        "DiagFabric": "Abbildung: Fabric",
+        "DiagStorage": "Abbildung: Speicherstack",
+        "DiagArray": "Abbildung: Pfad vom Host zum Volume",
+        "DiagUnmeasured": "{n} Elemente gestrichelt, weil nicht gemessen",
+        "EnvNodes": "Der Cluster hat {n} Knoten.",
+        "EnvSites": "Sie stehen an {n} Standorten: {sites}.",
+        "EnvHardware": "Die Hardware ist {make} {model}.",
+        "EnvStorageS2d": "Der Speicher ist Storage Spaces Direct mit Pool {pool} und {n} Clustervolumes.",
+        "EnvStorageSan": "Der Speicher stammt aus einem externen Array, mit {n} Clustervolumes.",
+        "EnvStorageSanVendor": "Der Speicher stammt aus einem externen {vendor}-Array, mit {n} Clustervolumes.",
+        "EnvVms": "Es gibt {n} virtuelle Maschinen, {running} davon zum Messzeitpunkt aktiv.",
+        "EnvPlanes": "Über die Clusterknoten hinaus wurde auch Folgendes gemessen: {planes}.",
+        "EnvPlanesNone": "Über die Clusterknoten hinaus wurde nichts gemessen.",
+        "EnvPlaneFabric": "die Ethernet-Fabric",
+        "EnvPlaneArray": "das Storage-Array",
+        "EnvPlaneBmc": "die Out-of-Band-Hardwareschicht",
+        "EnvPlaneArm": "die Azure-Steuerungsebene",
+        "EnvSite": "Sie stehen am Standort {sites}.",
+        "EnvNode": "Der Cluster hat 1 Knoten.",
+        "EnvVm": "Es gibt 1 virtuelle Maschine, {running} zum Messzeitpunkt aktiv.",
+        "Modules": "Module:",
+        "FreshnessUnknown": "Wie gebaut; der Nachweis nennt den Messzeitpunkt nicht"
+      },
+      "Rca": {
+        "Title": "Ursachenanalyse {cluster}",
+        "Freshness": "Erstellt am {date}",
+        "WindowLabel": "Zeitfenster des Vorfalls:",
+        "WindowNotSupplied": "nicht angegeben (das Zeitfenster des Vorfalls bei der Aufnahme erfassen)",
+        "OverflowNoteCondensed": "Die Tabelle zeigt die ersten {shown} von {total} entscheidenden Zeilen; die übrigen {dropped} stehen im Anhang.",
+        "OverflowNoteFull": "Die Tabelle zeigt die ersten {shown} von {total} Zeilen; die übrigen {dropped} stehen nicht in diesem Dokument, sind aber vollständig in {csv} neben dieser Datei enthalten.",
+        "CsvBesideThisFile": "der beigefügten CSV-Datei",
+        "FooterTag": "Ursachenanalyse",
+        "MeasuredOn": "Messdatum:",
+        "Cluster": "Cluster:",
+        "Tool": "Zustandsmessung:",
+        "Summary": "Zusammenfassung der Analyse:",
+        "GeenBewijs": "KEIN NACHWEIS: Nachweise zum Vorfall fehlen; die Analyse wurde nicht durchgeführt. Führen Sie Get-IncidentEvidence.ps1 für ein IncidentForensics-Engagement aus.",
+        "NoEvidence": "Für diesen Teil wurde in dieser Analyse nichts erfasst.",
+        "MeasuredNone": "gemessen, nichts vorhanden",
+        "ScopePlaceholder": "Zusammenfassung des Vorfalls (noch zu verfassen)",
+        "ScopePlaceholderNote": "Die verfasste Zusammenfassung des Vorfalls liegt noch nicht vor. Dieser Bericht zeigt die maschinell zusammengestellte Zeitleiste, Reihenfolge und Nachweise; der Assessor ergänzt die Zusammenfassung und die Ursachenbegründung.",
+        "TimelineCondensedCap": "Entscheidende Ereignisse in korrigierter Reihenfolge ({n})",
+        "TimelineFullCap": "Vollständige Zeitleiste nach Storm-Deduplizierung ({n})",
+        "TimelineCols": [
+          "Nachw.",
+          "Zeit (UTC)",
+          "Knoten",
+          "Kanal",
+          "Ereignis",
+          "Sign.",
+          "Bedeutung"
+        ],
+        "FirstNodeOutHead": "Erster ausgefallener Knoten",
+        "FirstNodeOutCols": [
+          "Feststellung",
+          "Nachweis"
+        ],
+        "FirstNodeOutUndetermined": "Erster ausgefallener Knoten: aus den Eventlogs nicht eindeutig bestimmbar.",
+        "ArbitrationLabel": "Arbitrierung:",
+        "MembershipFlapsCap": "Mitgliedschaftswechsel pro Knoten ({n})",
+        "FlapsCols": [
+          "Knoten",
+          "Anzahl",
+          "Nachweis"
+        ],
+        "CsvChainCap": "CSV-Pausenkette und Korruptionsverlauf in korrigierter Reihenfolge ({n})",
+        "CsvCols": [
+          "Nachw.",
+          "Zeit (UTC)",
+          "Ereignis",
+          "Bedeutung"
+        ],
+        "PauseStormLabel": "Pause-Frame-Overlay:",
+        "BackupLabel": "Backup-Overlay:",
+        "RecurrenceWideningLabel": "Wiederholungserweiterung:",
+        "ChainHead": "Ursache-Wirkungs-Kette",
+        "ChainCols": [
+          "Schritt",
+          "Wann",
+          "Ursache und Wirkung",
+          "Nachweis"
+        ],
+        "ChainPlaceholder": "Die Ursachenkette wurde noch nicht verfasst. Der Assessor ergänzt die Ursache-Wirkungs-Kette, wobei jedes Glied auf Nachweise der Zeitleiste verweist.",
+        "RootCauseLabel": "Grundursache:",
+        "ConfidenceLabel": "Konfidenz:",
+        "AlternativesHeading": "Abgewogene Alternativen",
+        "AltRejected": "abgelehnt mit der Begründung:",
+        "NotFiredLabel": "Detektoren, die nicht ausgelöst haben (abgewogen, kein stützender Nachweis im Zeitfenster):",
+        "CannotConcludeLabel": "Keine schlüssige Grundursache",
+        "WouldDecideLabel": "Entscheidender Nachweis:",
+        "RootCausePlaceholder": "Die Grundursache wurde noch nicht verfasst. Der Assessor benennt die Grundursache mit einer Konfidenzstufe und wiegt die Alternativen ab.",
+        "PostureIntro": "Zustandsfaktoren aus der Layer-1-Messung, die den Vorfall verstärkt haben:",
+        "PostureCols": [
+          "Feststellung",
+          "Titel",
+          "Katalog",
+          "Risiko",
+          "Hypothese",
+          "Hinweis"
+        ],
+        "PostureNone": "Der Analyse wurde kein Register bereitgestellt; die Einträge unten sind Kandidaten-Querverweise (ohne Nachweis), die gegen das Register zu prüfen sind.",
+        "PostureEmpty": "Keine Zustandsfaktoren mit den bewerteten Hypothesen verknüpft.",
+        "PostureMeasuredLabel": "Zustandsregister gemessen am {registerUtc}; Vorfallsfenster {window}.",
+        "PostureMeasuredAbsent": "Kein Messdatum für das Zustandsregister verfügbar (ohne Nachweis: der Analyse wurde kein Register bereitgestellt).",
+        "GapsHeading": "Nachweislücken",
+        "GapsCols": [
+          "Quelle",
+          "Knoten",
+          "Kanal",
+          "Hinweis"
+        ],
+        "GapsNone": "In dieser Analyse wurden keine Nachweislücken erfasst.",
+        "EvidenceScopeHeading": "Nachweisabdeckung",
+        "EvidenceScopeCols": [
+          "Nachweisbereich",
+          "Klasse",
+          "Anmerkung"
+        ],
+        "EvidenceScopeNone": "Für diese Analyse wurden keine Nachweisbereiche erfasst.",
+        "EvidenceScopeOverrideNote": "Akzeptierte Nachweislücke(n): {reason} (von {by}, {when}).",
+        "DumpJoinsHeading": "Dumps mit dem Clusterlog abgeglichen",
+        "DumpJoinsCols": [
+          "Quelle",
+          "Knoten",
+          "Pfad",
+          "Zeitpunkt (UTC)",
+          "Clusterlog-Abgleich"
+        ],
+        "DumpJoinsNone": "Es wurden keine Dumps oder Crash-Berichte für den Abgleich mit dem Clusterlog gefunden.",
+        "DumpJoinsMatchedNote": "Abgeglichen, {delta}s vom Mustertreffer entfernt.",
+        "CoverageHeading": "Log-Abdeckungskarte",
+        "CoverageChannelsCols": [
+          "Kanal",
+          "Status"
+        ],
+        "CoverageNodesCols": [
+          "Knoten",
+          "Status"
+        ],
+        "CoverageNotSupplied": "Die Log-Abdeckungskarte wurde nicht bereitgestellt (reine Analyse-Ausgabe); siehe die Nachweislücken unten.",
+        "FullTimelineHeading": "Entscheidende Zeitleiste, vollständig",
+        "DeploymentHeading": "Zeitleiste der Bereitstellung (Bereitstellungsforensik)",
+        "DeploymentIntro": "Diese Messung enthält einen Deployment-Knoten; Zeitleiste und Nachweise unten sind maschinell von Get-HcDeploymentAnalysis zusammengestellt. Detektoren bewerten und schließen nicht; der Assessor benennt die Grundursache.",
+        "DeploymentOnlyNote": "Dies ist eine Bereitstellungsforensik ohne Nachweise aus dem laufenden Betrieb; die Vorfallskapitel entfallen, und die Grundursache benennt der Assessor anhand der Zeitleiste unten.",
+        "DepPhaseLabel": "Abgeleitete Phase:",
+        "DepStepCols": [
+          "Nachweis-ID",
+          "Schritt",
+          "Schnittstelle",
+          "Dauer (s)",
+          "Status"
+        ],
+        "DepStepCap": "Baum der Bereitstellungsschritte in Ausgabereihenfolge ({n})",
+        "DepStepNone": "In dieser Analyse wurden keine Bereitstellungsschritte erfasst.",
+        "DepStallLabel": "Stillstandspunkt:",
+        "DepStallNone": "In dieser Analyse wurde keine Stillstandssignatur erfasst.",
+        "DepWatchdogLabel": "Watchdog-Urteil:",
+        "DepWatchdogNone": "Kein Watchdog-Urteil verfügbar (Plane E nicht erhoben; siehe die Nachweislücken).",
+        "DepToleratedCols": [
+          "Nachweis-ID",
+          "Klasse",
+          "Anzahl",
+          "Erste (UTC)",
+          "Letzte (UTC)"
+        ],
+        "DepToleratedCap": "Inventar tolerierter Fehler als Kontext ({n})",
+        "DepToleratedNone": "Keine tolerierten Fehlerklassen erfasst.",
+        "DepGapsHeading": "Nachweislücken der Bereitstellung",
+        "DepGapsCols": [
+          "Quelle",
+          "Bereich",
+          "Position",
+          "Hinweis"
+        ],
+        "Chapters": {
+          "1": "1. Zusammenfassung des Vorfalls",
+          "2": "2. Zeitleiste",
+          "3": "3. Erster ausgefallener Knoten und Reihenfolge",
+          "4": "4. Ursache-Wirkungs-Kette",
+          "5": "5. Grundursache",
+          "6": "6. Beitragende Zustandsfaktoren",
+          "7": "7. Korrekturmaßnahmen",
+          "8": "8. Anhänge"
+        },
+        "EnglishNote": "Die Zeilen unten zitieren die Meldungen so, wie Windows sie schreibt. Sie sind englisch, weil die Server englischsprachiges Windows ausführen; sie werden nicht übersetzt, damit sie in den Logs weiterhin auffindbar bleiben.",
+        "ClusterLogCols": [
+          "Knoten",
+          "Log beginnt (UTC)",
+          "Deckt das Zeitfenster ab",
+          "Gehalten",
+          "Herkunft"
+        ],
+        "ClusterLogProvenanceCollected": "gemessen",
+        "ClusterLogProvenanceSupplied": "bereitgestellt",
+        "ClusterLogSuppliedAll": "Alle {0} oben genannten Clusterlogs wurden nach der Messung bereitgestellt; dieser Lauf hat keines davon selbst erhoben.",
+        "ClusterLogSuppliedPartial": "{0} von {1} oben genannten Clusterlogs wurden nach der Messung bereitgestellt und nicht von diesem Lauf selbst gemessen.",
+        "ClusterLogCoversYes": "ja",
+        "ClusterLogCoversNo": "deckt das Zeitfenster nicht ab",
+        "ClusterLogCoversUnknown": "unbekannt (kein lesbarer Zeitstempel)",
+        "ClusterLogMinutes": "{0} min",
+        "ClusterLogSettings": "Clusterlog-Einstellungen: {0}. Sie bestimmen, wie weit das Log zurückreicht; eine höhere Stufe lässt den Dienst schneller schreiben und verkürzt die Abdeckung.",
+        "ClusterLogSettingsUnknown": "Die Clusterlog-Einstellungen wurden nicht gemessen, daher steht die Abdeckung unten ohne die Ursache daneben.",
+        "ClusterLogNotCollected": "Das Clusterlog wurde nicht erhoben, daher lässt sich zu seiner Abdeckung nichts sagen.",
+        "ClusterLogSizeOne": "ClusterLogSize {0} MB",
+        "ClusterLogSizeRange": "ClusterLogSize {0} bis {1} MB auf {2} von {3} Knoten",
+        "ClusterLogLevelOne": "ClusterLogLevel {0}",
+        "ClusterLogLevelRange": "ClusterLogLevel {0} bis {1} auf {2} von {3} Knoten",
+        "ClusterLogSettingsMissing": "{0} Knoten haben ihre Clusterlog-Einstellungen nicht gemeldet und erben hier keinen Wert von einem Nachbarknoten.",
+        "ClusterLogSizeOnePartial": "ClusterLogSize {0} MB, gemeldet von {1} von {2} Knoten",
+        "ClusterLogLevelOnePartial": "ClusterLogLevel {0}, gemeldet von {1} von {2} Knoten",
+        "CrashEvidenceHeading": "Dumps und Crashdump-Konfiguration",
+        "DumpsCols": [
+          "Knoten",
+          "Pfad",
+          "Größe (MB)",
+          "Geschrieben (UTC)",
+          "Typ",
+          "Route"
+        ],
+        "DumpsNone": "Auf den gemessenen Knoten wurden keine Dumpdateien gefunden.",
+        "CrashReportsCols": [
+          "Knoten",
+          "Modul",
+          "Ereignistyp",
+          "Ticks",
+          "App-Version",
+          "Zeitpunkt (UTC)"
+        ],
+        "CrashReportsNone": "Auf den gemessenen Knoten wurden keine WER-Crashberichte gefunden.",
+        "CrashConfigCols": [
+          "Knoten",
+          "Dumptyp",
+          "Zielvolume",
+          "Frei (MB)",
+          "Gesamt (MB)",
+          "Dateien gefunden"
+        ],
+        "CrashConfigNone": "Die Crashdump-Konfiguration wurde für keinen Knoten gemessen.",
+        "CrashEvidenceNone": "In dieser Analyse wurden weder Dumpdateien noch WER-Crashberichte noch eine Crashdump-Konfiguration gemessen.",
+        "NietGemeten": "nicht gemessen",
+        "TriggerLabel": "Auslöser:",
+        "ImpactLabel": "Auswirkung:",
+        "WhyMonitoringMissedLabel": "Warum die Überwachung es nicht erkannte:",
+        "CorrectiveActionsPlaceholder": "Die Korrekturmaßnahmen wurden noch nicht verfasst. Der Assessor ordnet die Maßnahmen nach Wirkung.",
+        "CorrectiveEffectLabel": "Wirkung:",
+        "CorrectiveWhyLabel": "Warum:",
+        "CorrectivePriorityLabel": "Priorität:",
+        "CorrectiveVerifyLabel": "Verifizierung:",
+        "RedundancyFindingLabel": "Redundanzfeststellung:",
+        "FollowUpIntro": "Folgevorschläge (ein Vorschlag an den Assessor, kein gestarteter Lauf):",
+        "AppendixLabel": "Anhang {letter}: {titel}",
+        "RootCauseHeading": "Grundursache",
+        "ConfidenceHeading": "Vertrauen",
+        "EvidenceCsvNote": "Alle {n} Nachweiszeilen stehen vollständig in {file}, die zusammen mit diesem Bericht geliefert wird. Dieser Export trägt dreizehn Spalten; die Tabelle unten zeigt sechs.",
+        "DecisiveFullCap": "Alle {n} entscheidenden Ereignisse in korrigierter Reihenfolge.",
+        "ReportDateLabel": "Berichtsdatum:",
+        "PostureSourceLabel": "Die Feststellungen unten stammen aus {titel}, Version {versie} vom {datum}.",
+        "PostureSourcePlain": "Die Feststellungen unten stammen aus dem Feststellungsbericht dieses Auftrags.",
+        "IncidentToolLabel": "Incident-Collector:"
+      },
+      "SeverityNotReconstructable": "Stufe nicht herleitbar",
+      "ChangeByAssessor": "{change}, Beurteilung des Assessors {date}",
+      "ChangeJoin": " und ",
+      "MachineProposedReopen": "Maschine schlug eine Wiedereröffnung vor",
+      "MachineProposedResolve": "Maschine schlug eine Behebung vor",
+      "DeltaCounts": "Von den {total} Feststellungen sind {unchanged} unverändert; {measured} haben sich durch eine Messung verändert, {judged} durch eine Beurteilung des Assessors und {derived} ohne Messeintrag und ohne Beurteilung.",
+      "ChangeJoinLowercases": true,
+      "DocKindFindings": "Feststellungsbericht",
+      "DocKindDelta": "Delta-Bericht",
+      "DocKindRemaining": "Restrisiko-Bericht",
+      "RemainingPartOpen": "Offene Risiken (TO-DO)",
+      "RemainingPartBorne": "Bewusst getragene Risiken",
+      "ChangeRevoked": "Akzeptanz zurückgezogen",
+      "ChangeNew": "Neu in dieser Messung",
+      "NewIntro": "Festgestellte Abweichungen, die noch nicht im Register stehen. Sie tragen daher keinen früheren WERT; was bei beiden Messungen vorgefunden wurde, steht im Detail je Feststellung.",
+      "NewMarker": "(Kandidat)",
+      "MeasuredIntroNew": "Messung {current}: {currentResult}. Diese Feststellung existierte bei der vorherigen Messung noch nicht.",
+      "ValueDerived": "Wert aus einem mehrdeutigen Historieneintrag hergeleitet",
+      "IntroConfirmed": "Der Assessor bestätigt die Beurteilungen dieser {findings} Feststellungen.",
+      "IntroNotConfirmed": "Diese Runde ist nicht die neueste in diesem Register, daher wurde der Autorenvertrag nicht darauf angewendet. Der Bericht stellt daher nicht fest, dass der Assessor diese {findings} Beurteilungen bestätigt.",
+      "IntroCandidatesUnjudged": "Die {candidates} ungebundenen Kandidaten sind Maschinensignale, die noch keine Beurteilung tragen.",
+      "DeltaDerivedNote": "Bei {n} dieser {total} Feststellungen beruht der angezeigte Wert auf einer Herleitung aus einem mehrdeutigen Historieneintrag; die Zeile weist ebenfalls darauf hin.",
+      "Topology": {
+        "ClusterOverviewTitle": "Clusterübersicht",
+        "VmCountRunning": "%d VM, %d aktiv",
+        "VmCountZero": "0 VM",
+        "VmInventoryNotMeasured": "VM-Inventar nicht in dieser Messung",
+        "VoteWeight": "Stimmgewicht %s",
+        "VoteWeightNotMeasured": "Stimmgewicht nicht in dieser Messung",
+        "PathLine": "Pfad: %s",
+        "PathNotMeasured": "Pfad nicht in dieser Messung",
+        "VmOwnerOrphanNote": "%d von %d VMs stehen auf einem Knoten in diesem Cluster; %d haben einen Besitzer, der kein Clusterknoten ist.",
+        "NoFaultDomainLabel": "keine Fault-Domain erfasst",
+        "PrivateSwitchNote": "Der vSwitch %s ist privat und wird hier nicht als Box dargestellt (kein physischer Uplink, kein Produktionsnetzwerk).",
+        "FabricMeasuredSub": "gemessen - siehe Fabric-Abbildung",
+        "NotMeasured": "nicht in dieser Messung",
+        "VswitchNotMeasured": "der vSwitch dieser vNIC wurde nicht gemessen",
+        "SwitchportNotMeasured": "welche NIC auf welchem Switchport landet, wurde hier nicht gemessen",
+        "NodePortNotMeasured": "welcher Knoten auf welchem Port landet, wurde nicht gemessen",
+        "NoInitiatorIdentity": "für diesen Knoten wurde keine Initiator-Identität (WWPN/IQN) gemessen",
+        "ControllerPortNotRecorded": "auf welchem Controller-Port eine Sitzung landet, wurde in dieser Messung nicht erfasst",
+        "VolumeNotMapped": "für dieses Volume wurde keine Zuordnung gemessen",
+        "MappingUnknownHost": "die Zuordnung nennt %s, das nicht in der Hosttabelle dieses Arrays steht",
+        "MappingUnknownHostAt": "die Zuordnung bei %s nennt %s, das nicht in der Hosttabelle dieses Arrays steht",
+        "SwitchTypePrivate": "privat",
+        "SwitchTypeInternal": "intern",
+        "NoPhysicalUplink": "%s - kein physischer Uplink",
+        "NodeNetworkTitle": "Netzwerk pro Knoten: %s",
+        "LldpPeerLabel": "LLDP-Nachbar",
+        "HostPortCount": "%d Port(s)",
+        "NativeVlanLine": "natives VLAN %s",
+        "HostPortsLabel": "Hostports %s",
+        "ClusterNodesLabel": "Clusterknoten",
+        "NoLldpFromNodes": "Knoten melden kein LLDP",
+        "NoLldpSectionSeen": "kein LLDP von den Knoten",
+        "NoSiteRecorded": "kein Standort erfasst",
+        "FabricTitle": "Fabric",
+        "Unknown": "unbekannt",
+        "DiskCount": "%d Laufwerk(e)",
+        "PerDiskSize": "%s GB pro Laufwerk",
+        "VirtualDiskCount": "%d virtuelle Datenträger",
+        "CopiesCount": "%s Kopien",
+        "NoTiersMeasured": "keine Tiers gemessen",
+        "TierSilentToo": "auch der Tier sagt nichts",
+        "VolumeCount": "%d Volumes",
+        "MixedFilesystems": "gemischt: %s",
+        "FilesystemNotMeasured": "Dateisystem nicht in dieser Messung",
+        "ClusterVolumesLabel": "Clustervolumes",
+        "AndMoreCount": "; und %d weitere",
+        "TiersNotRead": "die Storage-Tiers wurden in dieser Messung nicht ausgelesen",
+        "TiersSilentOnResiliency": "die gemessenen Tiers nennen für diese Volumes keine Resiliency",
+        "WithoutResiliencyNote": "Ohne Resiliency: %s. Grund: %s.",
+        "VirtualDisksNoVolumesNote": "Es wurden virtuelle Datenträger gemessen, aber keine Clustervolumes.",
+        "StorageStackTitle": "Speicherstack",
+        "DisksPathsEach": "%d Laufwerk(e), je %d Pfade",
+        "DisksPathsRange": "%d Laufwerk(e), %d bis %d Pfade",
+        "DisksCount": "%d Laufwerk(e)",
+        "BootLine": "Boot: %s",
+        "InitiatorenLabel": "Initiatoren",
+        "InitiatorCount": "%d Initiator(en)",
+        "OnArrayLine": "auf dem Array: %s",
+        "HostCount": "%d Host(s)",
+        "LosseHost": "eigenständiger Host",
+        "ReplicaTarget": "Replikationsziel",
+        "KoppelingOnbekend": "Zuordnung unbekannt",
+        "UnregisteredNodesNote": "%d von %d Knoten können keinem Host dieses Arrays zugeordnet werden: %s.",
+        "UnmappedVolumesNote": "%d Volume(s) wurden gemessen und sind keinem Ziel zugeordnet: %s.",
+        "UnmeasuredMappingNote": "Für %d Volume(s) wurde die Zuordnung nicht gemessen.",
+        "PathHostToVolumeTitle": "Pfad vom Host zum Volume",
+        "KnownOnBothArrays": "bekannt auf beiden Arrays",
+        "KnownOnNArrays": "bekannt auf %d Arrays",
+        "SiteLine": "Standort: %s",
+        "ArrayFallbackLabel": "Array %d",
+        "OnArrayNamedLine": "auf %s: %s",
+        "StretchedBothArrays": "gestreckt: beide Arrays",
+        "UnregisteredNodesMultiNote": "%d von %d Knoten können keinem Host eines Arrays zugeordnet werden: %s.",
+        "UnmappedVolumesPerArrayNote": "%s: %d Volume(s) wurden gemessen und sind keinem Ziel zugeordnet: %s.",
+        "UnmeasuredMappingPerArrayNote": "%s: Für %d Volume(s) wurde die Zuordnung nicht gemessen.",
+        "SharedVolumesNote": "%d Volume(s) wurden auf mehr als einem Array unter demselben Namen gemessen (ein gestreckter Pod) und werden hier einmal angezeigt.",
+        "StrippedPodNote": "%d Volume(s) zeigen nur ihren eigenen Namen; das Pod-Präfix ist für jedes Volume im selben Pod gleich und steht hier einmal pro Pod: %s.",
+        "FoldedHostgroupNote": "%d Hostgruppe(n) wurden auf mehr als einem Array unter derselben Identität gemessen (bestätigt über die Initiatorenmenge) und werden hier einmal angezeigt: %s.",
+        "LldpNeighborsLabel": "LLDP-Nachbarn",
+        "UnmeasuredLegend": "gestrichelt = nicht gemessen (%d)"
+      },
+      "DocKindRca": "Ursachenanalyse"
+    }
+  },
+  "RiskText": {
+    "_comment": "TEXT variant of the severity colours, for a coloured WORD on white. Not a second palette and never a fill: the same value, made readable as text, which is why the block is named RiskText and not RiskAlt or RiskDark. A name that does not say 'text' gets used as a fill within the year and then there are two palettes again, which is what decision E2 abolished. Its own block for the same reason RiskRing has one: it is a component rule of a surface, not a colour in the ramp. WHY IT EXISTS: a filled badge carries white text and clears BADGE_CONTRAST_FLOOR at 3.0; a coloured word on white is a LABEL and has to clear LABEL_FLOOR at 4.5. Measured on the badge colours: KRITIEK 21.00 and HOOG 4.51 clear it, MIDDEL 3.04 and LAAG 4.20 do not, and those two are exactly the levels the borne-risk rows carry. Darkened to just over the floor, so the association with the badge survives: two of the four are unchanged. The lint holds every entry here to 4.5 on white, so this stays a property and not a one-off measurement.",
+    "KRITIEK": "000000",
+    "HOOG": "E03131",
+    "MIDDEL": "C55205",
+    "LAAG": "1A78CD"
+  }
+}

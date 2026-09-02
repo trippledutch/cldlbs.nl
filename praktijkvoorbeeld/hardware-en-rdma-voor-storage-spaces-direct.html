@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- LET OP: noindex staat aan zolang de waarden met klasse .invul nog
+     invulvelden zijn. Zodra Hans de echte meetwaarden heeft aangeleverd:
+     deze regel verwijderen, de datums in het schema bijwerken en de URL
+     opnemen in sitemap.xml. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>Drie NIC-modellen van de bestellijst gehaald voor de inkoop &middot; Praktijkvoorbeeld &middot; CloudLabs</title>
+<meta name="description" content="Een logistiek bedrijf wilde van SAN-gebaseerd Hyper-V naar Storage Spaces Direct. De meting toetste de bestellijst aan de HCL en haalde drie NIC-modellen eruit voordat de inkooporder de deur uit ging.">
+<link rel="canonical" href="https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html">
+<link rel="alternate" hreflang="nl" href="https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html">
+<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:url" content="https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html">
+<meta property="og:title" content="Drie NIC-modellen, van de bestellijst gehaald &middot; CloudLabs">
+<meta property="og:description" content="Een logistiek bedrijf wilde van SAN-gebaseerd Hyper-V naar Storage Spaces Direct. De meting toetste de bestellijst aan de HCL en haalde drie NIC-modellen eruit voordat de inkooporder de deur uit ging.">
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../huisstijl/pagina.css">
+<link rel="stylesheet" href="/huisstijl/bevinding.css">
+<link rel="stylesheet" href="../huisstijl/voorbeeld.css">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://cldlbs.com/"},
+        {"@type":"ListItem","position":2,"name":"Praktijkvoorbeelden","item":"https://cldlbs.com/praktijkvoorbeelden.html"},
+        {"@type":"ListItem","position":3,"name":"Hardware en RDMA voor Storage Spaces Direct","item":"https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html"}
+      ]
+    },
+    {
+      "@type":"Article",
+      "@id":"https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html#artikel",
+      "headline":"Drie NIC-modellen van de bestellijst gehaald voor de inkoop van een Storage Spaces Direct-cluster",
+      "description":"Veertig virtuele machines op verouderend SAN-gebaseerd Hyper-V en een hardwarevervanging in aantocht. De meting toetste de voorgenomen bestellijst aan de HCL en het netwerkontwerp aan de eisen voor RDMA.",
+      "inLanguage":"nl-NL",
+      "datePublished":"2026-09-01",
+      "dateModified":"2026-09-01",
+      "mainEntityOfPage":"https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html",
+      "genre":"Praktijkvoorbeeld",
+      "about":[
+        {"@type":"Thing","name":"Storage Spaces Direct"},
+        {"@type":"Thing","name":"RDMA"},
+        {"@type":"Thing","name":"RoCE"},
+        {"@type":"Thing","name":"Hyper-V"}
+      ],
+      "keywords":"Storage Spaces Direct, S2D, RDMA, RoCE, PFC, HCL, hardware compatibility list, SAN migratie, Hyper-V, Azure Local",
+      "author":{
+        "@type":"Person","@id":"https://cldlbs.com/about.html#hans","name":"Hans Vredevoort",
+        "jobTitle":"Cluster- en virtualisatiespecialist",
+        "knowsAbout":["Hyper-V","Failover Clustering","Azure Local","Storage Spaces Direct","Windows Server"],
+        "worksFor":{"@id":"https://cldlbs.com/#organisatie"}
+      },
+      "publisher":{"@type":"Organization","@id":"https://cldlbs.com/#organisatie","name":"CloudLabs","url":"https://cldlbs.com/"}
+    },
+    {
+      "@type":"FAQPage",
+      "@id":"https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html#vragen",
+      "mainEntity":[
+        {"@type":"Question","name":"Waarom is de hardwarelijst bij Storage Spaces Direct zo bepalend?",
+         "acceptedAnswer":{"@type":"Answer","text":"Omdat S2D de opslaglaag in software bouwt uit de schijven en de netwerkkaarten van de hosts zelf. Bij een SAN ligt de betrouwbaarheid bij het opslagsysteem; bij S2D ligt hij bij de combinatie van componenten in uw eigen servers. Een netwerkkaart die RDMA op papier ondersteunt maar niet op de lijst van gevalideerde configuraties staat, kan onder belasting pakketten laten vallen die het cluster als opslagfout ziet. Dat is niet te herstellen met een instelling: het is de verkeerde kaart. Daarom hoort de toets aan de HCL vóór de inkooporder, niet erna."}},
+        {"@type":"Question","name":"Wat gaat er mis als PFC-klassen tussen host en switch niet overeenkomen?",
+         "acceptedAnswer":{"@type":"Answer","text":"RoCE verwacht een netwerk dat geen pakketten laat vallen. Priority Flow Control regelt dat door verkeer in een klasse te pauzeren in plaats van weg te gooien. Staat de host op een andere prioriteitsklasse dan de switch, dan komt die pauze niet aan waar hij nodig is en valt verkeer alsnog weg. Het cluster ziet dan geen netwerkfout maar trage of falende opslag, wat het onderzoek de verkeerde kant op stuurt. Beide kanten moeten dezelfde klasse gebruiken. Dat is alleen vast te stellen door host en switch naast elkaar te leggen."}},
+        {"@type":"Question","name":"Kan CloudLabs deze toets doen voordat wij hardware bestellen?",
+         "acceptedAnswer":{"@type":"Answer","text":"Ja. Dat is ook het moment waarop het het meeste oplevert. Na de inkoop is een verkeerd model een afschrijving of een moeizame ruil; ervoor is het een regel op een bestellijst. De basismeting brengt de bestaande omgeving in kaart; de netwerk- en opslagmodules M1 en M3 toetsen de switches en het opslagsysteem."}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Naar inhoud</a>
+
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="../preview-home.html">Cloud<span>Labs</span></a>
+    <div class="navlinks" id="navlinks"><a href="../triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="../preview-home.html#modules">Omgevingen</a><a href="../praktijkvoorbeelden.html" aria-current="page">Praktijkvoorbeelden</a><a href="../preview-home.html#kennis">Kennis</a></div>
+    <div class="nav-actions">
+      <button class="search" aria-label="Zoeken">&#8981;</button>
+      <a class="btn primary" href="../triage/">Start gratis triage</a>
+      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+<article class="artikel">
+
+  <p class="kruimel"><a href="../">CloudLabs</a> / <a href="../praktijkvoorbeelden.html">Praktijkvoorbeelden</a> / 03</p>
+
+  <div class="voorbeeldkop">
+    <p class="eyebrow">Praktijkvoorbeeld 03 &middot; basismeting met module M1 en M3</p>
+    <h1>Drie NIC-modellen, van de bestellijst gehaald</h1>
+    <div class="regel">
+      <b>Logistiek</b><i>&middot;</i>
+      <b>40+ virtuele machines</b><i>&middot;</i>
+      <b>SAN &rarr; Storage Spaces Direct</b><i>&middot;</i>
+      <b>Hyper-V</b><i>&middot;</i>
+      <b>Basismeting <span class="invul">kwartaal</span></b>
+    </div>
+  </div>
+
+  <div class="inleiding">
+    <p>Ruim veertig virtuele machines draaiden op verouderend SAN-gebaseerd Hyper-V, terwijl er een hardwarevervanging op de planning stond. Het bedrijf wilde weten of Storage Spaces Direct een verstandige stap was en had geen interne kennis van S2D. De meting ging niet over het bestaande cluster maar over de bestellijst: drie van de voorgenomen netwerkkaartmodellen stonden niet op de lijst van gevalideerde configuraties en zijn vervangen voordat de inkooporder de deur uit ging. Daarnaast bleken de PFC-klassen tussen host en switch niet overeen te komen, het soort afwijking dat zich later voordoet als trage opslag en niet als netwerkfout.</p>
+  </div>
+
+  <table class="meetgegevens">
+      <caption>Meetgegevens</caption>
+      <tbody>
+        <tr><th scope="row">NIC-modellen afgekeurd tegen de HCL</th><td><span class="invul">n</span> van <span class="invul">n</span></td></tr>
+        <tr><th scope="row">Virtuele machines gemigreerd, dataverlies 0</th><td>40+</td></tr>
+        <tr><th scope="row">Componenten die na de inkoop terug moesten</th><td>0</td></tr>
+      </tbody>
+    </table>
+
+  <section class="deel">
+    <p class="deel-nr">01</p>
+    <div class="deel-tekst">
+      <h2>De situatie</h2>
+  <p>Een logistiek bedrijf met ruim veertig virtuele machines op Hyper-V met SAN-opslag. De hardware liep tegen het einde van zijn ondersteuningstermijn en er lag budget voor vervanging. De leverancier had Storage Spaces Direct voorgesteld; intern was er niemand die kon beoordelen of dat klopte.</p>
+  <p>Dat is de gevaarlijkste fase van zo'n traject. De beslissing die het duurst is om terug te draaien, wordt genomen op het moment dat er nog niets gemeten is. Een bestellijst ziet er tot op het laatste moment uit als een administratieve stap, terwijl hij de betrouwbaarheid van de komende vijf jaar vastlegt.</p>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">02</p>
+    <div class="deel-tekst">
+      <h2>De meting</h2>
+  <p>De basismeting bracht de bestaande omgeving in kaart. De modules voor ethernet-switches en het opslagsysteem legden daarnaast de voorgenomen configuratie naast de eisen die S2D stelt.</p>
+
+  <div class="bev high">
+    <div class="bevkop">
+      <span class="fid">F01</span>
+      <div class="bevtitel">
+        <span class="onderwerp">Hardware &amp; compatibiliteit</span>
+        <h3>Drie voorgenomen NIC-modellen staan niet op de lijst van gevalideerde configuraties</h3>
+      </div>
+      <span class="chip high">HOOG</span>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Gemeten</span>
+      <p class="meting">Modellen op de bestellijst &middot; <span class="invul">n</span><br>
+      Niet aangetroffen op de HCL &middot; <span class="invul">n</span><br>
+      Betrokken modellen &middot; <span class="invul">modelaanduidingen</span><br>
+      Vervangen door &middot; <span class="invul">modelaanduidingen</span></p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Waarom dit telt</span>
+      <p>Storage Spaces Direct bouwt de opslaglaag in software uit de schijven en netwerkkaarten van de hosts zelf. Bij een SAN ligt de betrouwbaarheid bij het opslagsysteem; bij S2D ligt hij bij de combinatie van componenten in uw eigen servers. Een kaart die RDMA op papier ondersteunt maar niet gevalideerd is, kan onder belasting pakketten laten vallen die het cluster als opslagfout ziet. Dat is niet te herstellen met een instelling: het is de verkeerde kaart.</p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Actiepunt</span>
+      <p>De drie modellen van de bestellijst halen en vervangen door modellen die wel gevalideerd zijn, vóór de inkooporder. Zie ook de vergelijking van <a href="../blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">SAN, S2D en Azure Local</a>.</p>
+    </div>
+  </div>
+
+  <div class="bev med">
+    <div class="bevkop">
+      <span class="fid">F02</span>
+      <div class="bevtitel">
+        <span class="onderwerp">Netwerk &amp; RDMA</span>
+        <h3>PFC-klassen komen niet overeen tussen host en switch</h3>
+      </div>
+      <span class="chip med">MIDDEL</span>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Gemeten</span>
+      <p class="meting">Prioriteitsklasse op de host &middot; <span class="invul">n</span><br>
+      Prioriteitsklasse op de switch &middot; <span class="invul">n</span><br>
+      Bandbreedtereservering &middot; <span class="invul">percentage</span></p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Waarom dit telt</span>
+      <p>RoCE verwacht een netwerk dat geen pakketten laat vallen. Priority Flow Control regelt dat door verkeer in een klasse te pauzeren in plaats van weg te gooien. Staat de host op een andere klasse dan de switch, dan komt die pauze niet aan waar hij nodig is en valt verkeer alsnog weg. Het cluster meldt dan geen netwerkfout maar trage of falende opslag. Dat stuurt het onderzoek de verkeerde kant op.</p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Actiepunt</span>
+      <p>Host en switch op dezelfde prioriteitsklasse zetten en de reservering vastleggen. Het netwerkontwerp voor RDMA is opgeleverd en met het netwerkteam doorgenomen; zij hebben de configuratie zelf toegepast en gevalideerd.</p>
+    </div>
+  </div>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">03</p>
+    <div class="deel-tekst">
+      <h2>Wat niet gemeten kon worden</h2>
+  <p>In elk CloudLabs-rapport staat wat er buiten bereik bleef, met de reden erbij. Niet omdat het mooi staat, maar omdat een lezer anders niet weet hoe compleet het beeld is.</p>
+  <div class="nietgemeten">
+    <ul>
+      <li>De nieuwe hardware zelf: nog niet geleverd op het moment van meten</li>
+      <li>Gedrag van S2D onder productiebelasting: pas vast te stellen na de migratie</li>
+      <li>Firmware van het bestaande opslagsysteem: <span class="invul">reden</span></li>
+    </ul>
+  </div>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">04</p>
+    <div class="deel-tekst">
+      <h2>Het herstel</h2>
+  <ul>
+    <li>De bestellijst is aangepast: drie modellen vervangen door gevalideerde alternatieven, vóór de inkoop.</li>
+    <li>Een netwerkontwerp voor RDMA is opgeleverd; het netwerkteam heeft het toegepast en de configuratie gevalideerd.</li>
+    <li>Er is een migratie-runbook geschreven; alle ruim veertig virtuele machines zijn gemigreerd zonder dataverlies.</li>
+  </ul>
+  <p>Wat de klant heeft laten liggen: <span class="invul">bevinding die niet is opgepakt, met de reden van de klant</span>. Dat staat er, omdat een voorbeeld waarin alles is opgelost geen voorbeeld is maar een advertentie.</p>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">05</p>
+    <div class="deel-tekst">
+      <h2>De uitkomst</h2>
+  <p>De migratie is gelopen zoals gepland. Maar de waarde zat vrijwel volledig in het moment waarop er gemeten werd. Na de inkoop was een verkeerd NIC-model een afschrijving geweest, of een moeizame ruil met een leverancier die kon volhouden dat het model RDMA ondersteunt. Ervoor was het een regel op een lijst.</p>
+  <p>De afwijkende PFC-klassen zouden zich niet als netwerkfout hebben gemeld maar als opslag die onder belasting inzakt: het soort probleem waar teams weken aan kwijt zijn omdat ze op de verkeerde plek zoeken.</p>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">06</p>
+    <div class="deel-tekst">
+      <h2>Vragen</h2>
+
+  <div class="vraag">
+    <h3>Waarom is de hardwarelijst bij Storage Spaces Direct zo bepalend?</h3>
+    <p>Omdat S2D de opslaglaag in software bouwt uit de schijven en netwerkkaarten van de hosts zelf. Bij een SAN ligt de betrouwbaarheid bij het opslagsysteem; bij S2D ligt hij bij de combinatie van componenten in uw eigen servers.</p>
+    <p>Een netwerkkaart die RDMA op papier ondersteunt maar niet gevalideerd is, kan onder belasting pakketten laten vallen die het cluster als opslagfout ziet. Dat is niet op te lossen met een instelling.</p>
+  </div>
+
+  <div class="vraag">
+    <h3>Wat gaat er mis als PFC-klassen tussen host en switch niet overeenkomen?</h3>
+    <p>RoCE verwacht een netwerk dat geen pakketten laat vallen. Priority Flow Control regelt dat door verkeer in een klasse te pauzeren in plaats van weg te gooien. Staat de host op een andere klasse dan de switch, dan komt die pauze niet aan waar hij nodig is.</p>
+    <p>Het cluster ziet dan geen netwerkfout maar trage opslag. Dat stuurt het onderzoek de verkeerde kant op.</p>
+  </div>
+
+  <div class="vraag">
+    <h3>Kan CloudLabs dit doen voordat wij hardware bestellen?</h3>
+    <p>Ja. Dat is ook het moment waarop het het meeste oplevert. Na de inkoop is een verkeerd model een afschrijving; ervoor is het een regel op een bestellijst.</p>
+  </div>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">07</p>
+    <div class="deel-tekst">
+      <h2>Verder lezen</h2>
+  <div class="verwant">
+    <a href="../blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html"><span>Achtergrond</span><b>SAN, S2D of Azure Local</b></a>
+    <a href="../blog/aligning-vms-with-storage.html"><span>Achtergrond</span><b>Virtuele machines en opslag op elkaar afstemmen</b></a>
+    <a href="firmware-drift-en-csv-eigenaarsonbalans.html"><span>Praktijkvoorbeeld 01</span><b>Zes nodes, twee firmwareversies</b></a>
+    <a href="quorum-stretch-cluster-voor-rolling-upgrade.html"><span>Praktijkvoorbeeld 02</span><b>Een quorum dat de tweede locatie niet zou overleven</b></a>
+  </div>
+
+
+    </div>
+  </section>
+  </article>
+</section>
+
+<section class="cta">
+  <div class="inner">
+  <p class="eyebrow" style="justify-content:center">Uw eigen cluster</p>
+  <h2>Wat zou een meting<br>bij u aantreffen?</h2>
+  <p>De gratis Cluster Triage leest uitsluitend en verandert niets. U ontvangt de vijf zwaarste signalen rond uw incidentvenster, met de gemeten waarde, de node en het tijdstip erbij.</p>
+  <div class="actions">
+    <a class="btn primary" data-icon="script" href="../triage/">Start gratis Cluster Triage &rarr;</a>
+    <a class="btn ghost" data-icon="rapport" href="../praktijkvoorbeelden.html">Alle praktijkvoorbeelden</a>
+  </div>
+</div>
+</section>
+</main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+
+<script>
+(function(){
+  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
+  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
+})();
+</script>
+<script src="../huisstijl/pagina.js"></script>
+</body>
+</html>

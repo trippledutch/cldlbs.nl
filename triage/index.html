@@ -1,0 +1,124 @@
+<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="var(--ink)"><title>Gratis Cluster Triage na een clusterstoring · CloudLabs</title><meta name="description" content="Cluster Triage: het gratis, uitsluitend lezende script na een Hyper-V, Failover Cluster of Azure Local storing. U ontvangt de vijf zwaarste signalen rond uw incidentvenster, gesorteerd op ernst."><link rel="icon" href="/favicon.png" type="image/png"><link rel="stylesheet" href="/huisstijl/pagina.css?v=7c992235"></head><body><a class="skip" href="#main">Naar inhoud</a><div class="announcement" id="announcement"><span>Cluster down? Bewaar eerst het bewijs.</span><a href="#aanvraag">Start gratis triage →</a><button aria-label="Sluiten" id="close-announcement">×</button></div><header class="topbar"><nav class="nav"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><div class="navlinks" id="navlinks"><a href="/triage/" aria-current="page">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/preview-home.html#kennis">Kennis</a></div><div class="nav-actions"><button class="search" aria-label="Zoeken">⌕</button><a class="btn primary" href="/triage/">Start gratis triage</a><button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button></div></nav></header><main id="main">
+
+<section class="hero"><div class="hero-inner"><div>
+  <p class="eyebrow">Gratis</p>
+  <h1>Cluster Triage</h1>
+  <p class="hero-copy">De gratis eerste stap na een clusterstoring. E&eacute;n uitsluitend lezend script
+    over uw Hyper-V, Failover Cluster of Azure Local omgeving. U ontvangt de triagelijst: de vijf
+    zwaarste signalen rond uw incidentvenster, gesorteerd op ernst. Gratis, zonder abonnement en
+    zonder verplichtingen.</p>
+  <div class="actions">
+    <a class="btn primary" href="#aanvraag">Vraag het script aan</a>
+  </div>
+  <p class="verzendhint" style="margin-top:22px;color:var(--band-dim)">WhatsApp +66&nbsp;99&nbsp;146&nbsp;1761 &middot; hans@cldlbs.com</p>
+</div>
+<div class="triage-list" aria-label="Voorbeeld van een triagelijst">
+  <div class="triage-list-head"><span>TRIAGE &middot; INCIDENTVENSTER</span></div>
+  <div class="triage-finding" data-r="crit"><strong>KRITIEK</strong><span>Witness onbereikbaar vanaf beide nodes</span></div>
+  <div class="triage-finding" data-r="high"><strong>HOOG</strong><span>Firmware van NODE02 onder het niveau dat de leverancier voorschrijft</span></div>
+  <div class="triage-finding" data-r="med"><strong>MIDDEL</strong><span>PFC-klassen wijken af tussen host en switch</span></div>
+  <p class="lijstnoot">Voorbeeld van de vorm; de inhoud komt uit uw eigen meting.</p>
+</div>
+</div></section>
+
+<section class="section pattern"><div class="inner">
+  <div class="section-head"><h2>Zo werkt het</h2></div>
+  <div class="benefits">
+    <div class="benefit"><div class="icon">01</div><h3>Vraag het script aan</h3>
+      <p>Vul het formulier in en verstuur het via WhatsApp en e-mail; u ontvangt het script met de leeswijzer.</p></div>
+    <div class="benefit"><div class="icon">02</div><h3>Draai het vanaf uw beheerserver</h3>
+      <p>Het leest alleen: de gebeurteniskanalen van alle nodes over het incidentvenster. Vooraf toont
+        het het plan van de run, met &eacute;&eacute;n ja-of-nee-vraag. Geheugendumps blijven in deze
+        gratis variant buiten beschouwing.</p></div>
+    <div class="benefit"><div class="icon">03</div><h3>Draag de uitvoer over</h3>
+      <p>U zet het bestand op de versleutelde Proton-share die wij voor u klaarzetten.</p></div>
+  </div>
+  <p class="slotregel">U ontvangt de triagelijst per e-mail.</p>
+</div></section>
+
+<section class="section" id="aanvraag"><div class="inner" style="max-width:760px">
+  <div class="section-head" style="text-align:left;max-width:none">
+    <h2 style="font-size:clamp(34px,4vw,52px)">Aanvraag</h2>
+    <p class="lead" style="margin:0">Vijf gegevens zijn genoeg om u het juiste script en de leeswijzer
+      te sturen. Het aantal uren bepaalt het meetvenster van de run.</p>
+  </div>
+  <form class="aanvraag" id="triageform">
+    <div class="veldrij">
+      <label><span class="lbl">Voornaam</span><input name="voornaam" autocomplete="given-name" required></label>
+      <label><span class="lbl">Achternaam</span><input name="achternaam" autocomplete="family-name" required></label>
+    </div>
+    <label><span class="lbl">Bedrijf of organisatie</span><input name="bedrijf" autocomplete="organization" required></label>
+    <label><span class="lbl">E-mailadres</span><input name="email" type="email" autocomplete="email" required></label>
+    <div class="veldrij">
+      <label><span class="lbl">Telefoon, met landcode</span><input name="telefoon" type="tel" autocomplete="tel" placeholder="+31 6 ..." required></label>
+      <label><span class="lbl">Land</span><input name="land" autocomplete="country-name" required></label>
+    </div>
+    <label><span class="lbl">Clusternaam</span><input name="cluster" required></label>
+    <label><span class="lbl">Hoeveel uur geleden vond het incident plaats?</span><input name="uren" type="number" min="1" max="720" placeholder="12" required></label>
+
+    <p class="verzendhint">Verstuur de aanvraag via WhatsApp &eacute;n e-mail, dan missen wij hem niet.</p>
+    <div class="verzendrij">
+      <button type="button" class="btn primary" id="knop-wa">Verstuur via WhatsApp</button>
+      <button type="button" class="btn dark" id="knop-mail">Verstuur ook per e-mail</button>
+    </div>
+    <p class="aanvraag-noot">
+      Wij proberen per omgaande te reageren, afhankelijk van bereikbaarheid.<br>
+      <b>Dit formulier verstuurt niets zelf:</b> de aanvraag vertrekt via uw eigen WhatsApp of e-mail.
+      Deze pagina slaat niets op.<br>
+      WhatsApp +66&nbsp;99&nbsp;146&nbsp;1761 &middot; hans@cldlbs.com
+    </p>
+  </form>
+</div></section>
+
+<section class="section pattern"><div class="inner">
+  <div class="section-head"><h2>Wat de triagelijst is en wat niet</h2></div>
+  <div class="benefits" style="grid-template-columns:1fr 1fr">
+    <div class="benefit"><h3>Wat u krijgt</h3>
+      <p>Vijf signalen, gesorteerd op ernst, elk met de gemeten waarde, de node en het tijdstip. Ook
+        wat niet gelezen kon worden staat erbij, met de reden.</p></div>
+    <div class="benefit"><h3>Wat het niet is</h3>
+      <p>Geen oorzaak en geen reconstructie: triage sorteert, de diagnose is het werk van R1. Geen
+        rapport, geen bespreking en geen abonnement dat eraan vastzit.</p></div>
+  </div>
+  <p class="leesnoot"><b>Meer dan vijf gevonden?</b> De triagelijst noemt
+    ook het totale aantal aangetroffen signalen. De volledige risicolijst, gesorteerd op ernst, is als
+    betaalde tussenstap op aanvraag leverbaar; de vijf zwaarste staan altijd al in de gratis lijst.</p>
+</div></section>
+
+<section class="section" id="veilig"><div class="inner">
+  <div class="section-head"><h2>Veilig en uitsluitend lezend</h2></div>
+  <ul class="waarborgen">
+    <li>Er wordt niets ge&iuml;nstalleerd en niets gewijzigd; na afloop blijft er niets achter.</li>
+    <li>Er worden geen wachtwoorden verwerkt of bewaard. Voordat het bestand wordt geschreven
+      controleert het script zijn eigen uitvoer op waarden die op inloggegevens lijken.</li>
+    <li>Geheugendumps gaan niet mee in de gratis variant.</li>
+    <li>Wat u overdraagt, gebruiken wij uitsluitend om de triagelijst te maken.</li>
+  </ul>
+</div></section>
+
+<section class="section pattern" id="vervolg"><div class="inner">
+  <div class="section-head"><h2>Als de lijst ergens op wijst</h2></div>
+  <div class="tekstkolom">
+    <p><b>R1, het onderzoek naar de oorzaak.</b> De reconstructie over alle nodes, met tijdlijn,
+      oorzaakanalyse en RCA-document, gedragen door diepgaande log- en dumpanalyse. Los te bestellen.</p>
+    <p><b>B1, de eenmalige basismeting.</b> Het volledige beeld van het cluster, met bevindingenrapport,
+      een uur bespreking en het recht om door te stromen naar een abonnement. De grote broer is C1:
+      de volledige cyclus met drie kwartaalvervolgmetingen.</p>
+    <p>Beide staan met tarieven op de HealthCheck-pagina. Samen besteld vormen ze de package deal
+      <b>Storingsonderzoek compleet</b> (R1 + B1), met een actieprijs op aanvraag.</p>
+  </div>
+</div></section>
+
+<section class="cta"><div class="inner">
+  <p class="eyebrow" style="justify-content:center">Uw cluster ligt stil?</p>
+  <h2>Wacht niet tot het bewijs verdwenen is.</h2>
+  <p>Vraag het uitsluitend lezende triagescript aan. U ontvangt gratis de vijf zwaarste signalen en
+    weet welke vervolgstap logisch is.</p>
+  <div class="actions" style="justify-content:center;margin-top:26px">
+    <a class="btn primary" data-icon="script" href="#aanvraag">Vraag het script aan</a>
+  </div>
+</div></section>
+
+</main><footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+<script src="/huisstijl/pagina.js?v=94ec48de"></script>
+</body></html>

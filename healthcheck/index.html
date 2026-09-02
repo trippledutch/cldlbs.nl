@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- De teksten komen woord voor woord uit hoofdstuk 3 t/m 7 van
+     huisstijl/healthcheck.html, de dienstbeschrijving v2.2 van Hans.
+     De figuur is zijn eigen tekening, uit datzelfde document gelicht en
+     teruggebracht tot Nederlands. Er is niets herschreven of bijverzonnen.
+     noindex staat aan zolang de nieuwe stijl niet live is. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>De HealthCheck &middot; van meting naar rapport, vier keer per jaar &middot; CloudLabs</title>
+<meta name="description" content="Een cyclus van een jaar: een basismeting en drie vervolgmetingen, elk kwartaal een. Tussen meting en rapport staan zes stappen, en stap 4 houdt het rapport tegen zolang er iets ontbreekt.">
+<link rel="canonical" href="https://cldlbs.com/healthcheck/">
+<link rel="alternate" hreflang="nl" href="https://cldlbs.com/healthcheck/">
+<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/healthcheck/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:url" content="https://cldlbs.com/healthcheck/">
+<meta property="og:title" content="De HealthCheck &middot; CloudLabs">
+<meta property="og:description" content="Van meting naar rapport, vier keer per jaar. Loop de zes stappen door.">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=7c992235">
+<link rel="stylesheet" href="/huisstijl/cyclus.css?v=bc00e2f8">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {"@type":"BreadcrumbList","itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://cldlbs.com/"},
+      {"@type":"ListItem","position":2,"name":"De HealthCheck","item":"https://cldlbs.com/healthcheck/"}]},
+    {"@type":"HowTo",
+     "@id":"https://cldlbs.com/healthcheck/#stappen",
+     "name":"Van meting naar rapport: de zes stappen",
+     "inLanguage":"nl-NL",
+     "description":"Tussen de meting en het document staan zes stappen. Stap 4 is een geautomatiseerde controle die het rapport tegenhoudt zolang er iets ontbreekt.",
+     "step":[
+      {"@type":"HowToStep","position":1,"name":"Inlezen","text":"De meting wordt ingelezen en naast de vorige gelegd, zodat zichtbaar is wat nieuw is, wat openstaat en wat is opgelost."},
+      {"@type":"HowToStep","position":2,"name":"Schrijven","text":"Elke bevinding wordt opgebouwd uit de gemeten waarden van deze run, niet uit een sjabloon."},
+      {"@type":"HowToStep","position":3,"name":"Beoordelen","text":"Een beoordelaar leest het geheel, weegt de risiconiveaus en past ze aan waar dat nodig is. Elke aanpassing wordt met reden vastgelegd."},
+      {"@type":"HowToStep","position":4,"name":"Controleren","text":"Een geautomatiseerde controle gaat over het hele rapport heen en houdt het document tegen zolang er iets ontbreekt. Wordt het geweigerd, dan gaat het terug naar stap 2."},
+      {"@type":"HowToStep","position":5,"name":"Goedkeuren","text":"De beoordelaar tekent. Wordt de tekst daarna nog gewijzigd, dan vervalt de handtekening en wordt er opnieuw getekend."},
+      {"@type":"HowToStep","position":6,"name":"Opmaken","text":"Het document wordt opgemaakt in de talen die u afneemt."}]},
+    {"@type":"FAQPage","@id":"https://cldlbs.com/healthcheck/#vragen","mainEntity":[
+      {"@type":"Question","name":"Wat houdt een cyclus van een jaar in?",
+       "acceptedAnswer":{"@type":"Answer","text":"Een basismeting en drie vervolgmetingen, elk kwartaal een. Elke meting levert een rapport en een uur waarin wij het met u doornemen. Eén jaar is C1 + V1 + V2 + V3: vier metingen, vier rapporten, vier besprekingen. Bij de basismeting ontvangt u het volledige bevindingenrapport, bij elke vervolgmeting een delta-rapport."}},
+      {"@type":"Question","name":"Wat doet de controle in stap 4?",
+       "acceptedAnswer":{"@type":"Answer","text":"Die houdt het document tegen zolang er iets ontbreekt. De controle weigert een rapport waarin een bevinding geen gemeten waarden bevat, waarin bij een hoog risico het actiepunt ontbreekt, waarin een tekst staat die in elk willekeurig rapport zou passen, of waarin een onderdeel van de meting niet is beoordeeld en ook niet buiten scope is verklaard. Zolang een van deze punten openstaat, komt er geen document uit."}},
+      {"@type":"Question","name":"Verandert de meting iets aan mijn cluster?",
+       "acceptedAnswer":{"@type":"Answer","text":"Nee. Het script leest alleen en verandert niets. Er wordt niets geïnstalleerd: geen agent, geen service, geen geplande taak. Na afloop blijft er niets achter, het script wijzigt geen instellingen en herstart niets, en er worden geen wachtwoorden verwerkt of bewaard."}}]}
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Naar inhoud</a>
+
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/" aria-current="page">De HealthCheck</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/blog/">Blog</a></div>
+    <div class="nav-actions">
+      <button class="search" aria-label="Zoeken">&#8981;</button>
+      <a class="btn primary" href="/triage/">Start gratis triage</a>
+      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- De hero staat gecentreerd: oogregel, kop in twee regels waarvan de tweede
+       het accent draagt, de twee alinea's van Hans, en één knop. Daaronder het
+       venster met de eerste pagina van een bevindingenrapport, afgesneden door
+       de onderrand van de band. De klasse .hero zet het accent om naar de
+       donkere waarde en maakt de kopbalk doorzichtig zolang je bovenaan staat. -->
+  <section class="hero mid">
+    <div class="hero-inner">
+      <p class="eyebrow">De HealthCheck</p>
+      <h1>Van meting naar rapport,<br><em>vier keer per jaar</em></h1>
+      <p class="hero-copy">Een cyclus van een jaar: een basismeting en drie vervolgmetingen, elk kwartaal een. Elke meting levert een rapport en een uur waarin wij het met u doornemen.</p>
+      <p class="hero-noot">De gratis <a href="/triage/">Cluster Triage</a> is de eerste stap en kost u niets. Wat hieronder staat is wat daarna mogelijk is. Loop de cyclus door: de figuur volgt mee.</p>
+      <div class="actions"><a class="btn primary" href="#doorloop">Loop de cyclus door &rarr;</a></div>
+    </div>
+
+    <figure class="hero-venster">
+      <figcaption class="hero-venster-balk"><span>Bevindingenrapport &middot; AZLCL01 &middot; basismeting</span><span><b>Voorbeeld</b></span></figcaption>
+      <div class="hero-venster-blad"><img src="/images/toolchain-report-cover.webp" width="1000" height="1294" alt="De eerste pagina van een bevindingenrapport: de titel, de klant, de document scope en de omgevingsclassificatie." decoding="async"></div>
+    </figure>
+  </section>
+
+  <!-- Dezelfde band als op de homepage: vier bevestigingen op naam van Hans,
+       controleerbaar en van hem. Geen leverancierslogo's. -->
+  <div class="trust"><div class="trust-inner">
+    <span>Veertig jaar in de Microsoft-wereld</span>
+    <a class="cred" href="/over-ons/"><b>Microsoft MVP</b><i>ruim tien jaar &middot; Failover Clustering, Cloud &amp; Datacenter Management</i></a>
+    <a class="cred" href="/over-ons/"><b>Hyper-V.nu</b><i>medeoprichter van het Benelux-platform voor Microsoft-virtualisatie</i></a>
+    <a class="cred" href="/over-ons/"><b>Private Cloud Computing</b><i>medeauteur &middot; technisch redacteur van Mastering Hyper-V Deployment</i></a>
+    <a class="cred" href="/over-ons/"><b>Hyper-V Amigos</b><i>medepresentator, met vakgenoten in heel Europa</i></a>
+  </div></div>
+
+  <section class="section" id="doorloop" style="scroll-margin-top:80px">
+    <div>
+      <div class="doorloop">
+
+        <figure class="doorloop-figuur">
+          <svg id="cyclusfiguur" viewBox="0 0 960 500" role="img" aria-labelledby="cyclus-titel"><title id="cyclus-titel">De jaarcyclus van de HealthCheck en de zes stappen tussen meting en rapport.</title>
+              <defs>
+                <marker id="pijl-dim" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" class="mk-dim" fill="#3A4255"/>
+                </marker>
+                <marker id="pijl-acc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" class="mk-acc" fill="#0A7E9E"/>
+                </marker>
+              </defs>
+          <g data-halte="kader">
+            <text x="83" y="302" text-anchor="start" class="dg-eyebrow">Tussen meting en rapport &middot; stap 1 t/m 6</text>
+          </g>
+          <g data-halte="intake">
+            <rect x="83" y="36" width="158" height="88" rx="4" class="dg-doos eens"/>
+            <text x="162" y="68" text-anchor="middle" class="dg-titel">Intake</text>
+            <text x="162" y="88" text-anchor="middle" class="dg-sub">Stap 0 &middot; eenmalig</text>
+            <text x="162" y="104" text-anchor="middle" class="dg-sub">Get-ClusterIntake.ps1</text>
+            <line x1="241" y1="80" x2="289" y2="80" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+            <text x="268" y="142" text-anchor="middle" class="dg-sub">Startwaarden</text>
+          </g>
+          <g data-halte="meting">
+            <rect x="295" y="36" width="158" height="88" rx="4" class="dg-doos"/>
+            <text x="374" y="68" text-anchor="middle" class="dg-titel">Meting</text>
+            <text x="374" y="88" text-anchor="middle" class="dg-sub">Uitsluitend lezend</text>
+            <text x="374" y="104" text-anchor="middle" class="dg-sub">Vanaf uw beheerserver</text>
+            <line x1="453" y1="80" x2="501" y2="80" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+            <text x="480" y="142" text-anchor="middle" class="dg-sub acc">Stap 1 t/m 6</text>
+          </g>
+          <g data-halte="stap1">
+            <rect x="42" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+            <text x="105" y="344" text-anchor="middle" class="dg-nr">1</text>
+            <text x="105" y="366" text-anchor="middle" class="dg-titel klein">Inlezen</text>
+            <text x="105" y="384" text-anchor="middle" class="dg-sub b">Naast de vorige run</text>
+            <line x1="168" y1="368" x2="186" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+          </g>
+          <g data-halte="stap2">
+            <rect x="192" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+            <text x="255" y="344" text-anchor="middle" class="dg-nr">2</text>
+            <text x="255" y="366" text-anchor="middle" class="dg-titel klein">Schrijven</text>
+            <text x="255" y="384" text-anchor="middle" class="dg-sub b">Uit gemeten waarden</text>
+            <line x1="318" y1="368" x2="336" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+          </g>
+          <g data-halte="stap3">
+            <rect x="342" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+            <text x="405" y="344" text-anchor="middle" class="dg-nr">3</text>
+            <text x="405" y="366" text-anchor="middle" class="dg-titel klein">Beoordelen</text>
+            <text x="405" y="384" text-anchor="middle" class="dg-sub b">De beoordelaar weegt</text>
+            <line x1="468" y1="368" x2="486" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+          </g>
+          <g data-halte="stap4">
+            <rect x="492" y="322" width="126" height="92" rx="4" class="dg-doos poort"/>
+            <text x="555" y="344" text-anchor="middle" class="dg-nr acc">4</text>
+            <text x="555" y="366" text-anchor="middle" class="dg-titel klein">Controleren</text>
+            <text x="555" y="384" text-anchor="middle" class="dg-sub b">Houdt tegen</text>
+            <text x="555" y="397" text-anchor="middle" class="dg-sub b">Wat ontbreekt</text>
+            <line x1="618" y1="368" x2="636" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+          </g>
+          <g data-halte="terug">
+            <path d="M549,418 Q402,470 263,421" class="dg-terug" marker-end="url(#pijl-acc)"/>
+            <text x="405" y="464" text-anchor="middle" class="dg-sub acc">Geweigerd: terug naar schrijven</text>
+          </g>
+          <g data-halte="stap5">
+            <rect x="642" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+            <text x="705" y="344" text-anchor="middle" class="dg-nr">5</text>
+            <text x="705" y="366" text-anchor="middle" class="dg-titel klein">Goedkeuren</text>
+            <text x="705" y="384" text-anchor="middle" class="dg-sub b">De beoordelaar tekent</text>
+            <line x1="768" y1="368" x2="786" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+          </g>
+          <g data-halte="stap6">
+            <rect x="792" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+            <text x="855" y="344" text-anchor="middle" class="dg-nr">6</text>
+            <text x="855" y="366" text-anchor="middle" class="dg-titel klein">Opmaken</text>
+            <text x="855" y="384" text-anchor="middle" class="dg-sub b">In uw gekozen talen</text>
+          </g>
+          <g data-halte="rapport">
+            <rect x="507" y="36" width="158" height="88" rx="4" class="dg-doos"/>
+            <text x="586" y="68" text-anchor="middle" class="dg-titel">Rapport</text>
+            <text x="586" y="88" text-anchor="middle" class="dg-sub">Bevindingen, daarna delta</text>
+            <text x="586" y="104" text-anchor="middle" class="dg-sub">NL &middot; EN &middot; DE</text>
+            <line x1="665" y1="80" x2="713" y2="80" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+          </g>
+          <g data-halte="bespreking">
+            <rect x="719" y="36" width="158" height="88" rx="4" class="dg-doos"/>
+            <text x="798" y="68" text-anchor="middle" class="dg-titel">Bespreking</text>
+            <text x="798" y="88" text-anchor="middle" class="dg-sub">&Eacute;&eacute;n uur</text>
+            <text x="798" y="104" text-anchor="middle" class="dg-sub">Wij nemen het door</text>
+          </g>
+          <g data-halte="lus">
+            <path d="M798,124 L798,176 Q798,190 784,190 L388,190 Q374,190 374,176 L374,132" class="dg-lus" marker-end="url(#pijl-acc)" pathLength="1"/>
+            <circle cx="470" cy="190" r="11" class="dg-tick"/>
+            <circle cx="586" cy="190" r="11" class="dg-tick"/>
+            <circle cx="702" cy="190" r="11" class="dg-tick"/>
+            <text x="470" y="193" text-anchor="middle" class="dg-ticktxt">V1</text>
+            <text x="586" y="193" text-anchor="middle" class="dg-ticktxt">V2</text>
+            <text x="702" y="193" text-anchor="middle" class="dg-ticktxt">V3</text>
+            <text x="586" y="224" text-anchor="middle" class="dg-tekst">Elk kwartaal een vervolgmeting, opnieuw met rapport en bespreking</text>
+            <text x="586" y="242" text-anchor="middle" class="dg-sub">&Eacute;&eacute;n jaar: C1 + V1 + V2 + V3, vier metingen, vier rapporten, vier besprekingen</text>
+          </g>
+        </svg>
+          <figcaption>Figuur 1. Boven de jaarcyclus, onder de stappen tussen meting en rapport. De intake draait één keer, bij de start; de controle in stap 4 houdt het rapport tegen zolang er iets ontbreekt.</figcaption>
+        </figure>
+
+        <ol class="stappenlijst">
+          <li class="halte" data-halte="intake">
+            <p class="halte-nr">Stap 0 &middot; eenmalig</p>
+            <h3>Intake</h3>
+            <p>Voor de eerste meting leest <code>Get-ClusterIntake.ps1</code> de identiteit van het cluster: clusternaam, nodes, beheersubnet en domein. Het engagement begint zo met gemeten gegevens in plaats van overgetypte, en een veld dat niet gelezen kon worden, meldt zichzelf met de reden. Dit gebeurt één keer, bij de start.</p>
+          </li>
+          <li class="halte" data-halte="meting">
+            <p class="halte-nr">De meting</p>
+            <h3>Uitsluitend lezend, vanaf uw eigen beheerserver</h3>
+            <p>Een verzamelscript draait vanaf uw eigen beheerserver, over WinRM, naar de clusternodes. Het script leest alleen en verandert niets. De basismeting duurt ongeveer een kwartier.</p><ul><li>Er wordt niets geïnstalleerd: geen agent, geen service, geen geplande taak. Na afloop blijft er niets achter.</li><li>Het script wijzigt geen instellingen en herstart niets.</li><li>Er worden geen wachtwoorden verwerkt of bewaard. Het script werkt met de rechten van de beheerder die het start, en voordat het overdrachtsbestand wordt geschreven, controleert het zijn eigen uitvoer op waarden die op inloggegevens lijken.</li><li>Het resultaat is een bestand op uw server. Dat blijft bij u tot u het aan ons overdraagt, via een versleutelde Proton-share die wij voor u klaarzetten.</li></ul><p>De modules draaien apart, met toegang die vooraf met u is afgesproken, en lezen wat de basismeting niet kan zien: de opslagarray, de switches, de beheerkaarten en de Azure-kant.</p>
+          </li>
+          <li class="halte" data-halte="stap1">
+            <p class="halte-nr">Stap 1</p>
+            <h3>Inlezen</h3>
+            <p>De meting wordt ingelezen en naast de vorige gelegd, zodat zichtbaar is wat nieuw is, wat openstaat en wat is opgelost.</p>
+          </li>
+          <li class="halte" data-halte="stap2">
+            <p class="halte-nr">Stap 2</p>
+            <h3>Schrijven</h3>
+            <p>Elke bevinding wordt opgebouwd uit de gemeten waarden van deze run, niet uit een sjabloon.</p>
+          </li>
+          <li class="halte" data-halte="stap3">
+            <p class="halte-nr">Stap 3</p>
+            <h3>Beoordelen</h3>
+            <p>Een beoordelaar leest het geheel, weegt de risiconiveaus en past ze aan waar dat nodig is. Elke aanpassing wordt met reden vastgelegd.</p>
+          </li>
+          <li class="halte" data-halte="stap4">
+            <p class="halte-nr">Stap 4</p>
+            <h3>Controleren</h3>
+            <p>Een geautomatiseerde controle gaat over het hele rapport heen. De controle in stap 4 houdt het document tegen zolang er iets ontbreekt. Die weigert een rapport waarin:</p><ul><li>een bevinding geen gemeten waarden bevat: geen getallen, geen nodenamen, geen datum;</li><li>bij een hoog risico het actiepunt ontbreekt;</li><li>een tekst staat die in elk willekeurig rapport zou passen;</li><li>een onderdeel van de meting niet is beoordeeld en ook niet buiten scope is verklaard.</li></ul><div class="weigering"><p>Zolang een van deze punten openstaat, komt er geen document uit. Bij veel leveranciers hangt de kwaliteit van een rapport af van wie het die week schreef; hier staat er een controle tussen.</p></div>
+          </li>
+          <li class="halte" data-halte="terug">
+            <p class="halte-nr">Bij weigering</p>
+            <h3>Terug naar schrijven</h3>
+            <p>Wordt het rapport tegengehouden, dan gaat het niet door naar goedkeuring maar terug naar stap 2. Dit is het enige moment waarop het proces achteruit loopt.</p>
+          </li>
+          <li class="halte" data-halte="stap5">
+            <p class="halte-nr">Stap 5</p>
+            <h3>Goedkeuren</h3>
+            <p>De beoordelaar tekent. Wordt de tekst daarna nog gewijzigd, dan vervalt de handtekening en wordt er opnieuw getekend.</p>
+          </li>
+          <li class="halte" data-halte="stap6">
+            <p class="halte-nr">Stap 6</p>
+            <h3>Opmaken</h3>
+            <p>Het document wordt opgemaakt in de talen die u afneemt.</p>
+          </li>
+          <li class="halte" data-halte="rapport">
+            <p class="halte-nr">Het resultaat</p>
+            <h3>Wat er in het rapport staat</h3>
+            <p>Per bevinding leest u wat er gemeten is, met de waarden, de nodenamen en de datum; wat de leverancier of Microsoft voorschrijft, met de bron; waar die twee uiteenlopen en wat dat in uw situatie betekent; en het herstel.</p><p>Bij de basismeting ontvangt u het volledige bevindingenrapport. Bij elke vervolgmeting ontvangt u een delta-rapport: wat is er nieuw, wat staat er nog open en wat is opgelost.</p>
+          </li>
+          <li class="halte" data-halte="bespreking">
+            <p class="halte-nr">De bespreking</p>
+            <h3>Eén uur waarin wij het met u doornemen</h3>
+            <p>Elke meting levert een rapport en een uur waarin wij het met u doornemen.</p>
+          </li>
+          <li class="halte" data-halte="lus">
+            <p class="halte-nr">De cyclus</p>
+            <h3>Elk kwartaal opnieuw</h3>
+            <p>Een cyclus van een jaar: een basismeting en drie vervolgmetingen, elk kwartaal een. Eén jaar is C1 + V1 + V2 + V3: vier metingen, vier rapporten, vier besprekingen.</p><p>Een enkele meting laat zien hoe uw omgeving er op dat moment voorstaat. Door dezelfde meting elk kwartaal te herhalen, wordt ook de ontwikkeling zichtbaar. In elk volgend rapport ziet u wat er is opgelost, met de datum waarop het herstel is gemeten: dezelfde controle die de afwijking vond, vindt hem dan niet meer.</p><p>U ziet ook wat blijft staan: een bevinding die drie kwartalen openstaat weegt zwaarder dan een bevinding van vorige week. En u ziet kleine verschuivingen voordat ze een storing worden.</p>
+          </li>
+        </ol>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="inner">
+      <p class="eyebrow" style="justify-content:center">Beginnen</p>
+      <h2>Eerst meten,<br>dan pas praten</h2>
+      <p>De gratis Cluster Triage leest uitsluitend en verandert niets. Wilt u het volledige beeld, dan geeft de basismeting dat, met bevindingenrapport en een uur bespreking.</p>
+      <div class="actions">
+        <a class="btn primary" href="/triage/">Start gratis Cluster Triage &rarr;</a>
+        <a class="btn ghost" href="/rapport/">Bekijk het rapport</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+
+
+<script>
+(function(){
+  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
+  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
+
+  /* De doorloop. Zonder waarnemer blijft de figuur gewoon volledig staan;
+     .loopt wordt pas gezet als er ook echt gestuurd kan worden. */
+  var svg=document.getElementById('cyclusfiguur');
+  var haltes=[].slice.call(document.querySelectorAll('.halte'));
+  if(!svg||!haltes.length||!('IntersectionObserver' in window))return;
+
+  var volgorde=haltes.map(function(h){return h.dataset.halte});
+  svg.classList.add('loopt');
+
+  function toon(naam){
+    var i=volgorde.indexOf(naam);
+    volgorde.forEach(function(n,j){
+      var g=svg.querySelector('g[data-halte="'+n+'"]');
+      if(!g)return;
+      g.classList.toggle('aan', j===i);
+      g.classList.toggle('gehad', j<i);
+    });
+    haltes.forEach(function(h,j){h.classList.toggle('aan', j===i)});
+  }
+
+  var waarnemer=new IntersectionObserver(function(entries){
+    /* de halte die het dichtst bij het midden van het scherm staat, wint */
+    var beste=null,kleinste=Infinity,mid=window.innerHeight/2;
+    haltes.forEach(function(h){
+      var r=h.getBoundingClientRect();
+      var d=Math.abs((r.top+r.bottom)/2-mid);
+      if(r.bottom>0&&r.top<window.innerHeight&&d<kleinste){kleinste=d;beste=h}
+    });
+    if(beste)toon(beste.dataset.halte);
+  },{rootMargin:'-40% 0px -40% 0px',threshold:[0,.5,1]});
+
+  haltes.forEach(function(h){waarnemer.observe(h)});
+  toon(volgorde[0]);
+})();
+</script>
+<script src="/huisstijl/pagina.js?v=94ec48de"></script>
+</body>
+</html>

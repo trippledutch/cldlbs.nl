@@ -1,0 +1,269 @@
+<!doctype html><html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="var(--ink)"><title>Gratis Cluster Triage bij een storing · CloudLabs</title><meta name="description" content="Stel bij een clusterstoring eerst het bewijs veilig. Ontvang gratis de vijf zwaarste signalen uit Hyper-V, Failover Cluster of Azure Local, zonder installatie of wijzigingen."><link rel="icon" href="favicon.png" type="image/png"><link rel="stylesheet" href="huisstijl/pagina.css?v=7c992235"><link rel="stylesheet" href="/huisstijl/cyclus.css?v=bc00e2f8"></head><body><a class="skip" href="#main">Naar inhoud</a><div class="announcement" id="announcement"><span>Cluster down? Bewaar eerst het bewijs.</span><a href="#triage">Start gratis triage →</a><button aria-label="Sluiten" id="close-announcement">×</button></div><header class="topbar"><nav class="nav"><a class="brand" href="preview-home.html">Cloud<span>Labs</span></a><div class="navlinks" id="navlinks"><a href="triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="#modules">Omgevingen</a><a href="praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="#kennis">Kennis</a></div><div class="nav-actions"><button class="search" aria-label="Zoeken">⌕</button><a class="btn primary" href="triage/">Start gratis triage</a><button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button></div></nav></header><main id="main">
+<section class="hero" id="product"><div class="hero-inner"><div><p class="eyebrow">Gratis eerste stap bij een clusterstoring</p><h1>Uw cluster ligt stil.<br><em>Begin met triage.</em></h1><p class="hero-copy">Draai één uitsluitend lezend script en ontvang de vijf ernstigste signalen rond het incident, met gemeten waarde, node en tijdstip.</p><div class="actions"><a class="btn primary" href="#triage">Start gratis Cluster Triage →</a><a class="btn ghost" href="#healthcheck">Ik wil storingen voorkomen</a></div></div><div class="scan-card"><div class="scan-head"><span>TRIAGE · AZLCL01</span><span>Incidentvenster</span></div><div class="bars"><i class="bar" style="height:92%" data-v="KRITIEK"></i><i class="bar" style="height:72%" data-v="HOOG"></i><i class="bar" style="height:55%" data-v="HOOG"></i><i class="bar" style="height:34%" data-v="MIDDEL"></i></div><span class="scan-alert">TOP 5 GEVONDEN</span><div class="scan-meta"><span>Zwaarste signaal<b>Witness onbereikbaar</b></span><span>Wijzigingen uitgevoerd<b>0</b></span></div></div></div>
+</section><div class="trust"><div class="trust-inner">
+<span>Veertig jaar in de Microsoft-wereld</span>
+<a class="cred" href="about.html"><b>Microsoft MVP</b><i>ruim tien jaar &middot; Failover Clustering, Cloud &amp; Datacenter Management</i></a>
+<a class="cred" href="about.html"><b>Hyper-V.nu</b><i>medeoprichter van het Benelux-platform voor Microsoft-virtualisatie</i></a>
+<a class="cred" href="about.html"><b>Private Cloud Computing</b><i>medeauteur &middot; technisch redacteur van Mastering Hyper-V Deployment</i></a>
+<a class="cred" href="about.html"><b>Hyper-V Amigos</b><i>medepresentator, met vakgenoten in heel Europa</i></a>
+</div></div>
+<section class="proof"><div class="proof-grid reveal"><article class="proof-item"><strong>5</strong><h3>Zwaarste signalen</h3><p>Gesorteerd op ernst, met gemeten waarde, node en tijdstip.</p></article><article class="proof-item"><strong>15 min</strong><h3>Bewijs veilig verzamelen</h3><p>Voordat logs verdwijnen of de omgeving opnieuw wordt gestart.</p></article><article class="proof-item"><strong>0</strong><h3>Wijzigingen aan uw cluster</h3><p>Geen agent, installatie, wachtwoorden of geheugendumps.</p></article></div></section><section class="intro"><div class="intro-inner reveal"><p class="eyebrow">Eerst ordenen, daarna oplossen</p><p>Als het bedrijf platligt, wilt u niet eerst door een verkoopgesprek. U wilt weten hoe ernstig het is en waar u veilig moet beginnen.</p><p>Cluster Triage brengt de vijf zwaarste signalen in kaart. Wijst de lijst ergens op, dan kiest u gericht voor oorzakenonderzoek of een volledige HealthCheck.</p></div></section>
+<section class="section pattern" id="triage"><div class="inner"><div class="section-head reveal"><p class="eyebrow">Zo werkt Cluster Triage</p><h2>Bewaar eerst het bewijs</h2><p class="lead">Drie heldere stappen. Geen installatie, geen wijziging en geen verplicht vervolgtraject.</p></div><div class="benefits reveal"><article class="benefit"><span class="icon">01</span><h3>Vraag het script aan</h3><p>Vul de korte aanvraag in. U ontvangt het passende script met een leeswijzer.</p></article><article class="benefit"><span class="icon">02</span><h3>Draai het vanaf de beheerserver</h3><p>Vooraf ziet u exact wat wordt uitgelezen. Het script verzamelt uitsluitend gegevens rond het incidentvenster.</p></article><article class="benefit"><span class="icon">03</span><h3>Ontvang de triagelijst</h3><p>U krijgt de vijf zwaarste signalen per e-mail, gesorteerd op ernst en onderbouwd met meetgegevens.</p></article></div>
+<div class="aanvraag-wrap" style="max-width:760px;margin:56px auto 0">
+  <div class="section-head" style="margin-bottom:0;text-align:left;max-width:none">
+    <p class="eyebrow" style="justify-content:flex-start">Aanvraag</p>
+    <h3 style="font-family:var(--serif);font-weight:400;font-size:34px;margin:0 0 10px">Vraag het script aan</h3>
+    <p class="lead" style="margin:0">Vijf gegevens zijn genoeg om u het juiste script en de leeswijzer te
+      sturen. Het aantal uren bepaalt het meetvenster van de run.</p>
+  </div>
+
+  <form class="aanvraag" id="triageform">
+    <div class="veldrij">
+      <label><span class="lbl">Voornaam</span><input name="voornaam" autocomplete="given-name" required></label>
+      <label><span class="lbl">Achternaam</span><input name="achternaam" autocomplete="family-name" required></label>
+    </div>
+    <label><span class="lbl">Bedrijf of organisatie</span><input name="bedrijf" autocomplete="organization" required></label>
+    <label><span class="lbl">E-mailadres</span><input name="email" type="email" autocomplete="email" required></label>
+    <div class="veldrij">
+      <label><span class="lbl">Telefoon, met landcode</span><input name="telefoon" type="tel" autocomplete="tel" placeholder="+31 6 ..." required></label>
+      <label><span class="lbl">Land</span><input name="land" autocomplete="country-name" required></label>
+    </div>
+    <label><span class="lbl">Clusternaam</span><input name="cluster" required></label>
+    <label><span class="lbl">Hoeveel uur geleden vond het incident plaats?</span><input name="uren" type="number" min="1" max="720" placeholder="12" required></label>
+
+    <p class="verzendhint">Verstuur de aanvraag via WhatsApp &eacute;n e-mail, dan missen wij hem niet.</p>
+    <div class="verzendrij">
+      <button type="button" class="btn primary" id="knop-wa">Verstuur via WhatsApp</button>
+      <button type="button" class="btn dark" id="knop-mail">Verstuur ook per e-mail</button>
+    </div>
+    <p class="aanvraag-noot">
+      Wij proberen per omgaande te reageren, afhankelijk van bereikbaarheid.<br>
+      <b>Dit formulier verstuurt niets zelf:</b> de aanvraag vertrekt via uw eigen WhatsApp of e-mail.
+      Deze pagina slaat niets op.<br>
+      WhatsApp +66&nbsp;99&nbsp;146&nbsp;1761 &middot; hans@cldlbs.com
+    </p>
+  </form>
+</div>
+</div></section>
+<section class="platform" id="rapport"><div class="section-head reveal"><p class="eyebrow">Wat u gratis ontvangt</p><h2>De vijf zwaarste signalen,<br>niet een automatische diagnose</h2></div><div class="platform-panel reveal"><div class="platform-copy"><h3>Een triagelijst die richting geeft</h3><p>Elk signaal vermeldt de ernst, de gemeten waarde, de betrokken node en het tijdstip. Ook wat niet gelezen kon worden staat erbij.</p><p>Triage sorteert het probleem. Een definitieve oorzaak vraagt om reconstructie en diepgaande loganalyse.</p><div class="actions"><a class="btn dark" href="mailto:hans.vredevoort@cldlbs.com?subject=Aanvraag%20Cluster%20Triage">Vraag het script aan</a><a class="btn" href="findings.html">Bekijk een voorbeeld</a></div></div><div class="triage-list" aria-label="Voorbeeld van een triagelijst"><div class="triage-list-head"><span>TRIAGE · INCIDENTVENSTER</span><b>5 SIGNALEN</b></div><div class="triage-finding" data-r="crit"><strong>KRITIEK</strong><span>Witness onbereikbaar vanaf beide nodes</span></div><div class="triage-finding" data-r="high"><strong>HOOG</strong><span>Firmware NODE02 onder vereist niveau</span></div><div class="triage-finding" data-r="high"><strong>HOOG</strong><span>Opslagpad verloor redundantie</span></div><div class="triage-finding" data-r="med"><strong>MIDDEL</strong><span>PFC-klassen wijken af tussen host en switch</span></div><div class="triage-finding" data-r="low"><strong>LAAG</strong><span>Beheerinterface niet uitgelezen · reden vermeld</span></div></div></div><div class="feature-row reveal"><article class="feature"><div class="feature-media"><img src="assets/triage/failover-cluster.png" alt="Failover-clusternodes waarvan één node een kritieke status toont"></div><h3>Kritiek: witness onbereikbaar</h3><p>Vanaf beide nodes ontbreekt contact met de witness tijdens het incidentvenster.</p></article><article class="feature"><div class="feature-media"><img src="assets/triage/storage-spaces-direct.png" alt="Opslagarray met twee schijven die een waarschuwing tonen"></div><h3>Hoog: opslag onder druk</h3><p>Capaciteit, fouttolerantie en afwijkende disks worden als één opslagketen beoordeeld.</p></article><article class="feature"><div class="feature-media"><img src="assets/triage/datacenter-network.png" alt="Redundante netwerkswitches met een afwijkende verbinding"></div><h3>Hoog: netwerkpad wijkt af</h3><p>PFC, VLAN, RDMA en fysieke poorten worden tussen host en switch vergeleken.</p></article><article class="feature"><div class="feature-media"><img src="assets/triage/hyper-v.png" alt="Hyper-V hosts met een afwijkende virtuele workload"></div><h3>Middel: hostconfiguratie verschilt</h3><p>Virtuele switches, live migration en hostinstellingen worden node voor node vergeleken.</p></article></div></section>
+<section class="scope" id="veilig"><div class="scope-inner"><div class="section-head"><p class="eyebrow">Duidelijke grenzen</p><h2>Wat Triage wel en niet is</h2></div><div class="scope-grid"><article class="scope-card"><h3>U krijgt</h3><ul><li>De vijf zwaarste signalen, gesorteerd op ernst</li><li>Gemeten waarden, betrokken nodes en tijdstip</li><li>Ook niet-uitgelezen onderdelen, met de reden</li><li>Richting voor de veiligste vervolgstap</li><li>Een gratis eerste beoordeling zonder abonnement</li></ul></article><article class="scope-card no"><h3>U krijgt nog niet</h3><ul><li>Geen definitieve oorzaak of volledige reconstructie</li><li>Geen uitgebreid RCA-document</li><li>Geen volledig HealthCheck-rapport</li><li>Geen hersteluitvoering of configuratiewijzigingen</li><li>Geen gegarandeerde responstijd of spoedlijn</li></ul></article></div><div class="safety"><h3>Veilig en uitsluitend lezend</h3><p>Er wordt niets geïnstalleerd of gewijzigd. Wachtwoorden worden niet verwerkt of bewaard. Geheugendumps gaan niet mee in de gratis variant. Uw gegevens worden uitsluitend gebruikt om de triagelijst te maken.</p></div></div></section>
+<section class="stories pattern" id="healthcheck"><div class="stories-head reveal"><div><p class="eyebrow">Als de triagelijst ergens op wijst</p><h2 class="display">Van eerste signaal naar de juiste vervolgstap</h2></div><div class="carousel-controls"><button id="prev" aria-label="Vorige kaarten">‹</button><button id="next" aria-label="Volgende kaarten">›</button></div></div><div class="carousel reveal" id="carousel"><article class="story"><small>R1 · OORZAKENONDERZOEK</small><blockquote>Reconstructie over alle nodes, met tijdlijn, oorzaakanalyse en een RCA-document.</blockquote><small>Voor een storing waarvan de oorzaak achterhaald moet worden.</small></article><article class="story story-video"><img src="assets/triage/distributed-systems.png" alt="Onderzoeksschermen met een incidenttijdlijn en afhankelijkheden"><span>Root Cause Analysis</span></article><article class="story"><small>B1 · EENMALIGE HEALTHCHECK</small><blockquote>Het volledige technische beeld van het cluster, met bevindingen, herstelstappen en bespreking.</blockquote><small>Voor organisaties die eerst een betrouwbare nulmeting nodig hebben.</small></article><article class="story story-metric"><small>GRATIS TRIAGE</small><strong>5</strong><small>zwaarste signalen zijn altijd inbegrepen</small></article><article class="story"><small>C1 · PERIODIEKE HEALTHCHECK</small><blockquote>Vier meetmomenten per jaar maken zichtbaar of risico’s werkelijk verdwijnen.</blockquote><small>Voor aantoonbaar beheer en structurele risicoreductie.</small></article></div></section>
+
+<section class="cyclusband" id="cyclus">
+  <div class="cyclusband-inner">
+    <div class="kop">
+      <p class="eyebrow">Na de triage</p>
+      <h2>Van meting naar rapport, vier keer per jaar</h2>
+      <p>Een cyclus van een jaar: een basismeting en drie vervolgmetingen, elk kwartaal een. Elke meting levert een rapport en een uur waarin wij het met u doornemen.</p>
+      <p>De gratis Cluster Triage is stap 1 en kost u niets. Dit is wat daarna mogelijk is.</p>
+    </div>
+
+    <figure style="margin:0">
+      <svg id="cyclusfiguur" viewBox="0 0 960 500" role="img" aria-labelledby="cyclus-titel"><title id="cyclus-titel">De jaarcyclus van de HealthCheck en de zes stappen tussen meting en rapport.</title>
+              <defs>
+                <marker id="pijl-dim" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" class="mk-dim" fill="#3A4255"/>
+                </marker>
+                <marker id="pijl-acc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M0,0 L10,5 L0,10 z" class="mk-acc" fill="#0A7E9E"/>
+                </marker>
+              </defs>
+          <g data-halte="kader">
+            <text x="83" y="302" text-anchor="start" class="dg-eyebrow">Tussen meting en rapport &middot; stap 1 t/m 6</text>
+          </g>
+          <g data-halte="intake">
+            <rect x="83" y="36" width="158" height="88" rx="4" class="dg-doos eens"/>
+            <text x="162" y="68" text-anchor="middle" class="dg-titel">Intake</text>
+            <text x="162" y="88" text-anchor="middle" class="dg-sub">Stap 0 &middot; eenmalig</text>
+            <text x="162" y="104" text-anchor="middle" class="dg-sub">Get-ClusterIntake.ps1</text>
+            <line x1="241" y1="80" x2="289" y2="80" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+            <text x="268" y="142" text-anchor="middle" class="dg-sub">Startwaarden</text>
+          </g>
+          <g data-halte="meting">
+            <rect x="295" y="36" width="158" height="88" rx="4" class="dg-doos"/>
+            <text x="374" y="68" text-anchor="middle" class="dg-titel">Meting</text>
+            <text x="374" y="88" text-anchor="middle" class="dg-sub">Uitsluitend lezend</text>
+            <text x="374" y="104" text-anchor="middle" class="dg-sub">Vanaf uw beheerserver</text>
+            <line x1="453" y1="80" x2="501" y2="80" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+            <text x="480" y="142" text-anchor="middle" class="dg-sub acc">Stap 1 t/m 6</text>
+          </g>
+          <g data-halte="stap1">
+            <rect x="42" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+            <text x="105" y="344" text-anchor="middle" class="dg-nr">1</text>
+            <text x="105" y="366" text-anchor="middle" class="dg-titel klein">Inlezen</text>
+            <text x="105" y="384" text-anchor="middle" class="dg-sub b">Naast de vorige run</text>
+            <line x1="168" y1="368" x2="186" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+          </g>
+          <g data-halte="stap2">
+            <rect x="192" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+            <text x="255" y="344" text-anchor="middle" class="dg-nr">2</text>
+            <text x="255" y="366" text-anchor="middle" class="dg-titel klein">Schrijven</text>
+            <text x="255" y="384" text-anchor="middle" class="dg-sub b">Uit gemeten waarden</text>
+            <line x1="318" y1="368" x2="336" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+          </g>
+          <g data-halte="stap3">
+            <rect x="342" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+            <text x="405" y="344" text-anchor="middle" class="dg-nr">3</text>
+            <text x="405" y="366" text-anchor="middle" class="dg-titel klein">Beoordelen</text>
+            <text x="405" y="384" text-anchor="middle" class="dg-sub b">De beoordelaar weegt</text>
+            <line x1="468" y1="368" x2="486" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+          </g>
+          <g data-halte="stap4">
+            <rect x="492" y="322" width="126" height="92" rx="4" class="dg-doos poort"/>
+            <text x="555" y="344" text-anchor="middle" class="dg-nr acc">4</text>
+            <text x="555" y="366" text-anchor="middle" class="dg-titel klein">Controleren</text>
+            <text x="555" y="384" text-anchor="middle" class="dg-sub b">Houdt tegen</text>
+            <text x="555" y="397" text-anchor="middle" class="dg-sub b">Wat ontbreekt</text>
+            <line x1="618" y1="368" x2="636" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+          </g>
+          <g data-halte="terug">
+            <path d="M549,418 Q402,470 263,421" class="dg-terug" marker-end="url(#pijl-acc)"/>
+            <text x="405" y="464" text-anchor="middle" class="dg-sub acc">Geweigerd: terug naar schrijven</text>
+          </g>
+          <g data-halte="stap5">
+            <rect x="642" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+            <text x="705" y="344" text-anchor="middle" class="dg-nr">5</text>
+            <text x="705" y="366" text-anchor="middle" class="dg-titel klein">Goedkeuren</text>
+            <text x="705" y="384" text-anchor="middle" class="dg-sub b">De beoordelaar tekent</text>
+            <line x1="768" y1="368" x2="786" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+          </g>
+          <g data-halte="stap6">
+            <rect x="792" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+            <text x="855" y="344" text-anchor="middle" class="dg-nr">6</text>
+            <text x="855" y="366" text-anchor="middle" class="dg-titel klein">Opmaken</text>
+            <text x="855" y="384" text-anchor="middle" class="dg-sub b">In uw gekozen talen</text>
+          </g>
+          <g data-halte="rapport">
+            <rect x="507" y="36" width="158" height="88" rx="4" class="dg-doos"/>
+            <text x="586" y="68" text-anchor="middle" class="dg-titel">Rapport</text>
+            <text x="586" y="88" text-anchor="middle" class="dg-sub">Bevindingen, daarna delta</text>
+            <text x="586" y="104" text-anchor="middle" class="dg-sub">NL &middot; EN &middot; DE</text>
+            <line x1="665" y1="80" x2="713" y2="80" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+          </g>
+          <g data-halte="bespreking">
+            <rect x="719" y="36" width="158" height="88" rx="4" class="dg-doos"/>
+            <text x="798" y="68" text-anchor="middle" class="dg-titel">Bespreking</text>
+            <text x="798" y="88" text-anchor="middle" class="dg-sub">&Eacute;&eacute;n uur</text>
+            <text x="798" y="104" text-anchor="middle" class="dg-sub">Wij nemen het door</text>
+          </g>
+          <g data-halte="lus">
+            <path d="M798,124 L798,176 Q798,190 784,190 L388,190 Q374,190 374,176 L374,132" class="dg-lus" marker-end="url(#pijl-acc)" pathLength="1"/>
+            <circle cx="470" cy="190" r="11" class="dg-tick"/>
+            <circle cx="586" cy="190" r="11" class="dg-tick"/>
+            <circle cx="702" cy="190" r="11" class="dg-tick"/>
+            <text x="470" y="193" text-anchor="middle" class="dg-ticktxt">V1</text>
+            <text x="586" y="193" text-anchor="middle" class="dg-ticktxt">V2</text>
+            <text x="702" y="193" text-anchor="middle" class="dg-ticktxt">V3</text>
+            <text x="586" y="224" text-anchor="middle" class="dg-tekst">Elk kwartaal een vervolgmeting, opnieuw met rapport en bespreking</text>
+            <text x="586" y="242" text-anchor="middle" class="dg-sub">&Eacute;&eacute;n jaar: C1 + V1 + V2 + V3, vier metingen, vier rapporten, vier besprekingen</text>
+          </g>
+        </svg>
+    </figure>
+
+    <ul class="haltebalk" id="haltebalk">
+          <li><button type="button" data-ga="intake">Intake</button></li>
+          <li><button type="button" data-ga="meting">Meting</button></li>
+          <li><button type="button" data-ga="stap1">1 Inlezen</button></li>
+          <li><button type="button" data-ga="stap2">2 Schrijven</button></li>
+          <li><button type="button" data-ga="stap3">3 Beoordelen</button></li>
+          <li><button type="button" data-ga="stap4">4 Controleren</button></li>
+          <li><button type="button" data-ga="terug">Geweigerd</button></li>
+          <li><button type="button" data-ga="stap5">5 Goedkeuren</button></li>
+          <li><button type="button" data-ga="stap6">6 Opmaken</button></li>
+          <li><button type="button" data-ga="rapport">Rapport</button></li>
+          <li><button type="button" data-ga="bespreking">Bespreking</button></li>
+          <li><button type="button" data-ga="lus">Elk kwartaal</button></li>
+    </ul>
+
+    <p class="halteregel" id="halteregel" aria-live="polite"></p>
+
+    <div class="actions">
+      <a class="btn primary" href="/healthcheck/">Loop de hele cyclus door &rarr;</a>
+      <a class="btn" href="/rapport/">Bekijk het rapport</a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var svg=document.getElementById('cyclusfiguur');
+  var balk=document.getElementById('haltebalk');
+  var regel=document.getElementById('halteregel');
+  if(!svg||!balk||!regel)return;
+
+  /* Verminder beweging aan? Dan loopt hij niet en blijft de hele tekening
+     gewoon staan, volledig leesbaar. Zonder .loopt wordt er niets gedimd. */
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+    regel.innerHTML='<b>De cyclus</b>elk kwartaal een vervolgmeting, opnieuw met rapport en bespreking';
+    return;
+  }
+
+  var haltes=[
+    {h:"intake",k:"Stap 0 &middot; eenmalig",t:"Get-ClusterIntake.ps1 &middot; startwaarden"},
+    {h:"meting",k:"Uitsluitend lezend",t:"Vanaf uw beheerserver"},
+    {h:"stap1",k:"Stap 1",t:"Naast de vorige run"},
+    {h:"stap2",k:"Stap 2",t:"Uit gemeten waarden"},
+    {h:"stap3",k:"Stap 3",t:"De beoordelaar weegt"},
+    {h:"stap4",k:"Stap 4",t:"Houdt tegen wat ontbreekt"},
+    {h:"terug",k:"Terug naar stap 2",t:"Geweigerd: terug naar schrijven"},
+    {h:"stap5",k:"Stap 5",t:"De beoordelaar tekent"},
+    {h:"stap6",k:"Stap 6",t:"In uw gekozen talen"},
+    {h:"rapport",k:"Het document",t:"Bevindingen, daarna delta &middot; NL &middot; EN &middot; DE"},
+    {h:"bespreking",k:"E&eacute;n uur",t:"Wij nemen het door"},
+    {h:"lus",k:"De cyclus",t:"Elk kwartaal een vervolgmeting, opnieuw met rapport en bespreking"}
+  ];
+  var knoppen=[].slice.call(balk.querySelectorAll('button'));
+  var i=0, loopt=null, hervat=null, inBeeld=true, eerste=true;
+
+  svg.classList.add('loopt');
+
+  function toon(n){
+    i=n;
+    haltes.forEach(function(x,j){
+      var g=svg.querySelector('g[data-halte="'+x.h+'"]');
+      if(g){ g.classList.toggle('aan',j===n); g.classList.toggle('gehad',j<n); }
+      knoppen[j].setAttribute('aria-current', j===n ? 'true' : 'false');
+      knoppen[j].classList.toggle('gedaan', j<n);
+    });
+    regel.innerHTML='<b>'+haltes[n].k+'</b>'+haltes[n].t;
+  }
+
+  /* Een ketting van setTimeout in plaats van setInterval, zodat de eerste stap
+     sneller kan komen dan de rest. Anders staat u 1,6 seconde naar een stilstaande
+     tekening te kijken voordat er iets gebeurt. */
+  function tik(){ toon((i+1)%haltes.length) }
+  function draai(){
+    if(loopt||!inBeeld)return;
+    var wacht = eerste ? 350 : 1600;
+    eerste=false;
+    loopt=setTimeout(function ronde(){ tik(); loopt=setTimeout(ronde,1600) }, wacht);
+  }
+  function pauzeer(){ clearTimeout(loopt); loopt=null }
+
+  /* een klik houdt hem even vast en laat hem daarna vanzelf weer lopen */
+  knoppen.forEach(function(b,j){
+    b.addEventListener('click',function(){
+      toon(j); pauzeer(); clearTimeout(hervat);
+      hervat=setTimeout(draai,9000);
+    });
+  });
+  [balk,svg].forEach(function(el){
+    el.addEventListener('mouseenter',pauzeer);
+    el.addEventListener('mouseleave',function(){ clearTimeout(hervat); draai() });
+  });
+
+  toon(0); draai();
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(e){
+      inBeeld=e[0].isIntersecting; inBeeld ? draai() : pauzeer();
+    },{threshold:0, rootMargin:'0px 0px -15% 0px'}).observe(svg);
+  }
+})();
+</script>
+
+<section class="solutions" id="modules"><div class="solutions-inner"><p class="eyebrow">Waar de meting kijkt</p><h2 class="display">Het hele cluster, niet één losse foutmelding</h2><div class="solutions-grid"><div class="solution-tabs" role="tablist" aria-label="Technische domeinen"><button role="tab" aria-selected="true" data-solution="cluster">Failover Cluster</button><button role="tab" aria-selected="false" data-solution="storage">Storage Spaces Direct</button><button role="tab" aria-selected="false" data-solution="network">Netwerkpaden</button><button role="tab" aria-selected="false" data-solution="hyperv">Hyper-V hosts</button><button role="tab" aria-selected="false" data-solution="azure">Azure Local</button><button role="tab" aria-selected="false" data-solution="distributed">Afhankelijkheden</button></div><div class="solution-view" id="solution-view"><div class="solution-visual"><img src="assets/triage/failover-cluster.png" alt="Failover-clusternodes waarvan één node een kritieke status toont"><span>CLUSTER01 · Incidentvenster</span></div><div class="solution-copy"><h3>Elke node in dezelfde werkelijkheid</h3><p>Quorum, CSV’s, clusterparameters en firmware worden naast elkaar gelegd. Zo worden afwijkingen zichtbaar die per server afzonderlijk niet opvallen.</p><a href="services.html">Bekijk de modules ↗</a></div></div></div></div></section>
+<section class="topics pattern" id="kennis"><div class="stories-head reveal"><div><p class="eyebrow">Herken uw situatie</p><h2 class="display">Van zoekvraag naar veilige eerste stap</h2></div></div><div class="topics-list reveal"><a class="topic" href="blog.html"><span>Cluster down</span><h3>Wat verzamelt u vóór de eerste herstart?</h3></a><a class="topic" href="blog.html"><span>Witness</span><h3>Beide nodes verliezen contact met quorum</h3></a><a class="topic" href="blog.html"><span>Storage</span><h3>CSV of opslagpad valt onverwacht weg</h3></a><a class="topic" href="blog.html"><span>RCA</span><h3>Van top vijf signalen naar de werkelijke oorzaak</h3></a></div></section>
+<section class="cta" id="storing"><p class="eyebrow" style="justify-content:center;color:var(--accent)">Uw cluster ligt stil?</p><h2>Wacht niet tot het bewijs verdwenen is.</h2><p>Vraag het uitsluitend lezende triagescript aan. U ontvangt gratis de vijf zwaarste signalen en weet welke vervolgstap logisch is.</p><div class="actions" style="justify-content:center"><a class="btn primary" data-icon="script" href="mailto:hans.vredevoort@cldlbs.com?subject=Aanvraag%20Cluster%20Triage">Start gratis Cluster Triage →</a><a class="btn ghost" data-icon="mail" href="mailto:hans.vredevoort@cldlbs.com">WhatsApp of e-mail Hans</a></div></section></main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+<script src="huisstijl/pagina.js?v=94ec48de"></script></body></html>

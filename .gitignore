@@ -15,3 +15,8 @@ logs/
 *.m4a
 blog/_HANDOFF-*.md
 build_blog_docx.py
+
+# Werkmateriaal, geen sitecontent
+reference/
+test-results/
+*.antithesis-backup.html

@@ -1,0 +1,43 @@
+/* CloudLabs · bevinding.css · de bevindingkaart
+   ==========================================================================
+   Uit voorbeeld.css gelicht zodat zowel de praktijkvoorbeelden als de
+   rapportpagina eraan kunnen hangen. Geen regel gewijzigd, alleen verplaatst.
+
+   Laadvolgorde: pagina.css -> bevinding.css -> (voorbeeld.css | rapport.css) */
+
+/* ---- de bevindingkaart uit het rapport ---------------------------------
+   Bewust de klassenamen van Hans uit huisstijl/findings.css (.bev, .bevkop,
+   .fid, .chip, .veld). Zo staat op de site het component dat de klant in zijn
+   rapport terugziet, en valt dit blok samen met findings.css zodra beide
+   bestanden samengaan. */
+.bev{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--faint);
+     border-radius:4px;padding:26px 28px;margin:0 0 16px}
+.bev.crit{border-left-color:var(--crit);--risk:var(--crit)}
+.bev.high{border-left-color:var(--high);--risk:var(--high)}
+.bev.med {border-left-color:var(--med); --risk:var(--med)}
+.bev.low {border-left-color:var(--low); --risk:var(--low)}
+.bev.none{border-left-color:var(--geen);--risk:var(--geen)}
+.bevkop{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px;
+        background:color-mix(in srgb, var(--risk) 9%, transparent);padding:10px 14px;border-radius:2px}
+.bevkop .chip,.bevkop .fid{align-self:center}
+.fid{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink);
+     min-width:42px;font-variant-numeric:tabular-nums}
+.bevtitel{flex:1;min-width:0}
+.onderwerp{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+           text-transform:uppercase;color:var(--faint);margin-bottom:4px}
+.bevtitel h3{font-family:var(--sans);font-weight:600;font-size:16px;line-height:1.35;margin:0}
+.chip{flex:0 0 auto;min-width:74px;text-align:center;font-family:var(--mono);font-size:10px;
+      font-weight:500;letter-spacing:.09em;padding:5px 8px;border-radius:3px;
+      color:var(--chip-ink);background:var(--faint)}
+.chip.crit{background:var(--crit);border:1px solid var(--crit-ring)}
+.chip.high{background:var(--high)}
+.chip.med{background:var(--med)}
+.chip.low{background:var(--low)}
+.chip.none{background:var(--geen)}
+.veld{margin:0 0 18px}
+.veld:last-child{margin-bottom:0}
+.veldnaam{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.11em;
+          text-transform:uppercase;color:var(--accent);margin-bottom:7px}
+.veld p{margin:0;font-family:var(--serif);font-size:16px;line-height:1.65;color:var(--dim)}
+.veld p.meting{font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--ink);
+               font-variant-numeric:tabular-nums}

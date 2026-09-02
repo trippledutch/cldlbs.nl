@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Gegenereerd met blog-omzetten.py --index. Niet met de hand bijwerken:
+     draai het script opnieuw nadat er een artikel bij komt. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>Blog &middot; Hyper-V, Failover Clustering en Azure Local &middot; CloudLabs</title>
+<meta name="description" content="Uitleg bij bevindingen die wij in Hyper-V-, Failover Cluster- en Azure Local-omgevingen terugzien: quorum en witness, CSV-eigenaarschap, RDMA, firmware, migraties en patchrondes.">
+<link rel="canonical" href="https://cldlbs.com/blog/">
+<link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/">
+<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:url" content="https://cldlbs.com/blog/">
+<meta property="og:title" content="Blog &middot; CloudLabs">
+<meta property="og:description" content="Uitleg bij de bevindingen die wij in clusters terugzien.">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css">
+<link rel="stylesheet" href="/huisstijl/artikel.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://cldlbs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://cldlbs.com/blog/"
+        }
+      ]
+    },
+    {
+      "@type": "Blog",
+      "@id": "https://cldlbs.com/blog/#blog",
+      "name": "CloudLabs Blog",
+      "inLanguage": "nl-NL",
+      "description": "Uitleg bij bevindingen uit Hyper-V-, Failover Cluster- en Azure Local-metingen.",
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://cldlbs.com/#organisatie",
+        "name": "CloudLabs",
+        "url": "https://cldlbs.com/"
+      },
+      "blogPost": [
+        {
+          "@type": "BlogPosting",
+          "headline": "Windows Server 2025 Hyper-V: wat het werkelijk toevoegt voor cluster operators",
+          "url": "https://cldlbs.com/blog/windows-server-2025-hyper-v-cluster-features.html",
+          "datePublished": "2026-07-22",
+          "articleSection": "Windows Server 2025",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "Wat gaat het worden: Klassiek Hyper-V of Azure Local?",
+          "url": "https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html",
+          "datePublished": "2026-06-25",
+          "articleSection": "Strategy",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "CSV ownership onbalans in Hyper-V clusters: oorzaken en oplossingen",
+          "url": "https://cldlbs.com/blog/csv-ownership-imbalance.html",
+          "datePublished": "2026-06-23",
+          "articleSection": "Storage",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "VMs uitlijnen met hun storage: voortbouwen op het script van Darryl van der Peijl",
+          "url": "https://cldlbs.com/blog/aligning-vms-with-storage.html",
+          "datePublished": "2026-06-18",
+          "articleSection": "Storage",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "Hoe we de Hyper-V cluster health check opvolgen",
+          "url": "https://cldlbs.com/blog/reporting-remediation-progress.html",
+          "datePublished": "2026-06-18",
+          "articleSection": "Cluster Health",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "Van Health Check tot Patch Night: de CloudLabs-werkwijze in de praktijk",
+          "url": "https://cldlbs.com/blog/health-check-to-patch-night.html",
+          "datePublished": "2026-06-12",
+          "articleSection": "Cluster Health",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "Azure Local in 2026: de gebreken zijn gedocumenteerd. Plan je exit voordat je instapt.",
+          "url": "https://cldlbs.com/blog/azure-local-documented-flaws-exit-strategy.html",
+          "datePublished": "2026-06-11",
+          "articleSection": "Azure Local",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM's niet bijwerken, en wat er in 2026 stukgaat",
+          "url": "https://cldlbs.com/blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html",
+          "datePublished": "2026-06-05",
+          "articleSection": "Failover Clustering",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "Azure Local migratie readiness checklist: wat 2026 anders maakt",
+          "url": "https://cldlbs.com/blog/azure-local-migration-readiness.html",
+          "datePublished": "2026-06-01",
+          "articleSection": "Azure Local",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "Time drift in Hyper-V clusters: de stille killer van Kerberos en CSV",
+          "url": "https://cldlbs.com/blog/hyper-v-time-drift-kerberos-csv.html",
+          "datePublished": "2026-05-28",
+          "articleSection": "Time Service",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster?",
+          "url": "https://cldlbs.com/blog/cluster-witness-comparison.html",
+          "datePublished": "2026-05-24",
+          "articleSection": "Quorum",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "Live Migration over het verkeerde netwerk: de stille Hyper-V-valkuil",
+          "url": "https://cldlbs.com/blog/live-migration-wrong-network.html",
+          "datePublished": "2026-05-17",
+          "articleSection": "Networking",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "Cluster Aware Updating: runbook, audit trail, en wat niemand documenteert",
+          "url": "https://cldlbs.com/blog/cluster-aware-updating-runbook-audit-trail.html",
+          "datePublished": "2026-05-15",
+          "articleSection": "Patching",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "SAN vs S2D vs Azure Local: storage-keuze voor Hyper-V in 2026",
+          "url": "https://cldlbs.com/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html",
+          "datePublished": "2026-05-15",
+          "articleSection": "Storage",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026",
+          "url": "https://cldlbs.com/blog/top-10-hyper-v-cluster-issues.html",
+          "datePublished": "2026-05-15",
+          "articleSection": "Cluster Health",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        },
+        {
+          "@type": "BlogPosting",
+          "headline": "VMware naar Hyper-V cluster migratie: pre-migration assessment in 6 stappen",
+          "url": "https://cldlbs.com/blog/vmware-to-hyper-v-migration-assessment.html",
+          "datePublished": "2026-05-15",
+          "articleSection": "Migratie",
+          "author": {
+            "@type": "Person",
+            "name": "Hans Vredevoort"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Naar inhoud</a>
+
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/blog/" aria-current="page">Blog</a></div>
+    <div class="nav-actions">
+      <button class="search" aria-label="Zoeken">&#8981;</button>
+      <a class="btn primary" href="/triage/">Start gratis triage</a>
+      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+<section class="section" style="padding-bottom:80px">
+  <div class="inner">
+    <p class="kruimelpad"><a href="/">CloudLabs</a> / Blog</p>
+    <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,58px);line-height:1.05;letter-spacing:-.022em;margin:0 0 26px;max-width:17ch">Wat wij in clusters terugzien</h1>
+    <p style="font-family:var(--serif);font-size:21px;line-height:1.55;color:var(--dim);max-width:820px;margin:0 0 14px">Deze artikelen komen uit de bevindingencatalogus. Elk stuk behandelt iets dat wij in echte omgevingen tegenkomen, met de gemeten waarden erbij en de handeling die erop volgt.</p>
+    <p style="font-family:var(--serif);font-size:18px;line-height:1.7;color:var(--dim);max-width:820px;margin:0 0 50px">Geen nieuwsberichten en geen productaankondigingen. Uitleg waar een clusterbeheerder de volgende patchronde iets aan heeft.</p>
+
+    <div class="artikellijst">
+      <a class="artikelrij" href="/blog/windows-server-2025-hyper-v-cluster-features.html">
+        <div class="rij-meta"><b>Windows Server 2025</b>22 juli 2026<br>13 minuten leestijd</div>
+        <div><h2>Windows Server 2025 Hyper-V: wat het werkelijk toevoegt voor cluster operators</h2><p>Windows Server 2025 is sinds november 2024 algemeen beschikbaar, en in 2026 zien wij bij CloudLabs steeds vaker dat klanten upgrade-planning serieus oppakken. Niet omdat Windows Server...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/azure-local-vs-classic-hyper-v-cluster.html">
+        <div class="rij-meta"><b>Strategy</b>25 juni 2026<br>5 minuten leestijd</div>
+        <div><h2>Wat gaat het worden: Klassiek Hyper-V of Azure Local?</h2><p>Bijna elke maand komt dezelfde vraag op tafel. Een klant staat voor een refresh, het oude cluster is afgeschreven, en iemand in het team heeft op een Microsoft-slide gezien dat alles...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/csv-ownership-imbalance.html">
+        <div class="rij-meta"><b>Storage</b>23 juni 2026<br>12 minuten leestijd</div>
+        <div><h2>CSV ownership onbalans in Hyper-V clusters: oorzaken en oplossingen</h2><p>Na elke patch-ronde, na elke Live Migration-storm, na elke geplande failover drijft Cluster Shared Volume ownership uit elkaar. Eén node bezit uiteindelijk alle CSV&#x27;s, wordt coordinator...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/aligning-vms-with-storage.html">
+        <div class="rij-meta"><b>Storage</b>18 juni 2026<br>10 minuten leestijd</div>
+        <div><h2>VMs uitlijnen met hun storage: voortbouwen op het script van Darryl van der Peijl</h2><p>Jaren geleden schreef een oud-collega van mij, Darryl van der Peijl, een klein, scherp PowerShell-script dat één ding goed deed: het vond elke VM die op de verkeerde node draaide ten...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/reporting-remediation-progress.html">
+        <div class="rij-meta"><b>Cluster Health</b>18 juni 2026<br>11 minuten leestijd</div>
+        <div><h2>Hoe we de Hyper-V cluster health check opvolgen</h2><p>Een Hyper-V cluster health check die eindigt met één PDF is een momentopname. En een momentopname begint te verouderen zodra je dingen gaat repareren. Het serieus aanpakken van risico&#x27;s...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/health-check-to-patch-night.html">
+        <div class="rij-meta"><b>Cluster Health</b>12 juni 2026<br>9 minuten leestijd</div>
+        <div><h2>Van Health Check tot Patch Night: de CloudLabs-werkwijze in de praktijk</h2><p>Dit artikel volgt een praktijkvoorbeeld van de vijfstaps CloudLabs-werkwijze, toegepast op een productie Hyper-V cluster. Twaalf High Risk-bevindingen werden ontdekt, opgelost in...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/azure-local-documented-flaws-exit-strategy.html">
+        <div class="rij-meta"><b>Azure Local</b>11 juni 2026<br>12 minuten leestijd</div>
+        <div><h2>Azure Local in 2026: de gebreken zijn gedocumenteerd. Plan je exit voordat je instapt.</h2><p>Niemand hoeft geruchten over Azure Local te verspreiden. Microsoft documenteert de problemen zelf: een doorlopend bijgewerkte known-issues pagina, een publieke GitHub-repository vol...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html">
+        <div class="rij-meta"><b>Failover Clustering</b>5 juni 2026<br>13 minuten leestijd</div>
+        <div><h2>Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM&#x27;s niet bijwerken, en wat er in 2026 stukgaat</h2><p>Een vraag blijft terugkomen op Reddit en in de praktijk: heeft een Hyper-V-host bijgewerkte firmware en hardware Secure Boot nodig voordat de Generation 2-VM&#x27;s de Secure...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/azure-local-migration-readiness.html">
+        <div class="rij-meta"><b>Azure Local</b>1 juni 2026<br>16 minuten leestijd</div>
+        <div><h2>Azure Local migratie readiness checklist: wat 2026 anders maakt</h2><p>Azure Local is Microsofts huidige naam voor het besturingssysteem dat eerder Azure Stack HCI heette. Een hyperconverged Windows-platform beheerd via Azure Arc, gefactureerd per core per...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/hyper-v-time-drift-kerberos-csv.html">
+        <div class="rij-meta"><b>Time Service</b>28 mei 2026<br>13 minuten leestijd</div>
+        <div><h2>Time drift in Hyper-V clusters: de stille killer van Kerberos en CSV</h2><p>Een Hyper-V cluster met klok-skew tussen nodes is een tijdbom. Niet figuurlijk, maar letterlijk. Wanneer de klokken op cluster-nodes meer dan vijf minuten uit elkaar lopen, valt Kerberos...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/cluster-witness-comparison.html">
+        <div class="rij-meta"><b>Quorum</b>24 mei 2026<br>14 minuten leestijd</div>
+        <div><h2>File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster?</h2><p>Quorum is het onzichtbare stuk dat een Windows Server Failover Cluster overeind houdt wanneer nodes verdwijnen. Witness-configuratie is ook een van de top drie gebieden waar CloudLabs...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/live-migration-wrong-network.html">
+        <div class="rij-meta"><b>Networking</b>17 mei 2026<br>12 minuten leestijd</div>
+        <div><h2>Live Migration over het verkeerde netwerk: de stille Hyper-V-valkuil</h2><p>Live Migration die stilletjes het verkeerde netwerk gebruikt is de meest voorkomende bevinding in CloudLabs Hyper-V Cluster Health Checks. Het is precies het type misconfiguratie dat...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/cluster-aware-updating-runbook-audit-trail.html">
+        <div class="rij-meta"><b>Patching</b>15 mei 2026<br>13 minuten leestijd</div>
+        <div><h2>Cluster Aware Updating: runbook, audit trail, en wat niemand documenteert</h2><p>Cluster Aware Updating (CAU) bestaat sinds Windows Server 2012 en wordt door de meeste organisaties gebruikt. Of beter gezegd: CAU is geconfigureerd, een rol bestaat, een schema staat,...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">
+        <div class="rij-meta"><b>Storage</b>15 mei 2026<br>15 minuten leestijd</div>
+        <div><h2>SAN vs S2D vs Azure Local: storage-keuze voor Hyper-V in 2026</h2><p>De meeste marketing in 2026 vertelt je dat hyperconverged het antwoord is. Microsoft promoot Azure Local, vendors promoten hun HCI-stack, en op conferenties hoor je dat SAN-gebaseerde...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/top-10-hyper-v-cluster-issues.html">
+        <div class="rij-meta"><b>Cluster Health</b>15 mei 2026<br>14 minuten leestijd</div>
+        <div><h2>Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026</h2><p>Na jaren van Hyper-V Health Checks in Windows Server 2016-, 2019-, 2022- en 2025-omgevingen komen tien bevindingen telkens terug. Over branches, schaalgroottes en beheerteams heen. Geen...</p></div>
+      </a>
+      <a class="artikelrij" href="/blog/vmware-to-hyper-v-migration-assessment.html">
+        <div class="rij-meta"><b>Migratie</b>15 mei 2026<br>15 minuten leestijd</div>
+        <div><h2>VMware naar Hyper-V cluster migratie: pre-migration assessment in 6 stappen</h2><p>VMware naar Hyper-V migraties zijn in 2026 niet meer iets dat alleen Microsoft-shops overwegen. Sinds de Broadcom-overname is de subscription-only licentiestructuur voor veel...</p></div>
+      </a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+
+
+<script>
+(function(){
+  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
+  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
+})();
+</script>
+<script src="/huisstijl/pagina.js"></script>
+</body>
+</html>

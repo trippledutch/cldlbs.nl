@@ -1,0 +1,250 @@
+<!doctype html>
+<!-- CloudLabs · v0.1 · Cluster Triage -->
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a1024">
+<link rel="icon" href="/favicon.png" type="image/png">
+<!-- stealth preview: remove noindex at go-live -->
+<meta name="robots" content="noindex,nofollow">
+<title>CloudLabs Cluster Triage</title>
+<meta name="description" content="Cluster Triage: het gratis, uitsluitend lezende script na een Hyper-V, Failover Cluster of Azure Local storing. U ontvangt de vijf zwaarste signalen rond uw incidentvenster, gesorteerd op ernst.">
+<link rel="canonical" href="https://cldlbs.com/triage/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cldlbs.com/triage/">
+<meta property="og:title" content="CloudLabs Cluster Triage">
+<meta property="og:description" content="Gratis na een clusterstoring: een uitsluitend lezend script en de vijf zwaarste signalen rond uw incidentvenster, gesorteerd op ernst. NL/EN/DE/ES/FR.">
+<!-- Google tag (gtag.js) with Consent Mode v2 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BETH09PH6C"></script>
+<script>
+  window.dataLayer=window.dataLayer||[];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent','default',{'ad_storage':'denied','ad_user_data':'denied','ad_personalization':'denied','analytics_storage':'denied','functionality_storage':'granted','security_storage':'granted','wait_for_update':500});
+  gtag('js',new Date());
+  gtag('config','G-BETH09PH6C',{'anonymize_ip':true});
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+:root{
+  --kop:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --tekst:"IBM Plex Serif",Georgia,serif;
+  --meting:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+:root{
+  --ground:#FBFCFD; --surface:#FFFFFF; --sunk:#F4F6F9;
+  --ink:#0A1024; --dim:#3A4255; --faint:#6B7285; --rule:#D3D8E0;
+  --accent:#0A7E9E; --accent-soft:#E6F2F6; --chip-ink:#FFFFFF;
+  --crit:#000000; --critring:#FF3B30; --high:#E03131; --med:#F76707; --low:#1C7ED6;
+  --maxw:46rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0B0F1A; --surface:#121826; --sunk:#0F1421;
+    --ink:#E8ECF3; --dim:#AEB7C7; --faint:#7B849A; --rule:#232B3B;
+    --accent:#3FB6D8; --accent-soft:#102A33; --chip-ink:#0B0F1A;
+    --crit:#000000; --critring:#FF3B30; --high:#FF6B6B; --med:#FF922B; --low:#4DABF7;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0B0F1A; --surface:#121826; --sunk:#0F1421;
+  --ink:#E8ECF3; --dim:#AEB7C7; --faint:#7B849A; --rule:#232B3B;
+  --accent:#3FB6D8; --accent-soft:#102A33; --chip-ink:#0B0F1A;
+  --crit:#000000; --critring:#FF3B30; --high:#FF6B6B; --med:#FF922B; --low:#4DABF7;
+}
+.t-en,.t-de,.t-es,.t-fr{display:none}
+:root[data-taal="en"] .t-nl{display:none}
+:root[data-taal="en"] .t-en{display:inline}
+:root[data-taal="de"] .t-nl{display:none}
+:root[data-taal="de"] .t-de{display:inline}
+:root[data-taal="es"] .t-nl{display:none}
+:root[data-taal="es"] .t-es{display:inline}
+:root[data-taal="fr"] .t-nl{display:none}
+:root[data-taal="fr"] .t-fr{display:inline}
+.t-de,.t-es,.t-fr{hyphens:auto}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--tekst); font-size:1rem; line-height:1.62;
+  -webkit-font-smoothing:antialiased}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 1.5rem 3rem}
+a{color:var(--accent)}
+p{margin:0 0 .95rem; color:var(--dim)}
+strong{font-weight:600; color:var(--ink)}
+
+.kopbalk{position:sticky; top:0; z-index:50; background:var(--surface); border-bottom:1px solid var(--rule)}
+.kopbalk-binnen{max-width:var(--maxw); margin:0 auto; padding:.55rem 1.5rem;
+  display:flex; align-items:center; justify-content:space-between; gap:.6rem 1.2rem; flex-wrap:wrap}
+.kopmerk{font-family:var(--meting); font-size:.72rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); white-space:nowrap}
+a.kopmerk{text-decoration:none}
+.schakel{display:flex; gap:.9rem; flex-wrap:wrap}
+.schakelgroep{display:flex; gap:.3rem}
+.schakel button{font-family:var(--meting); font-size:.72rem; letter-spacing:.08em;
+  background:var(--surface); color:var(--dim); border:1px solid var(--rule);
+  border-radius:3px; padding:.3rem .6rem; cursor:pointer}
+.schakel button[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--chip-ink)}
+.schakel button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.knop-zoomreset{min-width:3.6rem; font-variant-numeric:tabular-nums}
+.knop-zoomin,.knop-zoomuit{min-width:1.9rem}
+
+.mast{border-bottom:1px solid var(--rule); background:var(--surface)}
+.mast .wrap{padding-top:2.4rem; padding-bottom:2.2rem}
+.gratis{display:inline-block; font-family:var(--meting); font-size:.7rem; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--chip-ink); background:var(--accent);
+  border-radius:3px; padding:.28rem .6rem; margin:0 0 1rem}
+h1{font-family:var(--kop); font-weight:600; font-size:clamp(1.9rem,4.6vw,2.6rem);
+  line-height:1.12; margin:0 0 .5rem; letter-spacing:-.012em}
+.onderkop{font-family:var(--kop); font-size:1.05rem; color:var(--dim); margin:0 0 1.2rem}
+.standfirst{font-size:1.05rem; color:var(--dim); max-width:58ch; margin:0 0 1.6rem}
+.knop{display:inline-block; font-family:var(--kop); font-weight:600; font-size:1rem;
+  background:var(--accent); color:var(--chip-ink); border-radius:4px;
+  padding:.7rem 1.3rem; text-decoration:none}
+.knop:focus-visible{outline:2px solid var(--ink); outline-offset:2px}
+p.subknop{font-family:var(--meting); font-size:.78rem; color:var(--faint); margin:.6rem 0 0}
+
+form.aanvraag{max-width:34rem; margin:.4rem 0 0}
+.veldrij{display:grid; grid-template-columns:1fr 1fr; gap:.7rem}
+form.aanvraag label{display:block; margin:0 0 .8rem}
+form.aanvraag .lbl{display:block; font-family:var(--meting); font-size:.68rem;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin-bottom:.3rem}
+form.aanvraag input{width:100%; font-family:var(--kop); font-size:1rem; color:var(--ink);
+  background:var(--surface); border:1px solid var(--rule); border-radius:3px; padding:.55rem .7rem}
+form.aanvraag input:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+.knoppenrij{display:flex; gap:.7rem; flex-wrap:wrap; margin:.4rem 0 .8rem}
+.knop.tweede{background:var(--surface); color:var(--accent); border:1.5px solid var(--accent)}
+form.aanvraag button.knop{border:0; cursor:pointer; font-size:1rem}
+form.aanvraag button.knop.tweede{border:1.5px solid var(--accent)}
+p.formnoot{font-size:.92rem; color:var(--dim); margin:0 0 .5rem}
+@media (max-width:520px){ .veldrij{grid-template-columns:1fr} }
+
+section{margin:2.8rem 0 0; scroll-margin-top:3.2rem}
+h2{font-family:var(--kop); font-weight:600; font-size:1.22rem; margin:0 0 1rem;
+  padding-bottom:.5rem; border-bottom:1px solid var(--rule);
+  display:flex; align-items:baseline; gap:.55rem}
+h2 .terug{margin-left:auto; font-family:var(--meting); font-weight:400; font-size:.85rem;
+  color:var(--faint); text-decoration:none; padding:0 .2rem}
+h2 .terug:hover{color:var(--accent)}
+ol.stappen{margin:.3rem 0 .6rem; padding-left:1.5rem; color:var(--dim)}
+ol.stappen li{margin:.55rem 0}
+ol.stappen b{font-family:var(--kop); color:var(--ink)}
+ul.opsom{margin:0; padding:0 0 .6rem 1.15rem; color:var(--dim)}
+ul.opsom li{margin:.28rem 0}
+
+.duo{display:grid; grid-template-columns:1fr 1fr; gap:.7rem; margin:.4rem 0 1rem}
+.duo>div{background:var(--surface); border:1px solid var(--rule); border-radius:4px; padding:.9rem 1.1rem}
+.duo .kopje{font-family:var(--meting); font-size:.68rem; letter-spacing:.11em;
+  text-transform:uppercase; display:block; margin-bottom:.4rem}
+.duo .wel .kopje{color:var(--accent)}
+.duo .niet .kopje{color:var(--high)}
+.duo p{font-size:.95rem; margin:0}
+
+.lijst{background:var(--surface); border:1px solid var(--rule); border-radius:4px; margin:.4rem 0 .3rem}
+.lijst>div{display:flex; align-items:center; gap:.9rem; padding:.65rem 1rem;
+  border-bottom:1px solid var(--sunk); font-size:.95rem; color:var(--dim)}
+.lijst>div:last-child{border-bottom:none}
+.rchip{flex:none; font-family:var(--meting); font-size:.64rem; font-weight:500; letter-spacing:.08em;
+  color:#FFFFFF; border-radius:3px; padding:.24rem .5rem; min-width:4.4rem; text-align:center}
+.rchip.crit{background:var(--crit); box-shadow:0 0 0 2px var(--critring)}
+.rchip.high{background:var(--high)}
+.rchip.med{background:var(--med)}
+p.bijschrift{font-family:var(--meting); font-size:.78rem; color:var(--faint); margin:.3rem 0 1rem}
+
+.kader{background:var(--sunk); border-left:3px solid var(--accent);
+  border-radius:0 4px 4px 0; padding:.9rem 1.15rem .7rem; margin:1rem 0}
+.kader p{margin-bottom:.5rem}
+.kader p:last-child{margin-bottom:0}
+
+footer{margin-top:3rem; padding-top:1.1rem; border-top:1px solid var(--rule);
+  font-family:var(--meting); font-size:.78rem; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--faint); display:flex; gap:1.6rem; flex-wrap:wrap}
+
+@media (max-width:640px){ .duo{grid-template-columns:1fr} }
+@media (prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+@page{ size:A4; margin:22mm 16mm 22mm }
+@media print{
+  html{font-size:100% !important}
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
+    --ground:#FFFFFF; --surface:#FFFFFF; --sunk:#F4F6F9;
+    --ink:#0A1024; --dim:#2B3245; --faint:#5C6478; --rule:#C9CFD9;
+    --accent:#0A6A85; --accent-soft:#E6F2F6; --chip-ink:#FFFFFF;
+    --crit:#0A1024; --high:#C42B2B; --med:#B04A05; --low:#1667B5;
+  }
+  html,body{background:#FFFFFF}
+  body{font-size:10.5pt; line-height:1.45}
+  .wrap{max-width:none; padding:0}
+  .kopbalk{display:none}
+  h2 .terug{display:none}
+  .rchip,.gratis,.knop{-webkit-print-color-adjust:exact; print-color-adjust:exact}
+  h2{break-after:avoid}
+  .duo>div,.lijst,.kader{break-inside:avoid}
+  p,li{orphans:2; widows:2}
+}
+</style>
+</head>
+<body>
+<div class="kopbalk" id="top"><div class="kopbalk-binnen"><a class="kopmerk" href="#top">CloudLabs Cluster Triage</a><div class="schakel"><div class="schakelgroep" role="group" aria-label="Zoom"><button type="button" class="knop-zoomuit" title="Zoom &minus;" aria-label="Zoom kleiner">&minus;</button><button type="button" class="knop-zoomreset" title="Zoom 100%">100%</button><button type="button" class="knop-zoomin" title="Zoom +" aria-label="Zoom groter">+</button></div><div class="schakelgroep" role="group" aria-label="Taal"><button type="button" class="knop-taal" data-taal="nl" aria-pressed="true">NL</button><button type="button" class="knop-taal" data-taal="en" aria-pressed="false">EN</button><button type="button" class="knop-taal" data-taal="de" aria-pressed="false">DE</button><button type="button" class="knop-taal" data-taal="es" aria-pressed="false">ES</button><button type="button" class="knop-taal" data-taal="fr" aria-pressed="false">FR</button></div><div class="schakelgroep" role="group" aria-label="Thema"><button type="button" class="knop-thema" data-thema="licht" aria-pressed="false" title="Licht / Light / Hell / Claro / Clair">&#9728;</button><button type="button" class="knop-thema" data-thema="donker" aria-pressed="false" title="Donker / Dark / Dunkel / Oscuro / Sombre">&#9790;</button></div></div></div></div><header class="mast"><div class="wrap"><span class="gratis"><span class="t t-nl">Gratis</span><span class="t t-en" lang="en">Free</span><span class="t t-de" lang="de">Kostenlos</span><span class="t t-es" lang="es">Gratis</span><span class="t t-fr" lang="fr">Gratuit</span></span><h1>Cluster Triage</h1><p class="onderkop"><span class="t t-nl">De gratis eerste stap na een clusterstoring</span><span class="t t-en" lang="en">The free first step after a cluster incident</span><span class="t t-de" lang="de">Der kostenlose erste Schritt nach einer Clusterst&ouml;rung</span><span class="t t-es" lang="es">El primer paso gratuito tras un incidente de cl&uacute;ster</span><span class="t t-fr" lang="fr">La premi&egrave;re &eacute;tape gratuite apr&egrave;s un incident de cluster</span></p><p class="standfirst"><span class="t t-nl">E&eacute;n uitsluitend lezend script over uw Hyper-V, Failover Cluster of Azure Local omgeving, en u ontvangt de triagelijst: de vijf zwaarste signalen rond uw incidentvenster, gesorteerd op ernst. Gratis, zonder abonnement en zonder verplichtingen.</span><span class="t t-en" lang="en">One read-only script across your Hyper-V, Failover Cluster or Azure Local environment, and you receive the triage list: the five heaviest signals around your incident window, sorted by severity. Free, no subscription, no strings attached.</span><span class="t t-de" lang="de">Ein ausschlie&szlig;lich lesendes Skript &uuml;ber Ihre Hyper-V-, Failover-Cluster- oder Azure-Local-Umgebung, und Sie erhalten die Triageliste: die f&uuml;nf schwersten Signale rund um Ihr St&ouml;rungsfenster, sortiert nach Schwere. Kostenlos, ohne Abonnement, ohne Verpflichtung.</span><span class="t t-es" lang="es">Un script de solo lectura sobre su entorno Hyper-V, Failover Cluster o Azure Local, y usted recibe la lista de triaje: las cinco se&ntilde;ales m&aacute;s graves en torno a la ventana del incidente, ordenadas por gravedad. Gratis, sin suscripci&oacute;n y sin compromiso.</span><span class="t t-fr" lang="fr">Un script en lecture seule sur votre environnement Hyper-V, Failover Cluster ou Azure Local, et vous recevez la liste de triage : les cinq signaux les plus graves autour de la fen&ecirc;tre de votre incident, tri&eacute;s par gravit&eacute;. Gratuit, sans abonnement et sans engagement.</span></p><a class="knop" href="#aanvraag"><span class="t t-nl">Vraag het script aan</span><span class="t t-en" lang="en">Request the script</span><span class="t t-de" lang="de">Skript anfordern</span><span class="t t-es" lang="es">Solicitar el script</span><span class="t t-fr" lang="fr">Demander le script</span></a><p class="subknop">WhatsApp +66&nbsp;99&nbsp;146&nbsp;1761 &middot; hans@cldlbs.com</p></div></header><div class="wrap"><section><h2><span class="t t-nl">Zo werkt het</span><span class="t t-en" lang="en">How it works</span><span class="t t-de" lang="de">So funktioniert es</span><span class="t t-es" lang="es">C&oacute;mo funciona</span><span class="t t-fr" lang="fr">Comment &ccedil;a marche</span><a class="terug" href="#top" title="Boven / Top" aria-label="Naar boven">&uarr;</a></h2><ol class="stappen"><li><b><span class="t t-nl">Vraag het script aan.</span><span class="t t-en" lang="en">Request the script.</span><span class="t t-de" lang="de">Skript anfordern.</span><span class="t t-es" lang="es">Solicite el script.</span><span class="t t-fr" lang="fr">Demandez le script.</span></b> <span class="t t-nl">Vul het formulier in en verstuur het via WhatsApp en e-mail; u ontvangt het script met de leeswijzer.</span><span class="t t-en" lang="en">Fill in the form and send it via WhatsApp and e-mail; you receive the script with its instructions.</span><span class="t t-de" lang="de">F&uuml;llen Sie das Formular aus und senden Sie es per WhatsApp und E-Mail; Sie erhalten das Skript mit der Anleitung.</span><span class="t t-es" lang="es">Rellene el formulario y env&iacute;elo por WhatsApp y correo; recibir&aacute; el script con sus instrucciones.</span><span class="t t-fr" lang="fr">Remplissez le formulaire et envoyez-le par WhatsApp et e-mail ; vous recevez le script avec son mode d&rsquo;emploi.</span></li><li><b><span class="t t-nl">Draai het vanaf uw beheerserver.</span><span class="t t-en" lang="en">Run it from your management server.</span><span class="t t-de" lang="de">F&uuml;hren Sie es von Ihrem Management-Server aus.</span><span class="t t-es" lang="es">Ejec&uacute;telo desde su servidor de administraci&oacute;n.</span><span class="t t-fr" lang="fr">Ex&eacute;cutez-le depuis votre serveur d&rsquo;administration.</span></b> <span class="t t-nl">Het leest alleen: de gebeurteniskanalen van alle nodes over het incidentvenster. Vooraf toont het het plan van de run, met &eacute;&eacute;n ja-of-nee-vraag. Geheugendumps blijven in deze gratis variant buiten beschouwing.</span><span class="t t-en" lang="en">It only reads: the event channels of all nodes over the incident window. It first shows the plan of the run, with one yes-or-no question. Memory dumps stay out of scope in this free variant.</span><span class="t t-de" lang="de">Es liest nur: die Eventkan&auml;le aller Knoten &uuml;ber das St&ouml;rungsfenster. Vorab zeigt es den Plan des Laufs, mit einer einzigen Ja-oder-Nein-Frage. Speicherabbilder bleiben in dieser kostenlosen Variante au&szlig;en vor.</span><span class="t t-es" lang="es">Solo lee: los canales de eventos de todos los nodos en la ventana del incidente. Antes muestra el plan de la ejecuci&oacute;n, con una &uacute;nica pregunta de s&iacute; o no. Los volcados de memoria quedan fuera en esta variante gratuita.</span><span class="t t-fr" lang="fr">Il ne fait que lire : les canaux d&rsquo;&eacute;v&eacute;nements de tous les n&oelig;uds sur la fen&ecirc;tre de l&rsquo;incident. Il montre d&rsquo;abord le plan de l&rsquo;ex&eacute;cution, avec une seule question oui-ou-non. Les vidages m&eacute;moire restent hors p&eacute;rim&egrave;tre dans cette variante gratuite.</span></li><li><b><span class="t t-nl">Draag de uitvoer over.</span><span class="t t-en" lang="en">Hand over the output.</span><span class="t t-de" lang="de">&Uuml;bergeben Sie die Ausgabe.</span><span class="t t-es" lang="es">Entregue la salida.</span><span class="t t-fr" lang="fr">Remettez la sortie.</span></b> <span class="t t-nl">U zet het bestand op de versleutelde Proton-share die wij voor u klaarzetten.</span><span class="t t-en" lang="en">You place the file on the encrypted Proton share we set up for you.</span><span class="t t-de" lang="de">Sie legen die Datei auf die verschl&uuml;sselte Proton-Freigabe, die wir f&uuml;r Sie bereitstellen.</span><span class="t t-es" lang="es">Coloca el archivo en el recurso compartido cifrado de Proton que preparamos para usted.</span><span class="t t-fr" lang="fr">Vous placez le fichier sur le partage Proton chiffr&eacute; que nous pr&eacute;parons pour vous.</span></li><li><b><span class="t t-nl">U ontvangt de triagelijst per e-mail.</span><span class="t t-en" lang="en">You receive the triage list by e-mail.</span><span class="t t-de" lang="de">Sie erhalten die Triageliste per E-Mail.</span><span class="t t-es" lang="es">Recibe la lista de triaje por correo.</span><span class="t t-fr" lang="fr">Vous recevez la liste de triage par e-mail.</span></b></li></ol></section><section id="aanvraag"><h2><span class="t t-nl">Aanvraag</span><span class="t t-en" lang="en">Request</span><span class="t t-de" lang="de">Anfrage</span><span class="t t-es" lang="es">Solicitud</span><span class="t t-fr" lang="fr">Demande</span><a class="terug" href="#top" title="Boven / Top" aria-label="Naar boven">&uarr;</a></h2><p><span class="t t-nl">Vijf gegevens zijn genoeg om u het juiste script en de leeswijzer te sturen. Het aantal uren bepaalt het meetvenster van de run.</span><span class="t t-en" lang="en">Five details are enough to send you the right script and instructions. The number of hours sets the measurement window of the run.</span><span class="t t-de" lang="de">F&uuml;nf Angaben gen&uuml;gen, um Ihnen das richtige Skript und die Anleitung zu senden. Die Stundenzahl bestimmt das Messfenster des Laufs.</span><span class="t t-es" lang="es">Cinco datos bastan para enviarle el script correcto y las instrucciones. El n&uacute;mero de horas determina la ventana de medici&oacute;n.</span><span class="t t-fr" lang="fr">Cinq informations suffisent pour vous envoyer le bon script et le mode d&rsquo;emploi. Le nombre d&rsquo;heures d&eacute;termine la fen&ecirc;tre de mesure.</span></p><form class="aanvraag" id="triageform"><div class="veldrij"><label><span class="lbl"><span class="t t-nl">Voornaam</span><span class="t t-en" lang="en">First name</span><span class="t t-de" lang="de">Vorname</span><span class="t t-es" lang="es">Nombre</span><span class="t t-fr" lang="fr">Pr&eacute;nom</span></span><input name="voornaam" autocomplete="given-name" required></label><label><span class="lbl"><span class="t t-nl">Achternaam</span><span class="t t-en" lang="en">Last name</span><span class="t t-de" lang="de">Nachname</span><span class="t t-es" lang="es">Apellidos</span><span class="t t-fr" lang="fr">Nom</span></span><input name="achternaam" autocomplete="family-name" required></label></div><label><span class="lbl"><span class="t t-nl">Bedrijf of organisatie</span><span class="t t-en" lang="en">Company or organisation</span><span class="t t-de" lang="de">Unternehmen oder Organisation</span><span class="t t-es" lang="es">Empresa u organizaci&oacute;n</span><span class="t t-fr" lang="fr">Entreprise ou organisation</span></span><input name="bedrijf" autocomplete="organization" required></label><label><span class="lbl"><span class="t t-nl">E-mailadres</span><span class="t t-en" lang="en">E-mail address</span><span class="t t-de" lang="de">E-Mail-Adresse</span><span class="t t-es" lang="es">Correo electr&oacute;nico</span><span class="t t-fr" lang="fr">Adresse e-mail</span></span><input name="email" type="email" autocomplete="email" required></label><div class="veldrij"><label><span class="lbl"><span class="t t-nl">Telefoon, met landcode</span><span class="t t-en" lang="en">Phone, with country code</span><span class="t t-de" lang="de">Telefon, mit L&auml;ndervorwahl</span><span class="t t-es" lang="es">Tel&eacute;fono, con prefijo de pa&iacute;s</span><span class="t t-fr" lang="fr">T&eacute;l&eacute;phone, avec indicatif pays</span></span><input name="telefoon" type="tel" autocomplete="tel" placeholder="+31 6 ..." required></label><label><span class="lbl"><span class="t t-nl">Land</span><span class="t t-en" lang="en">Country</span><span class="t t-de" lang="de">Land</span><span class="t t-es" lang="es">Pa&iacute;s</span><span class="t t-fr" lang="fr">Pays</span></span><input name="land" autocomplete="country-name" required></label></div><label><span class="lbl"><span class="t t-nl">Clusternaam</span><span class="t t-en" lang="en">Cluster name</span><span class="t t-de" lang="de">Clustername</span><span class="t t-es" lang="es">Nombre del cl&uacute;ster</span><span class="t t-fr" lang="fr">Nom du cluster</span></span><input name="cluster" required></label><label><span class="lbl"><span class="t t-nl">Hoeveel uur geleden vond het incident plaats?</span><span class="t t-en" lang="en">How many hours ago did the incident occur?</span><span class="t t-de" lang="de">Vor wie vielen Stunden trat die St&ouml;rung auf?</span><span class="t t-es" lang="es">&iquest;Hace cu&aacute;ntas horas ocurri&oacute; el incidente?</span><span class="t t-fr" lang="fr">Il y a combien d&rsquo;heures l&rsquo;incident s&rsquo;est-il produit ?</span></span><input name="uren" type="number" min="1" max="999" inputmode="numeric" required></label><p class="formnoot"><span class="t t-nl">Verstuur de aanvraag via WhatsApp &eacute;n e-mail, dan missen wij hem niet.</span><span class="t t-en" lang="en">Send the request via both WhatsApp and e-mail, so we cannot miss it.</span><span class="t t-de" lang="de">Senden Sie die Anfrage per WhatsApp und per E-Mail, dann entgeht sie uns nicht.</span><span class="t t-es" lang="es">Env&iacute;e la solicitud por WhatsApp y tambi&eacute;n por correo, as&iacute; no se nos escapa.</span><span class="t t-fr" lang="fr">Envoyez la demande par WhatsApp et par e-mail, ainsi elle ne nous &eacute;chappe pas.</span></p><div class="knoppenrij"><button type="button" class="knop" id="knop-wa"><span class="t t-nl">Verstuur via WhatsApp</span><span class="t t-en" lang="en">Send via WhatsApp</span><span class="t t-de" lang="de">Per WhatsApp senden</span><span class="t t-es" lang="es">Enviar por WhatsApp</span><span class="t t-fr" lang="fr">Envoyer par WhatsApp</span></button><button type="button" class="knop tweede" id="knop-mail"><span class="t t-nl">Verstuur ook per e-mail</span><span class="t t-en" lang="en">Also send by e-mail</span><span class="t t-de" lang="de">Auch per E-Mail senden</span><span class="t t-es" lang="es">Enviar tambi&eacute;n por correo</span><span class="t t-fr" lang="fr">Envoyer aussi par e-mail</span></button></div><p class="formnoot"><span class="t t-nl">Wij proberen per omgaande te reageren, afhankelijk van bereikbaarheid.</span><span class="t t-en" lang="en">We aim to respond right away, subject to availability.</span><span class="t t-de" lang="de">Wir versuchen, umgehend zu reagieren, je nach Erreichbarkeit.</span><span class="t t-es" lang="es">Intentamos responder de inmediato, seg&uacute;n disponibilidad.</span><span class="t t-fr" lang="fr">Nous essayons de r&eacute;pondre imm&eacute;diatement, selon disponibilit&eacute;.</span></p><p class="formnoot"><span class="t t-nl">Dit formulier verstuurt niets zelf: de aanvraag vertrekt via uw eigen WhatsApp of e-mail, en deze pagina slaat niets op.</span><span class="t t-en" lang="en">This form sends nothing by itself: the request leaves through your own WhatsApp or e-mail, and this page stores nothing.</span><span class="t t-de" lang="de">Dieses Formular sendet nichts selbst: Die Anfrage geht &uuml;ber Ihr eigenes WhatsApp oder Ihre eigene E-Mail, und diese Seite speichert nichts.</span><span class="t t-es" lang="es">Este formulario no env&iacute;a nada por s&iacute; mismo: la solicitud sale por su propio WhatsApp o correo, y esta p&aacute;gina no guarda nada.</span><span class="t t-fr" lang="fr">Ce formulaire n&rsquo;envoie rien par lui-m&ecirc;me : la demande part via votre propre WhatsApp ou e-mail, et cette page n&rsquo;enregistre rien.</span></p><p class="subknop">WhatsApp +66&nbsp;99&nbsp;146&nbsp;1761 &middot; hans@cldlbs.com</p></form></section><section><h2><span class="t t-nl">Wat de triagelijst is, en wat niet</span><span class="t t-en" lang="en">What the triage list is, and is not</span><span class="t t-de" lang="de">Was die Triageliste ist, und was nicht</span><span class="t t-es" lang="es">Qu&eacute; es la lista de triaje, y qu&eacute; no</span><span class="t t-fr" lang="fr">Ce qu&rsquo;est la liste de triage, et ce qu&rsquo;elle n&rsquo;est pas</span><a class="terug" href="#top" title="Boven / Top" aria-label="Naar boven">&uarr;</a></h2><div class="duo"><div class="wel"><span class="kopje"><span class="t t-nl">Wat u krijgt</span><span class="t t-en" lang="en">What you get</span><span class="t t-de" lang="de">Was Sie bekommen</span><span class="t t-es" lang="es">Qu&eacute; recibe</span><span class="t t-fr" lang="fr">Ce que vous recevez</span></span><p><span class="t t-nl">Vijf signalen, gesorteerd op ernst, elk met de gemeten waarde, de node en het tijdstip. Ook wat niet gelezen kon worden staat erbij, met de reden.</span><span class="t t-en" lang="en">Five signals, sorted by severity, each with the measured value, the node and the timestamp. Whatever could not be read is listed too, with the reason.</span><span class="t t-de" lang="de">F&uuml;nf Signale, sortiert nach Schwere, jedes mit dem gemessenen Wert, dem Knoten und dem Zeitpunkt. Auch was nicht gelesen werden konnte, steht dabei, mit dem Grund.</span><span class="t t-es" lang="es">Cinco se&ntilde;ales, ordenadas por gravedad, cada una con el valor medido, el nodo y el momento. Lo que no pudo leerse tambi&eacute;n figura, con el motivo.</span><span class="t t-fr" lang="fr">Cinq signaux, tri&eacute;s par gravit&eacute;, chacun avec la valeur mesur&eacute;e, le n&oelig;ud et l&rsquo;horodatage. Ce qui n&rsquo;a pas pu &ecirc;tre lu figure aussi, avec la raison.</span></p></div><div class="niet"><span class="kopje"><span class="t t-nl">Wat het niet is</span><span class="t t-en" lang="en">What it is not</span><span class="t t-de" lang="de">Was es nicht ist</span><span class="t t-es" lang="es">Qu&eacute; no es</span><span class="t t-fr" lang="fr">Ce qu&rsquo;elle n&rsquo;est pas</span></span><p><span class="t t-nl">Geen oorzaak en geen reconstructie: triage sorteert, de diagnose is het werk van R1. Geen rapport, geen bespreking, en geen abonnement dat eraan vastzit.</span><span class="t t-en" lang="en">No cause and no reconstruction: triage sorts, the diagnosis is the work of R1. No report, no review session, and no subscription attached.</span><span class="t t-de" lang="de">Keine Ursache und keine Rekonstruktion: Triage sortiert, die Diagnose ist die Arbeit von R1. Kein Bericht, keine Besprechung, und kein Abonnement daran.</span><span class="t t-es" lang="es">Sin causa y sin reconstrucci&oacute;n: el triaje ordena, el diagn&oacute;stico es el trabajo de R1. Sin informe, sin sesi&oacute;n de revisi&oacute;n y sin suscripci&oacute;n atada.</span><span class="t t-fr" lang="fr">Pas de cause et pas de reconstruction : le triage trie, le diagnostic est le travail de R1. Pas de rapport, pas de restitution, et aucun abonnement attach&eacute;.</span></p></div></div><div class="lijst"><div><span class="rchip crit"><span class="t t-nl">KRITIEK</span><span class="t t-en" lang="en">CRITICAL</span><span class="t t-de" lang="de">KRITISCH</span><span class="t t-es" lang="es">CR&Iacute;TICO</span><span class="t t-fr" lang="fr">CRITIQUE</span></span><span><span class="t t-nl">Witness onbereikbaar vanaf beide nodes</span><span class="t t-en" lang="en">Witness unreachable from both nodes</span><span class="t t-de" lang="de">Witness von beiden Knoten aus unerreichbar</span><span class="t t-es" lang="es">Witness inalcanzable desde ambos nodos</span><span class="t t-fr" lang="fr">Witness injoignable depuis les deux n&oelig;uds</span></span></div><div><span class="rchip high"><span class="t t-nl">HOOG</span><span class="t t-en" lang="en">HIGH</span><span class="t t-de" lang="de">HOCH</span><span class="t t-es" lang="es">ALTO</span><span class="t t-fr" lang="fr">&Eacute;LEV&Eacute;</span></span><span><span class="t t-nl">Firmware van NODE02 onder het niveau dat de leverancier voorschrijft</span><span class="t t-en" lang="en">Firmware on NODE02 below the level the vendor prescribes</span><span class="t t-de" lang="de">Firmware auf NODE02 unter dem vom Hersteller vorgegebenen Stand</span><span class="t t-es" lang="es">Firmware de NODE02 por debajo del nivel que prescribe el fabricante</span><span class="t t-fr" lang="fr">Firmware de NODE02 en dessous du niveau prescrit par le fabricant</span></span></div><div><span class="rchip med"><span class="t t-nl">MIDDEL</span><span class="t t-en" lang="en">MEDIUM</span><span class="t t-de" lang="de">MITTEL</span><span class="t t-es" lang="es">MEDIO</span><span class="t t-fr" lang="fr">MOYEN</span></span><span><span class="t t-nl">PFC-klassen wijken af tussen host en switch</span><span class="t t-en" lang="en">PFC classes differ between host and switch</span><span class="t t-de" lang="de">PFC-Klassen weichen zwischen Host und Switch ab</span><span class="t t-es" lang="es">Las clases PFC difieren entre host y switch</span><span class="t t-fr" lang="fr">Les classes PFC diff&egrave;rent entre h&ocirc;te et switch</span></span></div></div><p class="bijschrift"><span class="t t-nl">Voorbeeld van de vorm; de inhoud komt uit uw eigen meting.</span><span class="t t-en" lang="en">Example of the form; the content comes from your own measurement.</span><span class="t t-de" lang="de">Beispiel der Form; der Inhalt stammt aus Ihrer eigenen Messung.</span><span class="t t-es" lang="es">Ejemplo de la forma; el contenido sale de su propia medici&oacute;n.</span><span class="t t-fr" lang="fr">Exemple de la forme ; le contenu vient de votre propre mesure.</span></p><div class="kader"><p><span class="t t-nl"><strong>Meer dan vijf gevonden?</strong> De triagelijst noemt ook het totale aantal aangetroffen signalen. De volledige risicolijst, gesorteerd op ernst, is als betaalde tussenstap op aanvraag leverbaar; de vijf zwaarste staan altijd al in de gratis lijst.</span><span class="t t-en" lang="en"><strong>More than five found?</strong> The triage list also states the total number of signals found. The full risk list, sorted by severity, is available on request as a paid intermediate step; the five heaviest are always in the free list.</span><span class="t t-de" lang="de"><strong>Mehr als f&uuml;nf gefunden?</strong> Die Triageliste nennt auch die Gesamtzahl der gefundenen Signale. Die vollst&auml;ndige Risikoliste, sortiert nach Schwere, ist auf Anfrage als bezahlter Zwischenschritt erh&auml;ltlich; die f&uuml;nf schwersten stehen immer schon in der kostenlosen Liste.</span><span class="t t-es" lang="es"><strong>&iquest;M&aacute;s de cinco encontradas?</strong> La lista de triaje tambi&eacute;n indica el n&uacute;mero total de se&ntilde;ales encontradas. La lista de riesgos completa, ordenada por gravedad, est&aacute; disponible bajo pedido como paso intermedio de pago; las cinco m&aacute;s graves est&aacute;n siempre en la lista gratuita.</span><span class="t t-fr" lang="fr"><strong>Plus de cinq trouv&eacute;s ?</strong> La liste de triage indique aussi le nombre total de signaux trouv&eacute;s. La liste des risques compl&egrave;te, tri&eacute;e par gravit&eacute;, est disponible sur demande comme &eacute;tape interm&eacute;diaire payante ; les cinq plus graves figurent toujours dans la liste gratuite.</span></p></div></section><section><h2><span class="t t-nl">Veilig en uitsluitend lezend</span><span class="t t-en" lang="en">Safe and read-only</span><span class="t t-de" lang="de">Sicher und ausschlie&szlig;lich lesend</span><span class="t t-es" lang="es">Seguro y de solo lectura</span><span class="t t-fr" lang="fr">S&ucirc;r et en lecture seule</span><a class="terug" href="#top" title="Boven / Top" aria-label="Naar boven">&uarr;</a></h2><ul class="opsom"><li><span class="t t-nl">Er wordt niets ge&iuml;nstalleerd en niets gewijzigd; na afloop blijft er niets achter.</span><span class="t t-en" lang="en">Nothing is installed and nothing is changed; nothing is left behind afterwards.</span><span class="t t-de" lang="de">Es wird nichts installiert und nichts ver&auml;ndert; danach bleibt nichts zur&uuml;ck.</span><span class="t t-es" lang="es">No se instala ni se cambia nada; despu&eacute;s no queda nada.</span><span class="t t-fr" lang="fr">Rien n&rsquo;est install&eacute; et rien n&rsquo;est modifi&eacute; ; rien ne reste apr&egrave;s coup.</span></li><li><span class="t t-nl">Er worden geen wachtwoorden verwerkt of bewaard, en voordat het bestand wordt geschreven controleert het script zijn eigen uitvoer op waarden die op inloggegevens lijken.</span><span class="t t-en" lang="en">No passwords are processed or stored, and before the file is written the script checks its own output for values that look like credentials.</span><span class="t t-de" lang="de">Es werden keine Passw&ouml;rter verarbeitet oder gespeichert, und bevor die Datei geschrieben wird, pr&uuml;ft das Skript seine eigene Ausgabe auf Werte, die wie Anmeldedaten aussehen.</span><span class="t t-es" lang="es">No se procesan ni almacenan contrase&ntilde;as, y antes de escribir el archivo el script revisa su propia salida en busca de valores que parezcan credenciales.</span><span class="t t-fr" lang="fr">Aucun mot de passe n&rsquo;est trait&eacute; ni conserv&eacute;, et avant d&rsquo;&eacute;crire le fichier, le script v&eacute;rifie sa propre sortie &agrave; la recherche de valeurs ressemblant &agrave; des identifiants.</span></li><li><span class="t t-nl">Geheugendumps gaan niet mee in de gratis variant.</span><span class="t t-en" lang="en">Memory dumps do not travel in the free variant.</span><span class="t t-de" lang="de">Speicherabbilder gehen in der kostenlosen Variante nicht mit.</span><span class="t t-es" lang="es">Los volcados de memoria no viajan en la variante gratuita.</span><span class="t t-fr" lang="fr">Les vidages m&eacute;moire ne voyagent pas dans la variante gratuite.</span></li><li><span class="t t-nl">Wat u overdraagt, gebruiken wij uitsluitend om de triagelijst te maken.</span><span class="t t-en" lang="en">What you hand over is used solely to produce the triage list.</span><span class="t t-de" lang="de">Was Sie &uuml;bergeben, verwenden wir ausschlie&szlig;lich, um die Triageliste zu erstellen.</span><span class="t t-es" lang="es">Lo que entrega se usa &uacute;nicamente para elaborar la lista de triaje.</span><span class="t t-fr" lang="fr">Ce que vous remettez est utilis&eacute; uniquement pour produire la liste de triage.</span></li></ul></section><section><h2><span class="t t-nl">Als de lijst ergens op wijst</span><span class="t t-en" lang="en">If the list points at something</span><span class="t t-de" lang="de">Wenn die Liste auf etwas hindeutet</span><span class="t t-es" lang="es">Si la lista se&ntilde;ala algo</span><span class="t t-fr" lang="fr">Si la liste pointe vers quelque chose</span><a class="terug" href="#top" title="Boven / Top" aria-label="Naar boven">&uarr;</a></h2><div class="kader"><p><span class="t t-nl"><strong><a href="/healthcheck/#r1">R1, het onderzoek naar de oorzaak.</a></strong> De reconstructie over alle nodes, met tijdlijn, oorzaakanalyse en RCA-document, gedragen door diepgaande log- en dumpanalyse. Los te bestellen.</span><span class="t t-en" lang="en"><strong><a href="/healthcheck/#r1">R1, the root cause investigation.</a></strong> The reconstruction across all nodes, with timeline, root cause analysis and RCA document, backed by deep log and dump analysis. Orderable on its own.</span><span class="t t-de" lang="de"><strong><a href="/healthcheck/#r1">R1, die Ursachenuntersuchung.</a></strong> Die Rekonstruktion &uuml;ber alle Knoten, mit Zeitachse, Ursachenanalyse und RCA-Dokument, getragen von tiefgehender Log- und Dump-Analyse. Einzeln bestellbar.</span><span class="t t-es" lang="es"><strong><a href="/healthcheck/#r1">R1, la investigaci&oacute;n de la causa.</a></strong> La reconstrucci&oacute;n sobre todos los nodos, con l&iacute;nea de tiempo, an&aacute;lisis de causa ra&iacute;z y documento RCA, respaldada por an&aacute;lisis profundo de logs y volcados. Contratable por separado.</span><span class="t t-fr" lang="fr"><strong><a href="/healthcheck/#r1">R1, l&rsquo;investigation de la cause.</a></strong> La reconstruction sur tous les n&oelig;uds, avec ligne de temps, analyse de cause racine et document RCA, port&eacute;e par une analyse approfondie des journaux et des vidages. Commandable s&eacute;par&eacute;ment.</span></p><p><span class="t t-nl"><strong><a href="/healthcheck/#tarieven">B1, de eenmalige basismeting.</a></strong> Het volledige beeld van het cluster, met bevindingenrapport en een uur bespreking, en het recht om door te stromen naar een abonnement. De grote broer is C1: de volledige cyclus met drie kwartaalvervolgmetingen.</span><span class="t t-en" lang="en"><strong><a href="/healthcheck/#tarieven">B1, the one-off base measurement.</a></strong> The full picture of the cluster, with findings report and a one-hour review, and the right to move up to a subscription. Its big brother is C1: the full cycle with three quarterly follow-up measurements.</span><span class="t t-de" lang="de"><strong><a href="/healthcheck/#tarieven">B1, die einmalige Basismessung.</a></strong> Das vollst&auml;ndige Bild des Clusters, mit Feststellungsbericht und einer Stunde Besprechung, und dem Recht, in ein Abonnement zu wechseln. Der gro&szlig;e Bruder ist C1: der vollst&auml;ndige Zyklus mit drei Quartals-Folgemessungen.</span><span class="t t-es" lang="es"><strong><a href="/healthcheck/#tarieven">B1, la medici&oacute;n base &uacute;nica.</a></strong> La imagen completa del cl&uacute;ster, con informe de hallazgos y una hora de revisi&oacute;n, y el derecho a pasar a una suscripci&oacute;n. Su hermano mayor es C1: el ciclo completo con tres mediciones trimestrales de seguimiento.</span><span class="t t-fr" lang="fr"><strong><a href="/healthcheck/#tarieven">B1, la mesure de base unique.</a></strong> L&rsquo;image compl&egrave;te du cluster, avec rapport de constats et une heure de restitution, et le droit de passer &agrave; un abonnement. Le grand fr&egrave;re est C1 : le cycle complet avec trois mesures de suivi trimestrielles.</span></p></div><p><span class="t t-nl">Beide staan met tarieven op de <a href="/healthcheck/">HealthCheck-pagina</a>. Samen besteld vormen ze de package deal Storingsonderzoek compleet (R1 + B1), met een actieprijs op aanvraag.</span><span class="t t-en" lang="en">Both are on the <a href="/healthcheck/">HealthCheck page</a>, with pricing. Ordered together they form the package deal Incident investigation complete (R1 + B1), with a promo price on request.</span><span class="t t-de" lang="de">Beide stehen mit Preisen auf der <a href="/healthcheck/">HealthCheck-Seite</a>. Zusammen bestellt bilden sie das Paket St&ouml;rungsuntersuchung komplett (R1 + B1), mit Aktionspreis auf Anfrage.</span><span class="t t-es" lang="es">Ambas figuran con precios en la <a href="/healthcheck/">p&aacute;gina del HealthCheck</a>. Contratadas juntas forman el paquete Investigaci&oacute;n de incidente completa (R1 + B1), con precio promocional bajo pedido.</span><span class="t t-fr" lang="fr">Les deux figurent avec leurs tarifs sur la <a href="/healthcheck/">page HealthCheck</a>. Command&eacute;es ensemble, elles forment l&rsquo;offre group&eacute;e Investigation d&rsquo;incident compl&egrave;te (R1 + B1), avec un prix promotionnel sur demande.</span></p><p style="margin-top:1.2rem"><a class="knop" href="#aanvraag"><span class="t t-nl">Vraag het script aan</span><span class="t t-en" lang="en">Request the script</span><span class="t t-de" lang="de">Skript anfordern</span><span class="t t-es" lang="es">Solicitar el script</span><span class="t t-fr" lang="fr">Demander le script</span></a></p></section><footer><span>CloudLabs Cluster Triage</span><span>Hyper-V &middot; Failover Cluster &middot; Azure Local</span><span><a href="/healthcheck/">cldlbs.com/healthcheck</a></span></footer></div>
+<script>
+(function(){
+  var r=document.documentElement;
+  function lees(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function schrijf(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function alle(s){return Array.prototype.slice.call(document.querySelectorAll(s))}
+  function taal(t){
+    r.setAttribute('data-taal',t); r.setAttribute('lang',t); schrijf('hc-taal',t);
+    alle('.knop-taal').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-taal')===t?'true':'false')});
+  }
+  var t=lees('hc-taal'); taal(t==='en'||t==='de'||t==='es'||t==='fr'?t:'nl');
+  alle('.knop-taal').forEach(function(b){b.addEventListener('click',function(){taal(b.getAttribute('data-taal'))})});
+  var zoomWaarde=100;
+  function zoom(z){
+    zoomWaarde=Math.min(150,Math.max(80,z));
+    r.style.fontSize=zoomWaarde+'%'; schrijf('hc-zoom',String(zoomWaarde));
+    alle('.knop-zoomreset').forEach(function(b){b.textContent=zoomWaarde+'%'});
+  }
+  var z=parseInt(lees('hc-zoom'),10); zoom(isNaN(z)?100:z);
+  alle('.knop-zoomin').forEach(function(b){b.addEventListener('click',function(){zoom(zoomWaarde+10)})});
+  alle('.knop-zoomuit').forEach(function(b){b.addEventListener('click',function(){zoom(zoomWaarde-10)})});
+  alle('.knop-zoomreset').forEach(function(b){b.addEventListener('click',function(){zoom(100)})});
+  function thema(m){
+    if(m==='licht'){r.setAttribute('data-theme','light')}
+    else if(m==='donker'){r.setAttribute('data-theme','dark')}
+    else{r.removeAttribute('data-theme')}
+    schrijf('hc-thema',m);
+    alle('.knop-thema').forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-thema')===m?'true':'false')});
+  }
+  var m=lees('hc-thema'); thema(m==='licht'||m==='donker'?m:'auto');
+  alle('.knop-thema').forEach(function(b){b.addEventListener('click',function(){thema(b.getAttribute('data-thema'))})});
+  var F=document.getElementById('triageform');
+  if(F){
+    var L={
+      nl:{naam:'Naam',org:'Bedrijf',mail:'E-mail',tel:'Telefoon',ld:'Land',cl:'Cluster',ur:'Incident',urna:' uur geleden',kop:'Cluster Triage aanvraag'},
+      en:{naam:'Name',org:'Company',mail:'E-mail',tel:'Phone',ld:'Country',cl:'Cluster',ur:'Incident',urna:' hours ago',kop:'Cluster Triage request'},
+      de:{naam:'Name',org:'Unternehmen',mail:'E-Mail',tel:'Telefon',ld:'Land',cl:'Cluster',ur:'St\u00f6rung',urna:' Stunden her',kop:'Cluster-Triage-Anfrage'},
+      es:{naam:'Nombre',org:'Empresa',mail:'Correo',tel:'Tel\u00e9fono',ld:'Pa\u00eds',cl:'Cl\u00faster',ur:'Incidente',urna:' horas atr\u00e1s',kop:'Solicitud Cluster Triage'},
+      fr:{naam:'Nom',org:'Entreprise',mail:'E-mail',tel:'T\u00e9l\u00e9phone',ld:'Pays',cl:'Cluster',ur:'Incident',urna:' heures',kop:'Demande Cluster Triage'}
+    };
+    function bericht(){
+      if(!F.reportValidity()) return null;
+      var t=L[r.getAttribute('data-taal')]||L.nl;
+      var v=function(n){return F.elements[n].value.trim()};
+      return t.kop+'\n'+t.naam+': '+v('voornaam')+' '+v('achternaam')+'\n'+t.org+': '+v('bedrijf')+'\n'+t.mail+': '+v('email')+'\n'+t.tel+': '+v('telefoon')+'\n'+t.ld+': '+v('land')+'\n'+t.cl+': '+v('cluster')+'\n'+t.ur+': '+v('uren')+t.urna;
+    }
+    document.getElementById('knop-wa').addEventListener('click',function(){
+      var b=bericht(); if(b===null) return;
+      window.open('https://wa.me/66991461761?text='+encodeURIComponent(b),'_blank','noopener');
+    });
+    document.getElementById('knop-mail').addEventListener('click',function(){
+      var b=bericht(); if(b===null) return;
+      location.href='mailto:hans@cldlbs.com,rob@cldlbs.com?subject='+encodeURIComponent('Cluster Triage')+'&body='+encodeURIComponent(b);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<!-- CloudLabs · Stijlgids voor de documentviewer · alle inhoud is VOORBEELD -->
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CloudLabs Stijlgids</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="findings.css">
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <p class="eyebrow">CloudLabs &middot; Hyper-V Cluster Health Check</p>
+    <h1>Bevindingenrapport <span class="regel2">AZLCL01 (VOORBEELD)</span></h1>
+    <p class="meta"><b>Klant</b> Noorderlicht (VOORBEELD) &nbsp; <b>Cluster</b> AZLCL01, 2 nodes &nbsp; <b>Datum</b> 12 mei 2026 &nbsp; <b>Versie</b> 1.0</p>
+    <div class="scale">
+      <div class="bar" aria-hidden="true">
+        <span class="seg crit" style="flex:1"></span>
+        <span class="seg high" style="flex:3"></span>
+        <span class="seg med" style="flex:11"></span>
+        <span class="seg low" style="flex:6"></span>
+        <span class="seg none" style="flex:12"></span>
+      </div>
+      <div class="tellers">
+        <a class="teller" href="#g1"><b>1</b><span>kritiek</span></a>
+        <a class="teller high" href="#g1"><b>3</b><span>hoog</span></a>
+        <a class="teller med" href="#g1"><b>11</b><span>middel</span></a>
+        <a class="teller low" href="#g1"><b>6</b><span>laag</span></a>
+        <a class="teller none" href="#g1"><b>12</b><span>zonder afwijking</span></a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <nav class="inh" aria-label="Inhoud">
+    <h2>Inhoud</h2>
+    <ol>
+      <li class="g">Voorwerk</li>
+      <li class="s"><span class="fid">1</span><span class="t">Managementsamenvatting</span><span class="v"></span><span class="p"></span></li>
+      <li class="s"><span class="fid">2</span><span class="t">Methode en veiligheid</span><span class="v"></span><span class="p"></span></li>
+      <li class="g">Bevindingen</li>
+      <li><span class="fid">F07</span><span class="t">PFC-klassen wijken af tussen host en switch</span><span class="v"></span><span class="p"></span></li>
+      <li><span class="fid">F12</span><span class="t">Witness bereikbaar en gezond</span><span class="v"></span><span class="p"></span></li>
+    </ol>
+  </nav>
+
+  <section class="front">
+    <h2>Managementsamenvatting</h2>
+    <p>Dit is de sectievorm voor lopende tekst: serif, gedimde kleur, regelbreedte 52rem. Elke zin hieronder is voorbeeldinhoud; de vorm is wat telt.</p>
+    <h3 class="subkop">Een subkop binnen de sectie</h3>
+    <p class="opsomkop">De huisopsomming, met een kop erboven:</p>
+    <ul class="opsom">
+      <li>eerste punt van de opsomming;</li>
+      <li>tweede punt, met een <code>meetwaarde</code> in mono;</li>
+      <li>derde punt.</li>
+    </ul>
+    <p class="noot"><b class="dpkop">Noot.</b> Een aantekening die bij het blok erboven hangt, kleiner en in de dimkleur.</p>
+    <table class="tab">
+      <thead><tr><th>Categorie</th><th>Nodes</th><th>Bevindingen</th></tr></thead>
+      <tbody>
+        <tr><td>Netwerk</td><td>2</td><td>5</td></tr>
+        <tr><td>Opslag</td><td>2</td><td>4</td></tr>
+        <tr><td>Cluster</td><td>2</td><td>3</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="groep" id="g1">
+    <h2><span class="gnr">1</span>Hoog risico<span class="gaantal">2 bevindingen</span></h2>
+
+    <article class="bev high">
+      <div class="bevkop">
+        <span class="fid">F07</span>
+        <div class="bevtitel">
+          <span class="onderwerp">Netwerk &middot; NODE01, NODE02</span>
+          <h3>PFC-klassen wijken af tussen host en switch</h3>
+        </div>
+        <span class="chip high">HOOG</span>
+      </div>
+      <div class="veld">
+        <span class="veldnaam">Gemeten situatie</span>
+        <p>Op NODE01 en NODE02 staat PFC op prioriteit 3; de switchpoorten Eth1/1 en Eth1/2 dragen prioriteit 4. Gemeten op 12 mei 2026.</p>
+      </div>
+      <div class="veld">
+        <span class="veldnaam">Best practice</span>
+        <p>Host en switch dragen dezelfde prioriteitsklasse voor verliesvrij verkeer; de leverancier schrijft klasse 3 voor.</p>
+      </div>
+      <div class="veld">
+        <span class="veldnaam">Aanbeveling</span>
+        <ol class="stappen">
+          <li>Leg de gewenste klasse vast in het wijzigingsvenster.</li>
+          <li>Pas de switchpoorten aan naar prioriteit 3.</li>
+          <li>Controleer met <code>Get-NetQosPolicy</code> op beide nodes.</li>
+        </ol>
+      </div>
+    </article>
+
+    <article class="bev none">
+      <div class="bevkop">
+        <span class="fid">F12</span>
+        <div class="bevtitel">
+          <span class="onderwerp">Cluster &middot; quorum</span>
+          <h3>Witness bereikbaar en gezond</h3>
+        </div>
+        <span class="chip none">GEEN</span>
+      </div>
+      <div class="veld">
+        <span class="veldnaam">Gemeten situatie</span>
+        <p>De witness antwoordt vanaf beide nodes; gecontroleerd en zonder afwijking. Ook wat in orde is, staat in het rapport: dat is het bewijs van wat er is nagekeken.</p>
+      </div>
+    </article>
+  </section>
+
+</div>
+</body>
+</html>

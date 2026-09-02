@@ -1,0 +1,38 @@
+# CloudLabs
+
+> CloudLabs meet Hyper-V-, Failover Cluster- en Azure Local-omgevingen met een
+> uitsluitend lezend PowerShell-script en levert het resultaat als
+> bevindingenrapport. De meting duurt ongeveer een kwartier, installeert niets
+> en wijzigt niets. Het onderscheidende zit in het rapport: tussen meting en
+> document staat een controle die een bevinding zonder gemeten waarden
+> tegenhoudt en die een tekst weigert die in elk willekeurig rapport zou
+> passen. In elk rapport staat ook wat gecontroleerd is en in orde bleek, plus
+> wat niet gemeten kon worden, met de reden erbij.
+
+Hans Vredevoort, veertig jaar Windows Server, ruim tien jaar Microsoft MVP voor
+Failover Clustering en Cloud & Datacenter Management, medeoprichter van
+Hyper-V.nu. Rapporten in het Nederlands, Engels en Duits, alle drie opgebouwd
+uit dezelfde meting en niet achteraf vertaald.
+
+## Praktijkvoorbeelden
+
+Geanonimiseerde metingen. Sector, omvang, bevindingen en uitkomst komen
+ongewijzigd uit de meting; klantnaam, clusternaam, hostnamen, IP-adressen en
+exacte datums zijn vervangen.
+
+- [Praktijkvoorbeelden](https://cldlbs.com/praktijkvoorbeelden.html): overzicht van wat een meting aantreft in clusters die volgens de beheerconsole gezond zijn
+- [Zes nodes, twee firmwareversies](https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html): firmware-drift en scheef CSV-eigenaarschap in een 6-node Hyper-V-cluster, financiële dienstverlening
+- [Een quorum dat de tweede locatie niet zou overleven](https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html): stretch-cluster in de zorg, aangetroffen vóór een rolling upgrade van Windows Server 2019 naar 2022
+- [Drie NIC-modellen, van de bestellijst gehaald](https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html): HCL- en RDMA-toets vóór de inkoop van een Storage Spaces Direct-cluster, logistiek
+
+## Diensten
+
+- [Cluster Triage](https://cldlbs.com/triage/): gratis, uitsluitend lezend script na een clusterstoring; de vijf zwaarste signalen rond het incidentvenster, met gemeten waarde, node en tijdstip
+- [Het bevindingenrapport](https://cldlbs.com/findings.html): hoe een rapport is opgebouwd en wat erin staat
+- [Voor partners](https://cldlbs.com/partners.html): clusterassessments onder eigen merk, plus de moduletabel met statuskolom
+
+## Achtergrond
+
+- [Over Hans Vredevoort](https://cldlbs.com/about.html)
+- [Kennisartikelen](https://cldlbs.com/blog.html): uitleg bij terugkerende clusterbevindingen
+- [Veelgestelde vragen](https://cldlbs.com/faq.html)

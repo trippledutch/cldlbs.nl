@@ -1,0 +1,711 @@
+<!doctype html>
+<!-- CloudLabs · preview · homepage
+     ==========================================================================
+     DE NAVIGATIE WIJST NAAR ECHTE PAGINA'S en niet naar ankers op deze pagina.
+     Dat was de terechte klacht op de vorige versie: een menubalk waarvan elk
+     item naar een stukje verderop op dezelfde pagina springt, is geen site maar
+     een folder met een inhoudsopgave. healthcheck.html, rapport.html,
+     modules.html, storing.html en tarieven.html bestaan nog niet; ze worden
+     gebouwd zodra deze voorkant klopt.
+
+     GEEN BEELD IN DE OMSLAG. Er bestaat geen goede productfoto en de eerdere
+     rapportscreenshots waren te zwak. Daarom toont de omslag een echte,
+     inspecteerbare bevinding: het bewijs is het beeld. -->
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080C16">
+<meta name="robots" content="noindex,nofollow">
+<title>Cluster HealthCheck voor Hyper-V, Failover Cluster en Azure Local · CloudLabs</title>
+<meta name="description" content="Een uitsluitend lezende meting van uw Hyper-V, Failover Cluster of Azure Local omgeving, vier keer per jaar, met een rapport waarin elke bevinding uit gemeten waarden is opgebouwd. Vanaf 300 euro per maand.">
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../huisstijl/fonts.css">
+<link rel="stylesheet" href="../huisstijl/findings.css">
+<link rel="stylesheet" href="../huisstijl/site.css">
+<link rel="stylesheet" href="../huisstijl/omslag.css">
+</head>
+<body>
+
+<div class="kopbalk">
+  <div class="kopbalk-binnen">
+    <a class="kopmerk" href="index.html">Cloud<span class="labs">Labs</span></a>
+    <nav class="hoofdnav" aria-label="Hoofdnavigatie">
+      <a href="healthcheck.html">HealthCheck</a>
+      <a href="rapport.html">Het rapport</a>
+      <a href="modules.html">Modules</a>
+      <a href="storing.html">Na een storing</a>
+      <a href="tarieven.html">Tarieven</a>
+      <a href="../partners/">Partners</a>
+      <a href="../about.html">Over Hans</a>
+    </nav>
+    <div class="schakel">
+      <div class="schakelgroep" role="group" aria-label="Taal">
+        <a href="index.html" aria-current="true">NL</a>
+        <a href="#" hreflang="en">EN</a>
+        <a href="#" hreflang="de">DE</a>
+      </div>
+      <div class="schakelgroep" role="group" aria-label="Thema">
+        <button type="button" class="knop-thema" data-thema="auto" aria-pressed="true" title="Automatisch"><span aria-hidden="true">A</span><span class="vw">Automatisch</span></button>
+        <button type="button" class="knop-thema" data-thema="licht" aria-pressed="false" title="Licht"><span aria-hidden="true">L</span><span class="vw">Licht</span></button>
+        <button type="button" class="knop-thema" data-thema="donker" aria-pressed="false" title="Donker"><span aria-hidden="true">D</span><span class="vw">Donker</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==== de omslag =========================================================
+     Een live bevinding in plaats van een foto, schema of abstract netwerk.
+     De bezoeker kan de meting, duiding en herstelstappen zelf openklappen. -->
+<header class="omslag">
+  <div class="omslag-binnen">
+    <div>
+      <p class="eyebrow">Hyper-V &middot; Failover Cluster &middot; Azure Local</p>
+      <h1>Uw cluster draait.<br><span class="zacht">Maar is het in orde?</span></h1>
+      <p class="onderkop">Wij meten uw omgeving, uitsluitend lezend, en leveren een rapport waarin
+        <strong>elke bevinding is opgebouwd uit gemeten waarden</strong> &mdash; met de nodenamen,
+        de datum en het herstelwerk erbij. Vier keer per jaar.</p>
+      <div class="knoppen">
+        <a class="knop hoofd" href="tarieven.html">Vanaf 300 euro per maand <span class="pijl">&rarr;</span></a>
+        <a class="knop" href="healthcheck.html">Hoe de meting werkt</a>
+      </div>
+    </div>
+
+    <section class="bewijsvenster" aria-labelledby="bewijs-titel">
+      <div class="bewijsstatus">
+        <span><i aria-hidden="true"></i> Rapportcontrole actief</span>
+        <span>AZLCL01 &middot; 12-05-2026</span>
+      </div>
+
+      <div class="bewijskaart">
+        <div class="bewijskaart-kop">
+          <span class="bewijs-id">F01</span>
+          <div>
+            <span class="onderwerp">Beheerkaart &middot; AZLCL01N03</span>
+            <h2 id="bewijs-titel">Firmware wijkt af van de overige nodes</h2>
+          </div>
+          <span class="chip high">HOOG</span>
+        </div>
+
+        <div class="bewijstabs" role="tablist" aria-label="Onderdelen van de bevinding">
+          <button type="button" role="tab" id="tab-meting" aria-controls="paneel-meting" aria-selected="true">01 Gemeten</button>
+          <button type="button" role="tab" id="tab-duiding" aria-controls="paneel-duiding" aria-selected="false" tabindex="-1">02 Duiding</button>
+          <button type="button" role="tab" id="tab-herstel" aria-controls="paneel-herstel" aria-selected="false" tabindex="-1">03 Herstel</button>
+        </div>
+
+        <div class="bewijspaneel" role="tabpanel" id="paneel-meting" aria-labelledby="tab-meting">
+          <span class="veldnaam">Gemeten situatie</span>
+          <p>Op <code>AZLCL01N03</code> is iDRAC-versie <code>6.10.70.00</code> gemeten. De overige drie nodes draaien <code>6.10.30.00</code>.</p>
+          <dl class="meetregels">
+            <div><dt>Node</dt><dd>AZLCL01N03</dd></div>
+            <div><dt>Afwijkende waarde</dt><dd class="hoog">6.10.70.00</dd></div>
+            <div><dt>Gemeten</dt><dd>12-05-2026 14:32</dd></div>
+          </dl>
+        </div>
+        <div class="bewijspaneel" role="tabpanel" id="paneel-duiding" aria-labelledby="tab-duiding" hidden>
+          <span class="veldnaam">Waarom dit telt</span>
+          <p>Nodes in hetzelfde cluster horen aantoonbaar op een afgestemd firmware-niveau te draaien. Eén afwijkende beheerkaart maakt onderhoud en herstel minder voorspelbaar.</p>
+        </div>
+        <div class="bewijspaneel" role="tabpanel" id="paneel-herstel" aria-labelledby="tab-herstel" hidden>
+          <span class="veldnaam">Herstel en controle</span>
+          <ol class="stappen">
+            <li>Controleer de ondersteunde firmwarematrix voor dit servermodel.</li>
+            <li>Plan de afwijkende node in het wijzigingsvenster.</li>
+            <li>Meet alle vier de versies opnieuw en leg de uitkomst vast.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="controlepoort" aria-label="Uitkomst van de rapportcontrole">
+        <span class="poortlabel">Controlepoort 04</span>
+        <span class="poortregel"><b>Waarden</b> aanwezig</span>
+        <span class="poortregel"><b>Actie</b> aanwezig</span>
+        <span class="poortuitkomst">DOORGELATEN</span>
+      </div>
+    </section>
+  </div>
+</header>
+
+<div class="strook">
+  <div class="strook-binnen">
+    <span class="kopje">In cijfers</span>
+    <div class="strook-item"><b>324</b><span>bevindingen opgeschreven</span></div>
+    <div class="strook-item"><b>150+</b><span>controles in de catalogus</span></div>
+    <div class="strook-item"><b>9</b><span>clusteromgevingen gemeten</span></div>
+    <div class="strook-item"><b>3</b><span>talen uit dezelfde meting</span></div>
+  </div>
+</div>
+
+
+
+<!-- ==== waarom ============================================================ -->
+<section class="band grond">
+  <div class="binnen">
+    <div class="naast op">
+      <div>
+        <p class="eyebrow">Aanleiding</p>
+        <p class="uitspraak">Een cluster dat draait is niet hetzelfde als een cluster dat in
+          orde is.</p>
+      </div>
+      <div class="proza">
+        <p>Veel storingen die wij achteraf onderzoeken waren vooraf zichtbaar: firmware op een
+          node onder het niveau dat de leverancier voorschrijft, een cluster witness die niet
+          meer bereikbaar is, een backupaccount met meer rechten dan het werk vraagt, een node
+          die na een onderhoudsronde anders is ingesteld dan zijn buren.</p>
+        <p>Die signalen zijn te lezen met de middelen die u al heeft, maar dat gebeurt in de
+          praktijk zelden: het kost tijd, en u moet weten waar u kijken moet. De HealthCheck
+          neemt dat werk over. Wij kijken stelselmatig, leggen vast wat wij zien, en herhalen
+          dat elk kwartaal.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==== de meting ========================================================= -->
+<section class="band vlak">
+  <div class="binnen">
+    <div class="op">
+      <p class="eyebrow">Stap een</p>
+      <h2 class="sectiekop">De meting duurt een kwartier en verandert niets</h2>
+      <p class="sectielead">Een verzamelscript draait vanaf uw eigen beheerserver, over WinRM,
+        naar de clusternodes. Het leest, en dat is alles wat het doet.</p>
+    </div>
+
+    <div class="kaarten op">
+      <div class="kaart">
+        <span class="label">Geen installatie</span>
+        <h3>Er blijft niets achter</h3>
+        <p>Geen agent, geen service, geen geplande taak. Na afloop staat uw omgeving zoals hij
+          stond.</p>
+      </div>
+      <div class="kaart">
+        <span class="label">Uitsluitend lezend</span>
+        <h3>Geen wijziging, geen herstart</h3>
+        <p>Het script wijzigt geen instelling en start niets opnieuw op. Elke waarde wordt
+          gelezen, nooit gezet.</p>
+      </div>
+      <div class="kaart">
+        <span class="label">Geen wachtwoorden</span>
+        <h3>Het controleert zijn eigen uitvoer</h3>
+        <p>Het werkt met de rechten van de beheerder die het start, en scant voor het
+          wegschrijven op waarden die op inloggegevens lijken.</p>
+      </div>
+      <div class="kaart">
+        <span class="label">Uw bestand</span>
+        <h3>Het blijft bij u tot u het geeft</h3>
+        <p>Het resultaat is een bestand op uw server. U draagt het over via een versleutelde
+          Proton-share die wij voor u klaarzetten.</p>
+      </div>
+    </div>
+
+    <div class="knoppen op" style="margin-top:2.2rem">
+      <a class="knop" href="healthcheck.html">De hele meting, stap voor stap <span class="pijl">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==== de cyclus, als getekende figuur =================================== -->
+<section class="band grond">
+  <div class="binnen">
+    <div class="op">
+      <p class="eyebrow">De cyclus</p>
+      <h2 class="sectiekop">Van meting naar rapport, vier keer per jaar</h2>
+      <p class="sectielead">De intake draait &eacute;&eacute;n keer, bij de start. Daarna volgt
+        elk kwartaal dezelfde meting. Tussen de meting en het document staan zes stappen, en de
+        vierde houdt het rapport tegen zolang er iets ontbreekt.</p>
+    </div>
+
+    <figure class="fig op">
+      <div class="doek">
+        <svg viewBox="0 0 900 470" role="img"
+             aria-label="De jaarcyclus: intake, meting, rapport en bespreking, met daaronder de zes stappen tussen meting en rapport en de terugkoppeling vanaf de controle naar het schrijven.">
+          <defs>
+            <marker id="p-dim" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+            </marker>
+            <marker id="p-acc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M0,0 L10,5 L0,10 z" style="fill:var(--accent)"/>
+            </marker>
+          </defs>
+
+          <rect x="20" y="26" width="180" height="86" rx="5" class="fg-doos eens"/>
+          <text x="110" y="58" text-anchor="middle" class="fg-titel">Intake</text>
+          <text x="110" y="77" text-anchor="middle" class="fg-sub">stap 0 &middot; eenmalig</text>
+          <text x="110" y="93" text-anchor="middle" class="fg-sub">Get-ClusterIntake.ps1</text>
+
+          <rect x="240" y="26" width="180" height="86" rx="5" class="fg-doos"/>
+          <text x="330" y="58" text-anchor="middle" class="fg-titel">Meting</text>
+          <text x="330" y="77" text-anchor="middle" class="fg-sub">uitsluitend lezend</text>
+          <text x="330" y="93" text-anchor="middle" class="fg-sub">vanaf uw beheerserver</text>
+
+          <rect x="460" y="26" width="180" height="86" rx="5" class="fg-doos"/>
+          <text x="550" y="58" text-anchor="middle" class="fg-titel">Rapport</text>
+          <text x="550" y="77" text-anchor="middle" class="fg-sub">bevindingen, daarna delta</text>
+          <text x="550" y="93" text-anchor="middle" class="fg-sub">NL &middot; EN &middot; DE</text>
+
+          <rect x="680" y="26" width="180" height="86" rx="5" class="fg-doos"/>
+          <text x="770" y="58" text-anchor="middle" class="fg-titel">Bespreking</text>
+          <text x="770" y="77" text-anchor="middle" class="fg-sub">&eacute;&eacute;n uur</text>
+          <text x="770" y="93" text-anchor="middle" class="fg-sub">wij nemen het door</text>
+
+          <g class="fg-lijn" style="color:var(--dim)">
+            <line x1="200" y1="69" x2="234" y2="69" marker-end="url(#p-dim)"/>
+            <line x1="420" y1="69" x2="454" y2="69" marker-end="url(#p-dim)"/>
+            <line x1="640" y1="69" x2="674" y2="69" marker-end="url(#p-dim)"/>
+          </g>
+          <text x="217" y="130" text-anchor="middle" class="fg-sub">startwaarden</text>
+          <text x="440" y="130" text-anchor="middle" class="fg-sub acc">stap 1 t/m 6</text>
+
+          <path d="M770,112 L770,166 Q770,180 756,180 L344,180 Q330,180 330,166 L330,120"
+                class="fg-lus" marker-end="url(#p-acc)"/>
+          <circle cx="430" cy="180" r="11" class="fg-tick"/>
+          <circle cx="550" cy="180" r="11" class="fg-tick"/>
+          <circle cx="670" cy="180" r="11" class="fg-tick"/>
+          <text x="430" y="183.5" text-anchor="middle" class="fg-ticktxt">V1</text>
+          <text x="550" y="183.5" text-anchor="middle" class="fg-ticktxt">V2</text>
+          <text x="670" y="183.5" text-anchor="middle" class="fg-ticktxt">V3</text>
+          <text x="550" y="212" text-anchor="middle" class="fg-tekst">elk kwartaal een vervolgmeting, opnieuw met rapport en bespreking</text>
+          <text x="550" y="230" text-anchor="middle" class="fg-sub">&eacute;&eacute;n jaar: C1 + V1 + V2 + V3 &mdash; vier metingen, vier rapporten, vier besprekingen</text>
+
+          <text x="20" y="288" class="fg-eyebrow">Tussen meting en rapport</text>
+          <g>
+            <rect x="20" y="306" width="128" height="92" rx="5" class="fg-doos"/>
+            <text x="84" y="328" text-anchor="middle" class="fg-nr">1</text>
+            <text x="84" y="350" text-anchor="middle" class="fg-titel klein">Inlezen</text>
+            <text x="84" y="368" text-anchor="middle" class="fg-sub">naast de vorige run</text>
+
+            <rect x="164" y="306" width="128" height="92" rx="5" class="fg-doos"/>
+            <text x="228" y="328" text-anchor="middle" class="fg-nr">2</text>
+            <text x="228" y="350" text-anchor="middle" class="fg-titel klein">Schrijven</text>
+            <text x="228" y="368" text-anchor="middle" class="fg-sub">uit gemeten waarden</text>
+
+            <rect x="308" y="306" width="128" height="92" rx="5" class="fg-doos"/>
+            <text x="372" y="328" text-anchor="middle" class="fg-nr">3</text>
+            <text x="372" y="350" text-anchor="middle" class="fg-titel klein">Beoordelen</text>
+            <text x="372" y="368" text-anchor="middle" class="fg-sub">de beoordelaar weegt</text>
+
+            <rect x="452" y="306" width="128" height="92" rx="5" class="fg-doos poort"/>
+            <text x="516" y="328" text-anchor="middle" class="fg-nr acc">4</text>
+            <text x="516" y="350" text-anchor="middle" class="fg-titel klein">Controleren</text>
+            <text x="516" y="368" text-anchor="middle" class="fg-sub acc">houdt tegen</text>
+            <text x="516" y="381" text-anchor="middle" class="fg-sub acc">wat ontbreekt</text>
+
+            <rect x="596" y="306" width="128" height="92" rx="5" class="fg-doos"/>
+            <text x="660" y="328" text-anchor="middle" class="fg-nr">5</text>
+            <text x="660" y="350" text-anchor="middle" class="fg-titel klein">Goedkeuren</text>
+            <text x="660" y="368" text-anchor="middle" class="fg-sub">de beoordelaar tekent</text>
+
+            <rect x="740" y="306" width="128" height="92" rx="5" class="fg-doos"/>
+            <text x="804" y="328" text-anchor="middle" class="fg-nr">6</text>
+            <text x="804" y="350" text-anchor="middle" class="fg-titel klein">Opmaken</text>
+            <text x="804" y="368" text-anchor="middle" class="fg-sub">in uw talen</text>
+          </g>
+          <g class="fg-lijn" style="color:var(--dim)">
+            <line x1="148" y1="352" x2="158" y2="352" marker-end="url(#p-dim)"/>
+            <line x1="292" y1="352" x2="302" y2="352" marker-end="url(#p-dim)"/>
+            <line x1="436" y1="352" x2="446" y2="352" marker-end="url(#p-dim)"/>
+            <line x1="580" y1="352" x2="590" y2="352" marker-end="url(#p-dim)"/>
+            <line x1="724" y1="352" x2="734" y2="352" marker-end="url(#p-dim)"/>
+          </g>
+          <path d="M510,402 Q370,452 236,404" class="fg-terug" marker-end="url(#p-acc)"/>
+          <text x="372" y="446" text-anchor="middle" class="fg-sub acc">geweigerd: terug naar schrijven</text>
+        </svg>
+      </div>
+      <figcaption>Boven de jaarcyclus, onder de zes stappen tussen meting en rapport. De figuur
+        is getekend, niet gefotografeerd: hij blijft scherp op elke schaal en volgt de lichte en
+        donkere stand mee.</figcaption>
+    </figure>
+  </div>
+</section>
+
+
+<!-- ==== de controle ======================================================= -->
+<section class="band inkt">
+  <div class="binnen">
+    <div class="op">
+      <p class="eyebrow">Stap vier, en waarom die er zit</p>
+      <h2 class="sectiekop">Een controle die het rapport tegenhoudt</h2>
+      <p class="sectielead">Bij veel leveranciers hangt de kwaliteit van een rapport af van wie
+        het die week schreef. Hier staat er een geautomatiseerde controle tussen, en die weigert
+        een rapport waarin:</p>
+
+      <ul class="weigert">
+        <li><span class="merk">Geweigerd</span>
+          <span class="regel">een bevinding geen gemeten waarden bevat: geen getallen, geen
+            nodenamen, geen datum</span></li>
+        <li><span class="merk">Geweigerd</span>
+          <span class="regel">bij een hoog risico het actiepunt ontbreekt</span></li>
+        <li><span class="merk">Geweigerd</span>
+          <span class="regel">een tekst staat die in elk willekeurig rapport zou passen</span></li>
+        <li><span class="merk">Geweigerd</span>
+          <span class="regel">een onderdeel van de meting niet is beoordeeld en ook niet buiten
+            scope is verklaard</span></li>
+      </ul>
+
+      <p class="slotregel">Zolang een van deze punten openstaat, komt er geen document uit.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==== het rapport ======================================================= -->
+<section class="band vlak">
+  <div class="binnen">
+    <div class="op">
+      <p class="eyebrow">Het resultaat</p>
+      <h2 class="sectiekop">Wat er in het rapport staat</h2>
+      <p class="sectielead">Per bevinding leest u wat er gemeten is, wat de leverancier of
+        Microsoft voorschrijft, waar die twee uiteenlopen, en het herstelwerk met de commando's
+        erbij &mdash; plus de controle waarmee u vaststelt dat het gelukt is.</p>
+    </div>
+
+    <div class="kaarten op">
+      <div class="kaart">
+        <span class="label">Zelden elders</span>
+        <h3>Onderdelen zonder afwijking staan er ook in</h3>
+        <p>Wat gecontroleerd is en in orde bleek, is uw bewijs van wat er is nagekeken. Bij de
+          meeste hulpmiddelen ziet u alleen wat er mis is.</p>
+      </div>
+      <div class="kaart">
+        <span class="label">Zelden elders</span>
+        <h3>En de grenzen van de meting</h3>
+        <p>Wat wij niet konden zien, staat er met naam en reden in: geen toegang tot de array,
+          beheerkaarten niet bereikbaar, een node die niet reageerde.</p>
+      </div>
+      <div class="kaart">
+        <span class="label">Drie talen</span>
+        <h3>Uit dezelfde meting, niet vertaald</h3>
+        <p>Nederlands, Engels en Duits worden alle drie uit dezelfde meting opgebouwd. Bij
+          vertalen achteraf verschuiven gemeten waarden zonder dat iemand het merkt.</p>
+      </div>
+      <div class="kaart">
+        <span class="label">Herstel</span>
+        <h3>Met de commando's erbij</h3>
+        <p>Het herstelwerk staat in volgorde, met de opdracht waarmee u het uitvoert en dezelfde
+          opdracht waarmee wij het vonden.</p>
+      </div>
+    </div>
+
+    <div class="knoppen op" style="margin-top:2.2rem">
+      <a class="knop" href="rapport.html">Bekijk de opbouw van een bevinding <span class="pijl">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==== risktrend ========================================================= -->
+<section class="band grond">
+  <div class="binnen">
+    <div class="op">
+      <p class="eyebrow">Herhalen loont</p>
+      <h2 class="sectiekop">Een gemeten reeks in plaats van een mening</h2>
+      <p class="sectielead">In elk volgend rapport ziet u wat er is opgelost, met de datum waarop
+        het herstel is gemeten: dezelfde controle die de afwijking vond, vindt hem dan niet meer.
+        Die reeks levert u mee als grafiek, in de taal van uw rapport.</p>
+    </div>
+
+    <figure class="fig op">
+      <div class="doek">
+        <svg viewBox="0 0 780 320" role="img"
+             aria-label="RiskTrend: het aantal bevindingen per risiconiveau over drie meetmomenten. Hoog daalt van 3 naar 0, middel van 11 naar 5, laag van 6 naar 4, en opgelost stijgt van 0 naar 12.">
+          <g class="fg-as">
+            <line x1="72" y1="40"  x2="740" y2="40"/>
+            <line x1="72" y1="92"  x2="740" y2="92"/>
+            <line x1="72" y1="145" x2="740" y2="145"/>
+            <line x1="72" y1="197" x2="740" y2="197"/>
+            <line x1="72" y1="250" x2="740" y2="250"/>
+          </g>
+          <g class="fg-aslabel" text-anchor="end">
+            <text x="60" y="44">12</text><text x="60" y="96">9</text>
+            <text x="60" y="149">6</text><text x="60" y="201">3</text>
+            <text x="60" y="254">0</text>
+          </g>
+          <text x="20" y="150" class="fg-aslabel" transform="rotate(-90 20 150)" text-anchor="middle">Aantal bevindingen</text>
+          <g class="fg-aslabel" text-anchor="middle">
+            <text x="130" y="282">12-05-2026</text>
+            <text x="406" y="282">16-06-2026</text>
+            <text x="682" y="282">14-07-2026</text>
+          </g>
+
+          <polyline class="fg-reeks fg-l-middel" points="130,57 406,75 682,162"/>
+          <polyline class="fg-reeks fg-l-laag"   points="130,145 406,162 682,180"/>
+          <polyline class="fg-reeks fg-l-hoog"   points="130,197 406,232 682,250"/>
+          <polyline class="fg-reeks fg-l-geen"   points="130,250 406,162 682,40"/>
+
+          <g class="fg-middel"><circle cx="130" cy="57" r="4"/><circle cx="406" cy="75" r="4"/><circle cx="682" cy="162" r="4"/></g>
+          <g class="fg-laag"><circle cx="130" cy="145" r="4"/><circle cx="406" cy="162" r="4"/><circle cx="682" cy="180" r="4"/></g>
+          <g class="fg-hoog"><circle cx="130" cy="197" r="4"/><circle cx="406" cy="232" r="4"/><circle cx="682" cy="250" r="4"/></g>
+          <g class="fg-geen"><circle cx="130" cy="250" r="4"/><circle cx="406" cy="162" r="4"/><circle cx="682" cy="40" r="4"/></g>
+
+          <g text-anchor="start" style="font-size:10px;font-family:var(--meting)">
+            <text x="694" y="166" class="fg-middel">5 middel</text>
+            <text x="694" y="184" class="fg-laag">4 laag</text>
+            <text x="694" y="254" class="fg-hoog">0 hoog</text>
+            <text x="694" y="44"  class="fg-geen">12 opgelost</text>
+          </g>
+
+          <g transform="translate(72,300)">
+            <rect x="0"   y="-8" width="10" height="10" rx="2" class="fg-hoog"/><text x="16"  y="1" class="fg-legenda">Hoog</text>
+            <rect x="76"  y="-8" width="10" height="10" rx="2" class="fg-middel"/><text x="92"  y="1" class="fg-legenda">Middel</text>
+            <rect x="162" y="-8" width="10" height="10" rx="2" class="fg-laag"/><text x="178" y="1" class="fg-legenda">Laag</text>
+            <rect x="238" y="-8" width="10" height="10" rx="2" class="fg-geen"/><text x="254" y="1" class="fg-legenda">Opgelost</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>RiskTrend met voorbeeldgegevens over drie meetmomenten. Voor het jaargesprek
+        met uw directie of uw leverancier heeft u daarmee een gemeten reeks in handen.</figcaption>
+    </figure>
+  </div>
+</section>
+
+
+<!-- ==== vergelijking ====================================================== -->
+<section class="band diep">
+  <div class="binnen">
+    <div class="op">
+      <p class="eyebrow">Het verschil</p>
+      <h2 class="sectiekop">Wat dit onderscheidt van wat u al heeft</h2>
+      <p class="sectielead">Waarschijnlijk gebruikt u al een of meer van deze hulpmiddelen. Elk
+        doet iets goeds, en geen ervan doet dit.</p>
+    </div>
+
+    <div class="vergelijk op">
+      <div>
+        <h3>Wat u al heeft</h3>
+        <ul>
+          <li><b>Cluster validation en de readiness checker</b>
+            beoordelen of u mag bouwen. Over een cluster dat al een jaar draait zeggen ze
+            weinig.</li>
+          <li><b>Microsoft Unified of Premier</b>
+            is nuttig voor de trend, maar het is een dashboard en geen oplevering, de teksten
+            zijn machinaal vertaald en er wordt alleen naar de Microsoft-laag gekeken.</li>
+          <li><b>De portalen van uw leveranciers</b>
+            kijken diep in hun eigen product en niet daarbuiten.</li>
+          <li><b>Documentatiegereedschap</b>
+            legt vast wat er staat, maar beoordeelt het niet.</li>
+        </ul>
+      </div>
+      <div class="toevoeging">
+        <h3>Wat de HealthCheck toevoegt</h3>
+        <ul>
+          <li><b>E&eacute;n rapport over alle lagen</b>
+            Host, cluster, opslag, netwerk, array, beheerkaarten, Azure en backup, met de
+            verbanden ertussen. Een pad dat op de host klopt en op de switch niet, valt alleen
+            op wanneer iemand beide leest.</li>
+          <li><b>Wat niet gezien is, staat erin</b>
+            Met de reden erbij. Bij de meeste gereedschappen blijft zo'n gat onzichtbaar.</li>
+          <li><b>De vorm wordt afgedwongen</b>
+            Door de controle uit stap 4, niet door een afspraak of een huisstijl.</li>
+          <li><b>Geen duur contract nodig</b>
+            Geen Unified, geen Azure-abonnement, geen werkruimte. Wel een beheerserver die bij
+            de nodes kan, en een uur van uw tijd per kwartaal.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==== tarieven ========================================================== -->
+<section class="band vlak">
+  <div class="binnen">
+    <div class="op">
+      <p class="eyebrow">Tarieven</p>
+      <h2 class="sectiekop">Wat het kost</h2>
+      <p class="sectielead">Vier vormen. Ze verschillen in ritme, in wat er wordt opgeleverd en
+        in hoe lang u zich vastlegt. De prijs volgt de mate waarin u zich vastlegt.</p>
+    </div>
+
+    <div class="prijskaarten op">
+      <div class="prijskaart aanbevolen">
+        <p class="vorm">Jaarabonnement</p>
+        <p class="aanbeveling">De standaardvorm</p>
+        <p class="bedrag">5.000</p>
+        <p class="per">euro per jaar</p>
+        <p class="wat">Basismeting en drie kwartaalvervolgmetingen, elk met rapport en een uur
+          bespreking.</p>
+      </div>
+      <div class="prijskaart">
+        <p class="vorm">Kwartaalabonnement</p>
+        <p class="aanbeveling"></p>
+        <p class="bedrag">1.400</p>
+        <p class="per">euro per kwartaal</p>
+        <p class="wat">Dezelfde vier metingen, per kwartaal gefactureerd; u legt zich niet voor
+          een jaar vast.</p>
+      </div>
+      <div class="prijskaart">
+        <p class="vorm">Maandabonnement</p>
+        <p class="aanbeveling"></p>
+        <p class="bedrag">300</p>
+        <p class="per">euro per maand</p>
+        <p class="wat">Maandelijkse quickcheck met als uitkomst de bijgewerkte risicolijst; geen
+          rapport en geen bespreking.</p>
+      </div>
+      <div class="prijskaart">
+        <p class="vorm">Eenmalige basismeting</p>
+        <p class="aanbeveling"></p>
+        <p class="bedrag">1.500</p>
+        <p class="per">euro eenmalig</p>
+        <p class="wat">E&eacute;n meting met rapport en bespreking, met het recht om door te
+          stromen naar een abonnement.</p>
+      </div>
+    </div>
+
+    <div class="knoppen op" style="margin-top:2.2rem">
+      <a class="knop" href="tarieven.html">Alle tarieven en modules <span class="pijl">&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==== na een storing ==================================================== -->
+<section class="band accent">
+  <div class="binnen">
+    <div class="naast op">
+      <div>
+        <p class="eyebrow">Er is nu iets stuk</p>
+        <p class="uitspraak">Draai de verzamelaar nu. Niet omdat wij nu kijken, maar omdat het
+          bewijs er nu nog is.</p>
+        <div class="proza">
+          <p>Clusterlogboeken rollen door en gebeurteniskanalen lopen vol. Wie achtenveertig uur
+            wacht, heeft geen storing meer om te onderzoeken maar een rapport vol gaten. De
+            verzamelaar staat klaar, ook 's nachts en ook zonder ons.</p>
+        </div>
+        <div class="knoppen" style="margin-top:1.6rem">
+          <a class="knop hoofd" href="storing.html">Wat u nu kunt doen <span class="pijl">&rarr;</span></a>
+        </div>
+      </div>
+      <div>
+        <ol class="stappenrij">
+          <li><b>Download de verzamelaar</b>
+            <span class="bij">werkt altijd &middot; statisch bestand &middot; geen aanmelding nodig</span></li>
+          <li><b>Draai hem op uw beheerserver</b>
+            <span class="bij">leest alleen &middot; toont eerst het plan van de run</span></li>
+          <li><b>Vraag de share aan</b>
+            <span class="bij">wij zetten een versleutelde Proton-share voor u klaar</span></li>
+          <li><b>Wij kijken met voorrang mee</b>
+            <span class="bij">onderzoek 1.600 euro per dag &middot; herstel op nacalculatie</span></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==== beginnen ========================================================== -->
+<section class="band inkt">
+  <div class="binnen">
+    <div class="op">
+      <p class="eyebrow">Aanvang</p>
+      <h2 class="sectiekop">Beginnen</h2>
+      <p class="sectielead">Wij beginnen met een gesprek over uw omgeving en over wat wij mogen
+        zien. Daaruit volgt welke modules zinvol zijn en welke toegang daarvoor nodig is. Die
+        toegang vragen wij vooraf: wat u niet wilt geven, is dan van tevoren bekend en verschijnt
+        niet achteraf als gat in het rapport.</p>
+      <div class="knoppen">
+        <a class="knop hoofd" href="mailto:hans.vredevoort@cldlbs.com?subject=CloudLabs%20HealthCheck%20%C2%B7%20intake">
+          Plan een intakegesprek <span class="pijl">&rarr;</span></a>
+        <a class="knop" href="healthcheck.html">Lees eerst de dienstbeschrijving</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="site">
+  <div class="voet-binnen">
+    <div class="voet-kol">
+      <p class="voet-merk">Cloud<span class="labs">Labs</span></p>
+      <p>Onafhankelijke metingen aan Hyper-V, Failover Cluster en Azure Local omgevingen.
+        Rapporten in het Nederlands, Engels en Duits.</p>
+    </div>
+    <div class="voet-kol">
+      <h4>Dienst</h4>
+      <a href="healthcheck.html">De meting</a>
+      <a href="rapport.html">Het rapport</a>
+      <a href="modules.html">Modules</a>
+      <a href="storing.html">Na een storing</a>
+      <a href="tarieven.html">Tarieven</a>
+    </div>
+    <div class="voet-kol">
+      <h4>CloudLabs</h4>
+      <a href="../about.html">Over Hans Vredevoort</a>
+      <a href="../partners/">Voor partners</a>
+      <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a>
+      <a href="../privacy.html">Privacy</a>
+    </div>
+  </div>
+  <div class="voet-onder">
+    <span>&copy; 2026 CloudLabs</span>
+    <span>Hyper-V &middot; Failover Cluster &middot; Azure Local</span>
+    <span>Nederlands / English / Deutsch</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var r=document.documentElement;
+  function lees(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function schrijf(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+
+  var knoppen=[].slice.call(document.querySelectorAll('.knop-thema'));
+  function thema(m){
+    if(m==='licht'){r.setAttribute('data-theme','light')}
+    else if(m==='donker'){r.setAttribute('data-theme','dark')}
+    else{r.removeAttribute('data-theme')}
+    schrijf('cl-thema',m);
+    knoppen.forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-thema')===m?'true':'false')});
+  }
+  var m=lees('cl-thema'); thema(m==='licht'||m==='donker'?m:'auto');
+  knoppen.forEach(function(b){b.addEventListener('click',function(){thema(b.getAttribute('data-thema'))})});
+
+  var rustig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- de bevinding is met toetsenbord en muis te inspecteren ------------ */
+  (function(){
+    var tabs=[].slice.call(document.querySelectorAll('[role="tab"]'));
+    if(!tabs.length) return;
+    function kies(tab,zetFocus){
+      tabs.forEach(function(knop){
+        var actief=knop===tab;
+        knop.setAttribute('aria-selected',actief?'true':'false');
+        knop.tabIndex=actief?0:-1;
+        var paneel=document.getElementById(knop.getAttribute('aria-controls'));
+        if(paneel) paneel.hidden=!actief;
+      });
+      if(zetFocus) tab.focus();
+    }
+    tabs.forEach(function(tab,i){
+      tab.addEventListener('click',function(){kies(tab,false)});
+      tab.addEventListener('keydown',function(e){
+        var n=null;
+        if(e.key==='ArrowRight') n=(i+1)%tabs.length;
+        if(e.key==='ArrowLeft') n=(i-1+tabs.length)%tabs.length;
+        if(e.key==='Home') n=0;
+        if(e.key==='End') n=tabs.length-1;
+        if(n!==null){e.preventDefault(); kies(tabs[n],true)}
+      });
+    });
+  })();
+
+
+  /* ---- opkomst bij het in beeld komen ------------------------------------ */
+  var blokken=[].slice.call(document.querySelectorAll('.op'));
+  if(rustig||!('IntersectionObserver' in window)){
+    blokken.forEach(function(el){el.classList.add('in')});
+  }else{
+    var w=new IntersectionObserver(function(rs){
+      rs.forEach(function(rg){
+        if(rg.isIntersecting){rg.target.classList.add('in'); w.unobserve(rg.target)}
+      });
+    },{rootMargin:'0px 0px -8% 0px', threshold:.06});
+    blokken.forEach(function(el){w.observe(el)});
+  }
+})();
+</script>
+
+</body>
+</html>

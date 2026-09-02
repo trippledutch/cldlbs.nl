@@ -1,0 +1,636 @@
+/* CloudLabs · site.css · de huisstijl van het rapport, toegepast op cldlbs.com
+   ============================================================================
+
+   DIT BESTAND VOEGT TOE, HET VERVANGT NIET. De volgorde is:
+
+       fonts.css      de tien zelfgehoste woff2's
+       findings.css   de bron van de huisstijl, ongewijzigd overgenomen uit
+                      documents/docengine/html/findings.css
+       site.css       wat een WEBSITE nodig heeft en een document niet
+
+   Wie findings.css bijwerkt, werkt de site mee bij. Dat is de reden voor deze
+   volgorde en niet voor een kopie: twee stylesheets over een huisstijl lopen
+   binnen een maand uit elkaar op precies de dingen die een lezer over twee
+   opleveringen heen vergelijkt (findings.css zegt dat zelf, bij de RCA).
+
+   DE SITE TOONT GEEN PLAATJES VAN HET PRODUCT, HET TOONT HET PRODUCT.
+   Dat is de derde versie van dit bestand en het verschil met de eerste twee.
+   Versie 1 was een document: één kolom, geen contrast, geen ritme. Versie 2 gaf
+   het banden en schaal, maar bleef screenshots plakken - en een screenshot van
+   een bevinding is korrelig, dood en op elke telefoon onleesbaar. Versie 3
+   RENDERT de bevinding met findings.css zelf. Dezelfde klassen, dezelfde
+   kleuren, dezelfde chip. Het is scherp op elk scherm, het is doorzoekbaar, en
+   het bewijst in één blik dat er een machine achter staat en geen sjabloon.
+   Hetzelfde geldt voor de cyclusfiguur en de RiskTrend: getekende SVG, geen PNG.
+
+   GEEN NIEUWE KLEUREN. Elke waarde hieronder is een token uit findings.css of
+   een var()-verwijzing daarnaartoe. Wie hier een hexcode intypt, heeft een
+   vijfde palet gemaakt. De enige uitzondering staat bij .nacht en is daar
+   uitgeschreven. */
+
+
+/* ---- rolkleuren voor banden -----------------------------------------------
+   De contrastband is in de LICHTE stand de inktkleur met de grondkleur erop.
+   In de DONKERE stand kan dat niet: --ink is daar bijna wit, dus de band zou
+   een wit vlak worden midden in een donkere pagina. Daarom een ROL en geen
+   kleur: hetzelfde token wijst per stand naar een andere bestaande waarde. */
+:root{
+  --band-diep:var(--ink);
+  --band-diep-ink:var(--ground);
+  --band-diep-dim:var(--rule);
+  --schaduw:rgba(10,16,36,.13);
+  --schaduw-fijn:rgba(10,16,36,.07);
+  --soepel:cubic-bezier(.22,.61,.36,1);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --band-diep:var(--surface); --band-diep-ink:var(--ink);
+    --band-diep-dim:var(--faint);
+    --schaduw:rgba(0,0,0,.5); --schaduw-fijn:rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --band-diep:var(--surface); --band-diep-ink:var(--ink);
+  --band-diep-dim:var(--faint);
+  --schaduw:rgba(0,0,0,.5); --schaduw-fijn:rgba(0,0,0,.3);
+}
+
+
+/* ---- de nachtlaag ---------------------------------------------------------
+   DE VOORKANT RENDERT ALTIJD DONKER, in beide standen. Dat is dezelfde regel
+   die het rapportbeeld al volgt: een pagina uit het rapport is wit, ook in de
+   donkere stand, want papier is wit. Een omslag is donker, ook in de lichte
+   stand, want dat is wat een omslag is.
+
+   De zes waarden hieronder zijn GEEN nieuw palet: het zijn letterlijk de zes
+   die findings.css in zijn donkere blok declareert (--ground, --surface, --ink,
+   --dim, --rule, --accent). Ze staan hier uitgeschreven omdat ze hier moeten
+   gelden ONGEACHT de stand, en een var() zou dan met de stand meebewegen. */
+.nacht{
+  --n-grond:#0B0F1A;
+  --n-vlak:#121826;
+  --n-ink:#E8ECF3;
+  --n-dim:#AEB7C7;
+  --n-faint:#7B849A;
+  --n-lijn:#232B3B;
+  --n-accent:#3FB6D8;
+  position:relative; isolation:isolate; overflow:hidden;
+  background:var(--n-grond); color:var(--n-ink);
+}
+/* Twee heel lichte gloeden en een fijn raster. NIET het rasterscherm van de
+   huidige site: daar staat een 48px-grid over de HELE pagina plus scanlines op
+   1px/3px, en dat leest als een spelmenu. Hier staat het alleen op de omslag,
+   op 3%, met een masker dat het naar de randen laat verdwijnen. */
+.nacht::before{
+  content:""; position:absolute; inset:0; z-index:-2; pointer-events:none;
+  background:
+    radial-gradient(60rem 32rem at 78% -10%, rgba(63,182,216,.16), transparent 62%),
+    radial-gradient(48rem 30rem at 8% 108%, rgba(10,126,158,.14), transparent 60%);
+}
+.nacht::after{
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background-image:
+    linear-gradient(rgba(150,180,235,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(150,180,235,.05) 1px, transparent 1px);
+  background-size:72px 72px;
+  -webkit-mask-image:radial-gradient(75% 65% at 50% 40%, #000 20%, transparent 78%);
+  mask-image:radial-gradient(75% 65% at 50% 40%, #000 20%, transparent 78%);
+}
+.nacht .eyebrow{color:var(--n-accent)}
+.nacht .sectiekop{color:var(--n-ink)}
+.nacht .sectielead{color:var(--n-dim)}
+.nacht a{color:var(--n-accent)}
+
+
+/* ---- banden ---------------------------------------------------------------
+   Een band is een volle strook met een eigen grond. De INHOUD blijft smal -
+   een regel van 90 tekens leest niemand - maar de grond loopt door tot de rand. */
+.band{padding:5.5rem 0}
+.band > .binnen{max-width:66rem; margin:0 auto; padding:0 1.75rem}
+.band .proza{max-width:44rem}
+
+.band.grond{background:var(--ground)}
+.band.vlak{background:var(--surface)}
+.band.diep{background:var(--sunk)}
+.band.accent{background:var(--accent-soft)}
+.band.inkt{background:var(--band-diep); color:var(--band-diep-ink)}
+.band.smal{padding:3.5rem 0}
+.band.grond + .band.grond, .band.vlak + .band.vlak{border-top:1px solid var(--rule)}
+
+.band.inkt h2, .band.inkt h3, .band.inkt strong, .band.inkt b{color:var(--band-diep-ink)}
+.band.inkt p, .band.inkt li{color:var(--band-diep-ink); opacity:.86}
+.band.inkt .eyebrow{color:var(--accent)}
+.band.inkt a{color:var(--accent)}
+
+
+/* ---- koppen ---------------------------------------------------------------
+   Groter dan in het rapport. Een hoofdstukkop in een document staat tussen twee
+   alinea's; een sectiekop op een site staat bovenaan een leeg vlak. */
+.sectiekop{
+  font-family:var(--kop); font-weight:600;
+  font-size:clamp(1.65rem,3.2vw,2.35rem); line-height:1.12;
+  letter-spacing:-.022em; color:var(--ink);
+  margin:0 0 1.05rem; text-wrap:balance; border:0; padding:0;
+}
+.sectielead{
+  font-family:var(--kop); font-weight:400; font-size:1.08rem; line-height:1.6;
+  color:var(--dim); margin:0 0 2.6rem; max-width:56ch;
+}
+.eyebrow{margin-bottom:1rem}
+
+
+/* ---- vaste kopbalk -------------------------------------------------------- */
+.kopbalk{
+  position:sticky; top:0; z-index:50;
+  background:color-mix(in srgb, var(--surface) 82%, transparent);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--rule);
+}
+.kopbalk-binnen{
+  max-width:66rem; margin:0 auto; padding:.8rem 1.75rem;
+  display:flex; align-items:center; gap:.6rem 1.5rem; flex-wrap:wrap;
+}
+.kopmerk{
+  font-family:var(--kop); font-size:1.1rem; font-weight:600;
+  letter-spacing:-.02em; color:var(--ink); white-space:nowrap;
+  text-decoration:none; flex:none;
+}
+.kopmerk .labs{color:var(--accent)}
+
+/* De navigatie draagt WOORDEN. Op de huidige site staat er "01 Home, 02 Blog";
+   dat leest als een inhoudsopgave van iets anders dan waar de bezoeker is. */
+.hoofdnav{display:flex; flex-wrap:wrap; gap:.2rem 1.2rem; flex:1 1 auto}
+.hoofdnav a{
+  font-family:var(--kop); font-size:.9rem; color:var(--dim);
+  text-decoration:none; white-space:nowrap; padding:.2rem 0;
+  border-bottom:1.5px solid transparent; transition:color .18s var(--soepel);
+}
+.hoofdnav a:hover{color:var(--ink)}
+.hoofdnav a[aria-current="page"]{color:var(--ink); font-weight:600; border-bottom-color:var(--accent)}
+
+.schakel{display:flex; gap:.9rem; flex-wrap:wrap; flex:none}
+.schakelgroep{display:flex; gap:.25rem}
+.schakel a, .schakel button{
+  font-family:var(--meting); font-size:.7rem; letter-spacing:.08em;
+  background:transparent; color:var(--faint);
+  border:1px solid var(--rule); border-radius:3px; padding:.28rem .55rem;
+  cursor:pointer; text-decoration:none; line-height:1.2;
+  transition:color .18s var(--soepel), border-color .18s var(--soepel);
+}
+.schakel a:hover, .schakel button:hover{color:var(--ink); border-color:var(--faint)}
+/* DE TAALKEUZE IS EEN LINK EN GEEN KNOP, en dat is het hele verschil met de
+   huidige site. Daar verbergt CSS de andere taal op dezelfde URL; een
+   zoekmachine ziet dan een pagina met twee talen door elkaar en een Duitse
+   bezoeker landt op een Engelse titel. Drie talen zijn drie URL's. */
+.schakel a[aria-current="true"], .schakel button[aria-pressed="true"]{
+  background:var(--accent); border-color:var(--accent); color:var(--chip-ink);
+}
+.schakel a:focus-visible, .schakel button:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+/* A / L / D EN GEEN ZON EN MAAN. healthcheck.html gebruikt ☀ en ☾, maar die
+   staan niet in IBM Plex Mono: de browser tekende er een vervangglyph voor. */
+.knop-thema{min-width:1.9rem; text-align:center}
+.vw{position:absolute; width:1px; height:1px; overflow:hidden;
+    clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap}
+
+
+/* ---- de omslag ------------------------------------------------------------ */
+.omslag{padding:6rem 0 5rem}
+.omslag-binnen{
+  max-width:66rem; margin:0 auto; padding:0 1.75rem;
+  display:grid; grid-template-columns:1.02fr .98fr; gap:4rem; align-items:center;
+}
+.omslag h1{
+  font-family:var(--kop); font-weight:600;
+  font-size:clamp(2.3rem,5.4vw,3.6rem); line-height:1.03;
+  letter-spacing:-.032em; margin:.9rem 0 1.3rem; text-wrap:balance;
+  color:var(--n-ink);
+}
+/* NOWRAP. "in orde" is één begrip en de gradient loopt eronder door; brak hij
+   af, dan stond "in" onderstreept op de ene regel en "orde?" op de volgende. */
+.omslag h1 .accentwoord{
+  color:var(--n-accent); white-space:nowrap;
+  /* De onderstreping is een gradient en geen border: hij loopt onder de
+     staarten van de letters door en stopt precies bij het woord. */
+  background-image:linear-gradient(transparent 68%, rgba(63,182,216,.28) 68%);
+}
+.omslag .onderkop{
+  font-family:var(--kop); font-weight:400; font-size:1.14rem; line-height:1.6;
+  color:var(--n-dim); margin:0 0 2rem; max-width:40ch;
+}
+.omslag .onderkop strong{color:var(--n-ink); font-weight:500}
+
+/* ---- de stapel: het product, niet een foto ervan --------------------------
+   Drie lagen: twee spooklagen die alleen diepte geven, en bovenop de ECHTE
+   bevindingkaart, gerenderd met findings.css. Daarom staat er een .licht
+   omheen: de kaart is een stuk rapport, en een rapport is wit - ook op een
+   donkere omslag, ook in de donkere stand. */
+.stapel{position:relative; perspective:1600px}
+.stapel .spook{
+  position:absolute; left:0; right:0; border-radius:8px;
+  background:var(--n-vlak); border:1px solid var(--n-lijn);
+}
+/* De spooklagen moeten ZICHTBAAR zijn, anders staan ze er voor niets. Met
+   --n-vlak op --n-grond was het verschil 7 stappen grijs en zag je niets; ze
+   dragen nu de lijnkleur als rand, en die leest wel. */
+.stapel .spook.een{top:-1.5rem; height:3rem; transform:scale(.93);
+  background:var(--n-grond); border-color:var(--n-lijn)}
+.stapel .spook.twee{top:-.75rem; height:3rem; transform:scale(.965);
+  background:var(--n-vlak); border-color:var(--n-faint); opacity:.55}
+.stapel .blad{
+  position:relative;
+  border-radius:8px; overflow:hidden;
+  box-shadow:0 40px 80px -20px rgba(0,0,0,.55), 0 12px 28px -12px rgba(0,0,0,.4),
+             0 0 0 1px rgba(150,180,235,.12);
+  transform:rotate(-.5deg);
+  transition:transform .5s var(--soepel);
+}
+.stapel:hover .blad{transform:rotate(0deg) translateY(-4px)}
+
+/* DE LICHTE EILAND. Binnen dit blok gelden de LICHTE tokens, ongeacht de stand
+   van de pagina. Zonder dit zou de bevindingkaart in de donkere stand donker
+   worden, en dan is het geen stuk rapport meer maar een widget. */
+.licht{
+  --ground:#FBFCFD; --surface:#FFFFFF; --sunk:#F4F6F9;
+  --ink:#0A1024; --dim:#3A4255; --faint:#6B7285; --rule:#D3D8E0;
+  --accent:#0A7E9E; --accent-soft:#E6F2F6;
+  --crit:#0A1024; --high:#E03131; --med:#C55205; --low:#1A78CD; --none:#2B8A3E;
+  --chip-ink:#FFFFFF;
+  background:var(--surface); color:var(--ink);
+}
+.blad-kop{
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  padding:.75rem 1.1rem; border-bottom:1px solid var(--rule); background:var(--sunk);
+  font-family:var(--meting); font-size:.68rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--faint);
+}
+.blad-kop .stip{
+  display:inline-block; width:.5rem; height:.5rem; border-radius:999px;
+  background:var(--none); margin-right:.45rem; vertical-align:baseline;
+}
+.blad-lijf{padding:1.1rem 1.2rem 1.3rem}
+.blad-lijf .bev{margin:0; border:0; border-left:3px solid var(--high); border-radius:0}
+.omslagbij{
+  font-family:var(--meting); font-size:.7rem; letter-spacing:.07em;
+  color:var(--n-faint); margin:1.5rem 0 0; text-align:center;
+}
+
+
+/* ---- bewijsrij ------------------------------------------------------------
+   Vier getallen met een haarlijn ertussen. Niet "40 jaar ervaring" - dat is een
+   cv - maar wat er GEDAAN is. */
+.bewijsrij{
+  max-width:66rem; margin:4.5rem auto 0; padding:2.2rem 1.75rem 0;
+  border-top:1px solid var(--n-lijn);
+  display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem 0;
+}
+.bewijs-item{padding:0 1.5rem; border-left:1px solid var(--n-lijn)}
+.bewijs-item:first-child{border-left:0; padding-left:0}
+.bewijs-item b{
+  display:block; font-family:var(--meting); font-weight:500;
+  font-size:clamp(1.75rem,3.2vw,2.4rem); line-height:1;
+  font-variant-numeric:tabular-nums; color:var(--n-ink);
+  letter-spacing:-.03em; margin-bottom:.5rem;
+}
+.bewijs-item span{
+  display:block; font-family:var(--kop); font-size:.84rem; line-height:1.4;
+  color:var(--n-dim); max-width:15ch;
+}
+
+
+/* ---- knoppen -------------------------------------------------------------- */
+.knoppen{display:flex; flex-wrap:wrap; gap:.75rem; margin:0}
+.knop{
+  display:inline-flex; align-items:center; gap:.55rem;
+  font-family:var(--kop); font-size:.96rem; font-weight:500;
+  padding:.78rem 1.35rem; border-radius:5px; text-decoration:none;
+  border:1px solid var(--rule); color:var(--ink); background:var(--surface);
+  transition:transform .18s var(--soepel), border-color .18s var(--soepel),
+             box-shadow .18s var(--soepel);
+}
+.knop:hover{border-color:var(--faint); transform:translateY(-1px)}
+.knop.hoofd{
+  background:var(--accent); border-color:var(--accent); color:var(--chip-ink);
+  box-shadow:0 6px 18px -6px color-mix(in srgb, var(--accent) 65%, transparent);
+}
+.knop.hoofd:hover{box-shadow:0 10px 26px -8px color-mix(in srgb, var(--accent) 75%, transparent)}
+.knop:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.knop .pijl{font-family:var(--meting); font-size:.9em; opacity:.75}
+.nacht .knop{background:transparent; color:var(--n-ink); border-color:var(--n-lijn)}
+.nacht .knop:hover{border-color:var(--n-faint)}
+.nacht .knop.hoofd{background:var(--n-accent); border-color:var(--n-accent); color:#06121A}
+.band.inkt .knop{background:transparent; color:var(--band-diep-ink); border-color:var(--band-diep-dim)}
+.band.inkt .knop.hoofd{background:var(--accent); border-color:var(--accent); color:var(--chip-ink)}
+
+
+/* ---- kaartraster ---------------------------------------------------------- */
+.kaarten{display:grid; gap:1rem; grid-template-columns:repeat(2,1fr)}
+.kaarten.drie{grid-template-columns:repeat(3,1fr)}
+.kaart{
+  position:relative; background:var(--surface); border:1px solid var(--rule);
+  border-radius:6px; padding:1.5rem 1.5rem 1.4rem;
+  transition:border-color .22s var(--soepel), transform .22s var(--soepel),
+             box-shadow .22s var(--soepel);
+}
+.kaart:hover{
+  border-color:color-mix(in srgb, var(--accent) 45%, var(--rule));
+  transform:translateY(-2px);
+  box-shadow:0 14px 34px -18px var(--schaduw);
+}
+.band.vlak .kaart{background:var(--ground)}
+.kaart .label{
+  display:block; font-family:var(--meting); font-size:.66rem;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--accent);
+  margin-bottom:.7rem;
+}
+.kaart h3{
+  font-family:var(--kop); font-weight:600; font-size:1.04rem; line-height:1.3;
+  color:var(--ink); margin:0 0 .5rem; letter-spacing:-.008em;
+}
+.kaart p{font-family:var(--kop); font-size:.92rem; line-height:1.6; color:var(--dim); margin:0}
+
+
+/* ---- de weigerlijst -------------------------------------------------------
+   Het sterkste argument dat CloudLabs heeft, dus het krijgt de donkere band en
+   een eigen vorm: het woord GEWEIGERD in mono, en de regel erachter. */
+.weigert{list-style:none; margin:0; padding:0}
+.weigert li{
+  display:grid; grid-template-columns:max-content 1fr; gap:1.25rem;
+  align-items:baseline; padding:1.05rem 0; margin:0;
+  border-top:1px solid var(--band-diep-dim); opacity:1;
+}
+.weigert li:last-child{border-bottom:1px solid var(--band-diep-dim)}
+.weigert .merk{
+  font-family:var(--meting); font-size:.64rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--high); white-space:nowrap;
+}
+.weigert .regel{
+  font-family:var(--kop); font-size:1.02rem; line-height:1.5;
+  color:var(--band-diep-ink); opacity:.94;
+}
+.slotregel{
+  font-family:var(--kop); font-weight:600; font-size:1.22rem; line-height:1.45;
+  color:var(--band-diep-ink); margin:2.2rem 0 0; max-width:40ch;
+}
+
+
+/* ---- twee kolommen --------------------------------------------------------
+   BOVENAAN UITLIJNEN. Met align-items:center hangt de korte kolom in het midden
+   van de lange, en dan begint het kopje lager dan de alinea ernaast. */
+.naast{display:grid; grid-template-columns:1fr 1fr; gap:3.5rem; align-items:start}
+.naast.gecentreerd{align-items:center}
+.naast.beeldlinks > :first-child{order:2}
+.naast.beeldlinks > :last-child{order:1}
+
+
+/* ---- vergelijking --------------------------------------------------------- */
+.vergelijk{display:grid; grid-template-columns:1fr 1fr; gap:0}
+.vergelijk > div{padding:0 2.5rem}
+.vergelijk > div:first-child{padding-left:0; border-right:1px solid var(--rule)}
+.vergelijk > div:last-child{padding-right:0}
+.vergelijk h3{
+  font-family:var(--meting); font-weight:500; font-size:.68rem;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--faint);
+  margin:0 0 1.3rem;
+}
+.vergelijk .toevoeging h3{color:var(--accent)}
+.vergelijk ul{list-style:none; margin:0; padding:0; display:grid; gap:1.2rem}
+.vergelijk li{margin:0; font-family:var(--kop); font-size:.94rem; line-height:1.55; color:var(--dim)}
+.vergelijk li b{display:block; color:var(--ink); font-weight:600; margin-bottom:.2rem}
+.vergelijk .toevoeging li b{color:var(--accent)}
+
+
+/* ---- prijskaarten --------------------------------------------------------- */
+.prijskaarten{display:grid; gap:1rem; grid-template-columns:repeat(4,1fr)}
+.prijskaart{
+  background:var(--surface); border:1px solid var(--rule); border-radius:6px;
+  padding:1.6rem 1.45rem; display:flex; flex-direction:column; position:relative;
+  transition:transform .22s var(--soepel), box-shadow .22s var(--soepel);
+}
+.prijskaart:hover{transform:translateY(-2px); box-shadow:0 16px 36px -20px var(--schaduw)}
+.prijskaart.aanbevolen{
+  border-color:var(--accent);
+  box-shadow:inset 0 0 0 1px var(--accent), 0 16px 40px -22px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+.prijskaart .vorm{font-family:var(--kop); font-weight:600; font-size:1rem; color:var(--ink); margin:0}
+.prijskaart .aanbeveling{
+  font-family:var(--meting); font-size:.62rem; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--accent); margin:.3rem 0 0; min-height:1rem;
+}
+.prijskaart .bedrag{
+  font-family:var(--meting); font-weight:500; font-size:1.75rem;
+  font-variant-numeric:tabular-nums; color:var(--ink);
+  line-height:1.05; margin:1rem 0 .15rem; letter-spacing:-.03em;
+}
+.prijskaart .per{font-family:var(--meting); font-size:.74rem; color:var(--faint); margin:0 0 1.2rem}
+.prijskaart .wat{
+  font-family:var(--kop); font-size:.9rem; line-height:1.55; color:var(--dim);
+  margin:auto 0 0; padding-top:1.1rem; border-top:1px solid var(--rule);
+}
+
+
+/* ---- stappen 1-2-3 (de spoedingang) -------------------------------------- */
+ol.stappenrij{list-style:none; margin:0; padding:0; counter-reset:stap}
+ol.stappenrij li{
+  counter-increment:stap; position:relative;
+  padding:0 0 1.6rem 3.2rem; margin:0;
+  border-left:1px solid var(--rule); margin-left:1rem;
+}
+ol.stappenrij li:last-child{border-left-color:transparent; padding-bottom:0}
+ol.stappenrij li::before{
+  content:counter(stap);
+  position:absolute; left:-1rem; top:-.2rem;
+  width:2rem; height:2rem; border-radius:999px;
+  background:var(--surface); border:1px solid var(--accent); color:var(--accent);
+  font-family:var(--meting); font-size:.8rem; font-weight:500;
+  display:flex; align-items:center; justify-content:center;
+}
+ol.stappenrij b{
+  font-family:var(--kop); font-weight:600; font-size:1.04rem;
+  color:var(--ink); display:block; margin-bottom:.25rem;
+}
+ol.stappenrij .bij{font-family:var(--meting); font-size:.78rem; color:var(--faint); line-height:1.65}
+
+
+/* ---- getekende figuren ----------------------------------------------------
+   SVG EN GEEN PNG. Een screenshot van een grafiek is korrelig op een scherm met
+   dubbele dichtheid, onleesbaar op een telefoon, en hij verandert niet mee met
+   de stand. Deze twee figuren zijn getekend: ze erven de tokens, ze blijven
+   scherp op elke schaal, en de tekst erin is echte tekst. */
+figure.fig{margin:0; break-inside:avoid}
+figure.fig .doek{
+  background:var(--surface); border:1px solid var(--rule); border-radius:8px;
+  padding:1.75rem 1.5rem 1.5rem; overflow-x:auto;
+}
+.band.vlak figure.fig .doek{background:var(--ground)}
+figure.fig svg{display:block; width:100%; height:auto; min-width:38rem}
+figure.fig figcaption{
+  font-family:var(--meting); font-size:.75rem; color:var(--faint);
+  margin:.9rem 0 0; line-height:1.65;
+}
+/* de rollen binnen een figuur, zodat de SVG geen eigen kleuren draagt */
+.fg-doos{fill:var(--surface); stroke:var(--rule); stroke-width:1.25}
+.band.vlak .fg-doos{fill:var(--ground)}
+.fg-doos.eens{stroke-dasharray:5 4}
+.fg-doos.poort{fill:var(--accent-soft); stroke:var(--accent); stroke-width:1.5}
+.fg-titel{font-family:var(--kop); font-weight:600; font-size:13.5px; fill:var(--ink)}
+.fg-titel.klein{font-size:12px}
+.fg-sub{font-family:var(--meting); font-size:9.5px; fill:var(--faint)}
+.fg-sub.acc{fill:var(--accent)}
+.fg-nr{font-family:var(--meting); font-size:10px; fill:var(--faint)}
+.fg-nr.acc{fill:var(--accent)}
+.fg-lijn{stroke:var(--dim); stroke-width:1.4; fill:none}
+.fg-lus{stroke:var(--accent); stroke-width:2; fill:none}
+.fg-terug{stroke:var(--accent); stroke-width:1.4; fill:none; stroke-dasharray:5 4}
+.fg-tekst{font-family:var(--kop); font-size:11.5px; fill:var(--dim)}
+.fg-eyebrow{font-family:var(--meting); font-size:10px; letter-spacing:.12em; fill:var(--accent); text-transform:uppercase}
+.fg-tick{fill:var(--surface); stroke:var(--accent); stroke-width:1.5}
+.band.vlak .fg-tick{fill:var(--ground)}
+.fg-ticktxt{font-family:var(--meting); font-size:9px; font-weight:500; fill:var(--accent)}
+.fg-as{stroke:var(--rule); stroke-width:1}
+.fg-aslabel{font-family:var(--meting); font-size:9px; fill:var(--faint)}
+.fg-legenda{font-family:var(--meting); font-size:9.5px; fill:var(--dim)}
+.fg-hoog{fill:var(--high)} .fg-middel{fill:var(--med)}
+.fg-laag{fill:var(--low)} .fg-geen{fill:var(--none)}
+.fg-l-hoog{stroke:var(--high)} .fg-l-middel{stroke:var(--med)}
+.fg-l-laag{stroke:var(--low)} .fg-l-geen{stroke:var(--none)}
+.fg-reeks{fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
+
+
+/* ---- tabellen: aanvulling op findings.css -------------------------------- */
+.scroller{overflow-x:auto; margin:.2rem 0 .6rem}
+table.tab th{vertical-align:bottom}
+/* ELKE CELREGEL DRAAGT "table.tab" MEE. findings.css zet "table.tab td + td" in
+   mono en rechts uit, want daar is elke tweede kolom een cijferkolom. Dat is
+   drie elementen plus een klasse, dus een kale "td.naam" verliest. */
+table.tab td.code{font-family:var(--meting); font-size:.84rem; color:var(--ink); white-space:nowrap; text-align:left}
+table.tab td.naam{font-family:var(--kop); font-weight:600; color:var(--ink);
+  text-align:left; white-space:normal; font-variant-numeric:normal}
+table.tab td.zin{font-family:var(--kop); font-variant-numeric:normal; font-size:.92rem;
+  text-align:left; white-space:normal; color:var(--dim)}
+table.tab td.prijs, table.tab th.prijs{font-family:var(--meting); font-variant-numeric:tabular-nums;
+  text-align:right; white-space:nowrap; color:var(--ink)}
+table.tab th.zin{text-align:left}
+tr.uitgelicht td{background:var(--accent-soft)}
+
+.chip.omlijnd{
+  display:inline-block; font-family:var(--meting); font-size:.66rem;
+  font-weight:500; letter-spacing:.07em; padding:.22rem .5rem;
+  border-radius:3px; border:1px solid var(--rule); color:var(--dim);
+  background:transparent; white-space:nowrap; min-width:0; text-align:left;
+}
+.chip.omlijnd.basis{border-color:var(--ink); color:var(--ink)}
+.chip.omlijnd.plan{border-style:dashed; color:var(--faint)}
+.chip.omlijnd.r1{background:var(--accent); border-color:var(--accent); color:var(--chip-ink)}
+
+
+/* ---- overig --------------------------------------------------------------- */
+.kader{
+  background:var(--sunk); border-left:3px solid var(--accent);
+  border-radius:0 4px 4px 0; padding:1.1rem 1.35rem 1rem; margin:1.4rem 0;
+}
+.kader p{margin:0 0 .6rem} .kader p:last-child{margin-bottom:0}
+p.bijschrift{font-family:var(--meting); font-size:.77rem; color:var(--faint);
+  margin:.6rem 0 1.4rem; max-width:none; line-height:1.65}
+/* p.uitspraak en niet .uitspraak: ".front p" uit findings.css weegt even zwaar
+   als één klasse plus één element, dus een kale klasse verliest. */
+p.uitspraak{
+  font-family:var(--tekst); font-size:clamp(1.4rem,2.8vw,1.95rem);
+  line-height:1.32; color:var(--ink); margin:0 0 1.6rem;
+  max-width:24ch; text-wrap:balance; letter-spacing:-.015em;
+}
+.band .proza p{font-family:var(--tekst); font-size:1rem; line-height:1.68;
+  color:var(--dim); margin:0 0 1.05rem}
+.band .proza p:last-child{margin-bottom:0}
+.band .proza ul.opsom{margin:0 0 1.2rem; padding:0 0 0 1.15rem; color:var(--dim)}
+.band .proza li{margin:.3rem 0}
+
+
+/* ---- voettekst ------------------------------------------------------------ */
+footer.site{background:var(--band-diep); color:var(--band-diep-ink); padding:4rem 0 2.5rem}
+.voet-binnen{max-width:66rem; margin:0 auto; padding:0 1.75rem;
+  display:grid; grid-template-columns:1.5fr 1fr 1fr; gap:3rem}
+.voet-kol h4{font-family:var(--meting); font-size:.66rem; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin:0 0 1rem; font-weight:500}
+.voet-kol a, .voet-kol p{display:block; font-family:var(--kop); font-size:.9rem;
+  line-height:1.75; color:var(--band-diep-ink); opacity:.75; text-decoration:none; margin:0}
+.voet-kol a:hover{opacity:1}
+.voet-merk{font-family:var(--kop); font-size:1.2rem; font-weight:600; margin-bottom:.7rem !important; opacity:1 !important}
+.voet-merk .labs{color:var(--accent)}
+.voet-onder{max-width:66rem; margin:3rem auto 0; padding:1.5rem 1.75rem 0;
+  border-top:1px solid var(--band-diep-dim);
+  font-family:var(--meting); font-size:.72rem; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--band-diep-ink); opacity:.55;
+  display:flex; flex-wrap:wrap; gap:.5rem 1.6rem}
+
+
+/* ---- beweging -------------------------------------------------------------
+   Alleen een opkomst, en alleen één keer. Geen parallax en geen meebewegende
+   achtergrond: dit is een site voor iemand met een cluster dat eruit ligt. */
+.op{opacity:0; transform:translateY(14px); transition:opacity .7s var(--soepel), transform .7s var(--soepel)}
+.op.in{opacity:1; transform:none}
+@media (prefers-reduced-motion:reduce){
+  .op{opacity:1 !important; transform:none !important; transition:none}
+  .stapel .blad, .knop, .kaart, .prijskaart{transition:none}
+}
+
+
+/* ---- smalle schermen ------------------------------------------------------ */
+@media (max-width:900px){
+  .omslag-binnen{grid-template-columns:1fr; gap:3rem}
+  .omslag{padding:3.5rem 0 3.5rem}
+  .stapel{max-width:30rem}
+  .naast, .vergelijk{grid-template-columns:1fr; gap:2.25rem}
+  .vergelijk > div{padding:0}
+  .vergelijk > div:first-child{border-right:0; border-bottom:1px solid var(--rule); padding-bottom:2rem}
+  .naast.beeldlinks > :first-child, .naast.beeldlinks > :last-child{order:0}
+  .bewijsrij{grid-template-columns:repeat(2,1fr); gap:1.75rem 0}
+  .bewijs-item:nth-child(3){border-left:0; padding-left:0}
+  .prijskaarten{grid-template-columns:repeat(2,1fr)}
+  .voet-binnen{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  .band{padding:3.5rem 0}
+  .kaarten, .kaarten.drie, .prijskaarten{grid-template-columns:1fr}
+  .bewijsrij{grid-template-columns:1fr; gap:1.4rem 0; margin-top:3rem}
+  .bewijs-item{border-left:0; padding-left:0}
+  .kopbalk-binnen{padding:.6rem 1.1rem}
+  .band > .binnen, .omslag-binnen, .bewijsrij, .voet-binnen, .voet-onder{padding-left:1.1rem; padding-right:1.1rem}
+  .hoofdnav{order:3; flex-basis:100%; gap:.2rem .9rem}
+  .voet-binnen{grid-template-columns:1fr; gap:2rem}
+  figure.fig .doek{padding:1rem .9rem}
+}
+
+
+/* ---- druk -----------------------------------------------------------------
+   De site is te drukken en komt er dan uit als het rapport: A4, 22mm marge,
+   licht palet. Dat komt uit findings.css; hier alleen wat weg moet. */
+@media print{
+  .kopbalk, .knoppen, .schakel, .nacht::before, .nacht::after{display:none}
+  .band, .omslag, .nacht{padding:0; background:transparent !important; color:inherit !important}
+  .nacht{--n-ink:var(--ink); --n-dim:var(--dim); --n-faint:var(--faint); --n-lijn:var(--rule)}
+  .band > .binnen, .omslag-binnen, .bewijsrij, .voet-binnen{max-width:none; padding:0}
+  .band + .band{margin-top:16pt}
+  .band.inkt, .band.inkt *{color:var(--ink) !important}
+  .omslag h1{font-size:22pt} .omslag h1 .accentwoord{background:none}
+  .sectiekop{font-size:13pt; break-after:avoid; margin-bottom:8pt;
+             padding-bottom:4pt; border-bottom:1px solid var(--rule)}
+  .sectielead{font-size:10pt; margin-bottom:10pt}
+  p.uitspraak{font-size:12pt; margin-bottom:10pt}
+  .omslag-binnen, .naast, .vergelijk, .kaarten, .prijskaarten{display:block}
+  .stapel .spook{display:none}
+  .stapel .blad{transform:none; box-shadow:none; border:1px solid var(--rule)}
+  .kaart, .prijskaart{break-inside:avoid; margin-bottom:8pt; padding:6pt 8pt; box-shadow:none}
+  .bewijsrij{border-top:1px solid var(--rule); margin-top:12pt; padding-top:8pt}
+  .bewijs-item{border-left:0; padding:0 0 6pt}
+  .kader, .weigert li, figure.fig{break-inside:avoid}
+  figure.fig svg{min-width:0}
+  figure.fig .doek{border:1px solid var(--rule); padding:6pt}
+  tr.uitgelicht td, .chip.omlijnd, .kader, .bevkop, .chip,
+  ol.stappenrij li::before, .prijskaart.aanbevolen, .fg-doos.poort{
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  .op{opacity:1 !important; transform:none !important}
+  footer.site{margin-top:20pt; padding:8pt 0 0; border-top:1px solid var(--rule)}
+  .voet-onder{font-size:7.5pt; margin-top:8pt}
+}

@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- LET OP: noindex staat aan zolang de waarden met klasse .invul nog
+     invulvelden zijn. Zodra Hans de echte meetwaarden heeft aangeleverd:
+     deze regel verwijderen, de datums in het schema bijwerken en de URL
+     opnemen in sitemap.xml. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>Firmware-drift en scheef CSV-eigenaarschap in een 6-node Hyper-V-cluster · Praktijkvoorbeeld · CloudLabs</title>
+<meta name="description" content="Een productiecluster van zes nodes met trage opslag. De meting vond twee hosts op een firmwarebuild met een bekende NVMe-regressie en eigenaarschap van Cluster Shared Volumes dat scheef stond. Met de gemeten waarden.">
+<link rel="canonical" href="https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html">
+<link rel="alternate" hreflang="nl" href="https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html">
+<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:url" content="https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html">
+<meta property="og:title" content="Zes nodes, twee firmwareversies · Praktijkvoorbeeld · CloudLabs">
+<meta property="og:description" content="Wat een basismeting aantrof in een Hyper-V-cluster dat volgens de beheerconsole gezond was.">
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../huisstijl/pagina.css">
+<link rel="stylesheet" href="/huisstijl/bevinding.css">
+<link rel="stylesheet" href="../huisstijl/voorbeeld.css">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://cldlbs.com/"},
+        {"@type":"ListItem","position":2,"name":"Praktijkvoorbeelden","item":"https://cldlbs.com/praktijkvoorbeelden.html"},
+        {"@type":"ListItem","position":3,"name":"Firmware-drift en scheef CSV-eigenaarschap","item":"https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html"}
+      ]
+    },
+    {
+      "@type":"Article",
+      "@id":"https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html#artikel",
+      "headline":"Zes nodes, twee firmwareversies: firmware-drift en scheef CSV-eigenaarschap in een productiecluster",
+      "description":"Een 6-node Hyper-V-cluster met trage opslag en geen zichtbare storing. De basismeting vond twee hosts op een firmwarebuild met een bekende NVMe-regressie en eigenaarschap van Cluster Shared Volumes dat scheef stond.",
+      "inLanguage":"nl-NL",
+      "datePublished":"2026-09-01",
+      "dateModified":"2026-09-01",
+      "mainEntityOfPage":"https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html",
+      "genre":"Praktijkvoorbeeld",
+      "about":[
+        {"@type":"Thing","name":"Hyper-V"},
+        {"@type":"Thing","name":"Failover Clustering"},
+        {"@type":"Thing","name":"Cluster Shared Volume"},
+        {"@type":"Thing","name":"Firmware"}
+      ],
+      "keywords":"Hyper-V cluster, firmware drift, CSV eigenaarschap, Cluster Shared Volumes, NVMe, failover cluster health check",
+      "author":{
+        "@type":"Person",
+        "@id":"https://cldlbs.com/about.html#hans",
+        "name":"Hans Vredevoort",
+        "jobTitle":"Cluster- en virtualisatiespecialist",
+        "description":"Veertig jaar Windows Server. Ruim tien jaar Microsoft MVP voor Failover Clustering en Cloud & Datacenter Management, medeoprichter van Hyper-V.nu en medeauteur van Private Cloud Computing.",
+        "knowsAbout":["Hyper-V","Failover Clustering","Azure Local","Storage Spaces Direct","Windows Server"],
+        "worksFor":{"@id":"https://cldlbs.com/#organisatie"}
+      },
+      "publisher":{
+        "@type":"Organization",
+        "@id":"https://cldlbs.com/#organisatie",
+        "name":"CloudLabs",
+        "url":"https://cldlbs.com/"
+      }
+    },
+    {
+      "@type":"FAQPage",
+      "@id":"https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html#vragen",
+      "mainEntity":[
+        {"@type":"Question","name":"Waarom waarschuwt Failover Cluster Manager niet bij firmware-drift?",
+         "acceptedAnswer":{"@type":"Answer","text":"Omdat Failover Cluster Manager de clusterrollen bewaakt, niet de firmware van de hosts. Een node met een oudere of nieuwere firmwarebuild is voor het cluster een geldige node: hij neemt rollen aan, houdt zijn stem en meldt zich gezond. De validatiewizard vergelijkt driver- en firmwareversies tussen nodes evenmin. Verschillen komen pas boven water als iemand de versies per node naast elkaar legt, of als het gedrag onder belasting per node uiteen begint te lopen."}},
+        {"@type":"Question","name":"Wat is scheef CSV-eigenaarschap en waarom is het een probleem?",
+         "acceptedAnswer":{"@type":"Answer","text":"Elk Cluster Shared Volume heeft een node die er de coordinator van is. Al het metadataverkeer voor dat volume loopt over die node. Staan de meeste volumes op dezelfde node, dan draagt die node onevenredig veel I/O terwijl de andere nodes stilstaan. Het cluster meldt niets, want er is geen fout: alles werkt, alleen langzamer dan de hardware aankan. Na een failover of een patchronde blijft die verdeling vaak staan omdat niets hem terugzet."}},
+        {"@type":"Question","name":"Merkt het cluster iets van de meting?",
+         "acceptedAnswer":{"@type":"Answer","text":"Nee. Het verzamelscript leest uitsluitend en installeert niets. Het draait vanaf de beheerserver van de klant over WinRM naar de nodes, duurt ongeveer een kwartier, verwerkt geen wachtwoorden en laat niets achter. Er zijn geen wijzigingen nodig om te kunnen meten. Er worden er ook geen gedaan."}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Naar inhoud</a>
+
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="../preview-home.html">Cloud<span>Labs</span></a>
+    <div class="navlinks" id="navlinks"><a href="../triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="../preview-home.html#modules">Omgevingen</a><a href="../praktijkvoorbeelden.html" aria-current="page">Praktijkvoorbeelden</a><a href="../preview-home.html#kennis">Kennis</a></div>
+    <div class="nav-actions">
+      <button class="search" aria-label="Zoeken">&#8981;</button>
+      <a class="btn primary" href="../triage/">Start gratis triage</a>
+      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+<article class="artikel">
+
+  <p class="kruimel"><a href="../">CloudLabs</a> / <a href="../praktijkvoorbeelden.html">Praktijkvoorbeelden</a> / 01</p>
+
+  <div class="voorbeeldkop">
+    <p class="eyebrow">Praktijkvoorbeeld 01 &middot; basismeting</p>
+    <h1>Zes nodes, twee firmwareversies</h1>
+    <div class="regel">
+      <b>Financiële dienstverlening</b><i>&middot;</i>
+      <b>6-node Hyper-V</b><i>&middot;</i>
+      <b>Failover Cluster</b><i>&middot;</i>
+      <b>NVMe, lokale opslag</b><i>&middot;</i>
+      <b>Basismeting <span class="invul">kwartaal</span></b>
+    </div>
+  </div>
+
+  <!-- ===== het directe antwoord ===== -->
+  <div class="inleiding">
+    <p>Een productiecluster van zes Hyper-V-nodes draaide drie jaar zonder gestructureerde review. De beheerder meldde trage opslag zonder aanwijsbare oorzaak; het cluster gaf geen enkele waarschuwing. De basismeting trof twee dingen aan die elkaar versterkten: twee van de zes nodes stonden op een firmwarebuild met een bekende NVMe-stabiliteitsregressie en het eigenaarschap van de Cluster Shared Volumes stond scheef, waardoor één node het grootste deel van het metadataverkeer droeg. Beide zijn onzichtbaar in Failover Cluster Manager. Beide zijn hersteld binnen dezelfde cyclus.</p>
+  </div>
+
+  <table class="meetgegevens">
+      <caption>Meetgegevens</caption>
+      <tbody>
+        <tr><th scope="row">Nodes op een afwijkende firmwarebuild</th><td>2 van 6</td></tr>
+        <tr><th scope="row">CSV&rsquo;s in eigendom van dezelfde node</th><td><span class="invul">n</span> van 6</td></tr>
+        <tr><th scope="row">Waarschuwingen in de beheerconsole</th><td>0</td></tr>
+      </tbody>
+    </table>
+
+  <!-- ===== situatie ===== -->
+  <section class="deel">
+    <p class="deel-nr">01</p>
+    <div class="deel-tekst">
+      <h2>De situatie</h2>
+  <p>Zes nodes, productiewerklasten, lokale NVMe-opslag. Het cluster was drie jaar eerder opgeleverd en sindsdien netjes gepatcht, maar nooit als geheel doorgemeten. De beheerder had een concrete klacht en geen bewijs: de opslag voelde traag aan, in vlagen, zonder dat iemand kon aanwijzen waar het aan lag.</p>
+  <p>Dat is een gebruikelijk vertrekpunt. Failover Cluster Manager toonde alle nodes gezond, alle rollen online en geen gebeurtenissen die om aandacht vroegen. De validatiewizard liep schoon door. Er was dus geen storing om te onderzoeken. Er was een vermoeden en een cluster dat volhield dat er niets aan de hand was.</p>
+
+  <!-- ===== meting ===== -->
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">02</p>
+    <div class="deel-tekst">
+      <h2>De meting</h2>
+  <p>Het verzamelscript draaide vanaf de beheerserver van de klant over WinRM naar de zes nodes: ongeveer een kwartier, uitsluitend lezend, niets geïnstalleerd. Uit de uitvoer kwamen twee bevindingen naar boven die op zichzelf al aandacht verdienden en samen de klacht verklaarden.</p>
+
+  <div class="bev high">
+    <div class="bevkop">
+      <span class="fid">F01</span>
+      <div class="bevtitel">
+        <span class="onderwerp">Firmware &amp; drivers</span>
+        <h3>Twee nodes draaien een firmwarebuild met een bekende NVMe-stabiliteitsregressie</h3>
+      </div>
+      <span class="chip high">HOOG</span>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Gemeten</span>
+      <p class="meting">NODE03 &middot; firmware <span class="invul">bouwnummer</span><br>
+      NODE05 &middot; firmware <span class="invul">bouwnummer</span><br>
+      NODE01, 02, 04, 06 &middot; firmware <span class="invul">bouwnummer</span><br>
+      Voorschrift leverancier &middot; <span class="invul">bouwnummer</span></p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Waarom dit telt</span>
+      <p>Een cluster gaat ervan uit dat zijn nodes uitwisselbaar zijn. Zodra twee nodes zich onder belasting anders gedragen dan de vier andere, verplaatst een failover een werklast van voorspelbaar naar onvoorspelbaar gedrag, zonder dat er iets in het logboek staat dat daarop wijst. De betrokken build stond bij de leverancier bekend om terugvallende NVMe-doorvoer onder aanhoudende schrijfbelasting.</p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Actiepunt</span>
+      <p>Beide nodes naar het voorgeschreven niveau brengen, node voor node, met de werklast weggedraaid. Daarna de firmwareversies opnemen in de kwartaalmeting, zodat drift zichtbaar wordt voordat hij gedrag verandert.</p>
+    </div>
+  </div>
+
+  <div class="bev med">
+    <div class="bevkop">
+      <span class="fid">F02</span>
+      <div class="bevtitel">
+        <span class="onderwerp">Cluster Shared Volumes</span>
+        <h3>Eigenaarschap van de CSV&rsquo;s staat scheef over de nodes</h3>
+      </div>
+      <span class="chip med">MIDDEL</span>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Gemeten</span>
+      <p class="meting">Volumes in het cluster &middot; 6<br>
+      Coördinator NODE<span class="invul">nn</span> &middot; <span class="invul">n</span> volumes<br>
+      Overige nodes &middot; <span class="invul">verdeling</span></p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Waarom dit telt</span>
+      <p>Al het metadataverkeer voor een volume loopt over de node die er coördinator van is. Staan de meeste volumes bij dezelfde node, dan draagt die node onevenredig veel I/O terwijl de rest capaciteit overhoudt. Het cluster meldt niets, want er is geen fout: alles werkt, alleen langzamer dan de hardware aankan. Na een failover of een patchronde blijft die verdeling staan, omdat niets hem terugzet.</p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Actiepunt</span>
+      <p>Eigenaarschap gelijkmatig verdelen en de verdeling opnemen in de terugkerende meting. Zie ook de uitleg over <a href="../blog/csv-ownership-imbalance.html">scheef CSV-eigenaarschap</a>.</p>
+    </div>
+  </div>
+
+  <p>De twee bevindingen versterkten elkaar: de node die het meeste metadataverkeer droeg, was ook een van de twee nodes op de afwijkende firmwarebuild. Dat verklaart waarom de klacht in vlagen kwam en niet reproduceerbaar was: hij trad op wanneer de belasting samenviel met de node die hem het slechtst aankon.</p>
+
+  <!-- ===== niet gemeten ===== -->
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">03</p>
+    <div class="deel-tekst">
+      <h2>Wat niet gemeten kon worden</h2>
+  <p>In elk CloudLabs-rapport staat wat er buiten bereik bleef, met de reden erbij. Niet omdat het mooi staat, maar omdat een lezer anders niet weet hoe compleet het beeld is.</p>
+  <div class="nietgemeten">
+    <ul>
+      <li>Beheerkaarten van de hosts: <span class="invul">reden</span></li>
+      <li>Switchconfiguratie: buiten scope van de basismeting; valt onder module M1</li>
+      <li>Prestatiegeschiedenis vóór het meetvenster: niet bewaard op de hosts</li>
+    </ul>
+  </div>
+
+  <!-- ===== herstel ===== -->
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">04</p>
+    <div class="deel-tekst">
+      <h2>Het herstel</h2>
+  <p>Het herstel liep in dezelfde cyclus, node voor node, met de werklast telkens weggedraaid:</p>
+  <ul>
+    <li>De twee afwijkende nodes zijn naar het voorgeschreven firmwareniveau gebracht.</li>
+    <li>Het eigenaarschap van de zes volumes is gelijkmatig over de nodes verdeeld.</li>
+    <li>Firmwareversies per node en de CSV-verdeling zijn opgenomen in de terugkerende meting, zodat beide zichtbaar blijven.</li>
+  </ul>
+  <p>Wat de klant heeft laten liggen: <span class="invul">bevinding die niet is opgepakt, met de reden van de klant</span>. Dat staat er, omdat een voorbeeld waarin alles is opgelost geen voorbeeld is maar een advertentie.</p>
+
+  <!-- ===== resultaat ===== -->
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">05</p>
+    <div class="deel-tekst">
+      <h2>De uitkomst</h2>
+  <p>De klacht die drie jaar niet te plaatsen was, had een aanwijsbare oorzaak en een handeling. Belangrijker voor de beheerder was iets anders: hij had voor het eerst een document waarin stond wat er gecontroleerd is en in orde bleek, naast wat er mis was. Dat is het deel dat hij aan zijn IT-manager kon doorgeven zonder dat er nog vragen overbleven.</p>
+  <p>Bij de eerstvolgende kwartaalmeting bleek de firmwarestand op alle zes nodes gelijk en de CSV-verdeling nog steeds in balans. Dat gaf de tweede meting meteen zijn nut: niet om iets nieuws te vinden, maar om te laten zien dat het herstel stand hield.</p>
+
+  <!-- ===== vragen ===== -->
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">06</p>
+    <div class="deel-tekst">
+      <h2>Vragen</h2>
+
+  <div class="vraag">
+    <h3>Waarom waarschuwt Failover Cluster Manager niet bij firmware-drift?</h3>
+    <p>Omdat Failover Cluster Manager de clusterrollen bewaakt en niet de firmware van de hosts. Een node met een oudere of nieuwere build is voor het cluster een geldige node: hij neemt rollen aan, houdt zijn stem en meldt zich gezond.</p>
+    <p>De validatiewizard vergelijkt driver- en firmwareversies tussen nodes evenmin. Verschillen komen pas boven water als iemand de versies per node naast elkaar legt, of als het gedrag onder belasting per node uiteen begint te lopen.</p>
+  </div>
+
+  <div class="vraag">
+    <h3>Wat is scheef CSV-eigenaarschap en waarom is het een probleem?</h3>
+    <p>Elk Cluster Shared Volume heeft een node die er coördinator van is; al het metadataverkeer voor dat volume loopt over die node. Staan de meeste volumes op dezelfde node, dan draagt die node onevenredig veel I/O terwijl de andere nodes stilstaan.</p>
+    <p>Het cluster meldt niets, want er is geen fout. Alles werkt, alleen langzamer dan de hardware aankan.</p>
+  </div>
+
+  <div class="vraag">
+    <h3>Merkt het cluster iets van de meting?</h3>
+    <p>Nee. Het verzamelscript leest uitsluitend en installeert niets. Het draait vanaf de beheerserver over WinRM naar de nodes, duurt ongeveer een kwartier, verwerkt geen wachtwoorden en laat niets achter.</p>
+  </div>
+
+  <!-- ===== verder ===== -->
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">07</p>
+    <div class="deel-tekst">
+      <h2>Verder lezen</h2>
+  <div class="verwant">
+    <a href="../blog/csv-ownership-imbalance.html"><span>Achtergrond</span><b>Waarom CSV-eigenaarschap scheef gaat staan</b></a>
+    <a href="../blog/top-10-hyper-v-cluster-issues.html"><span>Achtergrond</span><b>De tien meest voorkomende clusterproblemen</b></a>
+    <a href="quorum-stretch-cluster-voor-rolling-upgrade.html"><span>Praktijkvoorbeeld 02</span><b>Een quorum dat de tweede locatie niet zou overleven</b></a>
+    <a href="../findings.html"><span>Het document</span><b>Hoe een bevindingenrapport eruitziet</b></a>
+  </div>
+
+
+    </div>
+  </section>
+  </article>
+</section>
+
+<section class="cta">
+  <div class="inner">
+  <p class="eyebrow" style="justify-content:center">Uw eigen cluster</p>
+  <h2>Wat zou een meting<br>bij u aantreffen?</h2>
+  <p>De gratis Cluster Triage leest uitsluitend en verandert niets. U ontvangt de vijf zwaarste signalen rond uw incidentvenster, met de gemeten waarde, de node en het tijdstip erbij.</p>
+  <div class="actions">
+    <a class="btn primary" data-icon="script" href="../triage/">Start gratis Cluster Triage &rarr;</a>
+    <a class="btn ghost" data-icon="rapport" href="../praktijkvoorbeelden.html">Alle praktijkvoorbeelden</a>
+  </div>
+</div>
+</section>
+</main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+
+<script>
+(function(){
+  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
+  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
+})();
+</script>
+<script src="../huisstijl/pagina.js"></script>
+</body>
+</html>

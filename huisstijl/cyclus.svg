@@ -1,0 +1,99 @@
+<svg id="cyclusfiguur" viewBox="0 0 960 500" role="img" aria-labelledby="cyclus-titel"><title id="cyclus-titel">De jaarcyclus van de HealthCheck en de zes stappen tussen meting en rapport.</title>
+      <defs>
+        <marker id="pijl-dim" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" class="mk-dim" fill="#3A4255"/>
+        </marker>
+        <marker id="pijl-acc" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" class="mk-acc" fill="#0A7E9E"/>
+        </marker>
+      </defs>
+  <g data-halte="kader">
+    <text x="83" y="302" text-anchor="start" class="dg-eyebrow">Tussen meting en rapport &middot; stap 1 t/m 6</text>
+  </g>
+  <g data-halte="intake">
+    <rect x="83" y="36" width="158" height="88" rx="4" class="dg-doos eens"/>
+    <text x="162" y="68" text-anchor="middle" class="dg-titel">Intake</text>
+    <text x="162" y="88" text-anchor="middle" class="dg-sub">Stap 0 &middot; eenmalig</text>
+    <text x="162" y="104" text-anchor="middle" class="dg-sub">Get-ClusterIntake.ps1</text>
+    <line x1="241" y1="80" x2="289" y2="80" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+    <text x="268" y="142" text-anchor="middle" class="dg-sub">Startwaarden</text>
+  </g>
+  <g data-halte="meting">
+    <rect x="295" y="36" width="158" height="88" rx="4" class="dg-doos"/>
+    <text x="374" y="68" text-anchor="middle" class="dg-titel">Meting</text>
+    <text x="374" y="88" text-anchor="middle" class="dg-sub">Uitsluitend lezend</text>
+    <text x="374" y="104" text-anchor="middle" class="dg-sub">Vanaf uw beheerserver</text>
+    <line x1="453" y1="80" x2="501" y2="80" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+    <text x="480" y="142" text-anchor="middle" class="dg-sub acc">Stap 1 t/m 6</text>
+  </g>
+  <g data-halte="stap1">
+    <rect x="42" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+    <text x="105" y="344" text-anchor="middle" class="dg-nr">1</text>
+    <text x="105" y="366" text-anchor="middle" class="dg-titel klein">Inlezen</text>
+    <text x="105" y="384" text-anchor="middle" class="dg-sub b">Naast de vorige run</text>
+    <line x1="168" y1="368" x2="186" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+  </g>
+  <g data-halte="stap2">
+    <rect x="192" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+    <text x="255" y="344" text-anchor="middle" class="dg-nr">2</text>
+    <text x="255" y="366" text-anchor="middle" class="dg-titel klein">Schrijven</text>
+    <text x="255" y="384" text-anchor="middle" class="dg-sub b">Uit gemeten waarden</text>
+    <line x1="318" y1="368" x2="336" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+  </g>
+  <g data-halte="stap3">
+    <rect x="342" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+    <text x="405" y="344" text-anchor="middle" class="dg-nr">3</text>
+    <text x="405" y="366" text-anchor="middle" class="dg-titel klein">Beoordelen</text>
+    <text x="405" y="384" text-anchor="middle" class="dg-sub b">De beoordelaar weegt</text>
+    <line x1="468" y1="368" x2="486" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+  </g>
+  <g data-halte="stap4">
+    <rect x="492" y="322" width="126" height="92" rx="4" class="dg-doos poort"/>
+    <text x="555" y="344" text-anchor="middle" class="dg-nr acc">4</text>
+    <text x="555" y="366" text-anchor="middle" class="dg-titel klein">Controleren</text>
+    <text x="555" y="384" text-anchor="middle" class="dg-sub b">Houdt tegen</text>
+    <text x="555" y="397" text-anchor="middle" class="dg-sub b">Wat ontbreekt</text>
+    <line x1="618" y1="368" x2="636" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+  </g>
+  <g data-halte="terug">
+    <path d="M549,418 Q402,470 263,421" class="dg-terug" marker-end="url(#pijl-acc)"/>
+    <text x="405" y="464" text-anchor="middle" class="dg-sub acc">Geweigerd: terug naar schrijven</text>
+  </g>
+  <g data-halte="stap5">
+    <rect x="642" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+    <text x="705" y="344" text-anchor="middle" class="dg-nr">5</text>
+    <text x="705" y="366" text-anchor="middle" class="dg-titel klein">Goedkeuren</text>
+    <text x="705" y="384" text-anchor="middle" class="dg-sub b">De beoordelaar tekent</text>
+    <line x1="768" y1="368" x2="786" y2="368" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+  </g>
+  <g data-halte="stap6">
+    <rect x="792" y="322" width="126" height="92" rx="4" class="dg-doos"/>
+    <text x="855" y="344" text-anchor="middle" class="dg-nr">6</text>
+    <text x="855" y="366" text-anchor="middle" class="dg-titel klein">Opmaken</text>
+    <text x="855" y="384" text-anchor="middle" class="dg-sub b">In uw gekozen talen</text>
+  </g>
+  <g data-halte="rapport">
+    <rect x="507" y="36" width="158" height="88" rx="4" class="dg-doos"/>
+    <text x="586" y="68" text-anchor="middle" class="dg-titel">Rapport</text>
+    <text x="586" y="88" text-anchor="middle" class="dg-sub">Bevindingen, daarna delta</text>
+    <text x="586" y="104" text-anchor="middle" class="dg-sub">NL &middot; EN &middot; DE</text>
+    <line x1="665" y1="80" x2="713" y2="80" class="dg-lijn" marker-end="url(#pijl-dim)" pathLength="1"/>
+  </g>
+  <g data-halte="bespreking">
+    <rect x="719" y="36" width="158" height="88" rx="4" class="dg-doos"/>
+    <text x="798" y="68" text-anchor="middle" class="dg-titel">Bespreking</text>
+    <text x="798" y="88" text-anchor="middle" class="dg-sub">&Eacute;&eacute;n uur</text>
+    <text x="798" y="104" text-anchor="middle" class="dg-sub">Wij nemen het door</text>
+  </g>
+  <g data-halte="lus">
+    <path d="M798,124 L798,176 Q798,190 784,190 L388,190 Q374,190 374,176 L374,132" class="dg-lus" marker-end="url(#pijl-acc)" pathLength="1"/>
+    <circle cx="470" cy="190" r="11" class="dg-tick"/>
+    <circle cx="586" cy="190" r="11" class="dg-tick"/>
+    <circle cx="702" cy="190" r="11" class="dg-tick"/>
+    <text x="470" y="193" text-anchor="middle" class="dg-ticktxt">V1</text>
+    <text x="586" y="193" text-anchor="middle" class="dg-ticktxt">V2</text>
+    <text x="702" y="193" text-anchor="middle" class="dg-ticktxt">V3</text>
+    <text x="586" y="224" text-anchor="middle" class="dg-tekst">Elk kwartaal een vervolgmeting, opnieuw met rapport en bespreking</text>
+    <text x="586" y="242" text-anchor="middle" class="dg-sub">&Eacute;&eacute;n jaar: C1 + V1 + V2 + V3, vier metingen, vier rapporten, vier besprekingen</text>
+  </g>
+</svg>

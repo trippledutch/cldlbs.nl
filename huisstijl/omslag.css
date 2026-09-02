@@ -1,0 +1,186 @@
+/* CloudLabs · omslag.css · de voorkant
+   ============================================================================
+   Laadt NA findings.css en site.css.
+
+   GEEN DEELTJESVELD MEER, EN DAAR IS EEN REDEN VOOR.
+   De vorige versie had een zwevend puntennetwerk op bijna zwart, met een blauwe
+   gloed en een puls die eroverheen liep. Technisch werkte het. Maar het is het
+   cliché van elke AI-gegenereerde en elke crypto-landingspagina, en het verwijst
+   nergens naar: het zijn driehonderd willekeurige punten.
+
+   Dat is precies verkeerd om voor dit bedrijf. De belofte van de HealthCheck is
+   dat een tekst die in ELK willekeurig rapport zou passen wordt geweigerd. Een
+   achtergrond die op elke willekeurige techsite zou passen, ondermijnt die
+   belofte op de eerste schermhoogte.
+
+   Wat wel vertrouwen wekt in deze markt is SPECIFICITEIT. Geen abstract netwerk
+   maar een concrete bevinding met nodenaam, firmwarewaarde, datum, duiding en
+   herstel. De bezoeker kan die lagen zelf inspecteren. Dat kan niemand van een
+   sjabloon plukken, en het is te controleren.
+
+   Licht en niet donker, om dezelfde reden. Donker met gloed leest als "product
+   launch". Licht met haarlijnen leest als "meetrapport", en dat is wat het is. */
+
+.omslag{
+  position:relative; overflow:hidden;
+  background:var(--surface); color:var(--ink);
+  border-bottom:1px solid var(--rule);
+}
+/* Geen millimeterpapier meer: in deze richting is het bewijs zelf het beeld. */
+.omslag::before{
+  content:""; position:absolute; inset:0; pointer-events:none; z-index:0;
+  background:linear-gradient(90deg, transparent 0 49.95%, var(--rule) 50%, transparent 50.05%);
+  opacity:.3;
+}
+
+.omslag-binnen{
+  position:relative; z-index:1;
+  max-width:80rem; margin:0 auto; padding:4.5rem 2.5rem 4rem;
+  display:grid; grid-template-columns:1fr 1.22fr; gap:4rem; align-items:center;
+}
+
+/* ---- interactief bewijsvenster ------------------------------------------
+   De beweging zit in het inspecteren van de bevinding. Geen autoplay: de
+   bezoeker bepaalt het tempo en reduced-motion hoeft niets te corrigeren. */
+.bewijsvenster{
+  min-width:0; border:1px solid var(--rule); border-radius:7px;
+  background:var(--surface); box-shadow:0 24px 65px -42px var(--ink);
+  overflow:hidden;
+}
+.bewijsstatus{
+  display:flex; justify-content:space-between; gap:1rem; flex-wrap:wrap;
+  padding:.7rem 1rem; background:var(--sunk); border-bottom:1px solid var(--rule);
+  font-family:var(--meting); font-size:.65rem; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--faint);
+}
+.bewijsstatus i{
+  display:inline-block; width:.48rem; height:.48rem; margin-right:.45rem;
+  border-radius:50%; background:var(--none); box-shadow:0 0 0 3px color-mix(in srgb,var(--none) 16%,transparent);
+}
+.bewijskaart{padding:1.15rem 1.2rem 1.25rem}
+.bewijskaart-kop{display:grid; grid-template-columns:auto 1fr auto; gap:.8rem; align-items:start}
+.bewijs-id{font-family:var(--meting); font-size:.78rem; font-weight:600; color:var(--ink); padding-top:.15rem}
+.bewijskaart-kop h2{
+  font-family:var(--kop); font-size:1.04rem; line-height:1.3; letter-spacing:-.008em;
+  margin:.12rem 0 0; color:var(--ink); text-wrap:balance;
+}
+.bewijstabs{
+  display:flex; gap:0; overflow-x:auto; margin:1.25rem 0 0;
+  border-bottom:1px solid var(--rule);
+}
+.bewijstabs button{
+  appearance:none; border:0; border-bottom:2px solid transparent; background:transparent;
+  color:var(--faint); font-family:var(--meting); font-size:.67rem; letter-spacing:.05em;
+  white-space:nowrap; padding:.65rem .8rem; margin-bottom:-1px; cursor:pointer;
+}
+.bewijstabs button:first-child{padding-left:0}
+.bewijstabs button:hover{color:var(--ink)}
+.bewijstabs button[aria-selected="true"]{color:var(--accent); border-bottom-color:var(--accent)}
+.bewijstabs button:focus-visible{outline:2px solid var(--accent); outline-offset:-2px}
+.bewijspaneel{padding:1.1rem 0 .1rem; min-height:13.5rem}
+.bewijspaneel[hidden]{display:none}
+.bewijspaneel p,.bewijspaneel li{color:var(--dim); font-size:.92rem; line-height:1.58}
+.bewijspaneel p{margin:0}
+.meetregels{margin:1.15rem 0 0; border-top:1px solid var(--rule)}
+.meetregels div{display:grid; grid-template-columns:1fr auto; gap:1rem; padding:.5rem 0; border-bottom:1px solid var(--sunk)}
+.meetregels dt,.meetregels dd{font-family:var(--meting); font-size:.7rem; margin:0}
+.meetregels dt{color:var(--faint)}
+.meetregels dd{color:var(--ink); text-align:right; font-variant-numeric:tabular-nums}
+.meetregels dd.hoog{color:var(--high); font-weight:500}
+.controlepoort{
+  display:grid; grid-template-columns:1fr auto auto auto; gap:.65rem 1rem; align-items:center;
+  padding:.75rem 1rem; border-top:1px solid var(--rule); background:var(--sunk);
+  font-family:var(--meting); font-size:.63rem; letter-spacing:.04em; color:var(--faint);
+}
+.poortlabel{text-transform:uppercase; letter-spacing:.1em}
+.poortregel b{color:var(--ink); font-weight:500}
+.poortuitkomst{color:var(--none); font-weight:600; letter-spacing:.08em}
+
+.omslag h1{
+  font-family:var(--kop); font-weight:600;
+  font-size:clamp(2.3rem,4.6vw,3.5rem); line-height:1.02;
+  letter-spacing:-.035em; margin:0 0 1.3rem; color:var(--ink);
+  text-wrap:balance;
+}
+.omslag h1 .zacht{color:var(--faint)}
+.omslag .onderkop{
+  font-family:var(--kop); font-weight:400; font-size:1.1rem; line-height:1.6;
+  color:var(--dim); margin:0 0 2rem; max-width:42ch;
+}
+.omslag .onderkop strong{color:var(--ink); font-weight:500}
+
+/* ---- de tekening ----------------------------------------------------------
+   Een SVG, dus echte tekst: doorzoekbaar, scherp op elke schaal, en hij volgt
+   de lichte en donkere stand mee omdat elke kleur een token is. */
+.tekening{margin:0}
+.tekening svg{display:block; width:100%; height:auto}
+.tk-vlak{fill:var(--ground); stroke:var(--rule); stroke-width:1}
+.tk-vlak.let{fill:var(--accent-soft); stroke:var(--accent)}
+.tk-naam{font-family:var(--meting); font-size:10.5px; font-weight:500; fill:var(--ink)}
+.tk-veld{font-family:var(--meting); font-size:9px; fill:var(--faint)}
+.tk-waarde{font-family:var(--meting); font-size:9px; fill:var(--dim)}
+.tk-waarde.afwijking{fill:var(--high); font-weight:500}
+.tk-kop{font-family:var(--meting); font-size:8.5px; letter-spacing:.14em; fill:var(--faint)}
+.tk-lijn{stroke:var(--rule); stroke-width:1; fill:none}
+.tk-lijn.acc{stroke:var(--accent); stroke-width:1.25}
+.tk-maat{stroke:var(--faint); stroke-width:.75; fill:none; stroke-dasharray:3 3}
+.tk-bij{font-family:var(--meting); font-size:8.5px; fill:var(--faint)}
+.tk-vlag{fill:var(--high)}
+.tk-vlagtxt{font-family:var(--meting); font-size:8px; font-weight:500; fill:#fff; letter-spacing:.08em}
+
+.tekening figcaption{
+  font-family:var(--meting); font-size:.72rem; letter-spacing:.04em;
+  color:var(--faint); margin:1rem 0 0; line-height:1.7;
+  padding-top:.8rem; border-top:1px solid var(--rule);
+  display:flex; justify-content:space-between; gap:1.5rem; flex-wrap:wrap;
+}
+
+/* ---- de strook onder de omslag -------------------------------------------- */
+.strook{background:var(--ground); border-bottom:1px solid var(--rule); padding:2rem 0}
+.strook-binnen{
+  max-width:80rem; margin:0 auto; padding:0 2.5rem;
+  display:grid; grid-template-columns:auto repeat(4,1fr); gap:1.25rem 2.5rem; align-items:center;
+}
+.strook .kopje{
+  font-family:var(--meting); font-size:.65rem; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--faint); white-space:nowrap;
+  padding-right:1.25rem; border-right:1px solid var(--rule);
+}
+.strook-item b{
+  display:block; font-family:var(--meting); font-weight:500; font-size:1.55rem;
+  font-variant-numeric:tabular-nums; color:var(--ink); letter-spacing:-.03em;
+  margin-bottom:.25rem; line-height:1;
+}
+.strook-item span{
+  display:block; font-family:var(--kop); font-size:.82rem; line-height:1.35;
+  color:var(--dim); max-width:16ch;
+}
+
+@media (max-width:980px){
+  .omslag-binnen{grid-template-columns:1fr; gap:3rem; padding:3rem 1.75rem 3rem}
+  .strook-binnen{grid-template-columns:repeat(2,1fr); gap:1.5rem 2rem; padding:0 1.75rem}
+  .strook .kopje{grid-column:1/-1; border-right:0; padding-right:0}
+  .bewijsvenster{max-width:42rem}
+}
+@media (max-width:640px){
+  .omslag-binnen{padding:2.5rem 1.1rem 2.5rem}
+  .strook-binnen{padding:0 1.1rem}
+  .bewijskaart{padding:1rem}
+  .bewijskaart-kop{grid-template-columns:auto 1fr}
+  .bewijskaart-kop .chip{grid-column:2; justify-self:start}
+  .bewijspaneel{min-height:15rem}
+  .controlepoort{grid-template-columns:1fr auto}
+  .poortregel{display:none}
+}
+@media print{
+  .omslag::before{display:none}
+  .omslag-binnen{padding:0; display:block}
+  .omslag h1{font-size:22pt}
+  .bewijstabs{display:none}
+  .bewijspaneel{min-height:0}
+  .controlepoort{grid-template-columns:1fr auto}
+  .poortregel{display:none}
+  .strook{background:none; padding:8pt 0}
+  .strook-binnen{padding:0; grid-template-columns:repeat(4,1fr)}
+  .strook .kopje{display:none}
+}
