@@ -29,7 +29,7 @@
 <meta property="og:locale:alternate" content="nl_NL">
 <meta property="og:url" content="https://cldlbs.com/en/privacy/">
 <link rel="icon" href="/favicon.png" type="image/png">
-<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=95ced786">
 <link rel="stylesheet" href="/huisstijl/juridisch.css?v=1331a9ea">
 <script type="application/ld+json">{
   "@context": "https://schema.org",
@@ -62,7 +62,7 @@
       }
     }
   ]
-}</script></head>
+}</script><script>(function(d){d.setAttribute('data-js','ja');try{var t=localStorage.getItem('cl-thema');if(t==='dark'||t==='light')d.setAttribute('data-theme',t)}catch(e){}})(document.documentElement)</script><!-- Google tag (gtag.js) met Consent Mode v2. Alles staat op denied; het paginascript zet analytics_storage om zodra de bezoeker akkoord gaat. De drie advertentiesoorten blijven altijd geweigerd. --><script async src="https://www.googletagmanager.com/gtag/js?id=G-BETH09PH6C"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',functionality_storage:'granted',security_storage:'granted',wait_for_update:500});gtag('js',new Date());gtag('config','G-BETH09PH6C',{anonymize_ip:true})</script></head>
 
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -70,9 +70,7 @@
 <header class="topbar">
   <nav class="nav">
     <a class="brand" href="/en/" hreflang="en"><b>Cloud<span>Labs</span></b><small>Decades of server expertise</small></a>
-    <div class="navlinks" id="navlinks"><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-the-healthcheck">The HealthCheck</button><div class="navmenu" id="nav-the-healthcheck"><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div></div><a href="/en/rates/">Rates</a><a href="/en/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-knowledge-base">Knowledge base</button><div class="navmenu" id="nav-knowledge-base"><a href="/en/faq/">FAQ</a><a href="/en/case-studies/">Case studies</a><a href="/en/topics/">Topics</a></div></div><a href="/en/about/">About us</a></div><div class="nav-actions">
-      <span class="taalwissel"><a href="/privacy/" hreflang="nl" lang="nl">NL</a><span aria-current="true">EN</span></span>
-      <a class="btn primary" href="/en/triage/#aanvraag">Start free triage</a>
+    <div class="navlinks" id="navlinks"><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-the-healthcheck">The HealthCheck</button><div class="navmenu" id="nav-the-healthcheck"><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div></div><a href="/en/rates/">Rates</a><a href="/en/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-knowledge-base">Knowledge base</button><div class="navmenu" id="nav-knowledge-base"><a href="/en/faq/">FAQ</a><a href="/en/case-studies/">Case studies</a><a href="/en/topics/">Topics</a></div></div><a href="/en/about/">About us</a><div class="nav-keuzes"><span class="taalwissel"><a href="/privacy/" hreflang="nl" lang="nl">NL</a><span aria-current="true">EN</span></span><button type="button" class="themawissel" aria-pressed="false" aria-label="Dark mode"></button></div></div><div class="nav-actions"><a class="btn primary" href="/en/triage/#aanvraag">Start free triage</a>
       <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
     </div>
   </nav>
@@ -107,7 +105,22 @@
         <p><strong>Legal basis:</strong> Legitimate interest (pre-contractual steps) and, where an engagement follows, performance of a contract (GDPR Art. 6(1)(b)).</p>
 
         <h3>Cookies and measurement</h3>
-        <p>This site sets no cookies of its own and does not measure your visit. No analytics software runs, there are no visitor statistics, and there is therefore no cookie banner either. What you do on this site is recorded nowhere.</p>
+        <p>We use Google Analytics 4 with Consent Mode v2. Analytics cookies are <strong>only placed after you explicitly accept</strong> via the cookie banner. If you decline, no analytics cookies are set and no data is sent to Google.</p>
+        <p><strong>Legal basis:</strong> Consent (GDPR Art. 6(1)(a)).</p>
+
+        <table class="cookietabel">
+          <tr><th>Name</th><th>Provider</th><th>Purpose</th><th>Duration</th></tr>
+          <tr><td>_ga</td><td>Google</td><td>Distinguish users</td><td>2 years</td></tr>
+          <tr><td>_ga_*</td><td>Google</td><td>Session state</td><td>2 years</td></tr>
+          <tr><td>cl_consent</td><td>CloudLabs</td><td>Remember your cookie choice</td><td>Persistent (localStorage)</td></tr>
+          <tr><td>cl-thema</td><td>CloudLabs</td><td>Remember the light or dark appearance</td><td>Persistent (localStorage)</td></tr>
+          <tr><td>cl-hulpkaart</td><td>CloudLabs</td><td>Remember that you dismissed the help card</td><td>Persistent (localStorage)</td></tr>
+          <tr><td>cl-melding</td><td>CloudLabs</td><td>Remember that you dismissed the notice bar</td><td>Until you close the tab</td></tr>
+          <tr><td>cl-taalpositie</td><td>CloudLabs</td><td>Keep your place on the page when you switch language</td><td>30 seconds</td></tr>
+        </table>
+
+        <p>The five rows below Google are not cookies but storage in your own browser. They are sent nowhere and read by nobody; they are there only to let the site do what you ask of it.</p>
+        <p>IP addresses are anonymised (<code>anonymize_ip: true</code>). Ad storage, ad user data and ad personalisation are always denied, even when you accept. We do not use Google Signals.</p>
 
         <h3>Calendly</h3>
         <p>The appointment page carries an embedded Calendly calendar. It only loads when you open that page, and as soon as you interact with it Calendly places its own cookies and Calendly's terms and privacy policy apply. If you would rather not, give your preferred times through the form below it; that sends through your own email or WhatsApp.</p>
@@ -115,7 +128,7 @@
         <h2>Data sharing</h2>
       <p>We do not sell or share your personal data with third parties, except:</p>
       <ul>
-        
+        <li>Google (analytics, only with your consent, see above)</li>
         <li>Calendly (if you book a call, subject to their own policy)</li>
         <li>When legally required</li>
       </ul>
@@ -124,7 +137,7 @@
       <p>You have the right to access, correct, or delete your personal data, to restrict or object to processing, and to data portability. Contact us at <a href="mailto:hans.vredevoort@cldlbs.com">hans.vredevoort@cldlbs.com</a> to exercise these rights. You also have the right to lodge a complaint with the Dutch Data Protection Authority (<a href="https://autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener">autoriteitpersoonsgegevens.nl</a>).</p>
 
       <h2>Cookie settings</h2>
-        <p>There is nothing to set: this site places no cookies and measures nothing. Only the embedded Calendly calendar places cookies, and only if you use it.</p>
+        <p>You can change your choice at any time with the <strong>Cookie preferences</strong> button at the bottom of every page. The banner returns and your new answer replaces the previous one.</p>
 
         <h2>Changes</h2>
       <p>We may update this policy. The date at the top of the page reflects the last change. Continued use of the site after an update does not constitute acceptance of new terms that require consent. We will show a new banner if that is the case.</p>
@@ -134,13 +147,13 @@
 
 </main>
 
-<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Services</h4><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div><div class="footer-column"><h4>Organisation</h4><a href="/en/about/">About us</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/rates/">Rates</a><a href="/en/partners/">For partners</a></div><div class="footer-column"><h4>Knowledge base</h4><a href="/en/blog/">Blog</a><a href="/en/case-studies/">Case studies</a><a href="/en/blog/top-10-hyper-v-cluster-issues/">Failures and causes</a><a href="/en/blog/cluster-witness-comparison/">Quorum and witness</a><a href="/en/blog/san-vs-s2d-vs-azure-local-hyper-v-storage/">Storage and Storage Spaces Direct</a><a href="/en/faq/">FAQ</a><a href="/en/topics/">Topics</a></div><div class="footer-column"><h4>Contact</h4><a href="/en/triage/#aanvraag">Request the free script</a><a href="/en/appointment/#agenda">Book a call</a><a href="/en/contact/#bericht">Get in touch</a></div><div class="newsletter"><h4>Technical findings by email</h4><form action="#" method="post"><label><span class="skip">Email address</span><input type="email" name="email" placeholder="name@company.com" autocomplete="email"></label><button type="submit">Subscribe</button></form><p>No marketing stream. Only new findings and practical explanation.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="Email"><img src="/assets/icons/email.svg" alt=""></a><a href="/en/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/en/">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/en/privacy/">Privacy statement</a><a href="/en/triage/#veilig">Security</a><a href="/en/terms/">Terms of engagement</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Services</h4><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div><div class="footer-column"><h4>Organisation</h4><a href="/en/about/">About us</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/rates/">Rates</a><a href="/en/partners/">For partners</a></div><div class="footer-column"><h4>Knowledge base</h4><a href="/en/blog/">Blog</a><a href="/en/case-studies/">Case studies</a><a href="/en/blog/top-10-hyper-v-cluster-issues/">Failures and causes</a><a href="/en/blog/cluster-witness-comparison/">Quorum and witness</a><a href="/en/blog/san-vs-s2d-vs-azure-local-hyper-v-storage/">Storage and Storage Spaces Direct</a><a href="/en/faq/">FAQ</a><a href="/en/topics/">Topics</a></div><div class="footer-column"><h4>Contact</h4><a href="/en/triage/#aanvraag">Request the free script</a><a href="/en/appointment/#agenda">Book a call</a><a href="/en/contact/#bericht">Get in touch</a></div><div class="newsletter"><h4>Technical findings by email</h4><form action="#" method="post"><label><span class="skip">Email address</span><input type="email" name="email" placeholder="name@company.com" autocomplete="email"></label><button type="submit">Subscribe</button></form><p>No marketing stream. Only new findings and practical explanation.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="Email"><img src="/assets/icons/email.svg" alt=""></a><a href="/en/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/en/">Cloud<span>Labs</span></a><p class="footer-tagline">Independent measurements of Hyper-V, Failover Cluster and Azure Local environments. Reports in Dutch, English, German, Spanish and French.</p><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/en/privacy/">Privacy statement</a><a href="/en/triage/#veilig">Security</a><a href="/en/terms/">Terms of engagement</a><button type="button" class="cookiebalk-open">Cookie preferences</button></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
 <script>
 (function(){
   var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
   if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
 })();
 </script>
-<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
+<div class="cookiebalk" id="cookiebalk" role="dialog" aria-live="polite" aria-label="Cookies"><div class="cookiebalk-inner"><p>We use Google Analytics to understand how visitors use this site. Analytics cookies are only set if you accept. What exactly is recorded is in the <a href="/en/privacy/">privacy statement</a>.</p><div class="cookiebalk-knoppen"><button type="button" class="btn primary" id="cookie-ja">Accept analytics</button><button type="button" class="btn ghost" id="cookie-nee">Decline</button></div></div></div><script src="/huisstijl/pagina.js?v=89a5807f"></script>
 </body>
 </html>

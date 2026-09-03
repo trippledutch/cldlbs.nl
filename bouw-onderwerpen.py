@@ -112,9 +112,8 @@ def bouw(t, groepen):
 <a class="skip" href="#main">{t['naarinhoud']}</a>
 <header class="topbar"><nav class="nav">
 <a class="brand" href="{t['brand']}"><b>Cloud<span>Labs</span></b><small lang="en">Decades of server expertise</small></a>
-<div class="navlinks" id="navlinks"></div>
-<div class="nav-actions"><span class="taalwissel">{t['taalwissel']}</span>
-<a class="btn primary" href="{t['knopurl']}">{t['knop']}</a>
+<div class="navlinks" id="navlinks"><div class="nav-keuzes"><span class="taalwissel">{t['taalwissel']}</span></div></div>
+<div class="nav-actions"><a class="btn primary" href="{t['knopurl']}">{t['knop']}</a>
 <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button></div>
 </nav></header>
 <main id="main">

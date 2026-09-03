@@ -28,8 +28,8 @@ document TEGENHOUDT. Die weigert een rapport waarin:
 Verder staan er twee dingen in die elders zelden staan: **wat gecontroleerd is en
 in orde bleek**, en **wat niet gemeten kon worden, met de reden erbij**.
 
-Rapporten in Nederlands, Engels en Duits, alle drie opgebouwd uit dezelfde
-meting en niet achteraf vertaald.
+Rapporten in Nederlands, Engels, Duits, Spaans en Frans, alle vijf opgebouwd
+uit dezelfde meting en niet achteraf vertaald.
 
 ### Doelgroep
 

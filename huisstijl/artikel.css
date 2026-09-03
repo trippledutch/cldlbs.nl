@@ -80,6 +80,25 @@
            overflow-x:auto;-webkit-overflow-scrolling:touch}
 .tekst pre code{background:none;border:0;padding:0;color:inherit;font-size:inherit}
 
+/* HET CODEBLOK IN DE DONKERE STAND. De vulling hierboven is --band-diep,
+   #0B0F1A, en dat is precies de grond waar de donkere pagina zelf op staat.
+   Het blok verdween daardoor: de tekst bleef staan, de vorm eromheen niet.
+   Nagemeten op /blog/csv-ownership-imbalance/: pagina en blok gaven allebei
+   rgb(11,15,26).
+
+   Hij krijgt daarom dezelfde behandeling als de losse code hierboven, --sunk
+   met een rand in --rule, zodat het weer een blok is. Alleen in het donker;
+   in de lichte stand blijft de donkere vulling zoals hij was. De tokens komen
+   uit het donkere blok van huisstijl/pagina.css. */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .tekst pre{
+    background:var(--sunk);color:var(--ink);border:1px solid var(--rule);
+  }
+}
+:root[data-theme="dark"] .tekst pre{
+  background:var(--sunk);color:var(--ink);border:1px solid var(--rule);
+}
+
 .tekst table{width:100%;border-collapse:collapse;margin:0 0 24px;font-size:15px}
 .tekst thead th{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
                 color:var(--faint);text-align:left;font-weight:400;
@@ -154,7 +173,13 @@
   .tekst h2{font-size:28px}
 }
 @media(max-width:820px){
-  .artikelbody,.artikelrij{grid-template-columns:1fr;gap:0}
+  /* minmax(0,1fr) en niet 1fr. Een kolom van 1fr is minstens zo breed als de
+     breedste inhoud die er niet in kan breken, en dat is hier een codeblok:
+     op time-drift is dat er een van 1019px. Die trok de kolom open, en dus de
+     hele pagina, tot een telefoon van 390 horizontaal scrolde. Met de 0 erin
+     mag de kolom smaller worden dan zijn inhoud en scrolt het codeblok zelf,
+     wat het met overflow-x:auto hierboven al kon. */
+  .artikelbody,.artikelrij{grid-template-columns:minmax(0,1fr);gap:0}
   .kruimelpad,.artikelkop{margin-left:0;max-width:none}
   .toc{position:static;margin-bottom:38px}
   .artikelrij .rij-meta{padding-top:0;margin-bottom:10px;line-height:1.6}
@@ -164,4 +189,11 @@
   .tekst h2{font-size:25px}
   .tekst p,.tekst li{font-size:16.5px}
   .artikelrij h2{font-size:23px;max-width:none}
+
+  /* Een tabel krimpt niet onder de som van zijn kolommen. Nu de kolom eromheen
+     wel mag krimpen moet de tabel dus zelf kunnen schuiven, anders steekt hij
+     alsnog buiten de pagina. display:block maakt van de tabel een schuifvak;
+     de rijen erin blijven een tabel. */
+  .tekst table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tekst thead th{white-space:nowrap}
 }

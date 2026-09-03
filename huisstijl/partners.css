@@ -56,6 +56,10 @@
 
 /* ---- een figuur met bijschrift ------------------------------------------ */
 .figuur{margin:26px 0 0}
+/* De link om het beeld is inline en de afbeelding erin is een blok, dus de
+   link zelf was 2px hoog: op een aanraakscherm een doel dat er niet is.
+   display:block geeft hem de hoogte van het beeld dat erin staat. */
+.figuur a{display:block}
 .figuur img{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:4px;background:var(--surface)}
 .figuur figcaption{font-family:var(--mono);font-size:11px;line-height:1.6;letter-spacing:.06em;
                    color:var(--faint);margin-top:11px}

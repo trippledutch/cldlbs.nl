@@ -21,6 +21,25 @@ Opbouw van het menu, zeven items:
 De naam van een pagina is hier gelijk aan de naam in de voettekst. Wijkt er
 iets af, pas het dan op beide plekken aan.
 
+DE TAALWISSEL EN DE THEMAKNOP STAAN ONDERIN HET MENU, in een <div class=
+"nav-keuzes"> als laatste regel van .navlinks. Ze stonden in .nav-actions, naast
+de knop. Op een smal scherm valt de linkenrij weg en bleven daar drie dingen
+naast elkaar staan: taal, licht of donker, en Menu. De knop "Start gratis
+triage" was het enige dat dan niet in beeld was, terwijl dat de enige is waar
+iemand op moet klikken. Dus staat die nu in de balk en gaan de twee keuzes over
+hoe je de site bekijkt mee naar binnen, onder de menu-items.
+
+Boven 1100 verandert er niets aan wat je ziet: .navlinks is daar een rij die de
+vrije ruimte opvult en .nav-keuzes wordt er met margin-left:auto tegen de
+rechterkant gezet, precies waar hij eerst ook stond. Dat staat in
+huisstijl/pagina.css bij ".nav-keuzes".
+
+De inhoud van de taalwissel blijft van de pagina zelf: die wijst naar de
+tegenhanger in de andere taal en die weet dit script niet. Hij wordt hier
+opgepakt waar hij staat en op de nieuwe plek teruggezet. De themaknop hoort bij
+sync-thema.py; staat hij er nog niet, dan zet dat script hem alsnog achter de
+taalwissel.
+
     python3 sync-nav.py           toont wat er zou veranderen
     python3 sync-nav.py --schrijf voert het uit
 """
@@ -70,8 +89,9 @@ def slug(label):
     return 'nav-' + re.sub(r'[^a-z]+', '-', label.lower()).strip('-')
 
 
-def bouw(menu, hier):
-    """hier = het pad van de pagina zelf, voor aria-current."""
+def bouw(menu, hier, keuzes):
+    """hier = het pad van de pagina zelf, voor aria-current.
+    keuzes = de taalwissel en de themaknop van deze pagina, zoals ze er staan."""
     uit = ['<div class="navlinks" id="navlinks">']
     for eerste, tweede in menu:
         if isinstance(tweede, str):                       # gewone link
@@ -94,6 +114,8 @@ def bouw(menu, hier):
                     h, ' aria-current="page"' if h == hier else '', t)
                 for h, t in tweede)
             + '</div></div>')
+    if keuzes:
+        uit.append('<div class="nav-keuzes">' + keuzes + '</div>')
     uit.append('</div>')
     return ''.join(uit)
 
@@ -105,6 +127,29 @@ OVERSLAAN = ('preview/', 'antithesis-backup', 'reference/', 'referentie/',
 # er per pagina maar een van nav-actions, dus dit anker is eenduidig.
 PATROON = re.compile(
     r'<div class="navlinks" id="navlinks">.*</div>\s*(?=<div class="nav-actions")', re.S)
+
+# De twee keuzeknoppen, waar ze ook staan. De taalwissel heeft twee vormen, met
+# de eigen taal als span en de andere als link, in beide volgordes; daarom niet
+# een luie .*? maar de twee labels zelf, anders stopt de match op de eerste
+# </span> die binnenin staat.
+TAALWISSEL = re.compile(
+    r'<span class="taalwissel">'
+    r'(?:<a [^>]*>[A-Z]{2}</a>|<span[^>]*>[A-Z]{2}</span>)+'
+    r'</span>')
+THEMAWISSEL = re.compile(r'<button type="button" class="themawissel".*?</button>', re.S)
+ACTIES = re.compile(r'<div class="nav-actions">.*?</div>', re.S)
+
+
+def haal_keuzes_weg(s):
+    """De taalwissel en de themaknop uit .nav-actions halen.
+
+    Alleen daar: staan ze al in het menu, dan vindt dit niets en blijft de
+    pagina zoals hij is. Zo mag dit script twee keer draaien."""
+    def schoon(m):
+        blok = TAALWISSEL.sub('', m.group(0), count=1)
+        blok = THEMAWISSEL.sub('', blok, count=1)
+        return re.sub(r'<div class="nav-actions">\s*', '<div class="nav-actions">', blok)
+    return ACTIES.sub(schoon, s, count=1)
 
 
 def eigen_pad(p):
@@ -127,19 +172,22 @@ def main():
     for p in paginas():
         s = p.read_text(encoding='utf-8')
         menu = MENU_EN if p.as_posix().startswith('en/') else MENU_NL
-        doel = bouw(menu, eigen_pad(p))
-        m = PATROON.search(s)
-        if not m:
+        taal = TAALWISSEL.search(s)
+        thema = THEMAWISSEL.search(s)
+        keuzes = (taal.group(0) if taal else '') + (thema.group(0) if thema else '')
+        doel = bouw(menu, eigen_pad(p), keuzes)
+        if not PATROON.search(s):
             print(f"  ! {p}: geen navlinks-blok gevonden")
             mist += 1
             continue
-        if m.group(0) == doel:
+        nieuw = PATROON.sub(lambda _: doel, haal_keuzes_weg(s), count=1)
+        if nieuw == s:
             gelijk += 1
             continue
         gewijzigd += 1
         print(f"  {'bijgewerkt' if schrijf else 'zou wijzigen'}: {p}")
         if schrijf:
-            p.write_text(PATROON.sub(lambda _: doel, s, count=1), encoding='utf-8')
+            p.write_text(nieuw, encoding='utf-8')
     print(f"\n  {gelijk} al gelijk, {gewijzigd} {'bijgewerkt' if schrijf else 'te wijzigen'}"
           + (f", {mist} zonder menu" if mist else ""))
     if gewijzigd and not schrijf:

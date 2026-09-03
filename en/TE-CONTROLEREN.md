@@ -12,7 +12,7 @@ Drie delen, van zwaar naar licht. Vink af met `[x]` wat akkoord is.
 |---|---|---|
 | 1 | nieuw geschreven juridische tekst | 73 |
 | 2 | vertaalde lopende tekst, per pagina | 214 |
-| 3 | korte labels, koppen en knoppen | 506 |
+| 3 | korte labels, koppen en knoppen | 536 |
 
 ---
 
@@ -968,6 +968,7 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | , of geef hieronder uw voorkeursmomenten door. | , or give your preferred times below. | <sub>appointment</sub> |
 | , staat op GitHub op | , is on GitHub at | <sub>aligning-vms-with-storage</sub> |
 | . Dat staat er, omdat een voorbeeld waarin alles is opgelost geen voorbeeld is maar een advertentie. | . That is stated, because an example in which everything is resolved is not an example but an advertisement. | <sub>firmware-drift-and-csv-owner-imbalance, hardware-and-rdma-for-storage-spaces-direct, quorum-stretch-cluster-for-rolling-upgrade +3</sub> |
+| .docx-rapport | .docx report | <sub>faq</sub> |
 | / Na een storing | / After an incident | <sub>after-an-incident, faq, na-een-storing</sub> |
 | 0 waarschuwingen in de beheerconsole | 0 warnings in the management console | <sub>en, preview-home</sub> |
 | 02 · Aanlevering | 02 · Delivery of data | <sub>partners</sub> |
@@ -993,8 +994,8 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | 3. Offerte en totstandkoming | 3. Quotation and formation | <sub>terms, voorwaarden</sub> |
 | 30 minuten | 30 minutes | <sub>appointment, vmware-to-hyper-v-migration-assessment, report</sub> |
 | 4. Vormen van de opdracht | 4. Forms of the engagement | <sub>terms, voorwaarden</sub> |
-| 40+ VM’s gemigreerd, dataverlies 0 | 40+ VMs migrated, data loss 0 | <sub>en, preview-home</sub> |
 | 40+ virtuele machines | 40+ virtual machines | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
+| 40+ VM’s gemigreerd, dataverlies 0 | 40+ VMs migrated, data loss 0 | <sub>en, preview-home</sub> |
 | 5. Prijzen en btw | 5. Prices and VAT | <sub>terms, voorwaarden</sub> |
 | 6. Facturering en betaling | 6. Invoicing and payment | <sub>terms, voorwaarden</sub> |
 | 7. Uitvoering en medewerking | 7. Performance and cooperation | <sub>terms, voorwaarden</sub> |
@@ -1003,6 +1004,7 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Achtergrond bij deze bevindingen | Background to these findings | <sub>case-studies, praktijkvoorbeelden</sub> |
 | Actiepunt | Action point | <sub>firmware-drift-and-csv-owner-imbalance, hardware-and-rdma-for-storage-spaces-direct, quorum-stretch-cluster-for-rolling-upgrade</sub> |
 | Actieve stemmen op dat moment · | Active votes at that moment · | <sub>quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade</sub> |
+| afgekeurd | rejected | <sub>case-studies, hardware-and-rdma-for-storage-spaces-direct, partners</sub> |
 | Afspraak | Appointment | <sub>appointment</sub> |
 | Afspraak maken | Book a call | <sub>afspraak, blog, aligning-vms-with-storage +32</sub> |
 | Alle antwoorden staan op de pagina met veelgestelde vragen. Staat uw vraag er niet bij, schrijf ons dan. | All answers are on the frequently asked questions page. If your question is not there, write to us. | <sub>case-studies</sub> |
@@ -1010,7 +1012,7 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Alle veelgestelde vragen | All frequently asked questions | <sub>case-studies, praktijkvoorbeelden</sub> |
 | Alles wat u wilt weten voordat een opdracht van start gaat. | Everything you want to know before an engagement starts. | <sub>faq, vragen</sub> |
 | Als de triagelijst ergens op wijst | If the triage list points at something | <sub>en, preview-home</sub> |
-| BMC-firmware onder de security-floor van de leverancier op alle vier de nodes. | BMC firmware below the vendor security floor on all four nodes. | <sub>partners</sub> |
+| As-Built systeemdocumentatie | As-Built system documentation | <sub>faq</sub> |
 | Backup faalt op cluster | Backup fails on the cluster | <sub>triage</sub> |
 | Bandbreedtereservering · | Bandwidth reservation · | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
 | Basismeting | Base measurement | <sub>faq, modules, report</sub> |
@@ -1024,19 +1026,28 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Bekijk een voorbeeld | See an example | <sub>en, preview-home</sub> |
 | Bekijk het rapport | See the report | <sub>en, case-studies, healthcheck +2</sub> |
 | Beschrijf uw vraag. Gaat het over een technische situatie, noem dan ook om welke omgeving het gaat. | Describe your question. If it concerns a technical situation, name the environment it is about as well. | <sub>contact</sub> |
+| Bespreking | Review | <sub>healthcheck</sub> |
 | Besprekingen | Reviews | <sub>partners</sub> |
 | Betrokken modellen · | Models involved · | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
+| bevinding | finding | <sub>en, about, after-an-incident +37</sub> |
+| bevinding die niet is opgepakt, met de reden van de klant | finding not taken up, with the customer’s reason | <sub>firmware-drift-and-csv-owner-imbalance, hardware-and-rdma-for-storage-spaces-direct, quorum-stretch-cluster-for-rolling-upgrade +3</sub> |
 | Bevindingen in de catalogus | Findings in the catalogue | <sub>case-studies, praktijkvoorbeelden</sub> |
+| Bevindingen, daarna delta | Findings, then delta | <sub>en, healthcheck</sub> |
+| bevindingenrapport | findings report | <sub>en, about, after-an-incident +45</sub> |
 | Bevindingenrapport · AZLCL01 · basismeting | Findings report · AZLCL01 · base measurement | <sub>healthcheck</sub> |
 | Bewaar eerst het bewijs | Secure the evidence first | <sub>en, about, after-an-incident +42</sub> |
 | Bewaar eerst het bewijs, plan daarna. | Secure the evidence first, schedule after. | <sub>appointment, afspraak</sub> |
 | Bewijs verzamelen na uitval | Collecting evidence after an outage | <sub>after-an-incident, na-een-storing</sub> |
 | Bij een storing | During an incident | <sub>contact</sub> |
 | Bij een storing is de triagelijst gratis. De diagnose die erop volgt is betaald werk. | During an incident the triage list is free. The diagnosis that follows is paid work. | <sub>contact</sub> |
+| bij u aantreffen? | find at your site? | <sub>case-studies, firmware-drift-and-csv-owner-imbalance, hardware-and-rdma-for-storage-spaces-direct +5</sub> |
 | Bij weigering | On refusal | <sub>healthcheck</sub> |
 | Bluescreen op clusternode | Bluescreen on a cluster node | <sub>triage</sub> |
-| CSV-eigenaarschap · | CSV ownership · | <sub>case-studies, firmware-drift-en-csv-eigenaarsonbalans, praktijkvoorbeelden</sub> |
-| CSV’s in eigendom van dezelfde node | CSVs owned by the same node | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
+| BMC-firmware onder de security-floor van de leverancier op alle vier de nodes. | BMC firmware below the vendor security floor on all four nodes. | <sub>partners</sub> |
+| bouwnummer | build number | <sub>reporting-remediation-progress, top-10-hyper-v-cluster-issues, case-studies +1</sub> |
+| C1-jaar | C1-year | <sub>en, rates, terms</sub> |
+| C1-kwartaal | C1-quarter | <sub>en, rates, terms</sub> |
+| C1-maand | C1-month | <sub>en, rates, terms</sub> |
 | Capaciteit, fouttolerantie en afwijkende disks worden als één opslagketen beoordeeld. | Capacity, fault tolerance and deviating disks are assessed as one storage chain. | <sub>en, preview-home</sub> |
 | Cluster down? Bewaar eerst het bewijs. | Cluster down? Secure the evidence first. | <sub>en, about, after-an-incident +42</sub> |
 | Cluster ligt nu stil | Cluster is down right now | <sub>appointment, afspraak</sub> |
@@ -1045,9 +1056,14 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Componenten die na de inkoop terug moesten | Components that had to go back after purchase | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
 | Cookies en meting | Cookies and measurement | <sub>privacy</sub> |
 | Coördinator NODE | Coordinator NODE | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
-| De HealthCheck | The HealthCheck | <sub>en, about, after-an-incident +45</sub> |
+| CSV-eigenaarschap · | CSV ownership · | <sub>case-studies, firmware-drift-en-csv-eigenaarsonbalans, praktijkvoorbeelden</sub> |
+| CSV’s in eigendom van dezelfde node | CSVs owned by the same node | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
+| dan pas praten | talk later | <sub>healthcheck, modules, tarieven</sub> |
 | De aanleiding | The reason | <sub>afspraak</sub> |
+| de aanvraag vertrekt via uw eigen WhatsApp of e-mail. Deze pagina slaat niets op. | the request leaves through your own WhatsApp or email. This page stores nothing. | <sub>en</sub> |
 | De anonimisering | The anonymisation | <sub>case-studies, praktijkvoorbeelden</sub> |
+| De beoordelaar tekent | The assessor signs | <sub>en</sub> |
+| De beoordelaar weegt | The assessor weighs | <sub>en, healthcheck</sub> |
 | De bespreking | The review | <sub>healthcheck, partners</sub> |
 | De bestellijst is aangepast: drie modellen vervangen door gevalideerde alternatieven, vóór de inkoop. | The order list was adjusted: three models replaced by validated alternatives, before the purchase. | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
 | De bevindingen zoals ze in het rapport stonden, met risiconiveau. | The findings as they stood in the report, with risk level. | <sub>case-studies, praktijkvoorbeelden</sub> |
@@ -1056,6 +1072,8 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | De gemeten waarde die de bevinding aantoont en de waarde die vereist was. | The measured value that proves the finding and the value that was required. | <sub>case-studies, praktijkvoorbeelden</sub> |
 | De gratis | The free | <sub>en, about, after-an-incident +10</sub> |
 | De gratis Cluster Triage is stap 1 en kost u niets. Dit is wat daarna mogelijk is. | The free Cluster Triage is step 1 and costs you nothing. This is what is possible after that. | <sub>en, preview-home</sub> |
+| De HealthCheck | The HealthCheck | <sub>en, about, after-an-incident +45</sub> |
+| De jaarcyclus van de HealthCheck en de zes stappen tussen meting en rapport. | The yearly cycle of the HealthCheck and the six steps between measurement and report. | <sub>en, healthcheck</sub> |
 | De naam van de organisatie en de naam van het cluster. | The name of the organisation and the name of the cluster. | <sub>case-studies, praktijkvoorbeelden</sub> |
 | De nieuwe hardware zelf: nog niet geleverd op het moment van meten | The new hardware itself: not yet delivered at the time of measurement | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
 | De passende meting | The measurement that fits | <sub>appointment, afspraak</sub> |
@@ -1074,15 +1092,16 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | De vijf zwaarste signalen, gesorteerd op ernst | The five heaviest signals, sorted by severity | <sub>en, preview-home</sub> |
 | De voorgenomen volgorde laat op één moment beide locaties met een minderheid achter | The intended order leaves both sites with a minority at one moment | <sub>quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade</sub> |
 | De vrije momenten staan hieronder. U ontvangt de bevestiging met de link naar het gesprek per e-mail. | The available slots are below. You receive the confirmation with the link to the call by email. | <sub>appointment</sub> |
+| de werkwijze | how we work | <sub>health-check-to-patch-night, reporting-remediation-progress, rapport</sub> |
 | Direct in de agenda | Straight into the calendar | <sub>appointment, afspraak</sub> |
 | Dit formulier verstuurt niets zelf: | This form sends nothing by itself: | <sub>en, appointment, contact +4</sub> |
 | Documenten die een opdracht oplevert | Documents an engagement delivers | <sub>report, rapport</sub> |
 | Draai het vanaf de beheerserver | Run it from the management server | <sub>en, preview-home</sub> |
-| Drie NIC-modellen van de bestellijst gehaald voor de inkoop van een Storage Spaces Direct-cluster | Three NIC models taken off the order list before the purchase of a Storage Spaces Direct cluster | <sub>case-studies, hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct +1</sub> |
-| Drie NIC-modellen, van de bestellijst gehaald | Three NIC models, taken off the order list | <sub>en, case-studies, hardware-and-rdma-for-storage-spaces-direct +3</sub> |
 | Drie heldere stappen. Geen installatie, geen wijziging en geen verplicht vervolgtraject. | Three clear steps. No installation, no change and no obligatory follow-up track. | <sub>en, preview-home</sub> |
 | Drie jaar zonder gestructureerde review. De klant meldde trage opslag en kon er de vinger niet op leggen. | Three years without a structured review. The customer reported slow storage and could not put a finger on it. | <sub>en, preview-home</sub> |
 | Drie metingen | Three measurements | <sub>en, case-studies, praktijkvoorbeelden +1</sub> |
+| Drie NIC-modellen van de bestellijst gehaald voor de inkoop van een Storage Spaces Direct-cluster | Three NIC models taken off the order list before the purchase of a Storage Spaces Direct cluster | <sub>case-studies, hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct +1</sub> |
+| Drie NIC-modellen, van de bestellijst gehaald | Three NIC models, taken off the order list | <sub>en, case-studies, hardware-and-rdma-for-storage-spaces-direct +3</sub> |
 | Drie uitgewerkte voorbeelden uit een echt rapport. | Three worked-out examples from a real report. | <sub>report, rapport</sub> |
 | Drie voorgenomen NIC-modellen staan niet op de lijst van gevalideerde configuraties | Three intended NIC models are not on the list of validated configurations | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
 | Een gratis eerste beoordeling zonder abonnement | A free first assessment without a subscription | <sub>en, preview-home</sub> |
@@ -1094,14 +1113,20 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Een storing die u wilt begrijpen, of de wens om er een voor te zijn. | An incident you want to understand, or the wish to get ahead of one. | <sub>appointment, afspraak</sub> |
 | Een triagelijst die richting geeft | A triage list that gives direction | <sub>en, preview-home</sub> |
 | Een uitgewerkt voorbeeld | A worked example | <sub>health-check-to-patch-night, partners</sub> |
+| een uitgewerkt voorbeeld | a worked example | <sub>after-an-incident, blog, health-check-to-patch-night +1</sub> |
 | Eerst meten, | Measure first, | <sub>healthcheck, modules, rates +1</sub> |
 | Eerste veldrun · 828 MB ruwe log | First field run · 828 MB raw log | <sub>after-an-incident, na-een-storing</sub> |
 | Eigenaarschap gelijkmatig verdelen en de verdeling opnemen in de terugkerende meting. Zie ook de uitleg over | Distribute ownership evenly and include the distribution in the recurring measurement. See also the explanation of | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
 | Eigenaarschap van de CSV’s staat scheef over de nodes | Ownership of the CSVs sits lopsided across the nodes | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
 | Elf modules, elk uitgelezen aan de kant die de laag beheert | Eleven modules, each read out on the side that manages the layer | <sub>partners</sub> |
+| Elk kwartaal een vervolgmeting, opnieuw met rapport en bespreking | Every quarter a follow-up measurement, again with report and review | <sub>en, healthcheck</sub> |
 | Elk kwartaal opnieuw | Every quarter again | <sub>healthcheck</sub> |
 | Elk voorbeeld begint bij wat de klant dacht dat er aan de hand was en eindigt bij wat er gemeten werd. | Each example starts with what the customer thought was going on and ends with what was measured. | <sub>case-studies, praktijkvoorbeelden</sub> |
 | Elke node in dezelfde werkelijkheid | Every node in the same reality | <sub>en, preview-home</sub> |
+| en een | and a | <sub>faq</sub> |
+| en een uur bespreking. | and a one-hour review. | <sub>en, about, case-studies +9</sub> |
+| en wordt gemarkeerd voor herprovisioning-planning in plaats van een snelle ingreep. | and is flagged for reprovisioning planning instead of a quick intervention. | <sub>secure-boot-2023-certificates-hyper-v-gen2-vms</sub> |
+| en, na een incident, een | and, after an incident, a | <sub>faq, vragen</sub> |
 | Er is een node-voor-node playbook opgeleverd, dat het interne team zelf heeft uitgevoerd. | A node-by-node playbook was delivered, which the internal team carried out themselves. | <sub>quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade</sub> |
 | Er is geen wachtdienst, dus wij noemen geen reactietijd die wij niet kunnen waarmaken. | There is no on-call service, so we do not name a response time we cannot meet. | <sub>contact</sub> |
 | Ethernet-switches | Ethernet switches | <sub>hardware-and-rdma-for-storage-spaces-direct, modules, partners</sub> |
@@ -1120,8 +1145,10 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | From measurement to report, four times a year. Loop de zes stappen door. | From measurement to report, four times a year. Walk through the six steps. | <sub>healthcheck</sub> |
 | Gecomprimeerd · 29,6 MB | Compressed · 29.6 MB | <sub>after-an-incident, na-een-storing</sub> |
 | Gecorrigeerd vóór de eerste node werd aangeraakt | Corrected before the first node was touched | <sub>en, preview-home</sub> |
-| Gedrag van S2D onder productiebelasting: pas vast te stellen na de migratie | Behaviour of S2D under production load: only determinable after the migration | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
 | Gedrag van de opslag bij locatieverlies: | Behaviour of the storage on loss of a site: | <sub>quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade</sub> |
+| Gedrag van S2D onder productiebelasting: pas vast te stellen na de migratie | Behaviour of S2D under production load: only determinable after the migration | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
+| geeft de vijf zwaarste signalen rond een incidentvenster. De basismeting geeft het volledige beeld, met | gives the five heaviest signals around an incident window. The base measurement gives the complete picture, with | <sub>case-studies, faq, praktijkvoorbeelden +1</sub> |
+| geeft het volledige beeld, met bevindingenrapport en een uur bespreking. | gives the complete picture, with a findings report and a one-hour review. | <sub>faq, vragen</sub> |
 | Geen agent, installatie, wachtwoorden of geheugendumps. | No agent, installation, passwords or memory dumps. | <sub>en, preview-home</sub> |
 | Geen crashdump na uitval | No crash dump after an outage | <sub>triage</sub> |
 | Geen definitieve oorzaak of volledige reconstructie | No definitive cause or full reconstruction | <sub>en, preview-home</sub> |
@@ -1133,7 +1160,9 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Geheugendumps | Memory dumps | <sub>en, after-an-incident, triage +2</sub> |
 | Gemeten | Measured | <sub>en, case-studies, firmware-drift-and-csv-owner-imbalance +2</sub> |
 | Gesorteerd op ernst, met gemeten waarde, node en tijdstip. | Sorted by severity, with measured value, node and time. | <sub>en, preview-home</sub> |
+| Get-ClusterIntake.ps1 · startwaarden | Get-ClusterIntake.ps1 · starting values | <sub>en</sub> |
 | Getoetst vóór de inkooporder | Checked before the purchase order | <sub>en, preview-home</sub> |
+| Geweigerd: terug naar schrijven | Refused: back to writing | <sub>en, healthcheck</sub> |
 | Goed om te weten | Good to know | <sub>contact</sub> |
 | Gratis Cluster Triage | Free Cluster Triage | <sub>en, appointment, contact +3</sub> |
 | Gratis eerste stap bij een clusterstoring | Free first step during a cluster incident | <sub>en, preview-home</sub> |
@@ -1155,6 +1184,7 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Het volledige technische beeld van het cluster, met bevindingen, herstelstappen en bespreking. | The complete technical picture of the cluster, with findings, repair steps and a review. | <sub>en, preview-home</sub> |
 | Hoe bereid ik me voor op een cluster assessment? | How do I prepare for a cluster assessment? | <sub>faq, vragen</sub> |
 | Hoe bewijs ik dat een storing niet aan mijn configuratie lag? | How do I prove that an incident was not caused by my configuration? | <sub>after-an-incident, faq, na-een-storing +1</sub> |
+| hoe een bevinding is opgebouwd | how a finding is built up | <sub>after-an-incident, na-een-storing</sub> |
 | Hoe een bevindingenrapport eruitziet | What a findings report looks like | <sub>firmware-drift-and-csv-owner-imbalance, quorum-stretch-cluster-for-rolling-upgrade, firmware-drift-en-csv-eigenaarsonbalans +1</sub> |
 | Hoe lang duurt een cluster assessment? | How long does a cluster assessment take? | <sub>faq, vragen</sub> |
 | Hoe lang duurt zo'n meting en heeft het gevolgen voor de productie? | How long does such a measurement take and does it affect production? | <sub>quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade</sub> |
@@ -1163,16 +1193,21 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Hoeveel nodes, welke opslag, welke versies en wat er de afgelopen tijd is veranderd. | How many nodes, which storage, which versions and what has changed recently. | <sub>appointment, afspraak</sub> |
 | Hoge latency op opslag | High latency on storage | <sub>triage</sub> |
 | Hostnamen, IP-adressen, serienummers en licentiegegevens. | Host names, IP addresses, serial numbers and licence data. | <sub>case-studies, praktijkvoorbeelden</sub> |
+| Houdt tegen | Holds back | <sub>en, healthcheck</sub> |
+| Houdt tegen wat ontbreekt | Holds back what is missing | <sub>en</sub> |
 | Hyper-V hosts met een afwijkende virtuele workload | Hyper-V hosts with a deviating virtual workload | <sub>en, preview-home</sub> |
 | Iets anders | Something else | <sub>appointment, partners</sub> |
 | Iets waarmee de omgeving te vinden of te benaderen is. | Anything by which the environment can be found or reached. | <sub>case-studies, praktijkvoorbeelden</sub> |
+| in een cluster dat het goed doet | in a cluster that is doing fine | <sub>case-studies, praktijkvoorbeelden</sub> |
+| In uw gekozen talen | In your chosen languages | <sub>en, healthcheck</sub> |
 | Inventarisatiehoofdstukken uit de as-built-documentatie | Inventory chapters from the as-built documentation | <sub>partners, report, rapport</sub> |
 | Inventarisatiehoofdstukken uit de as-built-documentatie, gegenereerd uit de meting | Inventory chapters from the as-built documentation, generated from the measurement | <sub>partners</sub> |
+| is de eerste stap en kost u niets. Loop de cyclus door: de figuur volgt mee. | is the first step and costs you nothing. Walk through the cycle: the figure follows along. | <sub>healthcheck</sub> |
 | Kan CloudLabs dit doen voordat wij hardware bestellen? | Can CloudLabs do this before we order hardware? | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
 | Kan iemand mijn clusterlogboeken analyseren na een storing? | Can anyone analyse my cluster logs after an incident? | <sub>faq, vragen</sub> |
-| Kan ik R1 los bestellen zonder HealthCheck-klant te zijn? | Can I order R1 separately without being a HealthCheck customer? | <sub>after-an-incident, na-een-storing</sub> |
 | Kan ik het rapport onder mijn eigen huisstijl uitbrengen? | Can I publish the report under my own house style? | <sub>partners</sub> |
 | Kan ik met een eerdere klant spreken? | Can I speak to a previous customer? | <sub>case-studies, praktijkvoorbeelden</sub> |
+| Kan ik R1 los bestellen zonder HealthCheck-klant te zijn? | Can I order R1 separately without being a HealthCheck customer? | <sub>after-an-incident, na-een-storing</sub> |
 | Kennismaken | Getting acquainted | <sub>about</sub> |
 | Kies een onderwerp | Choose a subject | <sub>appointment, partners, afspraak</sub> |
 | Kies een tijdstip | Pick a time | <sub>afspraak</sub> |
@@ -1180,26 +1215,35 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Korte toelichting op uw omgeving | A short note on your environment | <sub>appointment, afspraak</sub> |
 | Krijg ik een rapport dat ik aan mijn klant kan geven? | Do I get a report I can hand to my customer? | <sub>faq, vragen</sub> |
 | Krijgt CloudLabs toegang tot de omgeving van mijn klant? | Does CloudLabs get access to my customer's environment? | <sub>partners</sub> |
+| kwartaal | quarter | <sub>en, aligning-vms-with-storage, azure-local-documented-flaws-exit-strategy +14</sub> |
+| leest uw omgeving uitsluitend uit en geeft de vijf zwaarste signalen rond een incidentvenster. De | only reads your environment and gives the five heaviest signals around an incident window. The | <sub>faq, vragen</sub> |
 | Liever zonder agenda | Rather without the calendar | <sub>appointment, afspraak</sub> |
+| locatie | site | <sub>en, after-an-incident, blog +37</sub> |
 | Locaties, met een gedeelde stemverdeling | Sites, with a shared vote distribution | <sub>quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade</sub> |
 | Logistiek · SAN naar Storage Spaces Direct | Logistics &middot; SAN to Storage Spaces Direct | <sub>preview-home</sub> |
 | Loop de zes stappen door. | Walk through the six steps. | <sub>healthcheck</sub> |
+| medeauteur · technisch redacteur van Mastering Hyper-V Deployment | co-author &middot; technical editor of Mastering Hyper-V Deployment | <sub>healthcheck, preview-home</sub> |
+| medeoprichter van het Benelux-platform voor Microsoft-virtualisatie | co-founder of the Benelux platform for Microsoft virtualisation | <sub>en, healthcheck, preview-home</sub> |
+| medepresentator, met vakgenoten in heel Europa | co-presenter, with peers across Europe | <sub>en, healthcheck, preview-home</sub> |
 | Meetgegevens | Measurement data | <sub>firmware-drift-and-csv-owner-imbalance, hardware-and-rdma-for-storage-spaces-direct, quorum-stretch-cluster-for-rolling-upgrade +3</sub> |
 | Merkt het cluster iets van de meting? | Does the cluster notice the measurement? | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
+| met bevindingen op volgorde van ernst en aanbevolen herstelstappen. Bij een vervolgmeting ontvangt u ook een | with findings ranked by severity and recommended remediation steps. On a follow-up measurement you also receive a | <sub>faq, vragen</sub> |
 | Mijn cluster ligt stil | My cluster is down | <sub>contact</sub> |
+| modelaanduidingen | model designations | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
 | Modellen op de bestellijst · | Models on the order list · | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
 | Moet mijn cluster read-only worden gemeten? | Does my cluster have to be measured read-only? | <sub>faq, vragen</sub> |
 | Momenten die u schikken | Times that suit you | <sub>appointment, afspraak</sub> |
-| NIC-modellen afgekeurd tegen de HCL | NIC models rejected against the HCL | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
-| NIC-modellen tegen de HCL · | NIC models against the HCL · | <sub>case-studies, praktijkvoorbeelden</sub> |
-| NVMe, lokale opslag | NVMe, local storage | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
 | Na de triage | After the triage | <sub>en, preview-home</sub> |
 | Na een storing (2) | After an incident (2) | <sub>faq, vragen</sub> |
+| Naast de vorige run | Beside the previous run | <sub>en, healthcheck</sub> |
 | Nederlands · English | Dutch · English | <sub>about, over-ons</sub> |
 | Nederlands, Engels of Duits. | Dutch, English or German. | <sub>contact</sub> |
 | Neem contact op | Get in touch | <sub>en, about, after-an-incident +45</sub> |
 | Netwerk & RDMA | Network &amp; RDMA | <sub>hardware-en-rdma-voor-storage-spaces-direct</sub> |
+| NIC-modellen afgekeurd tegen de HCL | NIC models rejected against the HCL | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
+| NIC-modellen tegen de HCL · | NIC models against the HCL · | <sub>case-studies, praktijkvoorbeelden</sub> |
 | Niet aangetroffen op de HCL · | Not found on the HCL · | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
+| niet een automatische diagnose | not an automatic diagnosis | <sub>en, preview-home</sub> |
 | Niet-exclusief | Non-exclusive | <sub>partners</sub> |
 | Node niet toegevoegd aan cluster | Node not added to the cluster | <sub>triage</sub> |
 | Nodes die tijdens de upgrade uit de rotatie zijn | Nodes out of rotation during the upgrade | <sub>quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade</sub> |
@@ -1207,8 +1251,10 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Nodes locatie B · | Nodes site B · | <sub>quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade</sub> |
 | Nodes op een afwijkende firmwarebuild | Nodes on a deviating firmware build | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
 | Noem twee of drie momenten die u schikken. | Name two or three moments that suit you. | <sub>appointment, afspraak</sub> |
+| NVMe, lokale opslag | NVMe, local storage | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
 | Onderbouwing richting uw directie of uw leverancier | Substantiation towards your board or your supplier | <sub>after-an-incident, na-een-storing</sub> |
 | Onderwerp | Subject | <sub>contact</sub> |
+| onderzoek na een storing | investigation after an incident | <sub>en, faq, preview-home +2</sub> |
 | Ongeplande onderbrekingen tijdens de upgrade | Unplanned interruptions during the upgrade | <sub>quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade</sub> |
 | Ontvang de triagelijst | Receive the triage list | <sub>en, preview-home</sub> |
 | Ook niet-uitgelezen onderdelen, met de reden | Parts that were not read too, with the reason | <sub>en, preview-home</sub> |
@@ -1225,12 +1271,13 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Overige nodes · | Other nodes · | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
 | Overzichtstabel uit een bevindingen-rapport | Summary table from a findings report | <sub>partners, report, rapport</sub> |
 | Overzichtstabel uit een bevindingen-rapport met drieëndertig bevindingen, gesorteerd op risiconiveau | Summary table from a findings report with thirty-three findings, sorted by risk level | <sub>partners</sub> |
+| partnerbriefing aan | partner briefing to | <sub>partners</sub> |
+| Past er niets in de agenda, noem dan zelf een paar momenten. Vermeld ook uw tijdzone. | If nothing in the calendar fits, name a few moments yourself. State your time zone as well. | <sub>appointment</sub> |
 | PFC, VLAN, RDMA en fysieke poorten worden tussen host en switch vergeleken. | PFC, VLAN, RDMA and physical ports are compared between host and switch. | <sub>en, preview-home</sub> |
 | PFC-klassen host en switch · | PFC classes host and switch · | <sub>case-studies, praktijkvoorbeelden</sub> |
 | PFC-klassen komen niet overeen tussen host en switch | PFC classes do not match between host and switch | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
-| Past er niets in de agenda, noem dan zelf een paar momenten. Vermeld ook uw tijdzone. | If nothing in the calendar fits, name a few moments yourself. State your time zone as well. | <sub>appointment</sub> |
-| Plan een HealthCheck | Book a HealthCheck | <sub>about, over-ons</sub> |
 | Plan een gesprek | Book a call | <sub>afspraak</sub> |
+| Plan een HealthCheck | Book a HealthCheck | <sub>about, over-ons</sub> |
 | Portret van Hans Vredevoort | Portrait of Hans Vredevoort | <sub>about, over-ons</sub> |
 | Praktijkvoorbeeld 01 | Case study 01 | <sub>firmware-drift-and-csv-owner-imbalance, hardware-and-rdma-for-storage-spaces-direct, quorum-stretch-cluster-for-rolling-upgrade +3</sub> |
 | Praktijkvoorbeeld 01 · basismeting | Case study 01 · base measurement | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
@@ -1243,21 +1290,26 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Prioriteitsklasse op de switch · | Priority class on the switch · | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
 | Quorum in een stretch-cluster | Quorum in a stretch cluster | <sub>case-studies, quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade +1</sub> |
 | Quorum in een stretch-cluster, aangetroffen voor de rolling upgrade begon | Quorum in a stretch cluster, found before the rolling upgrade started | <sub>case-studies, praktijkvoorbeelden</sub> |
-| RDMA werkt niet | RDMA does not work | <sub>triage</sub> |
+| Rapport | Report | <sub>healthcheck</sub> |
 | Rapport voor directie na storing | Report for the board after an incident | <sub>after-an-incident, na-een-storing</sub> |
+| RDMA werkt niet | RDMA does not work | <sub>triage</sub> |
 | Readiness check gefaald op Azure Local | Readiness check failed on Azure Local | <sub>triage</sub> |
 | Reconstructie over alle nodes, met tijdlijn, oorzaakanalyse en een RCA-document. | Reconstruction across all nodes, with timeline, cause analysis and an RCA document. | <sub>en, preview-home</sub> |
+| reden | reason | <sub>en, after-an-incident, appointment +22</sub> |
 | Redundante netwerkswitches met een afwijkende verbinding | Redundant network switches with a deviating link | <sub>en, preview-home</sub> |
 | Register from a delta report with the status of each finding before and after de vervolgmeting | Register from a delta report with the status of each finding before and after the follow-up measurement | <sub>partners</sub> |
 | Register uit een delta-rapport met de status van elke bevinding voor en na | Register from a delta report with the status of each finding before and after | <sub>partners</sub> |
 | Register uit een delta-rapport met de status voor en na | Register from a delta report with the status before and after | <sub>report, rapport</sub> |
+| restrisico-rapport met een risico-trend grafiek | remaining-risk overview with a risk trend chart | <sub>faq, rapport, vragen</sub> |
 | Richting voor de veiligste vervolgstap | Direction for the safest next step | <sub>en, preview-home</sub> |
 | Risico-trend grafiek over drie metingen: hoog risico daalt van drie via een naar nul | Risk trend chart across three measurements: high risk falls from three via one to zero | <sub>partners</sub> |
 | Root cause analyse na een clusterstoring | Root cause analysis after a cluster incident | <sub>after-an-incident, na-een-storing</sub> |
+| ruim tien jaar · Failover Clustering, Cloud & Datacenter Management | over ten years &middot; Failover Clustering, Cloud &amp; Datacenter Management | <sub>healthcheck, preview-home</sub> |
 | Ruim tien jaar, in de categorieën Failover Clustering, Virtual Machine en Cloud & Datacenter Management. | Over ten years, in the categories Failover Clustering, Virtual Machine and Cloud & Datacenter Management. | <sub>about, over-ons</sub> |
 | S2D repair job loopt niet af | S2D repair job does not finish | <sub>triage</sub> |
 | SAN, S2D en Azure Local | SAN, S2D and Azure Local | <sub>hardware-and-rdma-for-storage-spaces-direct, san-vs-s2d-vs-azure-local-hyper-v-storage, hardware-en-rdma-voor-storage-spaces-direct</sub> |
 | SAN, S2D of Azure Local | SAN, S2D or Azure Local | <sub>case-studies, hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct +1</sub> |
+| scheef CSV-eigenaarschap | lopsided CSV ownership | <sub>case-studies, firmware-drift-and-csv-owner-imbalance, faq +3</sub> |
 | Scope en duur | Scope and duration | <sub>faq, vragen</sub> |
 | Sector, met de omvang en vorm van het cluster: aantal nodes, opslagvorm, aantal locaties. | Sector, with the size and shape of the cluster: number of nodes, storage form, number of sites. | <sub>case-studies, praktijkvoorbeelden</sub> |
 | Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM's niet bijwerken en wat er in 2026 stukgaat | Secure Boot certificates and Hyper-V: why your Gen 2 VMs are not updating and what breaks in 2026 | <sub>blog, secure-boot-2023-certificates-hyper-v-gen2-vms</sub> |
@@ -1266,6 +1318,7 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Standplaats | Based in | <sub>about</sub> |
 | Stap 0 · eenmalig | Step 0 · one-off | <sub>en, healthcheck, preview-home</sub> |
 | Stap 1 | Step 1 | <sub>hyper-v-time-drift-kerberos-csv, live-migration-wrong-network, vmware-to-hyper-v-migration-assessment +2</sub> |
+| Stap 1 t/m 6 | Steps 1 to 6 | <sub>en, healthcheck</sub> |
 | Stap 2 | Step 2 | <sub>hyper-v-time-drift-kerberos-csv, live-migration-wrong-network, vmware-to-hyper-v-migration-assessment +2</sub> |
 | Stap 3 | Step 3 | <sub>hyper-v-time-drift-kerberos-csv, live-migration-wrong-network, vmware-to-hyper-v-migration-assessment +2</sub> |
 | Stap 4 | Step 4 | <sub>hyper-v-time-drift-kerberos-csv, vmware-to-hyper-v-migration-assessment, windows-server-2025-hyper-v-cluster-features +2</sub> |
@@ -1273,6 +1326,7 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Stap 6 | Step 6 | <sub>hyper-v-time-drift-kerberos-csv, vmware-to-hyper-v-migration-assessment, windows-server-2025-hyper-v-cluster-features +1</sub> |
 | Stap in de voorgenomen volgorde · | Step in the intended order · | <sub>quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade</sub> |
 | Stappen tussen meting en document | Steps between measurement and document | <sub>case-studies, praktijkvoorbeelden</sub> |
+| Startwaarden | Starting values | <sub>en, healthcheck</sub> |
 | Stel hem gerust | Just ask | <sub>vragen</sub> |
 | Stemverdeling over locaties · | Vote distribution across sites · | <sub>case-studies, praktijkvoorbeelden</sub> |
 | Stemverdeling over twee locaties | Vote distribution across two sites | <sub>en, preview-home</sub> |
@@ -1282,27 +1336,33 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Stuur een bericht | Send a message | <sub>contact</sub> |
 | Stuur uw voorkeursmomenten | Send your preferred times | <sub>appointment, afspraak</sub> |
 | Switchconfiguratie: buiten scope van de basismeting; valt onder module M1 | Switch configuration: outside the scope of the base measurement; covered by module M1 | <sub>firmware-drift-and-csv-owner-imbalance, quorum-stretch-cluster-for-rolling-upgrade, firmware-drift-en-csv-eigenaarsonbalans +1</sub> |
-| TRIAGE · INCIDENTVENSTER | TRIAGE · INCIDENT WINDOW | <sub>en, triage, preview-home</sub> |
 | Terug naar schrijven | Back to writing | <sub>healthcheck</sub> |
+| Terug naar stap 2 | Back to step 2 | <sub>en</sub> |
 | Terugkerende storing zelfde node | Recurring incident same node | <sub>after-an-incident, na-een-storing</sub> |
+| title="Agenda van Hans Vredevoort, gesprek van 30 minuten" | title="Calendar of Hans Vredevoort, 30 minute call" | <sub>appointment, afspraak</sub> |
 | Toegang en setup | Access and setup | <sub>faq, vragen</sub> |
 | Triage sorteert het probleem. Een definitieve oorzaak vraagt om reconstructie en diepgaande loganalyse. | Triage sorts the problem. A definitive cause requires reconstruction and in-depth log analysis. | <sub>en, preview-home</sub> |
+| TRIAGE · INCIDENTVENSTER | TRIAGE · INCIDENT WINDOW | <sub>en, triage, preview-home</sub> |
+| Tussen meting en rapport · stap 1 t/m 6 | Between measurement and report · steps 1 to 6 | <sub>en, healthcheck</sub> |
 | Twee datacenterlocaties | Two datacenter sites | <sub>quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade</sub> |
 | Twee locaties | Two sites | <sub>praktijkvoorbeelden</sub> |
 | Twee nodes draaien een firmwarebuild met een bekende NVMe-stabiliteitsregressie | Two nodes run a firmware build with a known NVMe stability regression | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
 | Twee uitgewerkte bevindingen uit het hoofdstuk Hoog risico van een bevindingen-rapport | Two worked-out findings from the High risk chapter of a findings report | <sub>partners</sub> |
 | Twee zware onderdelen kiest u per run | Two heavy parts you choose per run | <sub>after-an-incident, na-een-storing</sub> |
+| type en locatie | type and location | <sub>case-studies, praktijkvoorbeelden</sub> |
 | U hoeft niets voor te bereiden en niets aan te leveren. | You need to prepare nothing and supply nothing. | <sub>appointment, afspraak</sub> |
 | U krijgt | You get | <sub>en</sub> |
 | U krijgt de vijf zwaarste signalen per e-mail, gesorteerd op ernst en onderbouwd met meetgegevens. | You receive the five heaviest signals by email, sorted by severity and backed by measurement data. | <sub>en, preview-home</sub> |
 | U krijgt nog niet | You do not yet get | <sub>en, preview-home</sub> |
 | U ziet de vrije momenten en kiest zelf. | You see the available slots and choose yourself. | <sub>appointment, afspraak</sub> |
 | Uit de praktijk | From practice | <sub>case-studies, praktijkvoorbeelden</sub> |
+| Uit gemeten waarden | From measured values | <sub>en, healthcheck</sub> |
 | Uitgebreide beschrijving per module | Full description per module | <sub>modules</sub> |
 | Uitkomst bij verlies locatie B · | Outcome on loss of site B · | <sub>case-studies, quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade +1</sub> |
 | Uitleg bij de bevindingen die wij het vaakst terugzien, met de gemeten waarden erbij. | Explanation of the findings we see back most often, with the measured values included. | <sub>en, preview-home</sub> |
 | Uitleg bij de bevindingen die wij in clusters terugzien. | Explanation of the findings we see back in clusters. | <sub>blog</sub> |
 | Uitleg bij findingen uit Hyper-V-, Failover Cluster- en Azure Local-metingen. | Explanation of findings from Hyper-V, Failover Cluster and Azure Local measurements. | <sub>blog</sub> |
+| Uitsluitend lezend | Read-only | <sub>en, healthcheck</sub> |
 | Uitsluitend lezend, vanaf uw eigen beheerserver | Read-only, from your own management server | <sub>healthcheck</sub> |
 | Uitsluitend lezend, zonder verplichtingen. | Read-only, without obligations. | <sub>contact</sub> |
 | Upgradevolgorde | Upgrade order | <sub>quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade</sub> |
@@ -1312,23 +1372,31 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Uw eigen cluster | Your own cluster | <sub>case-studies, firmware-drift-and-csv-owner-imbalance, hardware-and-rdma-for-storage-spaces-direct +7</sub> |
 | Uw omgeving | Your environment | <sub>appointment, case-studies</sub> |
 | Uw tijdzone | Your time zone | <sub>appointment</sub> |
-| VM’s, dataverlies 0 | VMs, data loss 0 | <sub>case-studies, praktijkvoorbeelden</sub> |
+| van | of | <sub>en, about, after-an-incident +45</sub> |
+| van 6 | of 6 | <sub>en, case-studies, firmware-drift-and-csv-owner-imbalance</sub> |
+| van 6 volumes op één node | of 6 volumes on one node | <sub>praktijkvoorbeelden</sub> |
 | Van eerste signaal naar de juiste vervolgstap | From first signal to the right next step | <sub>en, preview-home</sub> |
+| van hoe een reconstructie eruitziet en | of what a reconstruction looks like, and | <sub>after-an-incident, na-een-storing</sub> |
 | Van meting naar rapport, | From measurement to report, | <sub>en, healthcheck, preview-home</sub> |
 | Van meting naar rapport, vier keer per jaar | From measurement to report, four times a year | <sub>en, healthcheck, preview-home</sub> |
 | Van meting naar rapport: de zes stappen | From measurement to report: the six steps | <sub>healthcheck</sub> |
 | Van zoekvraag naar veilige eerste stap | From search question to a safe first step | <sub>en, preview-home</sub> |
 | Vanaf beide nodes ontbreekt contact met de witness tijdens het incidentvenster. | From both nodes contact with the witness is missing during the incident window. | <sub>en, preview-home</sub> |
+| Vanaf uw beheerserver | From your management server | <sub>en, healthcheck</sub> |
+| vanuit PowerShell geeft veel beter diagnosticeerbare output dan de portal. Onze | from PowerShell gives far more diagnosable output than the portal. Our | <sub>azure-local-documented-flaws-exit-strategy</sub> |
 | Veertig jaar in de Microsoft-wereld | Forty years in the Microsoft world | <sub>en, healthcheck, preview-home</sub> |
 | Veertig virtuele machines en een hardwarevervanging in aantocht. De meting ging over de bestellijst. | Forty virtual machines and a hardware replacement coming. The measurement was about the order list. | <sub>en, preview-home</sub> |
 | Verandert de meting iets aan mijn cluster? | Does the measurement change anything on my cluster? | <sub>healthcheck</sub> |
 | Verandert het onderzoek iets aan mijn cluster? | Does the investigation change anything on my cluster? | <sub>after-an-incident, healthcheck, na-een-storing</sub> |
 | Verdeel CSV-eigenaarschap handmatig met | Distribute CSV ownership manually with | <sub>report, rapport</sub> |
+| verdeling | distribution | <sub>en, aligning-vms-with-storage, csv-ownership-imbalance +9</sub> |
 | Verder lezen | Further reading | <sub>case-studies, firmware-drift-and-csv-owner-imbalance, hardware-and-rdma-for-storage-spaces-direct +5</sub> |
 | Verreweg het grootste deel van de run. De omvang verschilt per omgeving; als voorbeeld: | By far the largest part of the run. The size differs per environment; as an example: | <sub>after-an-incident, na-een-storing</sub> |
+| vertaalt één op één: zelfde governance, andere motor. | translates one to one: same governance, different engine. | <sub>azure-local-documented-flaws-exit-strategy</sub> |
 | Vervangen door · | Replaced by · | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
 | Vervolgmetingen | Follow-up measurements | <sub>partners</sub> |
 | Vier documenttypes, met een vijfde op afroep | Four document types, with a fifth on call | <sub>partners</sub> |
+| vier keer per jaar | four times a year | <sub>en, healthcheck, preview-home</sub> |
 | Vier meetmomenten per jaar maken zichtbaar of risico’s werkelijk verdwijnen. | Four measurement moments a year make visible whether risks really disappear. | <sub>en, preview-home</sub> |
 | Vier vormen, met alle bedragen op de pagina. | Four forms, with every amount on the page. | <sub>rates, tarieven</sub> |
 | Vijf stappen, van intake tot vervolgmeting | Five steps, from intake to follow-up measurement | <sub>partners</sub> |
@@ -1336,13 +1404,17 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Virtuele machines gemigreerd, dataverlies 0 | Virtual machines migrated, data loss 0 | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
 | Virtuele machines niet bereikbaar na herstart | Virtual machines unreachable after a restart | <sub>triage</sub> |
 | Virtuele switches, live migration en hostinstellingen worden node voor node vergeleken. | Virtual switches, live migration and host settings are compared node by node. | <sub>en, preview-home</sub> |
+| VM’s, dataverlies 0 | VMs, data loss 0 | <sub>case-studies, praktijkvoorbeelden</sub> |
 | Volumes in het cluster | Volumes in the cluster | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
 | Voor aantoonbaar beheer en structurele risicoreductie. | For demonstrable management and structural risk reduction. | <sub>en, preview-home</sub> |
 | Voor de eerste meting leest | For the first measurement | <sub>healthcheck</sub> |
 | Voor een storing waarvan de oorzaak achterhaald moet worden. | For an incident whose cause has to be established. | <sub>en, preview-home</sub> |
 | Voor een vraag met context of bijlagen. | For a question with context or attachments. | <sub>contact</sub> |
+| voor hoe de metingen samenhangen. | for how the measurements hang together. | <sub>report, rapport</sub> |
 | Voor organisaties die eerst een betrouwbare nulmeting nodig hebben. | For organisations that first need a reliable baseline. | <sub>en, preview-home</sub> |
 | Voor partners | For partners | <sub>en, about, after-an-incident +45</sub> |
+| voor wat 2026 daarin anders maakt. | for what makes 2026 different in that respect. | <sub>faq, vragen</sub> |
+| voor wat er precies wordt verzameld en wat u ontvangt. | for exactly what is collected and what you receive. | <sub>faq, vragen</sub> |
 | Vooraf ziet u exact wat wordt uitgelezen. Het script verzamelt uitsluitend gegevens rond het incidentvenster. | Beforehand you see exactly what is read out. The script collects data only around the incident window. | <sub>en, preview-home</sub> |
 | Voorbeeld | Example | <sub>en, cluster-aware-updating-runbook-audit-trail, reporting-remediation-progress +3</sub> |
 | Voorbeeld van een triagelijst | Example of a triage list | <sub>en, triage, preview-home</sub> |
@@ -1359,8 +1431,8 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Waar het gesprek over gaat | What the call is about | <sub>appointment, afspraak</sub> |
 | Waar het werk vandaan komt | Where the work comes from | <sub>about, over-ons</sub> |
 | Waar wij aan werken | What we work on | <sub>about, over-ons</sub> |
-| Waarom CSV-eigenaarschap scheef gaat staan | Why CSV ownership ends up lopsided | <sub>case-studies, firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans +1</sub> |
 | Waarom controleert een rolling upgrade het quorum niet zelf? | Why does a rolling upgrade not check the quorum itself? | <sub>quorum-stretch-cluster-for-rolling-upgrade, quorum-stretch-cluster-voor-rolling-upgrade</sub> |
+| Waarom CSV-eigenaarschap scheef gaat staan | Why CSV ownership ends up lopsided | <sub>case-studies, firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans +1</sub> |
 | Waarom dit telt | Why this counts | <sub>firmware-drift-and-csv-owner-imbalance, hardware-and-rdma-for-storage-spaces-direct, quorum-stretch-cluster-for-rolling-upgrade +3</sub> |
 | Waarom draait een twee-node cluster zonder redundantie tijdens patchen? | Why does a two-node cluster run without redundancy during patching? | <sub>faq, vragen</sub> |
 | Waarom is de hardwarelijst bij Storage Spaces Direct zo bepalend? | Why is the hardware list so decisive with Storage Spaces Direct? | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
@@ -1370,7 +1442,6 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Waarom waarschuwt Failover Cluster Manager niet bij firmware-drift? | Why does Failover Cluster Manager not warn about firmware drift? | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
 | Waarschuwingen in de beheerconsole | Warnings in the management console | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
 | Wacht niet tot het bewijs verdwenen is. | Do not wait until the evidence is gone. | <sub>en, triage, preview-home</sub> |
-| Wat Triage wel en niet is | What Triage is and is not | <sub>en, preview-home</sub> |
 | Wat de klant heeft laten liggen: | What the customer left alone: | <sub>firmware-drift-and-csv-owner-imbalance, hardware-and-rdma-for-storage-spaces-direct, quorum-stretch-cluster-for-rolling-upgrade +3</sub> |
 | Wat doet de controle in stap 4? | What does the check in step 4 do? | <sub>healthcheck</sub> |
 | Wat een basismeting aantrof in een Hyper-V-cluster dat volgens de beheerconsole gezond was | What a base measurement found in a Hyper-V cluster that the management console called healthy | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
@@ -1389,7 +1460,9 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Wat is scheef CSV-eigenaarschap en waarom is het een probleem? | What is lopsided CSV ownership and why is it a problem? | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
 | Wat kost een cluster health check? | What does a cluster health check cost? | <sub>faq, vragen</sub> |
 | Wat niet gemeten kon worden | What could not be measured | <sub>case-studies, firmware-drift-and-csv-owner-imbalance, hardware-and-rdma-for-storage-spaces-direct +4</sub> |
+| Wat ontbreekt | What is missing | <sub>en, healthcheck</sub> |
 | Wat staat er in een bevinding? | What is in a finding? | <sub>report, rapport</sub> |
+| Wat Triage wel en niet is | What Triage is and is not | <sub>en, preview-home</sub> |
 | Wat u gratis ontvangt | What you receive free of charge | <sub>en, preview-home</sub> |
 | Wat u hier terecht van vraagt | What you rightly ask of this | <sub>case-studies, praktijkvoorbeelden</sub> |
 | Wat u ontvangt · het bevindingenrapport | What you receive · the findings report | <sub>report, rapport</sub> |
@@ -1406,6 +1479,7 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Werkt de agenda niet in uw browser? | Does the calendar not work in your browser? | <sub>appointment, afspraak</sub> |
 | Wie kan cluster logs analyseren | Who can analyse cluster logs | <sub>after-an-incident, na-een-storing</sub> |
 | Wie kan mijn clusterlogboeken analyseren na een storing? | Who can analyse my cluster logs after an incident? | <sub>after-an-incident, na-een-storing</sub> |
+| Wij nemen het door | We go through it with you | <sub>en, healthcheck</sub> |
 | Wij proberen per omgaande te reageren, afhankelijk van bereikbaarheid. | We aim to reply promptly, depending on availability. | <sub>afspraak, contact, partners +2</sub> |
 | Wij rapporteren dit met severity | We report this with severity | <sub>top-10-hyper-v-cluster-issues</sub> |
 | Wij werken op afstand. Een meting vraagt geen bezoek op locatie. | We work remotely. A measurement does not require a visit on site. | <sub>contact</sub> |
@@ -1413,58 +1487,14 @@ Eén regel per stuk. Deze staan vaak op meerdere pagina's.
 | Wijzigingen aan uw cluster | Changes to your cluster | <sub>en, preview-home</sub> |
 | Wijzigingen uitgevoerd | Changes made | <sub>en, preview-home</sub> |
 | Witness niet bereikbaar | Witness unreachable | <sub>en, triage</sub> |
+| witness-vormen | witness types | <sub>cluster-witness-comparison, windows-server-2025-hyper-v-cluster-features, quorum-stretch-cluster-for-rolling-upgrade +1</sub> |
 | Zes momenten waarop een meting het verschil maakt | Six moments at which a measurement makes the difference | <sub>partners</sub> |
 | Zes nodes, twee firmwareversies | Six nodes, two firmware versions | <sub>en, case-studies, firmware-drift-and-csv-owner-imbalance +7</sub> |
 | Zes nodes, twee firmwareversies: firmware-drift en CSV-eigenaarsonbalans in een productiecluster | Six nodes, two firmware versions: firmware drift and CSV owner imbalance in a production cluster | <sub>case-studies, praktijkvoorbeelden</sub> |
 | Zes nodes, twee firmwareversies: firmware-drift en scheef CSV-eigenaarschap in een productiecluster | Six nodes, two firmware versions: firmware drift and lopsided CSV ownership in a production cluster | <sub>firmware-drift-and-csv-owner-imbalance, firmware-drift-en-csv-eigenaarsonbalans</sub> |
 | Zie het artikel over | See the article on | <sub>faq, vragen</sub> |
 | Zijn de gemeten waarden in deze voorbeelden echt? | Are the measured values in these examples real? | <sub>case-studies, praktijkvoorbeelden</sub> |
-| Zorg | Healthcare | <sub>en, case-studies, quorum-stretch-cluster-for-rolling-upgrade</sub> |
-| afgekeurd | rejected | <sub>case-studies, hardware-and-rdma-for-storage-spaces-direct, partners</sub> |
-| bevinding | finding | <sub>en, about, after-an-incident +37</sub> |
-| bevinding die niet is opgepakt, met de reden van de klant | finding not taken up, with the customer’s reason | <sub>firmware-drift-and-csv-owner-imbalance, hardware-and-rdma-for-storage-spaces-direct, quorum-stretch-cluster-for-rolling-upgrade +3</sub> |
-| bevindingenrapport | findings report | <sub>en, about, after-an-incident +45</sub> |
-| bij u aantreffen? | find at your site? | <sub>case-studies, firmware-drift-and-csv-owner-imbalance, hardware-and-rdma-for-storage-spaces-direct +5</sub> |
-| bouwnummer | build number | <sub>reporting-remediation-progress, top-10-hyper-v-cluster-issues, case-studies +1</sub> |
-| dan pas praten | talk later | <sub>healthcheck, modules, tarieven</sub> |
-| de aanvraag vertrekt via uw eigen WhatsApp of e-mail. Deze pagina slaat niets op. | the request leaves through your own WhatsApp or email. This page stores nothing. | <sub>en</sub> |
-| de werkwijze | how we work | <sub>health-check-to-patch-night, reporting-remediation-progress, rapport</sub> |
-| een uitgewerkt voorbeeld | a worked example | <sub>after-an-incident, blog, health-check-to-patch-night +1</sub> |
-| en een uur bespreking. | and a one-hour review. | <sub>en, about, case-studies +9</sub> |
-| en wordt gemarkeerd voor herprovisioning-planning in plaats van een snelle ingreep. | and is flagged for reprovisioning planning instead of a quick intervention. | <sub>secure-boot-2023-certificates-hyper-v-gen2-vms</sub> |
-| en, na een incident, een | and, after an incident, a | <sub>faq, vragen</sub> |
-| geeft de vijf zwaarste signalen rond een incidentvenster. De basismeting geeft het volledige beeld, met | gives the five heaviest signals around an incident window. The base measurement gives the complete picture, with | <sub>case-studies, faq, praktijkvoorbeelden +1</sub> |
-| geeft het volledige beeld, met bevindingenrapport en een uur bespreking. | gives the complete picture, with a findings report and a one-hour review. | <sub>faq, vragen</sub> |
-| hoe een bevinding is opgebouwd | how a finding is built up | <sub>after-an-incident, na-een-storing</sub> |
-| in een cluster dat het goed doet | in a cluster that is doing fine | <sub>case-studies, praktijkvoorbeelden</sub> |
-| is de eerste stap en kost u niets. Loop de cyclus door: de figuur volgt mee. | is the first step and costs you nothing. Walk through the cycle: the figure follows along. | <sub>healthcheck</sub> |
-| kwartaal | quarter | <sub>en, aligning-vms-with-storage, azure-local-documented-flaws-exit-strategy +14</sub> |
-| leest uw omgeving uitsluitend uit en geeft de vijf zwaarste signalen rond een incidentvenster. De | only reads your environment and gives the five heaviest signals around an incident window. The | <sub>faq, vragen</sub> |
-| locatie | site | <sub>en, after-an-incident, blog +37</sub> |
-| medeauteur · technisch redacteur van Mastering Hyper-V Deployment | co-author &middot; technical editor of Mastering Hyper-V Deployment | <sub>healthcheck, preview-home</sub> |
-| medeoprichter van het Benelux-platform voor Microsoft-virtualisatie | co-founder of the Benelux platform for Microsoft virtualisation | <sub>en, healthcheck, preview-home</sub> |
-| medepresentator, met vakgenoten in heel Europa | co-presenter, with peers across Europe | <sub>en, healthcheck, preview-home</sub> |
-| met bevindingen op volgorde van ernst en aanbevolen herstelstappen. Bij een vervolgmeting ontvangt u ook een | with findings ranked by severity and recommended remediation steps. On a follow-up measurement you also receive a | <sub>faq, vragen</sub> |
-| modelaanduidingen | model designations | <sub>hardware-and-rdma-for-storage-spaces-direct, hardware-en-rdma-voor-storage-spaces-direct</sub> |
-| niet een automatische diagnose | not an automatic diagnosis | <sub>en, preview-home</sub> |
-| onderzoek na een storing | investigation after an incident | <sub>en, faq, preview-home +2</sub> |
-| partnerbriefing aan | partner briefing to | <sub>partners</sub> |
-| reden | reason | <sub>en, after-an-incident, appointment +22</sub> |
-| restrisico-rapport met een risico-trend grafiek | remaining-risk overview with a risk trend chart | <sub>faq, rapport, vragen</sub> |
-| ruim tien jaar · Failover Clustering, Cloud & Datacenter Management | over ten years &middot; Failover Clustering, Cloud &amp; Datacenter Management | <sub>healthcheck, preview-home</sub> |
-| scheef CSV-eigenaarschap | lopsided CSV ownership | <sub>case-studies, firmware-drift-and-csv-owner-imbalance, faq +3</sub> |
-| title="Agenda van Hans Vredevoort, gesprek van 30 minuten" | title="Calendar of Hans Vredevoort, 30 minute call" | <sub>appointment, afspraak</sub> |
-| type en locatie | type and location | <sub>case-studies, praktijkvoorbeelden</sub> |
-| van | of | <sub>en, about, after-an-incident +45</sub> |
-| van 6 | of 6 | <sub>en, case-studies, firmware-drift-and-csv-owner-imbalance</sub> |
-| van 6 volumes op één node | of 6 volumes on one node | <sub>praktijkvoorbeelden</sub> |
-| van hoe een reconstructie eruitziet en | of what a reconstruction looks like, and | <sub>after-an-incident, na-een-storing</sub> |
-| vanuit PowerShell geeft veel beter diagnosticeerbare output dan de portal. Onze | from PowerShell gives far more diagnosable output than the portal. Our | <sub>azure-local-documented-flaws-exit-strategy</sub> |
-| verdeling | distribution | <sub>en, aligning-vms-with-storage, csv-ownership-imbalance +9</sub> |
-| vertaalt één op één: zelfde governance, andere motor. | translates one to one: same governance, different engine. | <sub>azure-local-documented-flaws-exit-strategy</sub> |
-| vier keer per jaar | four times a year | <sub>en, healthcheck, preview-home</sub> |
-| voor hoe de metingen samenhangen. | for how the measurements hang together. | <sub>report, rapport</sub> |
-| voor wat 2026 daarin anders maakt. | for what makes 2026 different in that respect. | <sub>faq, vragen</sub> |
-| voor wat er precies wordt verzameld en wat u ontvangt. | for exactly what is collected and what you receive. | <sub>faq, vragen</sub> |
-| witness-vormen | witness types | <sub>cluster-witness-comparison, windows-server-2025-hyper-v-cluster-features, quorum-stretch-cluster-for-rolling-upgrade +1</sub> |
 | zodat elke node ongeveer evenveel CSV’s bezit en controleer dan de VM-plaatsing en anti-affinity regels op | so that each node owns roughly the same number of CSVs, then check VM placement and anti-affinity rules on | <sub>report, rapport</sub> |
+| Zorg | Healthcare | <sub>en, case-studies, quorum-stretch-cluster-for-rolling-upgrade</sub> |
+| Één jaar: C1 + V1 + V2 + V3, vier metingen, vier rapporten, vier besprekingen | One year: C1 + V1 + V2 + V3, four measurements, four reports, four reviews | <sub>en, healthcheck</sub> |
+| Één uur | One hour | <sub>en, healthcheck</sub> |

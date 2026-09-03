@@ -41,3 +41,12 @@
 .veld p{margin:0;font-family:var(--serif);font-size:16px;line-height:1.65;color:var(--dim)}
 .veld p.meting{font-family:var(--mono);font-size:13px;line-height:1.8;color:var(--ink);
                font-variant-numeric:tabular-nums}
+
+/* Op 320 breed is de kaart met 28 binnenmarge aan weerskanten 341 breed en
+   past hij niet. Dezelfde regel staat in pagina.css, maar dit bestand laadt
+   daarna en won het dus. Hij hoort hier. */
+@media(max-width:360px){
+  .bev{padding:22px 18px}
+  .bevkop{gap:10px;padding:9px 10px}
+  .chip{min-width:0}
+}

@@ -80,8 +80,8 @@
 
 /* Een waarde die Hans nog moet aanleveren. Zichtbaar genoeg om niet per
    ongeluk live te gaan, rustig genoeg om de bladzij niet te verstoren. */
-.invul{color:#8A4B08;font-style:normal;font-family:var(--mono);font-size:.92em;
-       border-bottom:1px dotted #C2833E;padding-bottom:1px}
+.invul{color:var(--invul);font-style:normal;font-family:var(--mono);font-size:.92em;
+       border-bottom:1px dotted var(--invul-lijn);padding-bottom:1px}
 
 /* ---- vragen ------------------------------------------------------------- */
 .vraag{border-top:1px solid var(--rule);padding:26px 0}
@@ -104,14 +104,34 @@
   .artikel h2{font-size:30px}
 }
 @media(max-width:820px){
+  /* pagina.css zet --inspring hier op 0, maar het blok hierboven op 1040 zet
+     hem daarna weer op 156 en dat blok geldt op een telefoon ook. Deze regel
+     staat later en wint dus, precies zoals bedoeld was. Zonder hem begon de
+     hele pagina 156px naar rechts en scrolde een telefoon van 390 tot 526. */
+  :root{--inspring:0px}
   .kruimel,.voorbeeldkop{margin-left:0;max-width:none}
-  .deel{grid-template-columns:1fr;padding-top:30px}
+  .voorbeeldkop h1{max-width:none}
+  .deel{grid-template-columns:minmax(0,1fr);padding-top:30px}
   .deel-nr{padding-top:0;margin-bottom:14px}
-  .meetgegevens{width:100%}
   .inleiding p{font-size:19px}
   .artikel h2{font-size:26px}
   .artikel p,.artikel li{font-size:16.5px}
   .verwant{grid-template-columns:1fr}
-  .voorbeeldkop{margin-left:var(--inspring);max-width:var(--kolom)}
-.voorbeeldkop h1{max-width:none}
+}
+
+/* De meettabel op een telefoon.
+   Twee kolommen naast elkaar werken hier niet: de vraag in de linkerkolom is
+   een halve zin ("Nodes op een afwijkende firmwarebuild") en de waarde rechts
+   staat op white-space:nowrap. Samen is dat 350px minimum, en dat past niet op
+   een scherm van 320. Onder elkaar dus, met de waarde links uitgelijnd onder
+   zijn eigen vraag. De tabel blijft een tabel, alleen de rijen breken. */
+@media(max-width:560px){
+  .meetgegevens{width:100%;display:block}
+  .meetgegevens tbody,.meetgegevens tr{display:block}
+  .meetgegevens th,.meetgegevens td{display:block;width:auto;border-top:0}
+  .meetgegevens tr{border-top:1px solid var(--rule);padding:12px 0}
+  .meetgegevens tr:last-child{border-bottom:1px solid var(--rule)}
+  .meetgegevens th{padding:0 0 4px;font-size:14px}
+  .meetgegevens td{padding:0;text-align:left;white-space:normal;font-size:17px}
+  .meetgegevens tr:last-child th,.meetgegevens tr:last-child td{border-bottom:0}
 }

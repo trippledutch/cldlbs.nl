@@ -91,12 +91,12 @@
    soms de race. Nu is er één, en die wijst naar onze eigen beelden. */
 (function(){
   var domeinen={
-    cluster:['Elke node in dezelfde werkelijkheid','Quorum, CSV\u2019s, clusterparameters en firmware worden naast elkaar gelegd. Zo worden afwijkingen zichtbaar die per server afzonderlijk niet opvallen.','assets/triage/failover-cluster.png','CLUSTER01 \u00b7 Incidentvenster'],
-    storage:['Het hele opslagpad bewezen','Van fysieke disk en cache tot pool, virtuele disk en CSV: capaciteit, fouttolerantie en status worden als \u00e9\u00e9n keten beoordeeld.','assets/triage/storage-spaces-direct.png','S2D01 \u00b7 Opslagpad'],
-    network:['Host en switch naast elkaar','VLAN, RDMA, PFC en fysieke poorten worden als \u00e9\u00e9n verbinding beoordeeld, inclusief verschillen tussen nodes.','assets/triage/datacenter-network.png','DC-NET \u00b7 Redundante paden'],
-    hyperv:['Configuratie die verplaatsbaar blijft','Virtuele switches, live migration, NUMA, integratieservices en hostinstellingen worden onderling vergeleken.','assets/triage/hyper-v.png','HV-PROD \u00b7 Workloads'],
-    azure:['Lokaal en control plane verbonden','Registratie, Arc, Azure-resource providers en lokale nodes worden in samenhang beoordeeld.','assets/triage/azure-local.png','AZLCL01 \u00b7 Control plane'],
-    distributed:['Afhankelijkheden zonder blinde vlek','Clusterrollen, witnesses, beheerinterfaces en externe afhankelijkheden worden expliciet in de conclusie betrokken.','assets/triage/distributed-systems.png','RCA \u00b7 Tijdlijn en afhankelijkheden']
+    cluster:['Elke node in dezelfde werkelijkheid','Quorum, CSV\u2019s, clusterparameters en firmware worden naast elkaar gelegd. Zo worden afwijkingen zichtbaar die per server afzonderlijk niet opvallen.','/assets/triage/failover-cluster.png','CLUSTER01 \u00b7 Incidentvenster'],
+    storage:['Het hele opslagpad bewezen','Van fysieke disk en cache tot pool, virtuele disk en CSV: capaciteit, fouttolerantie en status worden als \u00e9\u00e9n keten beoordeeld.','/assets/triage/storage-spaces-direct.png','S2D01 \u00b7 Opslagpad'],
+    network:['Host en switch naast elkaar','VLAN, RDMA, PFC en fysieke poorten worden als \u00e9\u00e9n verbinding beoordeeld, inclusief verschillen tussen nodes.','/assets/triage/datacenter-network.png','DC-NET \u00b7 Redundante paden'],
+    hyperv:['Configuratie die verplaatsbaar blijft','Virtuele switches, live migration, NUMA, integratieservices en hostinstellingen worden onderling vergeleken.','/assets/triage/hyper-v.png','HV-PROD \u00b7 Workloads'],
+    azure:['Lokaal en control plane verbonden','Registratie, Arc, Azure-resource providers en lokale nodes worden in samenhang beoordeeld.','/assets/triage/azure-local.png','AZLCL01 \u00b7 Control plane'],
+    distributed:['Afhankelijkheden zonder blinde vlek','Clusterrollen, witnesses, beheerinterfaces en externe afhankelijkheden worden expliciet in de conclusie betrokken.','/assets/triage/distributed-systems.png','RCA \u00b7 Tijdlijn en afhankelijkheden']
   };
   var view=document.getElementById('solution-view');
   if(!view) return;
@@ -905,4 +905,142 @@
       else stop();
     });
   }, {threshold:.25}).observe(kaart);
+})();
+
+/* ---- licht of donker -------------------------------------------------------
+   De opmaak kan het al: pagina.css draagt een donker blok dat op twee manieren
+   aan gaat, via de voorkeur van het apparaat of via data-theme op <html>. Dit
+   blok gaat alleen over de knop in de kopbalk.
+
+   Het zetten van de onthouden stand staat NIET hier. Dat doet het kleine script
+   in de <head>, want dat moet gebeuren voordat de pagina voor het eerst wordt
+   getekend; anders ziet iemand die donker heeft gekozen eerst een witte flits.
+   Hier wordt de knop alleen aangesloten en bijgehouden.
+
+   Drie standen, twee knoppen ver: er is licht, er is donker, en er is "zeg het
+   maar" - dan volgt de site het apparaat. Die derde stand is de beginstand en
+   je komt erin terug door terug te klikken naar de stand die het apparaat zelf
+   al aanhield. Dan wordt de onthouden keuze gewist en volgt de site het
+   apparaat weer, ook als de bezoeker zijn Mac later omzet. */
+(function(){
+  var SLEUTEL = 'cl-thema';
+  var knoppen = [].slice.call(document.querySelectorAll('.themawissel'));
+  if(!knoppen.length) return;
+
+  var apparaat = window.matchMedia ? matchMedia('(prefers-color-scheme: dark)') : null;
+
+  function apparaatDonker(){ return !!(apparaat && apparaat.matches); }
+
+  function bewaard(){
+    try{ return localStorage.getItem(SLEUTEL); }catch(e){ return null; }
+  }
+
+  /* Wat er nu op het scherm staat, ongeacht waar het vandaan komt. */
+  function nuDonker(){
+    var gezet = document.documentElement.getAttribute('data-theme');
+    if(gezet === 'dark') return true;
+    if(gezet === 'light') return false;
+    return apparaatDonker();
+  }
+
+  function bijwerken(){
+    var donker = nuDonker();
+    knoppen.forEach(function(k){
+      k.setAttribute('aria-pressed', donker ? 'true' : 'false');
+    });
+  }
+
+  function zet(donker){
+    /* Komt de gevraagde stand overeen met wat het apparaat zelf al wil, dan
+       wordt er niets onthouden. Zo blijft de site het apparaat volgen. */
+    if(donker === apparaatDonker()){
+      document.documentElement.removeAttribute('data-theme');
+      try{ localStorage.removeItem(SLEUTEL); }catch(e){}
+    }else{
+      document.documentElement.setAttribute('data-theme', donker ? 'dark' : 'light');
+      try{ localStorage.setItem(SLEUTEL, donker ? 'dark' : 'light'); }catch(e){}
+    }
+    bijwerken();
+  }
+
+  knoppen.forEach(function(k){
+    k.addEventListener('click', function(){ zet(!nuDonker()); });
+  });
+
+  /* Zet de bezoeker zijn apparaat om terwijl de pagina openstaat, dan volgt de
+     site mee zolang er niets is onthouden. Alleen de knop hoeft dan bijgewerkt;
+     de kleuren doet de @media-regel in pagina.css zelf. */
+  if(apparaat){
+    var volg = function(){ if(!bewaard()) bijwerken(); };
+    if(apparaat.addEventListener) apparaat.addEventListener('change', volg);
+    else if(apparaat.addListener) apparaat.addListener(volg);
+  }
+
+  bijwerken();
+})();
+
+/* ---- de cookiebanner -------------------------------------------------------
+   Google Analytics staat in de <head> van elke pagina, maar met Consent Mode
+   en met alles op denied. Dat betekent dat de tag wel draait en niets opslaat:
+   er wordt geen cookie geplaatst en er gaat niets naar Google totdat hieronder
+   een update volgt. Weigert de bezoeker, dan blijft het bij die beginstand en
+   hoeft er dus niets ongedaan gemaakt te worden.
+
+   De keuze staat in localStorage onder cl_consent, dezelfde sleutel en
+   dezelfde twee waarden als de oude site gebruikte. Dat is met opzet: wie daar
+   al ja of nee heeft gezegd krijgt de vraag niet opnieuw.
+
+   Vier dingen kunnen ontbreken en geen ervan mag iets breken. Er is geen balk
+   op pagina's waar hij niet is uitgerold; localStorage kan geweigerd worden in
+   een afgeschermd venster; gtag kan er niet zijn als een blokkeerder het
+   script tegenhoudt; en de knop in de voettekst staat er alleen op pagina's
+   met een voettekst. Vandaar overal een controle en overal een try. */
+(function(){
+  var SLEUTEL = 'cl_consent';
+  var balk    = document.getElementById('cookiebalk');
+  if(!balk) return;
+
+  var ja  = document.getElementById('cookie-ja');
+  var nee = document.getElementById('cookie-nee');
+  var her = [].slice.call(document.querySelectorAll('.cookiebalk-open'));
+
+  function bewaard(){
+    try{ return localStorage.getItem(SLEUTEL); }catch(e){ return null; }
+  }
+
+  function toon(){ balk.classList.add('aan'); }
+  function verberg(){ balk.classList.remove('aan'); }
+
+  /* Alleen analytics_storage beweegt mee. De drie advertentiesoorten blijven
+     geweigerd, ook bij akkoord, want er wordt niet geadverteerd en er is dus
+     niets om toestemming voor te vragen. Dat staat ook zo in de
+     privacyverklaring. */
+  function zet(stand){
+    if(typeof gtag !== 'undefined'){
+      gtag('consent', 'update', {
+        analytics_storage:  stand,
+        ad_storage:         'denied',
+        ad_user_data:       'denied',
+        ad_personalization: 'denied'
+      });
+    }
+    try{ localStorage.setItem(SLEUTEL, stand); }catch(e){}
+    verberg();
+  }
+
+  var eerder = bewaard();
+  if(eerder === 'granted') zet('granted');
+  else if(eerder !== 'denied') toon();
+
+  if(ja)  ja.addEventListener('click',  function(){ zet('granted'); });
+  if(nee) nee.addEventListener('click', function(){ zet('denied');  });
+
+  /* Herzien wist de onthouden keuze niet meteen. De balk komt terug en pas de
+     knop erin legt de nieuwe keuze vast. Wie hem opent en zich bedenkt houdt
+     dus wat hij had; wegklikken zonder te kiezen bestaat hier niet, want er is
+     geen kruisje. Een balk die je kunt wegklikken zonder te antwoorden telt
+     niet als toestemming en zou de vraag bij elke pagina terugbrengen. */
+  her.forEach(function(k){
+    k.addEventListener('click', function(){ toon(); });
+  });
 })();

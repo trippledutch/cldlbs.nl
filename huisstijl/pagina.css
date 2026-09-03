@@ -37,7 +37,63 @@
   --sans:ATOnsite,Arial,sans-serif;
   --serif:ATStringer,Georgia,serif;
   --mono:CLMono,ui-monospace,SFMono-Regular,Menlo,monospace;
+  /* de nog in te vullen waarde van .invul in voorbeeld.css. Stond daar hard
+     in het bestand; hier als token, zodat de donkere stand hem mee kan nemen. */
+  --invul:#8A4B08; --invul-lijn:#C2833E;
+
   --max:1190px; --gutter:clamp(20px,4vw,64px);
+}
+
+/* ---- de donkere modus ----------------------------------------------------
+   Hans vroeg hierom op 3 september 2026. Er komt geen enkele nieuwe kleur bij:
+   elke waarde hieronder staat al in het donkere blok van huisstijl/findings.css
+   en wordt daar sinds augustus voor het bevindingenrapport gebruikt. Het
+   rapport kon dus al donker en de website nog niet.
+
+   Twee blokken, en dat is met opzet:
+
+     @media (prefers-color-scheme: dark)   volgt de instelling van het apparaat
+     :root[data-theme="dark"]              volgt de knop in de kopbalk
+
+   De uitzondering :not([data-theme="light"]) in het eerste blok laat de knop
+   winnen van het apparaat. Wie op een donkere Mac uitdrukkelijk op licht zet
+   krijgt licht. Dezelfde constructie staat in findings.css, zodat de site en
+   het rapport zich hetzelfde gedragen.
+
+   color-scheme staat erbij omdat de browser daarop de schuifbalken, de
+   invoervelden en de uitklaplijst van .aanvraag select tekent. Zonder die
+   regel blijft een keuzelijst wit met witte letters.
+
+   DE DONKERE VLAKKEN VERANDEREN NIET MEE. De kopbalk, de hero, .trust, .proof,
+   .intro, .cta, de voettekst en de hulpkaart zijn al donker. Zij zetten hun
+   tokens verderop lokaal om, precies zoals de opmerking bij .topbar hieronder
+   al beschreef, en zien er in beide standen dus hetzelfde uit.
+
+   KRITIEK blijft zwart met een rode ring. Dat is besluit E2 van 29 juli 2026
+   en de reden staat bovenaan dit bestand: zwart is de enige waarde die op wit
+   papier en op een donkere ondergrond even onmiskenbaar is. --high, --med,
+   --low en --geen krijgen wel hun donkere tegenhanger uit findings.css, want
+   die zijn op #0B0F1A te donker om te lezen. */
+:root{color-scheme:light}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#0B0F1A; --surface:#121826; --sunk:#0F1421;
+    --ink:#E8ECF3; --dim:#AEB7C7; --faint:#7B849A; --rule:#232B3B;
+    --accent:#3FB6D8; --accent-soft:#102A33; --chip-ink:#0B0F1A;
+    --high:#FF6B6B; --med:#FF922B; --low:#4DABF7; --geen:#51CF66;
+    --invul:#FF922B; --invul-lijn:#C2833E;
+  }
+}
+
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#0B0F1A; --surface:#121826; --sunk:#0F1421;
+  --ink:#E8ECF3; --dim:#AEB7C7; --faint:#7B849A; --rule:#232B3B;
+  --accent:#3FB6D8; --accent-soft:#102A33; --chip-ink:#0B0F1A;
+  --high:#FF6B6B; --med:#FF922B; --low:#4DABF7; --geen:#51CF66;
+  --invul:#FF922B; --invul-lijn:#C2833E;
 }
 
 /* IBM Plex, de huisstijl van Hans. De familienamen hieronder zijn die van de
@@ -58,12 +114,12 @@
 @font-face{font-family:CLMono;src:url('fonts/IBMPlexMono-500.woff2') format('woff2');font-weight:500;font-display:swap}
 
 
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}a{color:inherit}button{font:inherit}.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;z-index:99;background:white;padding:.7rem}.announcement{height:32px;background:var(--accent);color:var(--ink);display:flex;align-items:center;justify-content:center;gap:18px;font-size:12px}.announcement a{text-decoration:none;font-weight:600}.announcement button{position:absolute;right:16px;border:0;background:none;cursor:pointer}.topbar{height:72px;background:var(--band);color:var(--surface);border-bottom:1px solid #ffffff22;position:relative;z-index:20}.nav{height:100%;max-width:var(--max);margin:auto;padding:0 var(--gutter);display:flex;align-items:center;gap:34px}.brand{font-size:20px;font-weight:600;text-decoration:none;margin-right:8px}.brand span{color:var(--accent)}.navlinks{display:flex;gap:28px;font-size:13px;flex:1}.navlinks a{text-decoration:none;opacity:.82}.navlinks a:hover{opacity:1}.nav-actions{display:flex;gap:12px;align-items:center}.search{background:none;border:0;color:inherit;font-size:20px}.menu{display:none;background:none;color:white;border:1px solid #ffffff55;border-radius:4px;padding:7px 10px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 18px;border:1px solid currentColor;border-radius:5px;text-decoration:none;font-weight:600;font-size:14px;transition:transform .2s}.btn:hover{transform:translateY(-2px)}.btn.primary{background:var(--accent);color:var(--band);border-color:var(--accent)}.btn.ghost{color:var(--surface)}.btn.dark{background:var(--band);color:var(--surface);border-color:var(--band)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}a{color:inherit}button{font:inherit}.skip{position:absolute;left:-9999px}.skip:focus{left:1rem;top:1rem;z-index:99;background:white;color:#0A1024;padding:.7rem}.announcement{height:32px;background:var(--accent);color:var(--ink);display:flex;align-items:center;justify-content:center;gap:18px;font-size:12px}.announcement a{text-decoration:none;font-weight:600}.announcement button{position:absolute;right:16px;border:0;background:none;cursor:pointer}.topbar{height:72px;background:var(--band);color:var(--surface);border-bottom:1px solid #ffffff22;position:relative;z-index:20}.nav{height:100%;max-width:var(--max);margin:auto;padding:0 var(--gutter);display:flex;align-items:center;--navgap:34px;gap:var(--navgap)}.brand{font-size:20px;font-weight:600;text-decoration:none;margin-right:8px}.brand span{color:var(--accent)}.navlinks{display:flex;gap:28px;font-size:13px;flex:1}.navlinks a{text-decoration:none;opacity:.82}.navlinks a:hover{opacity:1}.nav-actions{display:flex;gap:12px;align-items:center}.search{background:none;border:0;color:inherit;font-size:20px}.menu{display:none;background:none;color:white;border:1px solid #ffffff55;border-radius:4px;padding:7px 10px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:13px 18px;border:1px solid currentColor;border-radius:5px;text-decoration:none;font-weight:600;font-size:14px;transition:transform .2s}.btn:hover{transform:translateY(-2px)}.btn.primary{background:var(--accent);color:var(--band);border-color:var(--accent)}.btn.ghost{color:var(--surface)}.btn.dark{--surface:#FFFFFF;background:var(--band);color:var(--surface);border-color:var(--band)}
 .hero{background:linear-gradient(135deg,var(--band),var(--band-op) 65%,var(--band-rule));color:var(--surface);padding:100px var(--gutter) 72px}.hero-inner{max-width:var(--max);margin:auto;display:grid;grid-template-columns:1.55fr 1fr;gap:70px;align-items:center}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.18em;font-weight:600;display:flex;align-items:center;gap:10px;margin:0 0 20px}.eyebrow:before{content:"";width:7px;height:7px;background:var(--accent)}.hero h1,.display{font-family:var(--serif);font-weight:400;letter-spacing:-.035em;line-height:.98}.hero h1{font-size:clamp(52px,6.2vw,86px);margin:0;max-width:850px}.hero h1 em{font-style:normal;color:var(--accent)}.hero-copy{color:var(--rule);font-size:21px;max-width:700px;margin:34px 0}.actions{display:flex;gap:14px;flex-wrap:wrap}.scan-card{border:1px solid #ffffff31;background:#0b0f1ac7;padding:26px;min-height:380px;position:relative;overflow:hidden}.scan-head{display:flex;justify-content:space-between;text-transform:uppercase;font-size:10px;letter-spacing:.14em;color:var(--band-dim);padding-bottom:18px;border-bottom:1px solid #ffffff22}.bars{height:210px;display:flex;align-items:flex-end;gap:14px;padding:30px 8px 16px;border-bottom:1px solid #ffffff22;background:repeating-linear-gradient(to top,transparent 0 41px,#ffffff12 42px)}.bar{flex:1;background:linear-gradient(var(--accent),var(--accent));min-height:4px;position:relative}.bar:after{content:attr(data-v);position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-size:10px}.scan-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px;font-size:11px;color:var(--band-dim)}.scan-meta b{display:block;color:white;font-size:18px;font-weight:500;margin-top:3px}.scan-alert{position:absolute;right:18px;top:74px;background:var(--accent);color:var(--band);padding:8px 10px;font-size:10px;font-weight:700;letter-spacing:.1em}.trust{background:var(--band);color:var(--band-dim);border-top:1px solid #ffffff18;padding:22px var(--gutter)}.trust-inner{max-width:var(--max);margin:auto;display:grid;grid-template-columns:1.2fr repeat(4,1fr);gap:28px;align-items:center;font-size:11px}.trust b{color:var(--surface);font-size:14px;font-weight:500}
 .proof{background:var(--band);color:var(--surface);padding:64px var(--gutter) 92px}.proof-grid{max-width:var(--max);margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:38px}.proof-item{border-left:1px solid var(--accent);padding-left:30px}.proof-item strong{font-family:var(--serif);font-size:52px;font-weight:400;color:var(--accent)}.proof-item h3{font-size:18px;margin:8px 0}.proof-item p{font-size:14px;color:var(--band-dim);max-width:28ch}.intro{background:var(--band);color:var(--surface);padding:0 var(--gutter) 100px}.intro-inner{max-width:980px;margin:auto}.intro .eyebrow{color:var(--accent)}.intro-inner{max-width:760px}.intro .eyebrow{letter-spacing:.13em}.intro p:not(.eyebrow){font-family:var(--serif);font-size:clamp(17px,1.5vw,21px);line-height:1.62;color:var(--band-ink);margin:0 0 18px;max-width:66ch}.pattern{position:relative}.pattern:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(var(--band-dim) .8px,transparent .8px);background-size:16px 16px;opacity:.45;mask-image:linear-gradient(transparent,#000 20%,#000 80%,transparent)}.section{padding:120px var(--gutter);position:relative}.inner{max-width:var(--max);margin:auto;position:relative}.section-head{text-align:center;max-width:780px;margin:0 auto 56px}.section-head .eyebrow{justify-content:center}.section h2{font-family:var(--serif);font-weight:400;font-size:clamp(42px,5vw,68px);line-height:1.02;letter-spacing:-.035em;margin:0 0 22px}.lead{font-size:18px;color:var(--dim);max-width:700px;margin:0 auto}.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.benefit{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:32px 26px;min-height:250px}.benefit .icon{color:var(--accent);font-size:28px}.benefit h3{font-size:21px;margin:28px 0 12px}.benefit p{color:var(--dim);font-size:15px}
 .platform{padding:110px var(--gutter);background:var(--ground)}.platform-panel{max-width:var(--max);margin:auto;border-radius:12px;overflow:hidden;background:linear-gradient(120deg,var(--accent-soft),var(--accent-soft));display:grid;grid-template-columns:1fr 1fr;min-height:460px}.platform-copy{padding:58px}.platform-copy h3{font-family:var(--serif);font-size:42px;font-weight:400;margin:0 0 20px}.platform-copy p{color:var(--dim);max-width:48ch}.gate{margin:36px;background:var(--band);color:white;border-radius:8px;padding:28px}.gate-row{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #ffffff21;font-size:13px}.gate-row span:last-child{color:var(--accent);font-weight:600}.gate-outcome{font-family:var(--serif);font-size:38px;color:var(--accent);margin-top:30px}.feature-row{max-width:var(--max);margin:10px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:30px}.feature{padding:26px 0}.feature h3{font-size:16px}.feature p{font-size:13px;color:var(--dim)}
 .solutions{background:var(--sunk);padding:115px var(--gutter)}.solutions-grid{max-width:var(--max);margin:auto;display:grid;grid-template-columns:.8fr 1.2fr;gap:70px}.solution-tabs{display:flex;flex-direction:column}.solution-tabs button{text-align:left;border:0;border-left:3px solid transparent;background:none;padding:14px 18px;color:var(--dim);cursor:pointer}.solution-tabs button[aria-selected="true"]{border-left-color:var(--accent);color:var(--ink);font-weight:600}.solution-view{display:grid;grid-template-columns:1.2fr 1fr;gap:42px;align-items:end}.solution-visual{height:340px;background:linear-gradient(145deg,var(--band),var(--band-faint));border-radius:8px;position:relative;overflow:hidden}.solution-visual:before{content:"AZLCL01";position:absolute;left:24px;bottom:20px;font-family:var(--serif);font-size:54px;color:#ffffff3b}.solution-view h3{font-family:var(--serif);font-size:35px;font-weight:400}.solution-view p{color:var(--dim)}.cta{background:var(--band);color:white;padding:110px var(--gutter);text-align:center}.cta h2{font-family:var(--serif);font-weight:400;font-size:clamp(42px,5vw,66px);margin:0 0 20px}.cta p{color:var(--band-dim);max-width:660px;margin:0 auto 30px}.footer{background:linear-gradient(180deg,var(--band),var(--band-op));color:var(--band-dim);padding:65px var(--gutter) 35px}.footer-grid{max-width:var(--max);margin:auto;display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:40px}.footer h4{font-size:10px;color:var(--accent);letter-spacing:.14em;text-transform:uppercase}.footer a{display:block;text-decoration:none;font-size:13px;margin:9px 0}.foot-bottom{max-width:var(--max);margin:55px auto 0;padding-top:22px;border-top:1px solid #ffffff20;font-size:11px;display:flex;justify-content:space-between}.reveal{opacity:0;transform:translateY(24px);transition:.75s ease}.reveal.in{opacity:1;transform:none}
-@media(max-width:800px){.announcement{font-size:9px;height:28px}.topbar{height:58px}.nav{padding:0 18px}.navlinks,.nav-actions .search,.nav-actions .btn{display:none}.menu{display:block;margin-left:auto}.navlinks.open{display:flex;position:absolute;top:58px;left:0;right:0;background:var(--band);padding:22px;flex-direction:column}.hero{padding:54px 20px 34px}.hero-inner{display:flex;flex-direction:column;gap:38px}.hero h1{font-size:44px}.hero-copy{font-size:16px}.actions{flex-direction:column}.actions .btn{width:100%}.scan-card{width:100%;min-height:320px}.bars{height:160px}.trust-inner{grid-template-columns:1fr 1fr}.trust-inner span:first-child{grid-column:1/-1}.proof{padding:45px 20px 70px}.proof-grid{grid-template-columns:1fr}.intro{padding:0 20px 72px}.intro p{font-size:17px}.section,.platform,.solutions,.cta{padding:78px 20px}.section-head{text-align:left}.section-head .eyebrow{justify-content:flex-start}.section h2{font-size:38px}.benefits,.feature-row{grid-template-columns:1fr}.benefit{min-height:0}.platform-panel{grid-template-columns:1fr}.platform-copy{padding:30px}.gate{margin:0 18px 18px}.feature-row{gap:0}.feature{border-bottom:1px solid var(--rule)}.solutions-grid{grid-template-columns:1fr}.solution-tabs{flex-direction:row;overflow:auto}.solution-tabs button{white-space:nowrap;border-left:0;border-bottom:3px solid transparent}.solution-tabs button[aria-selected="true"]{border-bottom-color:var(--accent)}.solution-view{grid-template-columns:1fr}.solution-visual{height:240px}.footer-grid{grid-template-columns:1fr 1fr}.footer-grid>div:first-child{grid-column:1/-1}.foot-bottom{display:block}}
+@media(max-width:800px){.announcement{font-size:9px;height:28px}.topbar{height:58px}.nav{padding:0 18px}.navlinks,.nav-actions .search{display:none}.menu{display:block;margin-left:auto}.navlinks.open{display:flex;position:absolute;top:58px;left:0;right:0;background:var(--band);padding:22px;flex-direction:column}.hero{padding:54px 20px 34px}.hero-inner{display:flex;flex-direction:column;gap:38px}.hero h1{font-size:44px}.hero-copy{font-size:16px}.actions{flex-direction:column}.actions .btn{width:100%}.scan-card{width:100%;min-height:320px}.bars{height:160px}.trust-inner{grid-template-columns:1fr 1fr}.trust-inner span:first-child{grid-column:1/-1}.proof{padding:45px 20px 70px}.proof-grid{grid-template-columns:1fr}.intro{padding:0 20px 72px}.intro p{font-size:17px}.section,.platform,.solutions,.cta{padding:78px 20px}.section-head{text-align:left}.section-head .eyebrow{justify-content:flex-start}.section h2{font-size:38px}.benefits,.feature-row{grid-template-columns:1fr}.benefit{min-height:0}.platform-panel{grid-template-columns:1fr}.platform-copy{padding:30px}.gate{margin:0 18px 18px}.feature-row{gap:0}.feature{border-bottom:1px solid var(--rule)}.solutions-grid{grid-template-columns:1fr}.solution-tabs{flex-direction:row;overflow:auto}.solution-tabs button{white-space:nowrap;border-left:0;border-bottom:3px solid transparent}.solution-tabs button[aria-selected="true"]{border-bottom-color:var(--accent)}.solution-view{grid-template-columns:1fr}.solution-visual{height:240px}.footer-grid{grid-template-columns:1fr 1fr}.footer-grid>div:first-child{grid-column:1/-1}.foot-bottom{display:block}}
 /* 1-op-1 bronrollen: lokale kopieën van de fonts die de referentie gebruikt. */
 
 
@@ -216,9 +272,55 @@ body{font-family:var(--sans)}
    Nu is licht de standaard en zetten de donkere secties het token lokaal om.
    Elke var(--accent) eronder klopt daarmee vanzelf,precies zoals in
    findings.css. */
-.topbar,.hero,.proof,.intro,.trust,.cta,.footer,.gate,.scan-card,.triage-list{
+/* EN DAAROM DRAAIT DE DONKERE MODUS HIER NIETS OM. Deze vlakken zijn al
+   donker. Ze lenen de LICHTE waarden voor hun inhoud: .trust b en .proof
+   pakken var(--surface) voor witte letters, de voettekst var(--rule) voor
+   grijze. Zou de donkere stand die tokens ook hier omzetten, dan werd het
+   donkere letters op een donkere band.
+
+   De lijst hieronder zet ze daarom vast op precies de waarden die ze vandaag
+   in de lichte stand hebben. Deze banden zien er in beide standen dus hetzelfde
+   uit, en dat is de bedoeling: de kopbalk en de voettekst van CloudLabs zijn
+   donker, in welke stand de bezoeker ook kijkt.
+
+   .meldband en .solution-visual staan erbij om dezelfde reden. Zij zijn
+   ook donker en hun inhoud gebruikt var(--surface).
+
+   DE ACCENTKLEUR STAAT APART, in de tweede regel, met precies de tien
+   selectoren die er altijd stonden. Dat is geen slordigheid maar het verschil
+   tussen de twee vragen. De eerste regel gaat over kleuren die in de donkere
+   stand zouden OMKLAPPEN en dat hier niet mogen; de tweede over een accent dat
+   in een donkere band lichter moet staan dan op een witte sectie.
+
+   .meldband hoort wel bij de eerste en niet bij de tweede. Zet je hem er ook
+   bij, dan wordt de knop op /404 en op de meldingspagina's in de LICHTE stand
+   ineens #3FB6D8 in plaats van #0A7E9E. Nagemeten op 404.html: 8046 pixels
+   verschil, en dat is een wijziging aan de lichte site waar niemand om heeft
+   gevraagd. In de donkere stand krijgt hij zijn lichte accent alsnog, want dan
+   staat #3FB6D8 al in :root. */
+.topbar,.hero,.proof,.intro,.trust,.cta,.footer,.gate,.scan-card,.triage-list,
+.meldband,.solution-visual,.cookiebalk{
+  --ground:#FBFCFD; --surface:#FFFFFF; --sunk:#F4F6F9;
+  --ink:#0A1024; --dim:#3A4255; --faint:#6B7285; --rule:#D3D8E0;
+  --chip-ink:#FFFFFF;
+}
+.topbar,.hero,.proof,.intro,.trust,.cta,.footer,.gate,.scan-card,.triage-list,
+.cookiebalk{
   --accent:#3FB6D8; --accent-soft:#102A33;
 }
+
+/* .btn.dark in de donkere stand. Deze knop is een donker vlak met een rand in
+   dezelfde kleur, bedoeld als tegenhanger van de lichte pagina. Staat de
+   pagina zelf op #0B0F1A, dan valt hij daarin weg en blijft alleen zijn letter
+   over. Hij houdt zijn vulling en krijgt de lijnkleur als rand, zodat de vorm
+   terug is zonder dat er een kleur bij komt.
+
+   De knop in de hulpkaart valt hier buiten: die is verderop al doorzichtig met
+   een rand in de accentkleur. */
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .btn.dark{border-color:var(--rule)}
+}
+:root[data-theme="dark"] .btn.dark{border-color:var(--rule)}
 
 /* ---- de aanvraag ---------------------------------------------------------
    Overgenomen van cldlbs.com/triage/, de pagina die Hans zelf heeft gebouwd.
@@ -232,7 +334,13 @@ body{font-family:var(--sans)}
    een clusterstoring om drie uur 's nachts is dat ook het snelste pad. */
 .aanvraag{display:grid;gap:16px;margin:26px 0 0}
 .veldrij{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.aanvraag label{display:block}
+/* In een rij van twee velden is het ene opschrift langer dan het andere:
+   "Phone, with country code" loopt over twee regels waar "Country" er maar
+   een nodig heeft. Het label vult daarom de hele celhoogte en het invoervak
+   zakt naar de onderkant, zodat de twee vakken naast elkaar op dezelfde lijn
+   staan terwijl de opschriften bovenaan beginnen. */
+.aanvraag label{display:flex;flex-direction:column}
+.veldrij label>input,.veldrij label>select,.veldrij label>textarea{margin-top:auto}
 .aanvraag .lbl{
   display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
   text-transform:uppercase;color:var(--faint);margin-bottom:7px;
@@ -944,6 +1052,52 @@ a.vervolg-kaart:hover{border-color:var(--accent);transform:translateY(-3px)}
 .taalwissel [aria-current]{background:#ffffff1f;color:var(--surface)}
 .taalwissel .uit{color:var(--band-faint);opacity:.55;cursor:default}
 
+/* ---- licht of donker -------------------------------------------------------
+   De knop staat naast de taalwissel en is met opzet dezelfde vorm: het zijn
+   twee keuzes over hoe je de site bekijkt, niet twee keuzes over wat er staat.
+
+   Er staat geen woord in. Dat is geen zuinigheid maar de bilinguale kant van
+   deze site: elk woord hier zou in het Nederlands en het Engels moeten staan,
+   en Hans levert de teksten. Een zon en een maan hebben die vertaling niet
+   nodig. De schermlezer krijgt hem wel, via aria-label op de knop zelf, en
+   aria-pressed vertelt daar of de donkere stand aan staat.
+
+   De knop zit in .topbar en die staat in de vergrendelde lijst hierboven, dus
+   var(--surface) is hier wit in beide standen, net als bij de taalwissel. */
+:root{
+  --icoon-zon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='4.2'/%3E%3Cpath d='M12 2.4v2.6M12 19v2.6M4.2 12H1.6M22.4 12h-2.6M6.5 6.5L4.6 4.6M19.4 19.4l-1.9-1.9M17.5 6.5l1.9-1.9M4.6 19.4l1.9-1.9'/%3E%3C/svg%3E");
+  --icoon-maan:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.5 14.8A8.8 8.8 0 1 1 9.2 3.5a7 7 0 0 0 11.3 11.3z'/%3E%3C/svg%3E");
+}
+.themawissel{
+  display:inline-flex;align-items:center;justify-content:center;
+  flex:0 0 auto;width:30px;height:26px;padding:0;
+  background:none;border:1px solid #ffffff33;border-radius:5px;
+  color:var(--band-dim);cursor:pointer;
+  transition:color .2s,background-color .2s,border-color .2s;
+}
+.themawissel:before{
+  content:"";width:15px;height:15px;background:currentColor;
+  -webkit-mask:var(--icoon-maan) center/contain no-repeat;
+  mask:var(--icoon-maan) center/contain no-repeat;
+}
+/* Het pictogram wijst naar wat de knop DOET, niet naar de stand waarin je
+   staat: in het licht zie je de maan waar je heen kunt, in het donker de zon.
+   Dat is dezelfde afspraak als bij de taalwissel, waar EN de plek is waar je
+   naartoe gaat. */
+.themawissel[aria-pressed="true"]:before{
+  -webkit-mask:var(--icoon-zon) center/contain no-repeat;
+  mask:var(--icoon-zon) center/contain no-repeat;
+}
+.themawissel:hover{color:var(--surface);background:#ffffff12;border-color:#ffffff55}
+.themawissel:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Zonder JavaScript is dit een knop die niets kan doen, dus dan hoort hij er
+   niet te staan. Het merkteken data-js komt van het kleine script in de <head>
+   dat ook de onthouden stand zet. Dat draait voor de eerste tekening, zodat de
+   knop er meteen staat en de kopbalk niet verschuift zodra pagina.js klaar is. */
+.themawissel{display:none}
+html[data-js] .themawissel{display:inline-flex}
+
 /* ---- de merknaam met de slogan --------------------------------------------
    De slogan stond alleen in de oude opmaak, onder het woordmerk in de kopbalk.
    Hij hoort daar, dus staat hij er weer: het woordmerk op de bovenste regel,
@@ -996,8 +1150,12 @@ a.vervolg-kaart:hover{border-color:var(--accent);transform:translateY(-3px)}
    tien pixels en met de hoogte van de knop als maat: 50 is een regel, 74 zijn
    er twee. Het Nederlands houdt de knop heel vanaf 1280, het Engels pas vanaf
    1310, en de balk hoort in beide talen hetzelfde te zijn. Dus 1310. */
-@media(max-width:1309px){
+@media(min-width:1101px) and (max-width:1309px){
   .nav-actions .btn{display:none}
+  /* Zonder de knop is .nav-actions leeg en nul breed, maar de tussenruimte van
+     de balk staat er nog wel tussen. Die wordt hier teruggenomen, zodat de
+     taalwissel net als vroeger tegen de rechterkantlijn staat. */
+  .navlinks{margin-right:calc(0px - var(--navgap))}
 }
 
 /* Boven die grens moet de knop dan ook heel blijven. De rij is een flexbox,
@@ -1030,6 +1188,62 @@ a.vervolg-kaart:hover{border-color:var(--accent);transform:translateY(-3px)}
     display:flex;flex-direction:column;gap:14px;
     position:absolute;top:100%;left:0;right:0;
     background:var(--band);padding:22px;
+  }
+}
+
+/* ---- de taal en de stand gaan mee het menu in ------------------------------
+   Ze stonden in .nav-actions, naast de knop. Zodra de linkenrij wegvalt stonden
+   er dus drie dingen in de balk waar niemand op wacht -- taal, licht of donker,
+   en Menu -- en was "Start gratis triage" het enige dat er niet stond. Nu staan
+   de twee keuzes onderin het menu, onder de regels waar ze bij horen, en staat
+   de knop in de balk.
+
+   Boven 1100 verandert er niets aan wat je ziet. .navlinks is daar een rij die
+   de vrije ruimte opvult, dus zet margin-left:auto de twee tegen de rechterkant
+   ervan, en de negatieve marge hieronder maakt van de tussenruimte van de balk
+   weer de 12px die ze in .nav-actions van elkaar scheidde. Zo staan ze op de
+   pixel waar ze stonden.
+
+   De HTML staat in sync-nav.py, dat het menu zet. */
+.nav-keuzes{display:flex;align-items:center;gap:12px}
+@media(min-width:1101px){
+  .nav-keuzes{margin-left:auto}
+  .navlinks{margin-right:calc(12px - var(--navgap))}
+}
+/* ---- de knop past nu wel in de smalle balk --------------------------------
+   Hij stond onder 1310 niet in de balk. Dat was terecht zolang de linkenrij er
+   ook stond, maar onder 1100 is die rij een menu en staat er niets naast. Wat
+   er wel bij moet: de knop is met de maat van de bladzijde (14px, 13/18 rondom)
+   te groot voor een telefoon. Gemeten op /triage/, waar het opschrift het
+   langst is:
+
+     op 1100 tot 560   woordmerk 130, knop 176, Menu 64, marges en tussenruimte
+                       70; samen 440, en dat past ruim
+     op 560 tot 400    knop 176 tegen een scherm van 414: samen 424 op 414, dus
+                       de maat van de knop een stap terug
+     onder 400         de slogan onder het woordmerk gaat weg, zoals hij dat
+                       hiervoor onder 360 al deed, en de knop nog een stap
+
+   De knop staat op elke pagina ook in de hero en onderaan in de slotband; deze
+   staat er alleen bij zodat hij tijdens het scrollen nooit weg is. */
+@media(max-width:1100px){
+  .nav-actions .btn{padding:11px 15px;font-size:13px}
+}
+@media(max-width:560px){
+  .nav-actions .btn{padding:9px 12px;font-size:12px}
+  .menu{font-size:14px;padding:6px 9px}
+}
+@media(max-width:400px){
+  .topbar .brand small{display:none}
+  .nav-actions .btn{padding:8px 10px;font-size:11px}
+  .menu{font-size:12px;padding:6px 8px}
+}
+
+@media(max-width:1100px){
+  /* In het uitgeklapte menu is het de laatste regel: een streep erboven, want
+     dit gaat niet over waar je heen gaat maar over hoe je kijkt. */
+  .navlinks.open .nav-keuzes{
+    gap:14px;margin-top:4px;padding-top:18px;border-top:1px solid #ffffff22;
   }
 }
 
@@ -1078,6 +1292,13 @@ a.vervolg-kaart:hover{border-color:var(--accent);transform:translateY(-3px)}
    assets/brands/HERKOMST.txt. Lees dat voordat de site live gaat. */
 .footer-badges{flex-direction:column;align-items:flex-end;gap:10px}
 .merkrij{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+/* DE LOGOTEGELS BLIJVEN LICHT, ook in de donkere stand. Dell, HPE en Lenovo
+   schrijven de kleur van hun woordmerk zelf voor; het merk van HPE is #040404
+   en dat is op een donkere tegel niet meer te zien. Een merkteken hertinten
+   mag niet, dus blijft de ondergrond wat hij is. Om dezelfde reden houdt
+   .merk-logo b zijn donkere letter: die staat op deze lichte tegel. */
+.merk-logo,.hyperv-logo,.hardware-logo{--sunk:#F4F6F9}
+
 .hardware-logo{
   box-sizing:border-box;
   display:inline-flex;align-items:center;justify-content:center;
@@ -1106,6 +1327,19 @@ a.vervolg-kaart:hover{border-color:var(--accent);transform:translateY(-3px)}
   .hardware-logo img[src*="dell"]  {max-width:114px}
   .hardware-logo img[src*="hpe"]   {max-height:34px}
   .hardware-logo img[src*="lenovo"]{max-width:100px}
+}
+
+/* De regel onder het merk in de voettekst. Hij staat in de lopende letter en
+   niet in de accentkleur: die is hier voor het copyright, en twee accenten
+   boven elkaar maken van het merkblok een lijstje. De maat is die van de
+   juridische regel eronder, de breedte houdt hem op twee regels zodat het
+   merkblok niet hoger wordt dan de merkentegels ernaast. */
+.footer-brand .footer-tagline{
+  max-width:46ch;margin:14px 0 0;
+  color:var(--band-faint);font-size:14px;line-height:1.5;
+}
+@media(max-width:800px){
+  .footer-brand .footer-tagline{max-width:none;font-size:13.5px}
 }
 
 /* Herkenlijst: de zinnen waarmee iemand met een storing zoekt, gegroepeerd naar
@@ -1191,14 +1425,14 @@ html[data-melding="weg"] .announcement{display:none}
    Alleen boven de 1100, want daaronder is de rij een uitklapmenu en gelden de
    marges van de telefoon. */
 @media(min-width:1101px){
-  .nav{padding:0 clamp(20px,2.6vw,44px);gap:32px}
+  .nav{padding:0 clamp(20px,2.6vw,44px);--navgap:32px}
   .navlinks{gap:24px}
 }
 
 /* Vanaf 1360 loopt de balk tegen zijn maximum van 1350 en groeit de marge mee.
    Daar is meer over, dus daar mag het ruimer. */
 @media(min-width:1360px){
-  .nav{gap:34px}
+  .nav{--navgap:34px}
   .navlinks{gap:26px}
 }
 
@@ -1209,7 +1443,7 @@ html[data-melding="weg"] .announcement{display:none}
    tussenruimtes. Alleen in deze band, want vanaf 1240 is er ruimte genoeg.
    Gemeten op 1101, 1150 en 1239, in beide talen. */
 @media(min-width:1101px) and (max-width:1239px){
-  .nav{gap:22px}
+  .nav{--navgap:22px}
   .navlinks{gap:16px}
 }
 @media(max-width:1100px){
@@ -1306,4 +1540,309 @@ html[data-melding="weg"] .announcement{display:none}
 @media(max-width:800px){
   .scan-veld{min-height:88px}
   .scan-signaal b{font-size:15px}
+}
+
+/* ==========================================================================
+   Wat er op een telefoon niet paste
+   --------------------------------------------------------------------------
+   Nagemeten in een telefoonviewport op 320, 360, 390, 414, 480, 540, 600,
+   700, 768, 800, 860, 900 en 1024 breed, op alle pagina's tegelijk. Waar de
+   pagina breder wordt dan het venster is dat meteen te zien: de kopbalk is
+   100% van het venster, de pagina eronder is breder, dus houdt de balk
+   halverwege op en schuift de rest eronder door.
+
+   Vier plekken, van boven naar beneden. Bij elke staat de meting waarmee de
+   grens gekozen is, zodat een volgende wijziging weet welke maat hij niet
+   mag verliezen. */
+
+/* ---- 1. de kopbalk, op elke pagina --------------------------------------
+   Op 360 breed: het woordmerk met de slogan is 130, de taalwissel met de
+   themaknop en Menu ernaast samen 180, de tussenruimte 34 en de twee
+   zijmarges 36. Dat is 380 op een scherm van 360.
+
+   Het woordmerk mag niet krimpen. Dat staat hierboven bij flex-shrink:0 en
+   dat blijft zo, want anders breekt de slogan op een laptop over twee regels
+   en wordt de balk hoger. De ruimte ertussen mag wel kleiner.
+
+   Onder 400 is ook dat niet genoeg. Dan gaat de slogan weg: op die breedte
+   zegt hij niets wat het woordmerk er niet ook al zegt, en onderaan in de
+   voettekst staat hij voluit. Zonder slogan is het woordmerk 100 breed en
+   past de balk tot 320, de smalste telefoon die nog meetelt. */
+@media(max-width:1100px){
+  /* Zodra de linkenrij weg is heeft niets in de balk nog flex:1, dus pakken
+     het woordmerk en de knoppen links op en blijft de vrije ruimte rechts
+     liggen. Op 414 stond Menu daardoor 44 van de rand af in plaats van 18.
+     Deze marge duwt de knoppen tegen de rechterrand, op elke breedte. */
+  .nav-actions{margin-left:auto}
+}
+@media(max-width:800px){
+  .nav{--navgap:16px;padding-right:10px}
+}
+@media(max-width:360px){
+  /* Onder 360 loopt het alsnog vast: knop 62, woordmerk met slogan 130,
+     taalwissel 60, themaknop 30, tussenruimtes en marges samen 62. Dat is
+     344 op een scherm van 320. De slogan is dan het enige dat weg kan zonder
+     dat er een functie verdwijnt; onderaan in de voettekst staat hij voluit. */
+  .nav{--navgap:12px;padding:0 14px}
+}
+
+/* ---- 2. de voettekst tussen 800 en 1100 --------------------------------
+   .footer-main staat op vijf kolommen en houdt dat vast tot 800. Op een
+   tablet van 860 is de laatste kolom, met het aanmeldveld erin, daardoor 129
+   breed en steekt hij 43 buiten de pagina; het veld en de knop staan op
+   width:100% en kunnen niet verder krimpen. Onder 800 was dit al opgelost,
+   dus dit blok vult alleen het gat ertussen. */
+@media(min-width:801px) and (max-width:1100px){
+  .footer-main{grid-template-columns:repeat(2,1fr);gap:44px 30px}
+  .newsletter{grid-column:1/-1;padding-left:0}
+  .footer-lower{margin-top:64px}
+}
+
+/* ---- 3. de scankaart op de landingspagina -------------------------------
+   .scan-card is met opzet breder dan zijn kolom: width:calc(100% + 117px)
+   laat hem rechts de kantlijn in lopen. Dat werkt zolang er rechts van de
+   bladspiegel van 1190 genoeg vrije ruimte staat, en dat is pas vanaf
+   ongeveer 1500. Daaronder duwt hij de pagina open: gemeten 1470 op een
+   scherm van 1440, 1433 op 1366, 1384 op 1280 en 1211 op 1100. Onder 800 was
+   hij al teruggezet; hier gebeurt hetzelfde voor alles daartussen, zodat de
+   uitloop alleen nog staat waar hij past. */
+@media(max-width:1500px){
+  .scan-card{width:100%;margin-left:0}
+}
+
+/* ---- 4. het modulesblok op de landingspagina ----------------------------
+   .solutions-grid en .solution-view krijgen verderop in dit bestand vaste
+   kolommen (260px 1fr en 430px 1fr) voor de brede opmaak. Die regels staan
+   na het telefoonblok van 800 en overrulen het dus ook op een telefoon: de
+   tekstkolom werd 225 breed en de afbeelding bleef op 430 staan, samen 1023
+   op een scherm van 390.
+
+   Onder 900 dus onder elkaar. De tabbladen worden een rij die zelf schuift,
+   met de markering onder het actieve tabblad in plaats van ernaast; het
+   blokje van 14px stond op left:-17px en zou links buiten beeld vallen. */
+/* De grens lag eerst op 900 en dat was te laag: op 1024 staat de tabkolom
+   van 260 en de afbeelding van 430 er nog naast elkaar, en houdt de
+   tekstkolom 164 over waar hij er 225 nodig heeft. Gemeten tot 1060. */
+@media(max-width:1060px){
+  .solutions{padding:78px var(--gutter) 86px}
+  .solutions-inner>h2{font-size:clamp(30px,7vw,44px);margin:0 0 34px}
+  .solutions-grid{grid-template-columns:minmax(0,1fr);gap:30px}
+  .solution-tabs{
+    flex-direction:row;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    border-left:0;border-bottom:1px solid var(--band-dim);padding:0;
+    justify-content:flex-start;
+  }
+  .solution-tabs button{
+    flex:0 0 auto;white-space:nowrap;font-size:15px;padding:10px 14px;
+    border-bottom:3px solid transparent;
+  }
+  /* De regel hierboven in dit bestand zet border:0 op het actieve tabblad en
+     is even zwaar als deze, dus moet de streep hier voluit staan en niet
+     alleen als kleur. */
+  .solution-tabs button[aria-selected="true"]{border-bottom:3px solid var(--accent)}
+  .solution-tabs button[aria-selected="true"]:before{display:none}
+  .solution-view{grid-template-columns:minmax(0,1fr);gap:24px;align-items:start}
+  .solution-visual{height:230px}
+  .solution-copy h3{font-size:28px;margin:0 0 16px}
+  .solution-copy p{max-width:none}
+}
+
+/* ---- 5. de smalste telefoon: 320 ----------------------------------------
+   Na het bovenstaande stond er op elf pagina's nog vijf tot tweeenveertig
+   pixel over de rand, alleen op 320 breed (de eerste iPhone SE, en de
+   smalste maat die nog meetelt). Steeds hetzelfde soort oorzaak, nooit een
+   opmaakfout: een woord dat niet kan breken (hans.vredevoort@cldlbs.com is
+   188 breed), een kaart met marges die op 390 wel passen, of de prijstabel
+   die op drie kolommen 315 nodig heeft terwijl er 280 is.
+
+   Twee ingrepen. De zijmarge gaat van 20 naar 16, wat overal 8 teruggeeft;
+   die 20 staat in het blok op 800 met de hand ingevuld en niet als --gutter,
+   dus hij moet hier per band opnieuw. En een woord mag breken waar het niet
+   anders kan. overflow-wrap:anywhere en niet break-word: alleen anywhere
+   telt mee in de kleinst mogelijke breedte, en dat is precies wat hier
+   gemeten wordt. Beide alleen onder 360, zodat de gewone maten ongemoeid
+   blijven. */
+@media(max-width:360px){
+  :root{--gutter:16px}
+  .hero,.proof,.intro,.section,.platform,.solutions,.cta,.footer,.trust,.scope{
+    padding-left:16px;padding-right:16px;
+  }
+  .gate{margin-left:14px;margin-right:14px}
+
+  p,li,dd,td,th,a,b,figcaption,.veldnaam,.onderwerp,
+  h1,h2,h3,h4,.display{overflow-wrap:anywhere}
+
+  /* Kaarten en kaders: dezelfde vorm, iets minder binnenmarge. */
+  .benefit{padding:26px 20px}
+  .bev{padding:22px 18px}
+  .scan-card{padding:24px 16px 20px 70px}
+  .scan-card:before{width:54px;font-size:18px}
+  .nietgemeten,.mid-cta{padding:22px 20px}
+
+  /* De prijstabel houdt drie kolommen niet. De prijs gaat onder de omschrijving
+     staan, links uitgelijnd, in dezelfde volgorde als hij gelezen wordt. */
+  .prijstabel,.prijstabel tbody,.prijstabel tr,.prijstabel td{display:block;width:auto}
+  .prijstabel td{padding:0 0 10px;border-bottom:0}
+  .prijstabel tr{border-bottom:1px solid var(--rule);padding:22px 0}
+  .prijstabel tr:last-child{border-bottom:0}
+  .prijstabel td.prijs{text-align:left;padding-top:6px}
+}
+
+/* ---- 6. wat er met een duim te raken valt --------------------------------
+   Nagemeten op 390 breed. WCAG 2.2 vraagt 24 bij 24 CSS-pixel, of genoeg
+   ruimte eromheen. Twee dingen haalden dat niet, en allebei staan ze in de
+   meldbalk bovenaan, waar ze op elke pagina staan:
+
+     de sluitknop  18 bij 17
+     de link       104 bij 19, met de sluitknop er vlak naast
+
+   De balk is 28 hoog op een telefoon, dus wordt het doel de hele hoogte van
+   de balk. Het kruisje en het opschrift blijven even groot; alleen het vlak
+   eromheen groeit mee. De rest van de site haalt de maat, de voettekstlinks
+   via de ruimte van 14 die ertussen staat. */
+.announcement{position:relative}
+.announcement button{
+  top:0;bottom:0;height:auto;width:34px;right:4px;
+  display:grid;place-items:center;line-height:1;
+}
+.announcement a{display:inline-flex;align-items:center;align-self:stretch;padding:0 4px}
+/* De knop staat los boven de balk, dus de tekst eronder weet niet dat hij
+   er is: op 320 liep 'Start free triage' eronderdoor. Deze marge houdt de
+   plek vrij, en de kleinere tussenruimte geeft de zin de ruimte terug. */
+@media(max-width:520px){
+  .announcement{padding-right:38px;gap:10px}
+}
+/* Onder 400 past de zin met de link er niet meer op een regel, en de balk
+   heeft een vaste hoogte van 28. Dan viel de tweede regel er buiten. De
+   hoogte wordt hier een ondergrens in plaats van een maat, zodat de balk
+   meegroeit met wat erin staat. Het kruisje rekt met top:0/bottom:0 vanzelf
+   mee. */
+@media(max-width:400px){
+  .announcement{
+    height:auto;min-height:28px;padding:5px 38px 5px 12px;
+    line-height:1.35;text-align:left;
+  }
+}
+
+/* De taalwissel en de themaknop staan naast elkaar in de kopbalk en zijn
+   26 tot 30 hoog. Dat haalt 24 wel, maar met twee doelen naast elkaar en een
+   duim erop is ruimer beter. Alleen op een aanraakscherm, zodat de balk op
+   een laptop met muis blijft zoals hij is. */
+@media(hover:none) and (pointer:coarse){
+  .themawissel{width:34px;height:32px}
+  .taalwissel a,.taalwissel span{padding:8px 9px}
+  /* Zonder deze twee viel NL boven EN op 320 breed: de wissel is een
+     inline-flex die als flexvak wel mocht krimpen, en dan brak hij binnenin.
+     Krimpen mag niet, en de twee labels horen op een regel. */
+  .taalwissel{flex:0 0 auto;white-space:nowrap}
+  .nav-actions{flex:0 0 auto}
+}
+@media(max-width:360px){
+  .taalwissel a,.taalwissel span{padding:7px 6px}
+}
+
+/* ---- de cookiebanner -------------------------------------------------------
+   De oude site vroeg toestemming voor Google Analytics, de nieuwe deed dat
+   niet. Nu de meting terugkomt hoort de vraag er ook weer bij: zonder banner
+   staan de cookies van Google er voordat iemand er iets over te zeggen heeft
+   gehad, en dat is precies wat niet mag.
+
+   Hij hangt onderaan en niet bovenaan. Bovenin staat de meldbalk al, en twee
+   balken boven elkaar duwen de pagina waarvoor iemand kwam uit beeld. Hij ligt
+   er ook over heen in plaats van ertussen, zodat de pagina niet springt op het
+   moment dat de balk verdwijnt.
+
+   De kleuren komen uit de donkere band, dezelfde als de kopbalk en de
+   voettekst; .cookiebalk staat daarom hierboven in beide vergrendelde lijsten.
+   Zo is het zichtbaar een deel van de site en niet iets dat er los overheen is
+   gelegd, en klopt hij in de lichte en de donkere stand zonder een tweede
+   woordenlijst.
+
+   Zonder JavaScript kan er niets onthouden worden. Dan hoort de balk er ook
+   niet te staan, want hij zou op elke pagina opnieuw komen en geen van beide
+   knoppen zou iets doen. Het merkteken data-js komt uit het scriptje in de
+   <head>, hetzelfde dat de onthouden thema-stand zet. */
+.cookiebalk{display:none}
+html[data-js] .cookiebalk.aan{
+  display:block;
+  position:fixed;left:0;right:0;bottom:0;z-index:90;
+  background:var(--band);color:var(--band-ink);
+  border-top:1px solid var(--band-accent);
+  padding:18px var(--gutter);
+  padding-bottom:calc(18px + env(safe-area-inset-bottom,0px));
+  box-shadow:0 -10px 34px #00000055;
+}
+.cookiebalk-inner{
+  max-width:var(--max);margin:auto;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:16px 30px;flex-wrap:wrap;
+}
+.cookiebalk p{margin:0;max-width:74ch;font-size:14px;line-height:1.55;color:var(--band-dim)}
+.cookiebalk p a{color:var(--band-accent)}
+.cookiebalk-knoppen{display:flex;gap:10px;flex:0 0 auto}
+
+/* Kleiner dan de knoppen in de kopbalk. Dit is geen uitnodiging om iets te
+   doen maar een vraag die weg moet kunnen; hij hoeft de pagina eronder niet te
+   overstemmen. Weigeren staat er even groot en even bereikbaar bij als
+   accepteren, met dezelfde vorm en dezelfde regelhoogte. Alleen de vulling
+   verschilt, en dat is het enige verschil dat er mag zijn. */
+.cookiebalk .btn{padding:10px 16px;font-size:13px}
+.cookiebalk .btn:hover{transform:none}
+.cookiebalk .btn.primary:hover{background:var(--band-accent-soft);color:var(--band-accent)}
+/* background:none hoort erbij. De rest van de site zet .btn op een <a> en
+   die heeft geen eigen vulling; hier is het een <button> en dan tekent de
+   browser zijn eigen grijze knopvlak. Weigeren stond daardoor als lichte
+   balk met onleesbare letters op het donker. */
+.cookiebalk .btn.ghost{background:none;color:var(--band-ink);border-color:#ffffff44}
+.cookiebalk .btn.ghost:hover{border-color:var(--band-accent);color:var(--surface)}
+.cookiebalk .btn:focus-visible{outline:2px solid var(--band-accent);outline-offset:2px}
+
+/* Op een telefoon staan de tekst en de knoppen onder elkaar en vullen de
+   knoppen de breedte, net als .actions .btn in de hero. Naast elkaar zouden ze
+   op 360 breed elk nog geen 140 pixels krijgen en dan breekt het opschrift. */
+@media(max-width:800px){
+  html[data-js] .cookiebalk.aan{padding:16px 18px;padding-bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+  .cookiebalk-inner{display:block}
+  .cookiebalk p{font-size:13px}
+  .cookiebalk-knoppen{margin-top:14px}
+  .cookiebalk-knoppen .btn{flex:1 1 0}
+}
+
+/* De knop om de keuze te herzien staat in de juridische regel onder in de
+   voettekst, tussen de privacyverklaring en de voorwaarden. Op de oude site
+   stond hij rechtsboven in de kopbalk, maar daar is geen ruimte meer: op 360
+   breed is de kopbalk al tot op de pixel verdeeld tussen het woordmerk, de
+   taalwissel en de themaknop. Onderin staat hij bovendien naast de verklaring
+   die uitlegt waar het over gaat.
+
+   Het is een knop en geen link, want er wordt niets geopend; de balk komt
+   terug. Hij is verder gelijk aan de links ernaast, zodat de regel één regel
+   blijft en niet half knop half link wordt. */
+.cookiebalk-open{
+  padding:0;border:0;background:none;color:inherit;
+  font:inherit;font-size:13px;cursor:pointer;text-align:left;
+}
+.cookiebalk-open:hover{text-decoration:underline}
+.cookiebalk-open:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+html:not([data-js]) .cookiebalk-open{display:none}
+
+/* ---- 7. de overgang tussen twee pagina's --------------------------------
+   Een taalwissel is een gewone paginalading: de browser breekt de oude
+   pagina af, verft zijn eigen achtergrond en tekent daarna de nieuwe. Dat
+   harde wisselmoment is de schok die je ziet, en die staat los van de
+   opmaak; er verspringt namelijk niets, gemeten CLS is 0,0004.
+
+   Deze regel laat de browser de twee pagina's in plaats daarvan over elkaar
+   heen vloeien. Hij geldt voor elke link binnen de site en niet alleen voor
+   de taalwissel, want een overgang heeft twee kanten en die moeten hem
+   allebei aan hebben staan.
+
+   Kort gehouden: 0,22 seconde is genoeg om het zachte te zien en te weinig
+   om op te vallen als je doorklikt. Browsers die dit niet kennen slaan het
+   blok over en wisselen zoals eerst, dus er gaat niets stuk. Wie beweging
+   heeft uitgezet krijgt hem niet. */
+@view-transition{navigation:auto}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.22s}
+@media(prefers-reduced-motion:reduce){
+  @view-transition{navigation:none}
 }
