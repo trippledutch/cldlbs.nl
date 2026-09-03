@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- LET OP: noindex staat aan zolang de waarden met klasse .invul nog
+     invulvelden zijn. Zodra Hans de echte meetwaarden heeft aangeleverd:
+     deze regel verwijderen, de datums in het schema bijwerken en de URL
+     opnemen in sitemap.xml. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>Firmware drift and CSV owner imbalance &middot; CloudLabs</title>
+<meta name="description" content="Six Hyper-V nodes, three years without a structured review. Two nodes on a firmware build with a known NVMe regression, and CSV ownership sitting lopsided.">
+<link rel="canonical" href="https://cldlbs.com/en/case-study/firmware-drift-and-csv-owner-imbalance/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://cldlbs.com/en/case-study/firmware-drift-and-csv-owner-imbalance/">
+<meta property="og:title" content="Firmware drift and CSV owner imbalance &middot; CloudLabs">
+<meta property="og:description" content="What a base measurement found in a Hyper-V cluster that the management console called healthy.">
+<link rel="alternate" hreflang="nl" href="https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/case-study/firmware-drift-and-csv-owner-imbalance/">
+<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/bevinding.css?v=8d065ab5">
+<link rel="stylesheet" href="/huisstijl/voorbeeld.css?v=81befd8f">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://cldlbs.com/"},
+        {"@type":"ListItem","position":2,"name":"Praktijkvoorbeelden","item":"https://cldlbs.com/praktijkvoorbeelden/"},
+        {"@type":"ListItem","position":3,"name":"Firmware-drift en scheef CSV-eigenaarschap","item":"https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html"}
+      ]
+    },
+    {
+      "@type":"Article",
+      "@id":"https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html#artikel",
+      "headline":"Six nodes, two firmware versions: firmware drift and lopsided CSV ownership in a production cluster",
+      "description":"A 6-node Hyper-V cluster with slow storage and no visible incident. The base measurement found two hosts on a firmware build with a known NVMe regression and Cluster Shared Volume ownership that sat lopsided.",
+      "inLanguage":"nl-NL",
+      "datePublished":"2026-09-01",
+      "dateModified":"2026-09-01",
+      "mainEntityOfPage":"https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html",
+      "genre":"Praktijkvoorbeeld",
+      "about":[
+        {"@type":"Thing","name":"Hyper-V"},
+        {"@type":"Thing","name":"Failover Clustering"},
+        {"@type":"Thing","name":"Cluster Shared Volume"},
+        {"@type":"Thing","name":"Firmware"}
+      ],
+      "keywords":"Hyper-V cluster, firmware drift, CSV eigenaarschap, Cluster Shared Volumes, NVMe, failover cluster health check",
+      "author":{
+        "@type":"Person",
+        "@id":"https://cldlbs.com/about.html#hans",
+        "name":"Hans Vredevoort",
+        "jobTitle":"Cluster- en virtualisatiespecialist",
+        "description":"Forty years of Windows Server. Over ten years a Microsoft MVP for Failover Clustering and Cloud & Datacenter Management, co-founder of Hyper-V.nu and co-author of Private Cloud Computing.",
+        "knowsAbout":["Hyper-V","Failover Clustering","Azure Local","Storage Spaces Direct","Windows Server"],
+        "worksFor":{"@id":"https://cldlbs.com/#organisatie"}
+      },
+      "publisher":{
+        "@type":"Organization",
+        "@id":"https://cldlbs.com/#organisatie",
+        "name":"CloudLabs",
+        "url":"https://cldlbs.com/"
+      }
+    },
+    {
+      "@type":"FAQPage",
+      "@id":"https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html#vragen",
+      "mainEntity":[
+        {"@type":"Question","name":"Why does Failover Cluster Manager not warn about firmware drift?",
+         "acceptedAnswer":{"@type":"Answer","text":"Because Failover Cluster Manager watches the cluster roles, not the firmware of the hosts. A node with an older or newer firmware build is a valid node to the cluster: it accepts roles, keeps its vote and reports healthy. Nor does the validation wizard compare driver and firmware versions between nodes. Differences only surface when someone puts the versions per node side by side, or when behaviour under load starts to diverge per node."}},
+        {"@type":"Question","name":"Wat is scheef CSV-eigenaarschap en waarom is het een probleem?",
+         "acceptedAnswer":{"@type":"Answer","text":"Every Cluster Shared Volume has a node that coordinates it. All metadata traffic for that volume runs over that node. If most volumes sit on the same node, that node carries a disproportionate amount of I/O while the other nodes stand idle. The cluster reports nothing, because there is no fault: everything works, only slower than the hardware can manage. After a failover or a patch round that distribution often stays as it is, because nothing puts it back."}},
+        {"@type":"Question","name":"Does the cluster notice the measurement?",
+         "acceptedAnswer":{"@type":"Answer","text":"No. The collection script only reads and installs nothing. It runs from the customer management server over WinRM to the nodes, takes about fifteen minutes, processes no passwords and leaves nothing behind. No changes are needed to be able to measure. None are made either."}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Secure the evidence first.</span><a href="/en/triage/#aanvraag">Start free triage &rarr;</a><button type="button" aria-label="Close" id="close-announcement">&times;</button></div>
+
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="/en/" hreflang="en"><b>Cloud<span>Labs</span></b><small>Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-the-healthcheck">The HealthCheck</button><div class="navmenu" id="nav-the-healthcheck"><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div></div><a href="/en/rates/">Rates</a><a href="/en/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-knowledge-base">Knowledge base</button><div class="navmenu" id="nav-knowledge-base"><a href="/en/faq/">FAQ</a><a href="/en/case-studies/">Case studies</a><a href="/en/topics/">Topics</a></div></div><a href="/en/about/">About us</a></div><div class="nav-actions">
+      <span class="taalwissel"><a href="/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html" hreflang="nl" lang="nl">NL</a><span aria-current="true">EN</span></span>
+      <a class="btn primary" href="/en/triage/#aanvraag">Start free triage</a>
+      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+<article class="artikel">
+
+  <p class="kruimel"><a href="/.">CloudLabs</a> / <a href="/praktijkvoorbeelden">Case studies</a> / 01</p>
+
+  <div class="voorbeeldkop">
+    <p class="eyebrow">Case study 01 · base measurement</p>
+    <h1>Six nodes, two firmware versions</h1>
+    <div class="regel">
+      <b>Financial services</b><i>&middot;</i>
+      <b>6-node Hyper-V</b><i>&middot;</i>
+      <b>Failover Cluster</b><i>&middot;</i>
+      <b>NVMe, local storage</b><i>&middot;</i>
+      <b>Baseline<span class="invul">quarter</span></b>
+    </div>
+  </div>
+
+  <!-- ===== het directe antwoord ===== -->
+  <div class="inleiding">
+    <p>A production cluster of six Hyper-V nodes had run for three years without a structured review. The administrator reported slow storage with no identifiable cause; the cluster gave no warning at all. The base measurement found two things that reinforced each other: two of the six nodes were on a firmware build with a known NVMe stability regression, and ownership of the Cluster Shared Volumes sat lopsided, so one node carried most of the metadata traffic. Both are invisible in Failover Cluster Manager. Both were repaired within the same cycle.</p>
+  </div>
+
+  <table class="meetgegevens">
+      <caption>Measurement data</caption>
+      <tbody>
+        <tr><th scope="row">Nodes on a deviating firmware build</th><td>2 of 6</td></tr>
+        <tr><th scope="row">CSVs owned by the same node</th><td><span class="invul">n</span> of 6</td></tr>
+        <tr><th scope="row">Warnings in the management console</th><td>0</td></tr>
+      </tbody>
+    </table>
+
+  <!-- ===== situatie ===== -->
+  <section class="deel">
+    <p class="deel-nr">01</p>
+    <div class="deel-tekst">
+      <h2>The situation</h2>
+  <p>Six nodes, production workloads, local NVMe storage. The cluster had been delivered three years earlier and patched properly since, but never measured through as a whole. The administrator had a concrete complaint and no evidence: the storage felt slow, in bursts, without anyone able to point at the cause.</p>
+  <p>That is a common starting point. Failover Cluster Manager showed all nodes healthy, all roles online and no events asking for attention. The validation wizard ran clean. So there was no incident to investigate. There was a suspicion and a cluster that maintained nothing was wrong.</p>
+
+  <!-- ===== meting ===== -->
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">02</p>
+    <div class="deel-tekst">
+      <h2>The measurement</h2>
+  <p>The collection script ran from the customer management server over WinRM to the six nodes: about fifteen minutes, read-only, nothing installed. From the output two findings emerged that deserved attention on their own and together explained the complaint.</p>
+
+  <div class="bev high">
+    <div class="bevkop">
+      <span class="fid">F01</span>
+      <div class="bevtitel">
+        <span class="onderwerp">Firmware &amp; drivers</span>
+        <h3>Two nodes run a firmware build with a known NVMe stability regression</h3>
+      </div>
+      <span class="chip high">HIGH</span>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Measured</span>
+      <p class="meting">NODE03 &middot; firmware <span class="invul">build number</span><br>
+      NODE05 &middot; firmware <span class="invul">build number</span><br>
+      NODE01, 02, 04, 06 &middot; firmware <span class="invul">build number</span><br>Vendor requirement ·<span class="invul">build number</span></p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Why this counts</span>
+      <p>A cluster assumes its nodes are interchangeable. As soon as two nodes behave differently under load than the other four, a failover moves a workload from predictable to unpredictable behaviour, without anything in the log pointing at it. The build involved was known to the vendor for falling NVMe throughput under sustained write load.</p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Action point</span>
+      <p>Bring both nodes to the prescribed level, node by node, with the workload drained. Then include the firmware versions in the quarterly measurement, so drift becomes visible before it changes behaviour.</p>
+    </div>
+  </div>
+
+  <div class="bev med">
+    <div class="bevkop">
+      <span class="fid">F02</span>
+      <div class="bevtitel">
+        <span class="onderwerp">Cluster Shared Volumes</span>
+        <h3>Ownership of the CSVs sits lopsided across the nodes</h3>
+      </div>
+      <span class="chip med">Medium</span>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Measured</span>
+      <p class="meting">Volumes in the cluster &middot; 6<br>Coordinator NODE<span class="invul">nn</span> &middot; <span class="invul">n</span> volumes<br>Other nodes ·<span class="invul">distribution</span></p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Why this counts</span>
+      <p>All metadata traffic for a volume runs over the node that coordinates it. If most volumes sit with the same node, that node carries a disproportionate amount of I/O while the rest has capacity to spare. The cluster reports nothing, because there is no fault: everything works, only slower than the hardware can manage. After a failover or a patch round that distribution stays as it is, because nothing puts it back.</p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Action point</span>
+      <p>Distribute ownership evenly and include the distribution in the recurring measurement. See also the explanation of <a href="/en/blog/csv-ownership-imbalance/">lopsided CSV ownership</a>.</p>
+    </div>
+  </div>
+
+  <p>The two findings reinforced each other: the node carrying the most metadata traffic was also one of the two nodes on the deviating firmware build. That explains why the complaint came in bursts and was not reproducible: it occurred when the load coincided with the node least able to handle it.</p>
+
+  <!-- ===== niet gemeten ===== -->
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">03</p>
+    <div class="deel-tekst">
+      <h2>What could not be measured</h2>
+  <p>Every CloudLabs report states what stayed out of reach, with the reason. Not because it looks good, but because otherwise a reader does not know how complete the picture is.</p>
+  <div class="nietgemeten">
+    <ul>
+      <li>Management cards of the hosts: <span class="invul">reason</span></li>
+      <li>Switch configuration: outside the scope of the base measurement; covered by module M1</li>
+      <li>Performance history before the measurement window: not retained on the hosts</li>
+    </ul>
+  </div>
+
+  <!-- ===== herstel ===== -->
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">04</p>
+    <div class="deel-tekst">
+      <h2>The repair</h2>
+  <p>The repair ran within the same cycle, node by node, with the workload drained each time:</p>
+  <ul>
+    <li>The two deviating nodes were brought to the prescribed firmware level.</li>
+    <li>Ownership of the six volumes was distributed evenly across the nodes.</li>
+    <li>Firmware versions per node and the CSV distribution have been included in the recurring measurement, so both stay visible.</li>
+  </ul>
+  <p>What the customer left alone: <span class="invul">finding not taken up, with the customer’s reason</span>. That is stated, because an example in which everything is resolved is not an example but an advertisement.</p>
+
+  <!-- ===== resultaat ===== -->
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">05</p>
+    <div class="deel-tekst">
+      <h2>The outcome</h2>
+  <p>The complaint that could not be placed for three years had an identifiable cause and an action. More important to the administrator was something else: for the first time he had a document stating what had been checked and found in order, next to what was wrong. That is the part he could pass to his IT manager without questions remaining.</p>
+  <p>At the next quarterly measurement the firmware level was equal on all six nodes and the CSV distribution still in balance. That gave the second measurement its purpose straight away: not to find something new, but to show that the repair held.</p>
+
+  <!-- ===== vragen ===== -->
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">06</p>
+    <div class="deel-tekst">
+      <h2>Questions</h2>
+
+  <div class="vraag">
+    <h3>Why does Failover Cluster Manager not warn about firmware drift?</h3>
+    <p>Because Failover Cluster Manager watches the cluster roles and not the firmware of the hosts. A node with an older or newer build is a valid node to the cluster: it accepts roles, keeps its vote and reports healthy.</p>
+    <p>Nor does the validation wizard compare driver and firmware versions between nodes. Differences only surface when someone puts the versions per node side by side, or when behaviour under load starts to diverge per node.</p>
+  </div>
+
+  <div class="vraag">
+    <h3>What is lopsided CSV ownership and why is it a problem?</h3>
+    <p>Every Cluster Shared Volume has a node that coordinates it; all metadata traffic for that volume runs over that node. If most volumes sit on the same node, that node carries a disproportionate amount of I/O while the other nodes stand idle.</p>
+    <p>The cluster reports nothing, because there is no fault. Everything works, only slower than the hardware can manage.</p>
+  </div>
+
+  <div class="vraag">
+    <h3>Does the cluster notice the measurement?</h3>
+    <p>No. The collection script only reads and installs nothing. It runs from the management server over WinRM to the nodes, takes about fifteen minutes, processes no passwords and leaves nothing behind.</p>
+  </div>
+
+  <!-- ===== verder ===== -->
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">07</p>
+    <div class="deel-tekst">
+      <h2>Further reading</h2>
+  <div class="verwant">
+    <a href="/en/blog/csv-ownership-imbalance/"><span>Background</span><b>Why CSV ownership ends up lopsided</b></a>
+    <a href="/en/blog/top-10-hyper-v-cluster-issues/"><span>Background</span><b>The ten most common cluster problems</b></a>
+    <a href="/en/case-study/quorum-stretch-cluster-for-rolling-upgrade/"><span>Case study 02</span><b>A quorum that would not survive the second site</b></a>
+    <a href="/findings.html"><span>The document</span><b>What a findings report looks like</b></a>
+  </div>
+
+
+    </div>
+  </section>
+  </article>
+</section>
+
+<section class="cta">
+  <div class="inner">
+  <p class="eyebrow" style="justify-content:center">Your own cluster</p>
+  <h2>What would a measurement<br>find at your site?</h2>
+  <p>The free Cluster Triage only reads and changes nothing. You receive the five heaviest signals around your incident window, with the measured value, the node and the time.</p>
+  <div class="actions">
+    <a class="btn primary" data-icon="script" href="/triage">Start free Cluster Triage &rarr;</a>
+    <a class="btn ghost" data-icon="rapport" href="/praktijkvoorbeelden">All case studies</a>
+  </div>
+</div>
+</section>
+</main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Services</h4><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div><div class="footer-column"><h4>Organisation</h4><a href="/en/about/">About us</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/rates/">Rates</a><a href="/en/partners/">For partners</a></div><div class="footer-column"><h4>Knowledge base</h4><a href="/en/blog/">Blog</a><a href="/en/case-studies/">Case studies</a><a href="/en/blog/top-10-hyper-v-cluster-issues/">Failures and causes</a><a href="/en/blog/cluster-witness-comparison/">Quorum and witness</a><a href="/en/blog/san-vs-s2d-vs-azure-local-hyper-v-storage/">Storage and Storage Spaces Direct</a><a href="/en/faq/">FAQ</a><a href="/en/topics/">Topics</a></div><div class="footer-column"><h4>Contact</h4><a href="/en/triage/#aanvraag">Request the free script</a><a href="/en/appointment/#agenda">Book a call</a><a href="/en/contact/#bericht">Get in touch</a></div><div class="newsletter"><h4>Technical findings by email</h4><form action="#" method="post"><label><span class="skip">Email address</span><input type="email" name="email" placeholder="name@company.com" autocomplete="email"></label><button type="submit">Subscribe</button></form><p>No marketing stream. Only new findings and practical explanation.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="Email"><img src="/assets/icons/email.svg" alt=""></a><a href="/en/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/en/">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/en/privacy/">Privacy statement</a><a href="/en/triage/#veilig">Security</a><a href="/en/terms/">Terms of engagement</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
+
+<script>
+(function(){
+  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
+  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
+})();
+</script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
+</body>
+</html>

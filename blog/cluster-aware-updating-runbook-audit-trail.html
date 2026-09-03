@@ -5,22 +5,22 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- Omgezet naar de nieuwe huisstijl met blog-omzetten.py. De Engelse helft is
      eruit; die krijgt later een eigen URL onder /en/. De inhoud is niet
-     herschreven. noindex staat aan zolang de nieuwe stijl niet live is. -->
-<meta name="robots" content="noindex,nofollow">
+     herschreven. Vrijgegeven voor indexering op 2 september 2026. -->
 <meta name="theme-color" content="#0A1024">
-<title>Cluster Aware Updating: runbook, audit trail, en wat niemand documenteert &middot; CloudLabs</title>
-<meta name="description" content="Cluster Aware Updating (CAU) bestaat sinds Windows Server 2012 en wordt door de meeste organisaties gebruikt. Of beter gezegd: CAU is geconfigureerd, een rol bestaat, een schema staat, en niemand kijkt er nog naar. Tot het moment dat Microsoft Support tijdens een incident vraagt om het CAU-rapport v">
+<title>Cluster Aware Updating: runbook en audit trail &middot; CloudLabs</title>
+<meta name="description" content="Cluster Aware Updating (CAU) bestaat sinds Windows Server 2012 en wordt door de meeste organisaties gebruikt. Of beter gezegd: CAU is geconfigureerd, een rol bestaat, een schema staat en niemand kijkt er nog naar. Tot het moment dat Microsoft Support tijdens een incident vraagt om het CAU-rapport v">
 <link rel="canonical" href="https://cldlbs.com/blog/cluster-aware-updating-runbook-audit-trail.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/cluster-aware-updating-runbook-audit-trail.html">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/blog/cluster-aware-updating-runbook-audit-trail/">
 <link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/cluster-aware-updating-runbook-audit-trail.html">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="nl_NL">
 <meta property="og:url" content="https://cldlbs.com/blog/cluster-aware-updating-runbook-audit-trail.html">
-<meta property="og:title" content="Cluster Aware Updating: runbook, audit trail, en wat niemand documenteert">
-<meta property="og:description" content="Cluster Aware Updating (CAU) bestaat sinds Windows Server 2012 en wordt door de meeste organisaties gebruikt. Of beter gezegd: CAU is geconfigureerd, een rol bestaat, een schema staat, en niemand kijkt er nog naar. Tot het moment dat Microsoft Support tijdens een incident vraagt om het CAU-rapport v">
+<meta property="og:title" content="Cluster Aware Updating: runbook en audit trail &middot; CloudLabs">
+<meta property="og:description" content="Cluster Aware Updating (CAU) bestaat sinds Windows Server 2012 en wordt door de meeste organisaties gebruikt. Of beter gezegd: CAU is geconfigureerd, een rol bestaat, een schema staat en niemand kijkt er nog naar. Tot het moment dat Microsoft Support tijdens een incident vraagt om het CAU-rapport v">
 <link rel="icon" href="/favicon.png" type="image/png">
-<link rel="stylesheet" href="/huisstijl/pagina.css">
-<link rel="stylesheet" href="/huisstijl/artikel.css">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/artikel.css?v=04e23fbe">
 
 <script type="application/ld+json">
 {
@@ -44,7 +44,7 @@
         {
           "@type": "ListItem",
           "position": 3,
-          "name": "Cluster Aware Updating: runbook, audit trail, en wat niemand documenteert",
+          "name": "Cluster Aware Updating: runbook, audit trail en wat niemand documenteert",
           "item": "https://cldlbs.com/blog/cluster-aware-updating-runbook-audit-trail.html"
         }
       ]
@@ -52,8 +52,8 @@
     {
       "@type": "BlogPosting",
       "@id": "https://cldlbs.com/blog/cluster-aware-updating-runbook-audit-trail.html#artikel",
-      "headline": "Cluster Aware Updating: runbook, audit trail, en wat niemand documenteert",
-      "description": "Cluster Aware Updating (CAU) bestaat sinds Windows Server 2012 en wordt door de meeste organisaties gebruikt. Of beter gezegd: CAU is geconfigureerd, een rol bestaat, een schema staat, en niemand kijkt er nog naar. Tot het moment dat Microsoft Support tijdens een incident vraagt om het CAU-rapport v",
+      "headline": "Cluster Aware Updating: runbook, audit trail en wat niemand documenteert",
+      "description": "Cluster Aware Updating (CAU) bestaat sinds Windows Server 2012 en wordt door de meeste organisaties gebruikt. Of beter gezegd: CAU is geconfigureerd, een rol bestaat, een schema staat en niemand kijkt er nog naar. Tot het moment dat Microsoft Support tijdens een incident vraagt om het CAU-rapport v",
       "inLanguage": "nl-NL",
       "datePublished": "2026-05-15",
       "dateModified": "2026-05-15",
@@ -96,7 +96,7 @@
           "name": "Werkt CAU goed met WSUS, of moet ik naar Azure Update Manager?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "CAU werkt prima met WSUS, en voor de meeste klanten blijft dat de juiste keuze. Azure Update Manager is een goede optie als je sowieso al Arc-enabled bent, meerdere clusters in verschillende sites beheert, en de centrale audit-trail in Azure waarde toevoegt. Het is geen vereiste upgrade."
+            "text": "CAU werkt prima met WSUS en voor de meeste klanten blijft dat de juiste keuze. Azure Update Manager is een goede optie als je sowieso al Arc-enabled bent, meerdere clusters in verschillende sites beheert en de centrale audit-trail in Azure waarde toevoegt. Het is geen vereiste upgrade."
           }
         },
         {
@@ -131,15 +131,14 @@
 </head>
 
 <body>
-<a class="skip" href="#main">Naar inhoud</a>
+<a class="skip" href="#main">Naar inhoud</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Bewaar eerst het bewijs.</span><a href="/triage/#aanvraag">Start gratis triage &rarr;</a><button type="button" aria-label="Sluiten" id="close-announcement">&times;</button></div>
 
 <header class="topbar">
   <nav class="nav">
-    <a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a>
-    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/blog/" aria-current="page">Blog</a></div>
-    <div class="nav-actions">
-      <button class="search" aria-label="Zoeken">&#8981;</button>
-      <a class="btn primary" href="/triage/">Start gratis triage</a>
+    <a class="brand" href="/preview-home.html"><b>Cloud<span>Labs</span></b><small lang="en">Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-de-healthcheck">De HealthCheck</button><div class="navmenu" id="nav-de-healthcheck"><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div></div><a href="/tarieven/">Tarieven</a><a href="/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-kennisbank">Kennisbank</button><div class="navmenu" id="nav-kennisbank"><a href="/vragen/">Veelgestelde vragen</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/onderwerpen/">Onderwerpen</a></div></div><a href="/over-ons/">Over ons</a></div><div class="nav-actions">
+      <span class="taalwissel"><span aria-current="true">NL</span><a href="/en/blog/cluster-aware-updating-runbook-audit-trail/" hreflang="en" lang="en">EN</a></span>
+      <a class="btn primary" href="/triage/#aanvraag">Start gratis triage</a>
       <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
     </div>
   </nav>
@@ -152,10 +151,10 @@
     <p class="kruimelpad"><a href="/">CloudLabs</a> / <a href="/blog/">Blog</a> / Patching</p>
 
     <header class="artikelkop">
-      <h1>Cluster Aware Updating: runbook, audit trail, en wat niemand documenteert</h1>
-      <p class="lede">Cluster Aware Updating (CAU) bestaat sinds Windows Server 2012 en wordt door de meeste organisaties gebruikt. Of beter gezegd: CAU is geconfigureerd, een rol bestaat, een schema staat, en niemand kijkt er nog naar. Tot het moment dat Microsoft Support tijdens een incident vraagt om het CAU-rapport van de afgelopen drie maanden, en blijkt dat er geen audit trail is, dat het runbook nergens beschreven staat, en dat het ops-team niet weet welke modus precies actief is.</p>
-        <p class="lede">In de Hyper-V Cluster Health Checks die wij uitvoeren is CAU vrijwel altijd een bevinding. Niet omdat patches niet worden toegepast, dat gebeurt meestal wel. Maar wel omdat de operationele governance rondom CAU ontbreekt, en dat is precies wat het verschil maakt tijdens een geëscaleerd Sev-1 incident waarbij ondersteuningskwaliteit van Microsoft afhangt van wat je kunt aantonen.</p>
-        <p class="lede">Dit artikel gaat over CAU-runbooks, audit trails, en de praktische beslissingen die je vooraf neemt zodat patching een professionele operatie blijft in plaats van een maandelijkse hoop dat er niets misgaat.</p>
+      <h1>Cluster Aware Updating: runbook, audit trail en wat niemand documenteert</h1>
+      <p class="lede">Cluster Aware Updating (CAU) bestaat sinds Windows Server 2012 en wordt door de meeste organisaties gebruikt. Of beter gezegd: CAU is geconfigureerd, een rol bestaat, een schema staat en niemand kijkt er nog naar. Tot het moment dat Microsoft Support tijdens een incident vraagt om het CAU-rapport van de afgelopen drie maanden en blijkt dat er geen audit trail is, dat het runbook nergens beschreven staat en dat het ops-team niet weet welke modus precies actief is.</p>
+        <p class="lede">In de Hyper-V Cluster Health Checks die wij uitvoeren is CAU vrijwel altijd een bevinding. Niet omdat patches niet worden toegepast, dat gebeurt meestal wel. Maar wel omdat de operationele governance rondom CAU ontbreekt en dat is precies wat het verschil maakt tijdens een geëscaleerd Sev-1 incident waarbij ondersteuningskwaliteit van Microsoft afhangt van wat je kunt aantonen.</p>
+        <p class="lede">Dit artikel gaat over CAU-runbooks, audit trails en de praktische beslissingen die je vooraf neemt zodat patching een professionele operatie blijft in plaats van een maandelijkse hoop dat er niets misgaat.</p>
       <p class="artikelmeta"><b>Door Hans Vredevoort</b> <i>&middot;</i> <b>15 mei 2026</b> <i>&middot;</i> <b>13 minuten leestijd</b> <i>&middot;</i> <b>Patching</b></p>
     </header>
 
@@ -176,15 +175,15 @@
 
       <div class="tekst">
 <h2 id="nl-1">1. De twee CAU-modi en wat ze werkelijk betekenen</h2>
-        <p>Cluster Aware Updating heeft twee operationele modi, en de keuze tussen beide is een strategische beslissing die invloed heeft op runbook, audit trail en supportbaarheid.</p>
-        <p><strong>Self-updating mode.</strong> Het cluster zelf orkestreert de update-run. Eén cluster-node is de coordinator, draint de andere nodes om de beurt, patcht ze, brengt ze weer in. Het cluster heeft een geconfigureerde CAU-rol, een ingebouwd schema, en de cluster-rol moet zelf voldoende rechten hebben om Windows Update of WSUS te bevragen.</p>
+        <p>Cluster Aware Updating heeft twee operationele modi en de keuze tussen beide is een strategische beslissing die invloed heeft op runbook, audit trail en supportbaarheid.</p>
+        <p><strong>Self-updating mode.</strong> Het cluster zelf orkestreert de update-run. Eén cluster-node is de coordinator, draint de andere nodes om de beurt, patcht ze, brengt ze weer in. Het cluster heeft een geconfigureerde CAU-rol, een ingebouwd schema en de cluster-rol moet zelf voldoende rechten hebben om Windows Update of WSUS te bevragen.</p>
         <p><strong>Remote-updating mode.</strong> Een externe orchestrator (een management-server, een script-host, of een handmatige operator) start de CAU-run via <code>Invoke-CauRun</code>. Het cluster zelf heeft geen geconfigureerde CAU-rol. Iedere update-cyclus wordt expliciet getriggerd vanuit een gedocumenteerd patch-window.</p>
 
         <p><strong>Welke is "beter"?</strong></p>
-        <p>Het hangt af van je operationele model. Self-updating is set-and-forget, schaalt goed over veel clusters, en past bij organisaties die volledige automatisering willen. Remote-updating geeft expliciete controle per cyclus, past bij organisaties met strikt change-management, en is wat wij vaker zien bij klanten met compliance-eisen die menselijke goedkeuring per patch-cyclus voorschrijven.</p>
+        <p>Het hangt af van je operationele model. Self-updating is set-and-forget, schaalt goed over veel clusters en past bij organisaties die volledige automatisering willen. Remote-updating geeft expliciete controle per cyclus, past bij organisaties met strikt change-management en is wat wij vaker zien bij klanten met compliance-eisen die menselijke goedkeuring per patch-cyclus voorschrijven.</p>
 
         <p><strong>Wat CloudLabs in Health Checks vindt:</strong></p>
-        <p>Een verrassend aantal klanten denkt dat ze self-updating draaien, maar de cluster-rol bestaat niet meer, of staat in een gedegradeerde state. Iemand heeft jaren geleden remote-updating geprobeerd, een script geschreven, en de self-updating rol uitgezet. Het script draait nog steeds, maar niemand documenteerde de overgang. Resultaat: een patch-cyclus die op self-updating lijkt, maar feitelijk afhangt van een vergeten scheduled task op een management-server die over zes maanden gedecommissioneerd wordt.</p>
+        <p>Een verrassend aantal klanten denkt dat ze self-updating draaien, maar de cluster-rol bestaat niet meer, of staat in een gedegradeerde state. Iemand heeft jaren geleden remote-updating geprobeerd, een script geschreven en de self-updating rol uitgezet. Het script draait nog steeds, maar niemand documenteerde de overgang. Resultaat: een patch-cyclus die op self-updating lijkt, maar feitelijk afhangt van een vergeten scheduled task op een management-server die over zes maanden gedecommissioneerd wordt.</p>
 
         <p><strong>Detecteren wat er werkelijk draait:</strong></p>
 <pre><code># Check of er een CAU clustered role bestaat
@@ -202,13 +201,13 @@ Get-CauReport -ClusterName $cluster -Last 5</code></pre>
         <p>Een CAU-runbook is geen optionele documentatie, het is operationele infrastructuur. Wij eisen in CloudLabs remediation-opdrachten standaard dat de volgende secties bestaan en bijgewerkt zijn.</p>
         <ul>
           <li><strong>Sectie 1, de modus.</strong> Self-updating of remote-updating, expliciet beschreven, met de reden waarom voor deze modus is gekozen.</li>
-          <li><strong>Sectie 2, het schema.</strong> Wanneer draait een CAU-run, met welke frequentie, in welk onderhoudsvenster, en wat is de fallback als het venster gemist wordt.</li>
-          <li><strong>Sectie 3, de update-bron.</strong> Windows Update direct, WSUS, SCCM, of Azure Update Manager. Inclusief de URL of server, en het serviceaccount waarmee het cluster authenticeert.</li>
+          <li><strong>Sectie 2, het schema.</strong> Wanneer draait een CAU-run, met welke frequentie, in welk onderhoudsvenster en wat is de fallback als het venster gemist wordt.</li>
+          <li><strong>Sectie 3, de update-bron.</strong> Windows Update direct, WSUS, SCCM, of Azure Update Manager. Inclusief de URL of server en het serviceaccount waarmee het cluster authenticeert.</li>
           <li><strong>Sectie 4, pre-update tasks.</strong> Wat moet vóór elke run gecontroleerd worden, scripted of handmatig. Bijvoorbeeld: cluster validatie, geen bestaande paused nodes, geen actieve incidents.</li>
           <li><strong>Sectie 5, post-update tasks.</strong> Wat moet ná elke run gecontroleerd worden. CSV ownership rebalance, time service sync verifiëren, <code>Test-Cluster</code> run, alert op nieuwe firmware-drift.</li>
           <li><strong>Sectie 6, escalatiepad.</strong> Wat te doen als een node niet correct rejoint, als een patch faalt, of als een VM niet correct migreert tijdens drain. Wie wordt gebeld, op welk nummer, met welk informatie-pakket.</li>
-          <li><strong>Sectie 7, rollback.</strong> Wat is het terugrolproces als een patch een regressie veroorzaakt. Welk onderhoudsvenster is daarvoor nodig, en welke beslissingscriteria triggeren rollback.</li>
-          <li><strong>Sectie 8, audit-locatie.</strong> Waar worden CAU-rapporten gearchiveerd, met welke retentie, en wie heeft toegang. Onder de 90 dagen retentie is structureel te kort als Microsoft Support drie maanden terug wil kunnen kijken.</li>
+          <li><strong>Sectie 7, rollback.</strong> Wat is het terugrolproces als een patch een regressie veroorzaakt. Welk onderhoudsvenster is daarvoor nodig en welke beslissingscriteria triggeren rollback.</li>
+          <li><strong>Sectie 8, audit-locatie.</strong> Waar worden CAU-rapporten gearchiveerd, met welke retentie en wie heeft toegang. Onder de 90 dagen retentie is structureel te kort als Microsoft Support drie maanden terug wil kunnen kijken.</li>
         </ul>
         <p>Wij leveren dit runbook als template mee bij een Health Check remediation, ingevuld voor de specifieke klantomgeving. De template zelf is generiek toepasbaar, het invullen is wat tijd kost en wat de waarde maakt.</p>
 
@@ -227,19 +226,19 @@ Get-CauReport -ClusterName $cluster -Last 1 -Detailed |
     ConvertTo-Html | Out-File "C:\Audit\CAU\$($cluster)_$(Get-Date -Format 'yyyyMMdd').html"</code></pre>
 
         <p><strong>Wat we standaard in remediation toevoegen:</strong></p>
-        <p>Een scheduled task die na elke CAU-run het rapport ophaalt, archiveert naar een onafhankelijke locatie (niet op de cluster zelf, en niet op één node), en een notificatie naar een Teams-webhook of SIEM stuurt. Voor klanten met compliance-eisen (ISO 27001, SOC 2, NEN 7510) is dit een verplicht onderdeel van het remediation-rapport.</p>
+        <p>Een scheduled task die na elke CAU-run het rapport ophaalt, archiveert naar een onafhankelijke locatie (niet op de cluster zelf en niet op één node) en een notificatie naar een Teams-webhook of SIEM stuurt. Voor klanten met compliance-eisen (ISO 27001, SOC 2, NEN 7510) is dit een verplicht onderdeel van het remediation-rapport.</p>
 
         <p><strong>Naast de rapportage zelf:</strong></p>
         <p>Welke change-management ticket is gekoppeld aan deze run. Wie heeft de run getriggerd of geautoriseerd. Wat was de reden voor afwijkingen van het standaardschema. Dit is informatie die het cluster zelf niet bijhoudt, maar wat in de bredere operationele context wel vastgelegd moet worden.</p>
 
         <h2 id="nl-4">4. Self-updating vs remote-updating, een nuchtere afweging</h2>
-        <p>Microsoft's documentatie suggereert voor de meeste klanten self-updating. Onze ervaring is dat remote-updating in enterprise-omgevingen vaker de juiste keuze is, en hier is waarom.</p>
+        <p>Microsoft's documentatie suggereert voor de meeste klanten self-updating. Onze ervaring is dat remote-updating in enterprise-omgevingen vaker de juiste keuze is en hier is waarom.</p>
 
         <p><strong>Voor self-updating:</strong></p>
         <ul>
           <li>Lage operationele overhead, geen externe orkestrator nodig. Het cluster patcht zichzelf in het ingestelde venster, klaar.</li>
           <li>Schaalbaar, één configuratie geldt voor één cluster en je hoeft het niet op een management-host bij te houden.</li>
-          <li>Geschikt voor remote sites, edge-deployments, en omgevingen zonder centrale management-server.</li>
+          <li>Geschikt voor remote sites, edge-deployments en omgevingen zonder centrale management-server.</li>
         </ul>
 
         <p><strong>Voor remote-updating:</strong></p>
@@ -252,16 +251,16 @@ Get-CauReport -ClusterName $cluster -Last 1 -Detailed |
 
         <p><strong>De CloudLabs aanbeveling:</strong></p>
         <p>Voor enterprise-omgevingen met meerdere Hyper-V clusters en een centraal ops-team: remote-updating, met een gestandaardiseerde script-stack die elke run consistent uitvoert. Voor branch sites of edge-deployments met beperkte centrale connectivity: self-updating.</p>
-        <p>De keuze documenteer je in het runbook (sectie 1), en de motivatie blijft staan zodat een toekomstige beheerder begrijpt waarom de modus is wat hij is.</p>
+        <p>De keuze documenteer je in het runbook (sectie 1) en de motivatie blijft staan zodat een toekomstige beheerder begrijpt waarom de modus is wat hij is.</p>
 
         <div class="mid-cta">
           <p>CAU governance is een onderwerp waar klanten vaak verrast zijn over wat er wel of niet werkt in hun omgeving. "We dachten dat het self-updating was" is een zin die wij in elke tweede Health Check horen.</p>
-          <p>Een CloudLabs Hyper-V Cluster Health Check brengt de werkelijke CAU-toestand in kaart, identificeert governance-gaps, en levert een runbook-template plus audit-trail-script mee als onderdeel van het remediation-rapport.</p>
+          <p>Een CloudLabs Hyper-V Cluster Health Check brengt de werkelijke CAU-toestand in kaart, identificeert governance-gaps en levert een runbook-template plus audit-trail-script mee als onderdeel van het remediation-rapport.</p>
           <a href="../book.html">Plan een Health Check kennismaking →</a>
         </div>
 
         <h2 id="nl-5">5. Pre-update en post-update tasks die ertoe doen</h2>
-        <p>CAU ondersteunt scriptable pre-update en post-update tasks. Wij gebruiken die intensief, en de specifieke tasks die wij standaard inrichten:</p>
+        <p>CAU ondersteunt scriptable pre-update en post-update tasks. Wij gebruiken die intensief en de specifieke tasks die wij standaard inrichten:</p>
 
         <p><strong>Pre-update tasks:</strong></p>
 <pre><code># Voorbeeld pre-update task: cluster validatie en sanity checks
@@ -322,7 +321,7 @@ Write-Host "Post-update tasks completed"
         <h2 id="nl-6">6. CAU op Windows Server 2025, wat verandert</h2>
         <p>Windows Server 2025 brengt enkele veranderingen aan CAU die het overwegen waard zijn.</p>
         <p><strong>Hot-patching integratie.</strong> Patches die hot-patchable zijn (zie <!--LINK:windows-server-2025-hyper-v-cluster-features--><a href="windows-server-2025-hyper-v-cluster-features.html">Windows Server 2025 Hyper-V</a><!--/LINK:windows-server-2025-hyper-v-cluster-features-->) lopen veel sneller door een CAU-run, omdat ze geen reboot vereisen. Een maandelijkse CAU-run die op WS 2022 vier uur kostte voor een vier-node cluster, daalt op WS 2025 vaak naar anderhalf uur, met grotere reboot-windows op kwartaalbasis voor de niet-hot-patchable updates.</p>
-        <p><strong>Azure Update Manager als alternatief.</strong> Voor Arc-enabled Hyper-V hosts kun je in plaats van CAU ook Azure Update Manager gebruiken. Dat orkestreert vanuit Azure-portal en geeft een centrale audit-trail uit Azure Monitor. Voor klanten met meerdere clusters in verschillende sites is dit operationeel comfortabeler dan per-cluster CAU-configuratie. Wel: het is een andere tool, met andere abstracties, en het runbook moet daarop worden aangepast.</p>
+        <p><strong>Azure Update Manager als alternatief.</strong> Voor Arc-enabled Hyper-V hosts kun je in plaats van CAU ook Azure Update Manager gebruiken. Dat orkestreert vanuit Azure-portal en geeft een centrale audit-trail uit Azure Monitor. Voor klanten met meerdere clusters in verschillende sites is dit operationeel comfortabeler dan per-cluster CAU-configuratie. Wel: het is een andere tool, met andere abstracties en het runbook moet daarop worden aangepast.</p>
         <p><strong>Verbeterde reporting.</strong> <code>Get-CauReport</code> in WS 2025 levert iets rijkere output, met expliciete logging van welke patches via hot-patch zijn toegepast en welke niet. Dat helpt bij troubleshooting van regressies.</p>
         <p><strong>Backward compatibility.</strong> CAU-configuratie van WS 2022 wordt automatisch overgenomen tijdens een cluster rolling upgrade. Bestaande pre/post-scripts blijven werken. Geen herconfiguratie nodig na de upgrade, mits de scripts geen hard-coded versies hadden.</p>
 
@@ -340,12 +339,12 @@ Write-Host "Post-update tasks completed"
         <h2 id="nl-8">8. Het CloudLabs CAU readiness-rapport</h2>
         <p>In CloudLabs Health Checks behandelen we CAU als een eigen bevindingsgebied, met de volgende structuur per cluster:</p>
         <ul>
-          <li><strong>Welke modus draait er werkelijk.</strong> Self-updating, remote-updating, of geen van beide. Met evidence uit <code>Get-CauClusterRole</code>, scheduled tasks, en eventuele externe scripts.</li>
-          <li><strong>Wanneer is de laatste succesvolle run, en wat patched die.</strong> Met <code>Get-CauReport</code> output, en een check op gaps in het patch-ritme.</li>
+          <li><strong>Welke modus draait er werkelijk.</strong> Self-updating, remote-updating, of geen van beide. Met evidence uit <code>Get-CauClusterRole</code>, scheduled tasks en eventuele externe scripts.</li>
+          <li><strong>Wanneer is de laatste succesvolle run en wat patched die.</strong> Met <code>Get-CauReport</code> output en een check op gaps in het patch-ritme.</li>
           <li><strong>Wat is de audit-trail.</strong> Bestaat er archivering, waar, met welke retentie.</li>
-          <li><strong>Welke pre/post-scripts zijn geconfigureerd.</strong> En zijn ze idempotent, getest, en gedocumenteerd.</li>
+          <li><strong>Welke pre/post-scripts zijn geconfigureerd.</strong> En zijn ze idempotent, getest en gedocumenteerd.</li>
           <li><strong>Welk runbook bestaat.</strong> En is het actueel, of dateert het uit een vorige hardware-generatie.</li>
-          <li><strong>Welke remediation-stappen brengen het op niveau.</strong> Met severity geprioriteerd, en met geschatte effort.</li>
+          <li><strong>Welke remediation-stappen brengen het op niveau.</strong> Met severity geprioriteerd en met geschatte effort.</li>
         </ul>
         <p>Voor klanten die zelf hun CAU-governance willen opbouwen, leveren we een runbook-template en pre/post-script bibliotheek mee. Voor klanten die het remediation-traject willen uitbesteden, doen wij het in een afgebakende opdracht van twee tot vier werkdagen.</p>
         <p><a href="../book.html"><strong>Plan een Hyper-V Cluster Health Check kennismaking →</strong></a></p>
@@ -357,7 +356,7 @@ Write-Host "Post-update tasks completed"
           <p>Voor de momenten dat het niet goed gaat. Een runbook is niet voor het successcenario, het is voor het escalatiescenario waar je tijd verliest aan reconstructie van wat de normale toestand was. Microsoft Support gaat tijdens een geëscaleerde call vragen naar patch-niveaus, audit-rapporten en post-patch checks. Hebben die niet bestaan, dan duurt de call drie keer langer en kan support beslissen om problemen niet als covered te beschouwen.</p>
 
           <div class="faq-q">Werkt CAU goed met WSUS, of moet ik naar Azure Update Manager?</div>
-          <p>CAU werkt prima met WSUS, en voor de meeste klanten blijft dat de juiste keuze. Azure Update Manager is een goede optie als je sowieso al Arc-enabled bent, meerdere clusters in verschillende sites beheert, en de centrale audit-trail in Azure waarde toevoegt. Het is geen vereiste upgrade.</p>
+          <p>CAU werkt prima met WSUS en voor de meeste klanten blijft dat de juiste keuze. Azure Update Manager is een goede optie als je sowieso al Arc-enabled bent, meerdere clusters in verschillende sites beheert en de centrale audit-trail in Azure waarde toevoegt. Het is geen vereiste upgrade.</p>
 
           <div class="faq-q">Wat is een redelijke retentieperiode voor CAU-audit-rapporten?</div>
           <p>Minimaal 12 maanden, bij voorkeur 24 maanden. Microsoft Support kan tot een jaar terug naar patches vragen tijdens escalatie. Voor klanten met compliance-frameworks (ISO 27001, SOC 2) kan de retentie-eis langer zijn, controleer met de compliance-officer.</p>
@@ -385,7 +384,7 @@ Write-Host "Post-update tasks completed"
 </section>
 </main>
 
-<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><a href="/healthcheck/">De HealthCheck</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/tarieven/">Tarieven</a><a href="/partners/">Voor partners</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/vragen/">Veelgestelde vragen</a><a href="/onderwerpen/">Onderwerpen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Gratis script aanvragen</a><a href="/afspraak/#agenda">Afspraak maken</a><a href="/contact/#bericht">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy/">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/voorwaarden/">Algemene voorwaarden</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
 
 
 <script>
@@ -394,6 +393,6 @@ Write-Host "Post-update tasks completed"
   if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
 })();
 </script>
-<script src="/huisstijl/pagina.js"></script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
 </body>
 </html>

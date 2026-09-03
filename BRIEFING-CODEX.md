@@ -149,8 +149,10 @@ en niet als een bedrijf dat meetrapporten levert.
 - `preview/index.html` — homepage-proef, `noindex`
 - `preview-home.html` — oudere proef, mag weg
 
-**Draaiende server tijdens ontwikkeling:** `python3 -m http.server 8000` in de
-repo-root. De preview staat op `/preview/index.html`.
+**Draaiende server tijdens ontwikkeling:** `python3 serve.py` in de repo-root,
+op poort 8000. Die voert de omleidingen uit `redirects.conf` uit en toont bij
+een onbekend adres `/404.html` (of `/en/404.html`), net als nginx straks doet.
+`python3 -m http.server 8000` werkt ook, maar kent die twee dingen niet.
 
 ### Bekende fouten in de bestaande site
 

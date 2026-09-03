@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Deze pagina is nieuw en vervangt findings.html. De teksten komen woord voor
+     woord uit findings.html; er is niets herschreven of bijverzonnen.
+     De carrousel met pijltjes is vervallen: de drie bevindingen staan nu onder
+     elkaar. noindex staat aan zolang de nieuwe stijl niet live is. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>The findings report &middot; CloudLabs</title>
+<meta name="description" content="Every finding follows the same anatomy: what was measured, on which node, at what time, and what follows from it.">
+<link rel="canonical" href="https://cldlbs.com/en/report/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://cldlbs.com/en/report/">
+<meta property="og:title" content="Wat u ontvangt &middot; CloudLabs">
+<meta property="og:description" content="Every finding follows the same anatomy. Three worked-out examples from a real report.">
+<meta property="og:image" content="https://cldlbs.com/images/toolchain-findings-summary.webp">
+<link rel="alternate" hreflang="nl" href="https://cldlbs.com/rapport/">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/report/">
+<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/rapport/">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/bevinding.css?v=8d065ab5">
+<link rel="stylesheet" href="/huisstijl/rapport.css?v=8d461463">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://cldlbs.com/"},
+        {"@type":"ListItem","position":2,"name":"Wat u ontvangt","item":"https://cldlbs.com/rapport/"}
+      ]
+    },
+    {
+      "@type":"WebPage",
+      "@id":"https://cldlbs.com/rapport/#pagina",
+      "url":"https://cldlbs.com/rapport/",
+      "name":"What you receive · the findings report",
+      "inLanguage":"nl-NL",
+      "description":"The anatomy of a finding, with three worked-out examples and the five documents an engagement delivers.",
+      "about":["Hyper-V","Failover Clustering","Azure Local","Storage Spaces Direct"],
+      "publisher":{"@type":"Organization","@id":"https://cldlbs.com/#organisatie","name":"CloudLabs","url":"https://cldlbs.com/"},
+      "mainEntity":{
+        "@type":"ItemList",
+        "name":"Documents an engagement delivers",
+        "numberOfItems":5,
+        "itemListElement":[
+          {"@type":"ListItem","position":1,"name":"Health check with risk analysis"},
+          {"@type":"ListItem","position":2,"name":"Delta-rapport"},
+          {"@type":"ListItem","position":3,"name":"Restrisico-rapport en trend"},
+          {"@type":"ListItem","position":4,"name":"Systeemdocumentatie"},
+          {"@type":"ListItem","position":5,"name":"Root Cause Analysis"}
+        ]
+      }
+    },
+    {
+      "@type":"FAQPage",
+      "@id":"https://cldlbs.com/rapport/#vragen",
+      "mainEntity":[
+        {"@type":"Question","name":"What is in a finding?",
+         "acceptedAnswer":{"@type":"Answer","text":"Every finding follows the same anatomy: the status and how it was established, the current situation with measured values, the best practice with its source, the deviation and why it gets this risk level, a recommendation an engineer can carry out, and the reference the standard rests on."}},
+        {"@type":"Question","name":"Welke risiconiveaus gebruikt CloudLabs?",
+         "acceptedAnswer":{"@type":"Answer","text":"Six: CRITICAL, HIGH, MEDIUM, LOW, NONE and RESOLVED. NONE means checked and found in order and stands as such in the report; that is something other than not measured. RESOLVED is only assigned when a follow-up measurement proves the fix, not on the basis of a ticket status."}},
+        {"@type":"Question","name":"Which documents does an engagement deliver?",
+         "acceptedAnswer":{"@type":"Answer","text":"The findings report is the base deliverable. From the same read-only measurements comes, on every follow-up measurement, a delta report and a remaining-risk report with a risk trend chart. As-Built system documentation and a Root Cause Analysis after an incident are available separately."}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Secure the evidence first.</span><a href="/en/triage/#aanvraag">Start free triage &rarr;</a><button type="button" aria-label="Close" id="close-announcement">&times;</button></div>
+
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="/en/" hreflang="en"><b>Cloud<span>Labs</span></b><small>Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><div class="navgroep" data-hier="ja"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-the-healthcheck">The HealthCheck</button><div class="navmenu" id="nav-the-healthcheck"><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/modules/">The modules</a><a href="/en/report/" aria-current="page">The findings report</a></div></div><a href="/en/rates/">Rates</a><a href="/en/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-knowledge-base">Knowledge base</button><div class="navmenu" id="nav-knowledge-base"><a href="/en/faq/">FAQ</a><a href="/en/case-studies/">Case studies</a><a href="/en/topics/">Topics</a></div></div><a href="/en/about/">About us</a></div><div class="nav-actions">
+      <span class="taalwissel"><a href="/rapport/" hreflang="nl" lang="nl">NL</a><span aria-current="true">EN</span></span>
+      <a class="btn primary" href="/en/triage/#aanvraag">Start free triage</a>
+      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <section class="section" style="padding-bottom:0">
+    <div class="inner">
+      <p class="kruimelpad" style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);margin:0 0 30px"><a href="/" style="color:var(--faint);text-decoration:none">CloudLabs</a>What you receive</p>
+
+      <div class="rapportkop">
+        <p class="eyebrow">The findings report</p>
+        <h1>Every finding follows the same anatomy.</h1>
+        <p>Below are a few worked examples of findings, each with a risk indicator.</p>
+      </div>
+
+      <div class="schaal">
+        <span class="chip crit">CRITICAL</span>
+        <span class="chip high">HIGH</span>
+        <span class="chip med">Medium</span>
+        <span class="chip low">LOW</span>
+        <span class="chip none">NONE</span>
+        <span class="chip" style="background:var(--opgelost)">RESOLVED</span>
+      </div>
+      <p class="schaalnoot">Methodology last updated: juli 2026</p>
+
+      <div class="bevindingen">
+
+        <article class="bev high">
+          <div class="bevkop">
+            <span class="fid">F22</span>
+            <div class="bevtitel">
+              <span class="onderwerp">Networking &middot; Live Migration</span>
+              <h3>Live Migration traffic routed over the cluster heartbeat network</h3>
+            </div>
+            <span class="chip high">HIGH</span>
+          </div>
+          <div class="veld"><span class="veldnaam">Status</span><p>Open. Bevestigd via <code>Get-ClusterNetwork</code>, per-node binding order, and the Live Migration network selection on each Hyper-V host.</p></div>
+          <div class="veld"><span class="veldnaam">Current situation</span><p>Het <code>Cluster Communication</code> network has role 3 (Cluster and Client) and allows both cluster traffic and Live Migration on a single 1 GbE adapter per node. The same adapter carries cluster heartbeats and CSV metadata, and no QoS policy is set to reserve bandwidth for either.</p></div>
+          <div class="veld"><span class="veldnaam">Best Practice</span><p>Live Migration must run on a dedicated 10 GbE or faster network, physically separated from heartbeat and CSV metadata where possible. When converged on a SET team, a QoS policy must guarantee minimum bandwidth for cluster traffic, and SMB Direct (RDMA) should be enabled when the NICs support it.</p></div>
+          <div class="veld"><span class="veldnaam">Deviation</span><p>A single Live Migration of a memory-heavy VM saturates the 1 GbE link within seconds and starves cluster heartbeats. The cluster service treats missed heartbeats as node isolation, producing FailoverClustering Event ID 1135 in the System log, CSV ownership flapping, and in the worst case unplanned VM restarts on surviving nodes. Microsoft Support will require this is corrected before troubleshooting any cluster performance or stability case.</p></div>
+          <div class="veld"><span class="veldnaam">Recommendation</span><p>Move Live Migration onto a dedicated 10 GbE network, ideally with SMB Direct (RDMA) where the NICs support it. If physical separation is not feasible, use <code>Set-NetQosPolicy</code> on the SET team to reserve minimum bandwidth for cluster and CSV traffic, and cap parallel migrations via <code>Set-VMHost -MaximumVirtualMachineMigrations</code>.</p></div>
+          <div class="veld"><span class="veldnaam">Reference</span><p>Open.</p></div>
+        </article>
+
+        <article class="bev high">
+          <div class="bevkop">
+            <span class="fid">F12</span>
+            <div class="bevtitel">
+              <span class="onderwerp">Cluster Configuration &middot; Quorum</span>
+              <h3>File Share Witness on a single non-redundant file server</h3>
+            </div>
+            <span class="chip high">HIGH</span>
+          </div>
+          <div class="veld"><span class="veldnaam">Status</span><p>Open. Identified during the most recent cluster validation run and confirmed via <code>Get-ClusterQuorum</code> and <code>Get-ClusterResource "File Share Witness"</code>.</p></div>
+          <div class="veld"><span class="veldnaam">Current situation</span><p>The cluster uses a File Share Witness pointed at a UNC path on a single standalone Windows file server in the same site as the cluster, on the same management VLAN. The witness server is not clustered, runs on shared infrastructure with no dedicated maintenance window, and Dynamic Witness is enabled, which masks part of the risk during day-to-day operation.</p></div>
+          <div class="veld"><span class="veldnaam">Best Practice</span><p>The witness must reside on infrastructure independent of the cluster's failure domains. For single-site clusters, Cloud Witness on Azure Storage is preferred; for multisite, the witness sits in a third site or on Azure.</p></div>
+          <div class="veld"><span class="veldnaam">Deviation</span><p>The witness shares a failure domain with the cluster. Dynamic Witness offers no protection when a node fails simultaneously with the witness server; in that combined-failure case the cluster drops below quorum and all VMs go offline.</p></div>
+          <div class="veld"><span class="veldnaam">Recommendation</span><p>Reconfigure to a Cloud Witness via <code>Set-ClusterQuorum -CloudWitness</code> using a dedicated Azure Storage Account with access keys stored separately from the cluster credentials.</p></div>
+          <div class="veld"><span class="veldnaam">Reference</span><p>Open.</p></div>
+        </article>
+
+        <article class="bev med">
+          <div class="bevkop">
+            <span class="fid">F18</span>
+            <div class="bevtitel">
+              <span class="onderwerp">Cluster Configuration &middot; CSV Ownership</span>
+              <h3>CSV ownership unbalanced: 7 of 8 volumes owned by a single node</h3>
+            </div>
+            <span class="chip med">Medium</span>
+          </div>
+          <div class="veld"><span class="veldnaam">Status</span><p>Open. Observed across three consecutive inventory runs via <code>Get-ClusterSharedVolume</code> and confirmed with <code>Get-ClusterSharedVolumeState</code>.</p></div>
+          <div class="veld"><span class="veldnaam">Current situation</span><p>Of the eight CSVs in the cluster, seven are owned by node <code>HV-01</code>. CsvBalancer is enabled with BalancingPeriod 30 minutes but has not converged, typically because VM placement keeps pulling ownership back to <code>HV-01</code>.</p></div>
+          <div class="veld"><span class="veldnaam">Best Practice</span><p>CSV ownership should be approximately even across nodes so that metadata coordination, redirected IO during backups, and Live Migration overhead are spread.</p></div>
+          <div class="veld"><span class="veldnaam">Deviation</span><p>Concentrated ownership creates a metadata and IO coordination hotspot on <code>HV-01</code>. Drain operations on <code>HV-01</code> for patching trigger seven simultaneous ownership changes, elongating maintenance windows and producing brief IO pauses on VMs hosted on those CSVs.</p></div>
+          <div class="veld"><span class="veldnaam">Recommendation</span><p>Distribute CSV ownership manually with <code>Move-ClusterSharedVolume</code> so that each node owns roughly the same number of CSVs, then check VM placement and anti-affinity rules on <code>HV-01</code>.</p></div>
+          <div class="veld"><span class="veldnaam">Reference</span><p>Microsoft Learn: Use Cluster Shared Volumes in a failover cluster; CSV cache and balancing behaviour.</p></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= de documenten ================= -->
+  <section class="section" style="background:var(--surface)">
+    <div class="inner">
+      <div class="section-head" style="text-align:left;margin-left:0;max-width:var(--kolom)">
+        <p class="eyebrow" style="justify-content:flex-start">Beyond the findings report</p>
+        <h2 style="font-family:var(--serif);font-weight:400">What an engagement delivers</h2>
+      </div>
+
+      <div class="rapporttekst" style="margin-bottom:40px">
+        <p>The Findings report is the base deliverable. From the same read-only measurements the toolchain also produces, on every follow-up measurement, a delta report and a remaining-risk report with a risk trend chart, so that progress is measured and not asserted. As-Built system documentation and a Root Cause Analysis after an incident are available separately. See <a href="/en/healthcheck/#doorloop">how we work</a> for how the measurements hang together.</p>
+        <p><em>Real output from a sample engagement (a fictional environment, no customer data). Click any page to enlarge.</em></p>
+      </div>
+
+      <div class="opleveringen">
+        <a class="oplevering" href="/images/toolchain-findings-summary.webp" target="_blank" rel="noopener">
+          <img src="/images/toolchain-findings-summary.webp" alt="Summary table from a findings report" loading="lazy" decoding="async">
+          <div class="binnen"><span class="tag">Base measurement</span><h3>Health check with risk analysis</h3>
+          <p>Findings graded CRITICAL, HIGH, MEDIUM and LOW, with a prioritised action plan.</p></div>
+        </a>
+        <a class="oplevering" href="/images/toolchain-delta-status.webp" target="_blank" rel="noopener">
+          <img src="/images/toolchain-delta-status.webp" alt="Register from a delta report with the status before and after" loading="lazy" decoding="async">
+          <div class="binnen"><span class="tag">Delta</span><h3>Delta report</h3>
+          <p>What was resolved, verified by measurement, not by ticket status.</p></div>
+        </a>
+        <a class="oplevering" href="/images/noorderlicht-risk-trend.png" target="_blank" rel="noopener">
+          <img src="/images/noorderlicht-risk-trend.png" alt="Risico-trend grafiek over drie metingen" loading="lazy" decoding="async">
+          <div class="binnen"><span class="tag">Progress</span><h3>Remaining risks & trend</h3>
+          <p>The open risks with a progress chart across measurements.</p></div>
+        </a>
+        <a class="oplevering" href="/images/toolchain-asbuilt-inventory.webp" target="_blank" rel="noopener">
+          <img src="/images/toolchain-asbuilt-inventory.webp" alt="Inventory chapters from the as-built documentation" loading="lazy" decoding="async">
+          <div class="binnen"><span class="tag">As-Built</span><h3>System documentation</h3>
+          <p>Generated from the latest measurement, always in sync with reality.</p></div>
+        </a>
+        <a class="oplevering" href="/images/toolchain-rca-causes.webp" target="_blank" rel="noopener">
+          <img src="/images/toolchain-rca-causes.webp" alt="Failure sequence and causes from a root cause analysis" loading="lazy" decoding="async">
+          <div class="binnen"><span class="tag">RCA · on call</span><h3>Root Cause Analysis</h3>
+          <p>After an incident: a cross-node timeline where every claim cites evidence.</p></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="inner">
+      <p class="eyebrow" style="justify-content:center">Your own cluster</p>
+      <h2>Book a<br>health check</h2>
+      <p>The free Cluster Triage only reads and changes nothing. You receive the five heaviest signals around your incident window, with the measured value, the node and the time.</p>
+      <div class="actions">
+        <a class="btn primary" data-icon="script" href="/en/triage/">Start free Cluster Triage &rarr;</a>
+        <a class="btn ghost" data-icon="rapport" href="/en/healthcheck/#doorloop">See the method</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Services</h4><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div><div class="footer-column"><h4>Organisation</h4><a href="/en/about/">About us</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/rates/">Rates</a><a href="/en/partners/">For partners</a></div><div class="footer-column"><h4>Knowledge base</h4><a href="/en/blog/">Blog</a><a href="/en/case-studies/">Case studies</a><a href="/en/blog/top-10-hyper-v-cluster-issues/">Failures and causes</a><a href="/en/blog/cluster-witness-comparison/">Quorum and witness</a><a href="/en/blog/san-vs-s2d-vs-azure-local-hyper-v-storage/">Storage and Storage Spaces Direct</a><a href="/en/faq/">FAQ</a><a href="/en/topics/">Topics</a></div><div class="footer-column"><h4>Contact</h4><a href="/en/triage/#aanvraag">Request the free script</a><a href="/en/appointment/#agenda">Book a call</a><a href="/en/contact/#bericht">Get in touch</a></div><div class="newsletter"><h4>Technical findings by email</h4><form action="#" method="post"><label><span class="skip">Email address</span><input type="email" name="email" placeholder="name@company.com" autocomplete="email"></label><button type="submit">Subscribe</button></form><p>No marketing stream. Only new findings and practical explanation.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="Email"><img src="/assets/icons/email.svg" alt=""></a><a href="/en/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/en/">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/en/privacy/">Privacy statement</a><a href="/en/triage/#veilig">Security</a><a href="/en/terms/">Terms of engagement</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
+
+
+<script>
+(function(){
+  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
+  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
+})();
+</script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
+</body>
+</html>

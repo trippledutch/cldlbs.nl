@@ -5,22 +5,22 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- Omgezet naar de nieuwe huisstijl met blog-omzetten.py. De Engelse helft is
      eruit; die krijgt later een eigen URL onder /en/. De inhoud is niet
-     herschreven. noindex staat aan zolang de nieuwe stijl niet live is. -->
-<meta name="robots" content="noindex,nofollow">
+     herschreven. Vrijgegeven voor indexering op 2 september 2026. -->
 <meta name="theme-color" content="#0A1024">
-<title>Windows Server 2025 Hyper-V: wat het werkelijk toevoegt voor cluster operators &middot; CloudLabs</title>
-<meta name="description" content="Windows Server 2025 is sinds november 2024 algemeen beschikbaar, en in 2026 zien wij bij CloudLabs steeds vaker dat klanten upgrade-planning serieus oppakken. Niet omdat Windows Server 2022 morgen ophoudt, maar omdat 2025 een aantal Hyper-V verbeteringen brengt die het verschil maken voor cluster-op">
+<title>Windows Server 2025 Hyper-V voor clusterbeheer &middot; CloudLabs</title>
+<meta name="description" content="Windows Server 2025 is sinds november 2024 algemeen beschikbaar en in 2026 zien wij bij CloudLabs steeds vaker dat klanten upgrade-planning serieus oppakken. Niet omdat Windows Server 2022 morgen ophoudt, maar omdat 2025 een aantal Hyper-V verbeteringen brengt die het verschil maken voor cluster-op">
 <link rel="canonical" href="https://cldlbs.com/blog/windows-server-2025-hyper-v-cluster-features.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/windows-server-2025-hyper-v-cluster-features.html">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/blog/windows-server-2025-hyper-v-cluster-features/">
 <link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/windows-server-2025-hyper-v-cluster-features.html">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="nl_NL">
 <meta property="og:url" content="https://cldlbs.com/blog/windows-server-2025-hyper-v-cluster-features.html">
-<meta property="og:title" content="Windows Server 2025 Hyper-V: wat het werkelijk toevoegt voor cluster operators">
-<meta property="og:description" content="Windows Server 2025 is sinds november 2024 algemeen beschikbaar, en in 2026 zien wij bij CloudLabs steeds vaker dat klanten upgrade-planning serieus oppakken. Niet omdat Windows Server 2022 morgen ophoudt, maar omdat 2025 een aantal Hyper-V verbeteringen brengt die het verschil maken voor cluster-op">
+<meta property="og:title" content="Windows Server 2025 Hyper-V voor clusterbeheer &middot; CloudLabs">
+<meta property="og:description" content="Windows Server 2025 is sinds november 2024 algemeen beschikbaar en in 2026 zien wij bij CloudLabs steeds vaker dat klanten upgrade-planning serieus oppakken. Niet omdat Windows Server 2022 morgen ophoudt, maar omdat 2025 een aantal Hyper-V verbeteringen brengt die het verschil maken voor cluster-op">
 <link rel="icon" href="/favicon.png" type="image/png">
-<link rel="stylesheet" href="/huisstijl/pagina.css">
-<link rel="stylesheet" href="/huisstijl/artikel.css">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/artikel.css?v=04e23fbe">
 
 <script type="application/ld+json">
 {
@@ -53,7 +53,7 @@
       "@type": "BlogPosting",
       "@id": "https://cldlbs.com/blog/windows-server-2025-hyper-v-cluster-features.html#artikel",
       "headline": "Windows Server 2025 Hyper-V: wat het werkelijk toevoegt voor cluster operators",
-      "description": "Windows Server 2025 is sinds november 2024 algemeen beschikbaar, en in 2026 zien wij bij CloudLabs steeds vaker dat klanten upgrade-planning serieus oppakken. Niet omdat Windows Server 2022 morgen ophoudt, maar omdat 2025 een aantal Hyper-V verbeteringen brengt die het verschil maken voor cluster-op",
+      "description": "Windows Server 2025 is sinds november 2024 algemeen beschikbaar en in 2026 zien wij bij CloudLabs steeds vaker dat klanten upgrade-planning serieus oppakken. Niet omdat Windows Server 2022 morgen ophoudt, maar omdat 2025 een aantal Hyper-V verbeteringen brengt die het verschil maken voor cluster-op",
       "inLanguage": "nl-NL",
       "datePublished": "2026-07-22",
       "dateModified": "2026-07-22",
@@ -88,7 +88,7 @@
           "name": "Moet ik per se naar Windows Server 2025 als mijn cluster op 2022 prima draait?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Niet per se. Windows Server 2022 wordt nog ondersteund tot 2027, en daarna nog vijf jaar Extended Support. De vraag is of de nieuwe features genoeg waarde leveren om een upgrade naar voren te trekken. Voor heterogene clusters met live migration-issues, GPU-workloads of strikte patch-window-eisen wel. Voor stabiele, homogene clusters zonder die behoeften kan 2025 wachten tot natuurlijke hardware-refresh."
+            "text": "Niet per se. Windows Server 2022 wordt nog ondersteund tot 2027 en daarna nog vijf jaar Extended Support. De vraag is of de nieuwe features genoeg waarde leveren om een upgrade naar voren te trekken. Voor heterogene clusters met live migration-issues, GPU-workloads of strikte patch-window-eisen wel. Voor stabiele, homogene clusters zonder die behoeften kan 2025 wachten tot natuurlijke hardware-refresh."
           }
         },
         {
@@ -120,7 +120,7 @@
           "name": "Wat zijn de licentievoorwaarden voor hot-patching?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Hot-patching op Windows Server 2025 vereist een actief Software Assurance-contract of een Azure Arc-koppeling met Azure Update Manager. Voor klanten zonder SA of zonder Azure-connectivity is hot-patching geen optie, en blijven traditionele reboot-cycli van toepassing."
+            "text": "Hot-patching op Windows Server 2025 vereist een actief Software Assurance-contract of een Azure Arc-koppeling met Azure Update Manager. Voor klanten zonder SA of zonder Azure-connectivity is hot-patching geen optie en blijven traditionele reboot-cycli van toepassing."
           }
         }
       ]
@@ -131,15 +131,14 @@
 </head>
 
 <body>
-<a class="skip" href="#main">Naar inhoud</a>
+<a class="skip" href="#main">Naar inhoud</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Bewaar eerst het bewijs.</span><a href="/triage/#aanvraag">Start gratis triage &rarr;</a><button type="button" aria-label="Sluiten" id="close-announcement">&times;</button></div>
 
 <header class="topbar">
   <nav class="nav">
-    <a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a>
-    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/blog/" aria-current="page">Blog</a></div>
-    <div class="nav-actions">
-      <button class="search" aria-label="Zoeken">&#8981;</button>
-      <a class="btn primary" href="/triage/">Start gratis triage</a>
+    <a class="brand" href="/preview-home.html"><b>Cloud<span>Labs</span></b><small lang="en">Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-de-healthcheck">De HealthCheck</button><div class="navmenu" id="nav-de-healthcheck"><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div></div><a href="/tarieven/">Tarieven</a><a href="/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-kennisbank">Kennisbank</button><div class="navmenu" id="nav-kennisbank"><a href="/vragen/">Veelgestelde vragen</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/onderwerpen/">Onderwerpen</a></div></div><a href="/over-ons/">Over ons</a></div><div class="nav-actions">
+      <span class="taalwissel"><span aria-current="true">NL</span><a href="/en/blog/windows-server-2025-hyper-v-cluster-features/" hreflang="en" lang="en">EN</a></span>
+      <a class="btn primary" href="/triage/#aanvraag">Start gratis triage</a>
       <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
     </div>
   </nav>
@@ -153,7 +152,7 @@
 
     <header class="artikelkop">
       <h1>Windows Server 2025 Hyper-V: wat het werkelijk toevoegt voor cluster operators</h1>
-      <p class="lede">Windows Server 2025 is sinds november 2024 algemeen beschikbaar, en in 2026 zien wij bij CloudLabs steeds vaker dat klanten upgrade-planning serieus oppakken. Niet omdat Windows Server 2022 morgen ophoudt, maar omdat 2025 een aantal Hyper-V verbeteringen brengt die het verschil maken voor cluster-operators die met heterogene hardware, mixed-generation CPU's, en GPU-workloads werken.</p>
+      <p class="lede">Windows Server 2025 is sinds november 2024 algemeen beschikbaar en in 2026 zien wij bij CloudLabs steeds vaker dat klanten upgrade-planning serieus oppakken. Niet omdat Windows Server 2022 morgen ophoudt, maar omdat 2025 een aantal Hyper-V verbeteringen brengt die het verschil maken voor cluster-operators die met heterogene hardware, mixed-generation CPU's en GPU-workloads werken.</p>
         <p class="lede">Dit artikel kijkt naar de Hyper-V toevoegingen die er werkelijk toe doen voor failover clusters, niet de marketing-lijst. Wat verbetert je operatie? Wat is een goede reden om de upgrade voor te trekken? En welke valkuilen ontstaan er voor bestaande clusters bij de overstap?</p>
       <p class="artikelmeta"><b>Door Hans Vredevoort</b> <i>&middot;</i> <b>22 juli 2026</b> <i>&middot;</i> <b>13 minuten leestijd</b> <i>&middot;</i> <b>Windows Server 2025</b></p>
     </header>
@@ -165,7 +164,7 @@
             <li><a href="#nl-1">De vier Hyper-V veranderingen die er werkelijk toe doen</a></li>
             <li><a href="#nl-2">Dynamic CPU compatibility voor Live Migration</a></li>
             <li><a href="#nl-3">GPU-P voor productieworkloads</a></li>
-            <li><a href="#nl-4">vTPM 2.0 standaard, en wat dat betekent voor backup en DR</a></li>
+            <li><a href="#nl-4">vTPM 2.0 standaard en wat dat betekent voor backup en DR</a></li>
             <li><a href="#nl-5">Hot-patching voor Hyper-V hosts</a></li>
             <li><a href="#nl-6">De Windows Server 2012 R2 en 2016 guest-valkuil</a></li>
             <li><a href="#nl-7">Wat NIET drastisch is veranderd</a></li>
@@ -188,14 +187,14 @@
         <p>Dit is de feature waarvan operators in bestaande heterogene clusters het meeste merken.</p>
 
         <p><strong>Het oude probleem:</strong></p>
-        <p>Een cluster met nodes van verschillende CPU-generaties (bijvoorbeeld Intel Xeon Skylake en Ice Lake, of Sapphire Rapids en Emerald Rapids gemixed) kon alleen Live Migration tussen die nodes doen met CPU compatibility-mode aangezet op de VM. Dat beperkte de CPU-features die de VM zag tot wat de oudste generatie ondersteunde, en handmatige aanpassing per VM was vereist. Live Migration tussen nodes met verschillende AMD- en Intel-generaties was sowieso niet mogelijk zonder VM-shutdown.</p>
+        <p>Een cluster met nodes van verschillende CPU-generaties (bijvoorbeeld Intel Xeon Skylake en Ice Lake, of Sapphire Rapids en Emerald Rapids gemixed) kon alleen Live Migration tussen die nodes doen met CPU compatibility-mode aangezet op de VM. Dat beperkte de CPU-features die de VM zag tot wat de oudste generatie ondersteunde en handmatige aanpassing per VM was vereist. Live Migration tussen nodes met verschillende AMD- en Intel-generaties was sowieso niet mogelijk zonder VM-shutdown.</p>
         <p>In de praktijk betekende dit dat na elke hardware-refresh ofwel het hele cluster in één keer vervangen moest worden, of dat een deel van de VM's vast zat aan oudere nodes. Beide opties zijn duur.</p>
 
         <p><strong>Wat 2025 verandert:</strong></p>
-        <p>Dynamic CPU compatibility past de gepresenteerde CPU-feature set live aan tijdens de migratie, op basis van wat de doel-host ondersteunt. De VM ziet bij de bron-host de volledige feature set, bij de doel-host de set die beide ondersteunen, en de overgang gebeurt zonder VM-restart en zonder dat handmatige compatibility-mode-configuratie nodig is.</p>
+        <p>Dynamic CPU compatibility past de gepresenteerde CPU-feature set live aan tijdens de migratie, op basis van wat de doel-host ondersteunt. De VM ziet bij de bron-host de volledige feature set, bij de doel-host de set die beide ondersteunen en de overgang gebeurt zonder VM-restart en zonder dat handmatige compatibility-mode-configuratie nodig is.</p>
 
         <p><strong>Praktische impact:</strong></p>
-        <p>Hardware-refreshes kunnen rolling gebeuren over maanden, zonder VM-pinning. Een cluster kan een mengeling van CPU-generaties draaien zonder operationele beperkingen op Live Migration. Dat verlaagt de drempel om bestaande hardware door te laten draaien naast nieuwe aanwinsten, en maakt CapEx-planning flexibeler.</p>
+        <p>Hardware-refreshes kunnen rolling gebeuren over maanden, zonder VM-pinning. Een cluster kan een mengeling van CPU-generaties draaien zonder operationele beperkingen op Live Migration. Dat verlaagt de drempel om bestaande hardware door te laten draaien naast nieuwe aanwinsten en maakt CapEx-planning flexibeler.</p>
 
         <p><strong>Verifieer op je cluster:</strong></p>
 <pre><code># Controleer of de feature actief is op de host
@@ -210,7 +209,7 @@ Get-VM | Select-Object Name,
         <p>Cross-vendor migration (Intel naar AMD of omgekeerd) werkt nog steeds niet, ook niet met dynamic compatibility. Voor dat scenario blijft de oplossing een VM-shutdown of een quick migration met state-save.</p>
 
         <h2 id="nl-3">3. GPU-P voor productieworkloads</h2>
-        <p>GPU Partitioning was in 2022 al beschikbaar maar in lab-staat. In 2025 is het volwassen genoeg voor productie, en voor klanten met VDI-workloads of AI-gevoelige applicaties is dit interessant.</p>
+        <p>GPU Partitioning was in 2022 al beschikbaar maar in lab-staat. In 2025 is het volwassen genoeg voor productie en voor klanten met VDI-workloads of AI-gevoelige applicaties is dit interessant.</p>
 
         <p><strong>Wat GPU-P doet:</strong></p>
         <p>Een fysieke GPU (NVIDIA T4, A10, A40, H100, of equivalente AMD/Intel) wordt opgesplitst in meerdere virtuele GPU's. Elke vGPU wordt aan een VM toegewezen en presenteert zich aan de guest als een echte GPU met eigen vRAM en compute-budget. Anders dan DDA (Discrete Device Assignment) waar één VM de hele GPU krijgt, deelt GPU-P de GPU over meerdere VM's.</p>
@@ -220,7 +219,7 @@ Get-VM | Select-Object Name,
         <p>Niet voor: zware AI-training, waar je de volle GPU wilt en DDA de juiste keuze blijft. En niet voor scenario's waar je echte hardware-isolatie tussen tenants nodig hebt om compliance-redenen.</p>
 
         <p><strong>Cluster-implicaties:</strong></p>
-        <p>GPU-P werkt momenteel niet over Live Migration heen. Een VM met een vGPU is gepind aan de host die de fysieke GPU heeft. Plan dat in cluster-ontwerp: GPU-hosts zijn een dedicated subset, geen mix met algemene workloads, en je accepteert dat GPU-VM's down moeten voor host-onderhoud.</p>
+        <p>GPU-P werkt momenteel niet over Live Migration heen. Een VM met een vGPU is gepind aan de host die de fysieke GPU heeft. Plan dat in cluster-ontwerp: GPU-hosts zijn een dedicated subset, geen mix met algemene workloads en je accepteert dat GPU-VM's down moeten voor host-onderhoud.</p>
 
         <p><strong>Configuratie hoog niveau:</strong></p>
 <pre><code># Inventariseer GPU's geschikt voor GPU-P
@@ -233,22 +232,22 @@ Set-VMGpuPartitionAdapter -VMName 'VDI-Pool-01' `
     -MaxPartitionVRAM 8589934592 `
     -OptimalPartitionVRAM 4294967296</code></pre>
 
-        <p>Voor klanten die GPU-P serieus willen inzetten, raden wij een dedicated assessment aan. De GPU-modellen die ondersteund worden, de driver-versies aan host en guest, en de licentievoorwaarden (NVIDIA vGPU vereist aparte vGPU-licenties) maken het een onderwerp dat eigen aandacht verdient.</p>
+        <p>Voor klanten die GPU-P serieus willen inzetten, raden wij een dedicated assessment aan. De GPU-modellen die ondersteund worden, de driver-versies aan host en guest en de licentievoorwaarden (NVIDIA vGPU vereist aparte vGPU-licenties) maken het een onderwerp dat eigen aandacht verdient.</p>
 
-        <h2 id="nl-4">4. vTPM 2.0 standaard, en wat dat betekent voor backup en DR</h2>
+        <h2 id="nl-4">4. vTPM 2.0 standaard en wat dat betekent voor backup en DR</h2>
         <p>Virtual TPM 2.0 was in eerdere versies opt-in. In 2025 is het standaard voor Generation 2 VM's die op Windows Server 2025 hosts worden aangemaakt. Dat klinkt onschuldig, maar het heeft implicaties.</p>
 
         <p><strong>Wat verandert:</strong></p>
-        <p>Nieuwe Gen 2 VM's worden met vTPM aangemaakt, en die vTPM bevat keys die uniek zijn per VM-instantie. Voor de VM zelf maakt dit Secure Boot en BitLocker-achtige features beschikbaar, wat goed is.</p>
+        <p>Nieuwe Gen 2 VM's worden met vTPM aangemaakt en die vTPM bevat keys die uniek zijn per VM-instantie. Voor de VM zelf maakt dit Secure Boot en BitLocker-achtige features beschikbaar, wat goed is.</p>
 
         <p><strong>Backup en DR implicaties:</strong></p>
-        <p>Een vTPM-state moet bij een VM-restore mee. De meeste moderne backup-producten doen dit correct, maar oudere Veeam-versies (vóór 12.1) en sommige scripts die op <code>Export-VM</code> plus <code>Import-VM</code> leunen, kunnen de vTPM-state verliezen tijdens een restore. Resultaat: de VM start, maar BitLocker is uit, Secure Boot is verbroken, en alles wat van TPM-attested cryptografie afhankelijk is moet opnieuw geprovisioneerd worden.</p>
+        <p>Een vTPM-state moet bij een VM-restore mee. De meeste moderne backup-producten doen dit correct, maar oudere Veeam-versies (vóór 12.1) en sommige scripts die op <code>Export-VM</code> plus <code>Import-VM</code> leunen, kunnen de vTPM-state verliezen tijdens een restore. Resultaat: de VM start, maar BitLocker is uit, Secure Boot is verbroken en alles wat van TPM-attested cryptografie afhankelijk is moet opnieuw geprovisioneerd worden.</p>
 
         <p><strong>Hyper-V Replica met vTPM:</strong></p>
         <p>Werkt, mits beide kanten op Windows Server 2025 staan en de host guardian service-configuratie (HGS) consistent is. Voor stretched clusters of cross-site replica is dit een extra prerequisite die je in pre-migration assessments en in DR-runbooks moet documenteren.</p>
 
         <p><strong>Wat we tijdens een Health Check controleren:</strong></p>
-        <p>Welke VM's hebben vTPM en welke niet, of het backup-product de vTPM-state correct backupt en restored, en of de host guardian service-configuratie consistent is over alle nodes als shielded VMs in scope zijn.</p>
+        <p>Welke VM's hebben vTPM en welke niet, of het backup-product de vTPM-state correct backupt en restored en of de host guardian service-configuratie consistent is over alle nodes als shielded VMs in scope zijn.</p>
 
 <pre><code># Inventariseer vTPM-status per VM
 Get-VM | Select-Object Name, Generation,
@@ -256,10 +255,10 @@ Get-VM | Select-Object Name, Generation,
     @{N='SecureBoot';E={(Get-VMFirmware -VMName $_.Name).SecureBoot}}</code></pre>
 
         <h2 id="nl-5">5. Hot-patching voor Hyper-V hosts</h2>
-        <p>Hot-patching is sinds Windows Server 2022 beschikbaar voor specifieke scenarios, en in 2025 is de scope uitgebreid. Het is nog steeds niet voor alle patches, maar wel voor genoeg om patch-windows merkbaar in te korten.</p>
+        <p>Hot-patching is sinds Windows Server 2022 beschikbaar voor specifieke scenarios en in 2025 is de scope uitgebreid. Het is nog steeds niet voor alle patches, maar wel voor genoeg om patch-windows merkbaar in te korten.</p>
 
         <p><strong>Wat het doet:</strong></p>
-        <p>Bepaalde patches worden toegepast zonder reboot. De Cluster Service blijft draaien, VM's blijven draaien, en de patch is direct actief. Voor cumulative updates die hot-patch geschikt zijn, betekent dit dat een Cluster Aware Updating-run die voorheen vier uur kostte (een drain per node, een reboot per node, een rebalance achteraf) terugkomt op een fractie daarvan.</p>
+        <p>Bepaalde patches worden toegepast zonder reboot. De Cluster Service blijft draaien, VM's blijven draaien en de patch is direct actief. Voor cumulative updates die hot-patch geschikt zijn, betekent dit dat een Cluster Aware Updating-run die voorheen vier uur kostte (een drain per node, een reboot per node, een rebalance achteraf) terugkomt op een fractie daarvan.</p>
 
         <p><strong>Wat het niet doet:</strong></p>
         <p>Niet alle patches zijn hot-patchable. Kernel-updates, sommige driver-updates en firmware-niveau patches vereisen nog steeds een reboot. In de praktijk zien wij dat ongeveer 60 tot 70% van de maandelijkse CU-content hot-patchable is, met de rest via een Server reboot per kwartaal.</p>
@@ -275,7 +274,7 @@ Get-VM | Select-Object Name, Generation,
 
         <p><strong>Het probleem:</strong></p>
         <p>Windows Server 2012 R2 en 2016 guest-VM's worden niet ondersteund op Windows Server 2025 Hyper-V. In sommige gevallen booten ze niet, in andere gevallen lopen ze tegen onverwacht gedrag aan in integration services, in nog andere gevallen lijken ze te werken maar zonder Microsoft-support.</p>
-        <p>De oorzaak ligt in ACPI table-veranderingen en aangepaste VMBus device IDs in Hyper-V 2025. Een 2012 R2 guest verwacht specifieke device-identifiers die er niet meer zijn, en valt terug op een inaccessible boot device-fout.</p>
+        <p>De oorzaak ligt in ACPI table-veranderingen en aangepaste VMBus device IDs in Hyper-V 2025. Een 2012 R2 guest verwacht specifieke device-identifiers die er niet meer zijn en valt terug op een inaccessible boot device-fout.</p>
 
         <p><strong>Wat het werkbaar maakt (tijdelijk):</strong></p>
         <p>Voor klanten die 2012 R2-VM's tijdelijk moeten blijven draaien op een 2025 cluster, bestaat er een handmatige registry-truc om de oude device-IDs te aliasen. Didier Van Hoye heeft hierover <a href="https://blog.workinghardinit.work/2026/03/17/how-i-made-server-2012-r2-love-hyper-v-2025/" rel="noopener">een uitstekend artikel</a> geschreven dat de offline registry-edit procedure uitlegt. Het is een workaround, geen oplossing.</p>
@@ -287,8 +286,8 @@ Get-VM | Select-Object Name, Generation,
         <p>Windows Server 2019, 2022 en 2025 guest-VM's draaien zonder issues op Windows Server 2025 Hyper-V. Moderne Linux-distributies met kernel 4.x of nieuwer werken eveneens. De pijn zit specifiek bij 2012 R2 en (in mindere mate) 2016 guests.</p>
 
         <div class="mid-cta">
-          <p>Windows Server 2025 Hyper-V is geen upgrade die je puur op de hypervisor-laag plant. De host-upgrade dwingt vragen over guest-OS levenscycli, GPU-strategie, en backup-tooling die anders nog jaren zouden blijven liggen.</p>
-          <p>Een CloudLabs upgrade readiness assessment brengt deze afhankelijkheden in kaart vóór de eerste node wordt aangeraakt, en levert een gedetailleerd upgrade-plan per VM-batch.</p>
+          <p>Windows Server 2025 Hyper-V is geen upgrade die je puur op de hypervisor-laag plant. De host-upgrade dwingt vragen over guest-OS levenscycli, GPU-strategie en backup-tooling die anders nog jaren zouden blijven liggen.</p>
+          <p>Een CloudLabs upgrade readiness assessment brengt deze afhankelijkheden in kaart vóór de eerste node wordt aangeraakt en levert een gedetailleerd upgrade-plan per VM-batch.</p>
           <a href="../book.html">Plan een Windows Server 2025 upgrade assessment →</a>
         </div>
 
@@ -299,34 +298,34 @@ Get-VM | Select-Object Name, Generation,
           <li><strong>SET en netwerken.</strong> Switch Embedded Teaming, virtuele switches, VLAN-tagging, RDMA over RoCEv2 en iWARP: ongewijzigd in mechaniek. Network ATC blijft de aanbevolen automatiseringslaag, met enkele toegevoegde validatie-features.</li>
           <li><strong>Storage Spaces Direct.</strong> S2D is grotendeels onveranderd, met de strategische nadruk verschoven naar Azure Local voor nieuwe hyperconverged deployments. S2D op Windows Server 2025 blijft ondersteund maar krijgt minder feature-investering.</li>
           <li><strong>PowerShell en management.</strong> De kern-cmdlets voor Hyper-V en clustering zijn backwards compatible. Bestaande scripts blijven werken. Windows Admin Center is de aanbevolen GUI, met inmiddels ook een "Virtualization Mode" (vMode) preview voor schaal-management van meerdere clusters.</li>
-          <li><strong>System Center VMM.</strong> SCVMM 2025 ondersteunt Windows Server 2025 hosts. Bestaande VMM-deployments kunnen geüpdatet worden, en de upgrade is minder disruptief dan eerdere major-versie sprongen.</li>
+          <li><strong>System Center VMM.</strong> SCVMM 2025 ondersteunt Windows Server 2025 hosts. Bestaande VMM-deployments kunnen geüpdatet worden en de upgrade is minder disruptief dan eerdere major-versie sprongen.</li>
         </ul>
 
         <h2 id="nl-8">8. Upgrade-strategie voor bestaande clusters</h2>
         <p>Voor klanten met een bestaand Hyper-V cluster op Windows Server 2019 of 2022, raden wij de volgende volgorde:</p>
 
-        <p><strong>Stap 1, assessment.</strong> Inventariseer guest-OS versies, identificeer 2012 R2 en 2016 VM's die OS-upgrade nodig hebben, controleer backup-product-versies op vTPM-support, en check GPU-modellen tegen GPU-P compatibility-lijsten.</p>
+        <p><strong>Stap 1, assessment.</strong> Inventariseer guest-OS versies, identificeer 2012 R2 en 2016 VM's die OS-upgrade nodig hebben, controleer backup-product-versies op vTPM-support en check GPU-modellen tegen GPU-P compatibility-lijsten.</p>
 
         <p><strong>Stap 2, guest OS-upgrades.</strong> Pak de 2012 R2 en 2016 VM's aan. Upgrade naar 2019 of 2022 (niet direct naar 2025, want een OS-in-place-upgrade die meerdere versies overslaat, verloopt zelden soepel), of vervang met nieuwe builds. Dit is meestal het langste deel van het traject.</p>
 
         <p><strong>Stap 3, backup-stack update.</strong> Verifieer dat Veeam, Commvault of welk product ook in gebruik is, vTPM-aware is op de gebruikte versie. Upgrade waar nodig vóór de host-upgrade.</p>
 
-        <p><strong>Stap 4, cluster rolling upgrade.</strong> Windows Server 2025 ondersteunt cluster rolling upgrade vanuit 2019 en 2022. Een node tegelijk wordt geüpgraded, het cluster blijft draaien, en de Cluster Functional Level wordt aan het eind expliciet verhoogd met <code>Update-ClusterFunctionalLevel</code>. Reken op één tot twee nodes per onderhoudsvenster, afhankelijk van VM-evacuatietijd.</p>
+        <p><strong>Stap 4, cluster rolling upgrade.</strong> Windows Server 2025 ondersteunt cluster rolling upgrade vanuit 2019 en 2022. Een node tegelijk wordt geüpgraded, het cluster blijft draaien en de Cluster Functional Level wordt aan het eind expliciet verhoogd met <code>Update-ClusterFunctionalLevel</code>. Reken op één tot twee nodes per onderhoudsvenster, afhankelijk van VM-evacuatietijd.</p>
 
-        <p><strong>Stap 5, post-upgrade validatie.</strong> Volledige <code>Test-Cluster</code> run, validatie van Live Migration-paden, controle of GPU-P (indien in gebruik) correct werkt, en hercontrole van <!--LINK:hyper-v-time-drift-kerberos-csv--><a href="hyper-v-time-drift-kerberos-csv.html">time service-configuratie</a><!--/LINK:hyper-v-time-drift-kerberos-csv-->. Dat laatste, omdat wij regelmatig zien dat een major-version upgrade de w32time-configuratie op subtiele manieren beïnvloedt.</p>
+        <p><strong>Stap 5, post-upgrade validatie.</strong> Volledige <code>Test-Cluster</code> run, validatie van Live Migration-paden, controle of GPU-P (indien in gebruik) correct werkt en hercontrole van <!--LINK:hyper-v-time-drift-kerberos-csv--><a href="hyper-v-time-drift-kerberos-csv.html">time service-configuratie</a><!--/LINK:hyper-v-time-drift-kerberos-csv-->. Dat laatste, omdat wij regelmatig zien dat een major-version upgrade de w32time-configuratie op subtiele manieren beïnvloedt.</p>
 
-        <p><strong>Stap 6, activeer nieuwe features.</strong> Pas wanneer het cluster stabiel is op de nieuwe versie, activeer je Dynamic CPU compatibility-features op heterogene clusters, plan je GPU-P deployment, en koppel je hosts aan Azure Arc voor hot-patching. Allemaal stap-voor-stap, niet allemaal tegelijk.</p>
+        <p><strong>Stap 6, activeer nieuwe features.</strong> Pas wanneer het cluster stabiel is op de nieuwe versie, activeer je Dynamic CPU compatibility-features op heterogene clusters, plan je GPU-P deployment en koppel je hosts aan Azure Arc voor hot-patching. Allemaal stap-voor-stap, niet allemaal tegelijk.</p>
 
         <h2>De CloudLabs aanpak voor Windows Server 2025 upgrade</h2>
         <p>Wij behandelen een Windows Server 2025 upgrade voor een bestaand Hyper-V cluster als een opdracht in twee fasen. Een assessment-fase van drie tot vijf werkdagen die alle afhankelijkheden in kaart brengt, een go/no-go-advies geeft en een gefaseerd upgrade-plan oplevert. Daarna een uitvoering-fase die ofwel door het klantteam wordt gedaan met ons runbook, ofwel door ons gedaan in nauwe samenwerking met het klantteam.</p>
-        <p>Voor klanten die overwegen of een Hyper-V upgrade nog wel logisch is versus een sprong naar Azure Local, leveren wij een vergelijkende assessment die beide opties tegen elkaar afzet op kosten, operationele impact, en strategische fit.</p>
+        <p>Voor klanten die overwegen of een Hyper-V upgrade nog wel logisch is versus een sprong naar Azure Local, leveren wij een vergelijkende assessment die beide opties tegen elkaar afzet op kosten, operationele impact en strategische fit.</p>
         <p><a href="../book.html"><strong>Plan een Windows Server 2025 Hyper-V assessment →</strong></a></p>
 
         <div class="faq-block">
           <h2>Veelgestelde vragen</h2>
 
           <div class="faq-q">Moet ik per se naar Windows Server 2025 als mijn cluster op 2022 prima draait?</div>
-          <p>Niet per se. Windows Server 2022 wordt nog ondersteund tot 2027, en daarna nog vijf jaar Extended Support. De vraag is of de nieuwe features genoeg waarde leveren om een upgrade naar voren te trekken. Voor heterogene clusters met live migration-issues, GPU-workloads of strikte patch-window-eisen wel. Voor stabiele, homogene clusters zonder die behoeften kan 2025 wachten tot natuurlijke hardware-refresh.</p>
+          <p>Niet per se. Windows Server 2022 wordt nog ondersteund tot 2027 en daarna nog vijf jaar Extended Support. De vraag is of de nieuwe features genoeg waarde leveren om een upgrade naar voren te trekken. Voor heterogene clusters met live migration-issues, GPU-workloads of strikte patch-window-eisen wel. Voor stabiele, homogene clusters zonder die behoeften kan 2025 wachten tot natuurlijke hardware-refresh.</p>
 
           <div class="faq-q">Werkt cluster rolling upgrade van 2019 direct naar 2025?</div>
           <p>Ja. Windows Server 2025 ondersteunt cluster rolling upgrade vanuit zowel 2019 als 2022. De Cluster Functional Level blijft tijdens de upgrade op de oude versie tot je hem expliciet verhoogt met <code>Update-ClusterFunctionalLevel</code>. Plan een recovery point door deze verhoging als laatste stap te doen.</p>
@@ -338,7 +337,7 @@ Get-VM | Select-Object Name, Generation,
           <p>Ja, maar niet op dezelfde GPU. Een fysieke GPU is óf in DDA-modus toegewezen aan één VM, óf in partitioning-modus opgesplitst over meerdere VM's. Een host met meerdere GPU's kan een mix doen, bijvoorbeeld één H100 in DDA voor AI-training, twee A10's in GPU-P voor VDI.</p>
 
           <div class="faq-q">Wat zijn de licentievoorwaarden voor hot-patching?</div>
-          <p>Hot-patching op Windows Server 2025 vereist een actief Software Assurance-contract of een Azure Arc-koppeling met Azure Update Manager. Voor klanten zonder SA of zonder Azure-connectivity is hot-patching geen optie, en blijven traditionele reboot-cycli van toepassing.</p>
+          <p>Hot-patching op Windows Server 2025 vereist een actief Software Assurance-contract of een Azure Arc-koppeling met Azure Update Manager. Voor klanten zonder SA of zonder Azure-connectivity is hot-patching geen optie en blijven traditionele reboot-cycli van toepassing.</p>
         </div>
 <div class="related">
         <h3>Gerelateerde artikelen</h3>
@@ -357,7 +356,7 @@ Get-VM | Select-Object Name, Generation,
 </section>
 </main>
 
-<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><a href="/healthcheck/">De HealthCheck</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/tarieven/">Tarieven</a><a href="/partners/">Voor partners</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/vragen/">Veelgestelde vragen</a><a href="/onderwerpen/">Onderwerpen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Gratis script aanvragen</a><a href="/afspraak/#agenda">Afspraak maken</a><a href="/contact/#bericht">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy/">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/voorwaarden/">Algemene voorwaarden</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
 
 
 <script>
@@ -366,6 +365,6 @@ Get-VM | Select-Object Name, Generation,
   if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
 })();
 </script>
-<script src="/huisstijl/pagina.js"></script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
 </body>
 </html>

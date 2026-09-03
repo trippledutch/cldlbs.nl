@@ -5,22 +5,22 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- Omgezet naar de nieuwe huisstijl met blog-omzetten.py. De Engelse helft is
      eruit; die krijgt later een eigen URL onder /en/. De inhoud is niet
-     herschreven. noindex staat aan zolang de nieuwe stijl niet live is. -->
-<meta name="robots" content="noindex,nofollow">
+     herschreven. Vrijgegeven voor indexering op 2 september 2026. -->
 <meta name="theme-color" content="#0A1024">
-<title>VMs uitlijnen met hun storage: voortbouwen op het script van Darryl van der Peijl &middot; CloudLabs</title>
+<title>VMs uitlijnen met hun storage in Hyper-V &middot; CloudLabs</title>
 <meta name="description" content="Jaren geleden schreef een oud-collega van mij, Darryl van der Peijl, een klein, scherp PowerShell-script dat één ding goed deed: het vond elke VM die op de verkeerde node draaide ten opzichte van zijn storage en migreerde die met Live Migration naar de node die zijn Cluster Shared Volume bezat. Het ">
 <link rel="canonical" href="https://cldlbs.com/blog/aligning-vms-with-storage.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/aligning-vms-with-storage.html">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/blog/aligning-vms-with-storage/">
 <link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/aligning-vms-with-storage.html">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="nl_NL">
 <meta property="og:url" content="https://cldlbs.com/blog/aligning-vms-with-storage.html">
-<meta property="og:title" content="VMs uitlijnen met hun storage: voortbouwen op het script van Darryl van der Peijl">
+<meta property="og:title" content="VMs uitlijnen met hun storage in Hyper-V &middot; CloudLabs">
 <meta property="og:description" content="Jaren geleden schreef een oud-collega van mij, Darryl van der Peijl, een klein, scherp PowerShell-script dat één ding goed deed: het vond elke VM die op de verkeerde node draaide ten opzichte van zijn storage en migreerde die met Live Migration naar de node die zijn Cluster Shared Volume bezat. Het ">
 <link rel="icon" href="/favicon.png" type="image/png">
-<link rel="stylesheet" href="/huisstijl/pagina.css">
-<link rel="stylesheet" href="/huisstijl/artikel.css">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/artikel.css?v=04e23fbe">
 
 <script type="application/ld+json">
 {
@@ -96,7 +96,7 @@
           "name": "Waarom CSV-ownership verplaatsen in plaats van de VMs?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Tientallen VMs met Live Migration verplaatsen concentreert de load op de eigenaar-nodes en kan de rolspreiding slopen, en op SAN-storage is de uitlijningswinst kleiner dan op Storage Spaces Direct. De CSV-ownership verplaatsen naar waar de VMs al draaien is vrijwel direct en niet-verstorend, en lijnt veel VMs tegelijk uit zonder de VM- of geheugenverdeling te veranderen. Wij maakten ownership-verplaatsingen de primaire actie en hielden VM-verplaatsingen als de rest."
+            "text": "Tientallen VMs met Live Migration verplaatsen concentreert de load op de eigenaar-nodes en kan de rolspreiding slopen en op SAN-storage is de uitlijningswinst kleiner dan op Storage Spaces Direct. De CSV-ownership verplaatsen naar waar de VMs al draaien is vrijwel direct en niet-verstorend en lijnt veel VMs tegelijk uit zonder de VM- of geheugenverdeling te veranderen. Wij maakten ownership-verplaatsingen de primaire actie en hielden VM-verplaatsingen als de rest."
           }
         },
         {
@@ -104,7 +104,7 @@
           "name": "Is de balancer veilig om op een productiecluster te draaien?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "De analyse is read-only en altijd veilig. Remediatie gebeurt alleen met een expliciete Balance switch, en je wordt geacht die eerst met WhatIf te draaien, wat elke ownership-verplaatsing, VM-verplaatsing en anti-affinity-wijziging afdrukt zonder iets aan te raken. Het script schakelt nooit een VM uit: een draaiende VM die van Live Migration is uitgesloten wordt gerapporteerd als 'handmatig afsluiten vereist' in plaats van verplaatst."
+            "text": "De analyse is read-only en altijd veilig. Remediatie gebeurt alleen met een expliciete Balance switch en je wordt geacht die eerst met WhatIf te draaien, wat elke ownership-verplaatsing, VM-verplaatsing en anti-affinity-wijziging afdrukt zonder iets aan te raken. Het script schakelt nooit een VM uit: een draaiende VM die van Live Migration is uitgesloten wordt gerapporteerd als 'handmatig afsluiten vereist' in plaats van verplaatst."
           }
         },
         {
@@ -120,7 +120,7 @@
           "name": "Vervangt dit de automatische balancer van het cluster?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Nee, het vult die aan. Automatische CSV-balancing en node-fairness dekken het algemene geval. Dit script richt zich op de specifieke uitlijning tussen VM-plaatsing en CSV-ownership, zet anti-affinity zodat het cluster rolleden bij toekomstige failover uit elkaar houdt, en geeft je een gemeten voor-en-na zodat je kunt aantonen dat de wijziging hielp."
+            "text": "Nee, het vult die aan. Automatische CSV-balancing en node-fairness dekken het algemene geval. Dit script richt zich op de specifieke uitlijning tussen VM-plaatsing en CSV-ownership, zet anti-affinity zodat het cluster rolleden bij toekomstige failover uit elkaar houdt en geeft je een gemeten voor-en-na zodat je kunt aantonen dat de wijziging hielp."
           }
         }
       ]
@@ -131,15 +131,14 @@
 </head>
 
 <body>
-<a class="skip" href="#main">Naar inhoud</a>
+<a class="skip" href="#main">Naar inhoud</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Bewaar eerst het bewijs.</span><a href="/triage/#aanvraag">Start gratis triage &rarr;</a><button type="button" aria-label="Sluiten" id="close-announcement">&times;</button></div>
 
 <header class="topbar">
   <nav class="nav">
-    <a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a>
-    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/blog/" aria-current="page">Blog</a></div>
-    <div class="nav-actions">
-      <button class="search" aria-label="Zoeken">&#8981;</button>
-      <a class="btn primary" href="/triage/">Start gratis triage</a>
+    <a class="brand" href="/preview-home.html"><b>Cloud<span>Labs</span></b><small lang="en">Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-de-healthcheck">De HealthCheck</button><div class="navmenu" id="nav-de-healthcheck"><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div></div><a href="/tarieven/">Tarieven</a><a href="/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-kennisbank">Kennisbank</button><div class="navmenu" id="nav-kennisbank"><a href="/vragen/">Veelgestelde vragen</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/onderwerpen/">Onderwerpen</a></div></div><a href="/over-ons/">Over ons</a></div><div class="nav-actions">
+      <span class="taalwissel"><span aria-current="true">NL</span><a href="/en/blog/aligning-vms-with-storage/" hreflang="en" lang="en">EN</a></span>
+      <a class="btn primary" href="/triage/#aanvraag">Start gratis triage</a>
       <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
     </div>
   </nav>
@@ -153,8 +152,8 @@
 
     <header class="artikelkop">
       <h1>VMs uitlijnen met hun storage: voortbouwen op het script van Darryl van der Peijl</h1>
-      <p class="lede">Jaren geleden schreef een oud-collega van mij, Darryl van der Peijl, een klein, scherp PowerShell-script dat één ding goed deed: het vond elke VM die op de verkeerde node draaide ten opzichte van zijn storage en migreerde die met Live Migration naar de node die zijn Cluster Shared Volume bezat. Het idee staat op zijn site onder <a href="https://www.darrylvanderpeijl.com/align-vms-with-storage/" rel="noopener">align VMs with storage</a>, en het heeft door de jaren heen stilletjes heel wat clusters voor redirected I/O behoed. Darryl heeft sindsdien <strong>Splitbrain</strong> opgericht, maar het script leeft voort in talloze toolboxen, ook de mijne.</p>
-        <p class="lede">Dit is het verhaal van wat er gebeurt wanneer je dat goede idee meeneemt naar een moderne productieomgeving, op de plekken stuit waar de simpele versie te bot is, en het laat uitgroeien tot een balancer die een klant daadwerkelijk op een zes-node stretch cluster kan draaien zonder de adem in te houden. De eer voor het kerninzicht is van Darryl. Wat volgt is wat wij erbovenop hebben gebouwd.</p>
+      <p class="lede">Jaren geleden schreef een oud-collega van mij, Darryl van der Peijl, een klein, scherp PowerShell-script dat één ding goed deed: het vond elke VM die op de verkeerde node draaide ten opzichte van zijn storage en migreerde die met Live Migration naar de node die zijn Cluster Shared Volume bezat. Het idee staat op zijn site onder <a href="https://www.darrylvanderpeijl.com/align-vms-with-storage/" rel="noopener">align VMs with storage</a> en het heeft door de jaren heen stilletjes heel wat clusters voor redirected I/O behoed. Darryl heeft sindsdien <strong>Splitbrain</strong> opgericht, maar het script leeft voort in talloze toolboxen, ook de mijne.</p>
+        <p class="lede">Dit is het verhaal van wat er gebeurt wanneer je dat goede idee meeneemt naar een moderne productieomgeving, op de plekken stuit waar de simpele versie te bot is en het laat uitgroeien tot een balancer die een klant daadwerkelijk op een zes-node stretch cluster kan draaien zonder de adem in te houden. De eer voor het kerninzicht is van Darryl. Wat volgt is wat wij erbovenop hebben gebouwd.</p>
       <p class="artikelmeta"><b>Door Hans Vredevoort</b> <i>&middot;</i> <b>18 juni 2026</b> <i>&middot;</i> <b>10 minuten leestijd</b> <i>&middot;</i> <b>Storage</b></p>
     </header>
 
@@ -162,45 +161,45 @@
       <nav class="toc" aria-label="Inhoud van dit artikel">
         <p class="toc-title">In dit artikel</p>
         <ol>
-            <li><a href="#nl-1">Het oorspronkelijke idee, en waarom het zo goed is</a></li>
+            <li><a href="#nl-1">Het oorspronkelijke idee en waarom het zo goed is</a></li>
             <li><a href="#nl-2">Waar de simpele versie terugbijt</a></li>
             <li><a href="#nl-3">De kern-herformulering: verplaats ownership, niet VMs</a></li>
             <li><a href="#nl-4">Site-bewuste rolspreiding</a></li>
             <li><a href="#nl-5">Ingebouwde beschermingen voor productie</a></li>
             <li><a href="#nl-6">Voor en na, in één plaatje</a></li>
-            <li><a href="#nl-7">Wat we van Darryl hebben behouden, en wat we hem verschuldigd zijn</a></li>
+            <li><a href="#nl-7">Wat we van Darryl hebben behouden en wat we hem verschuldigd zijn</a></li>
           </ol>
       </nav>
 
       <div class="tekst">
-<h2 id="nl-1">1. Het oorspronkelijke idee, en waarom het zo goed is</h2>
-        <p>Het inzicht achter Darryl's script is zo'n ding dat overduidelijk is zodra iemand het zegt, en jarenlang makkelijk over het hoofd te zien daarvóór. Een Cluster Shared Volume heeft een eigenaar-node, de coordinator, en alle metadata-operaties op dat volume lopen daardoorheen. Als een VM op de ene node leeft maar de CSV met zijn disks door een andere node wordt bezeten, kruist elke metadata-operatie, en elke I/O die niet direct kan, het clusternetwerk naar de coordinator en terug. Zet de VM op de node die zijn storage bezit en dat verkeer blijft lokaal.</p>
-        <p>Het oorspronkelijke script automatiseerde de hele lus. Inventariseer de VMs, vind de CSV van elke VM, vind de eigenaar van die CSV, en waar de VM daar nog niet draait, migreer hem met Live Migration naar de eigenaar. Een handvol regels, geen agents, geen producten, alleen clustercmdlets die precies doen wat een zorgvuldige beheerder met de hand zou doen, maar dan over honderd VMs in één keer. Het is het soort hulpmiddel dat je bewaart, want het lost een echt probleem op zonder omhaal.</p>
+<h2 id="nl-1">1. Het oorspronkelijke idee en waarom het zo goed is</h2>
+        <p>Het inzicht achter Darryl's script is zo'n ding dat overduidelijk is zodra iemand het zegt en jarenlang makkelijk over het hoofd te zien daarvóór. Een Cluster Shared Volume heeft een eigenaar-node, de coordinator en alle metadata-operaties op dat volume lopen daardoorheen. Als een VM op de ene node leeft maar de CSV met zijn disks door een andere node wordt bezeten, kruist elke metadata-operatie en elke I/O die niet direct kan, het clusternetwerk naar de coordinator en terug. Zet de VM op de node die zijn storage bezit en dat verkeer blijft lokaal.</p>
+        <p>Het oorspronkelijke script automatiseerde de hele lus. Inventariseer de VMs, vind de CSV van elke VM, vind de eigenaar van die CSV en waar de VM daar nog niet draait, migreer hem met Live Migration naar de eigenaar. Een handvol regels, geen agents, geen producten, alleen clustercmdlets die precies doen wat een zorgvuldige beheerder met de hand zou doen, maar dan over honderd VMs in één keer. Het is het soort hulpmiddel dat je bewaart, want het lost een echt probleem op zonder omhaal.</p>
         <p>We hebben het gebruikt, aangeraden en ervan geleerd. Dus toen een recente opdracht ons een flink scheef uitgelijnd stretch cluster voorschotelde, was het script het voor de hand liggende vertrekpunt. En toen leerde het cluster ons waar de simpele versie ophoudt genoeg te zijn.</p>
 
         <h2 id="nl-2">2. Waar de simpele versie terugbijt</h2>
-        <p>Op het cluster in kwestie meldde de analyse dat zoiets als driekwart van de VMs scheef stond. De naïeve fix was duidelijk: migreer ze allemaal met Live Migration naar hun CSV-eigenaren, precies wat het oorspronkelijke script doet. Dat hebben we niet gedaan, en de reden daarvoor is de hele kern van dit artikel.</p>
+        <p>Op het cluster in kwestie meldde de analyse dat zoiets als driekwart van de VMs scheef stond. De naïeve fix was duidelijk: migreer ze allemaal met Live Migration naar hun CSV-eigenaren, precies wat het oorspronkelijke script doet. Dat hebben we niet gedaan en de reden daarvoor is de hele kern van dit artikel.</p>
         <p>Ten eerste was de scheefstand niet willekeurig, maar systematisch. VM-plaatsing en CSV-ownership waren tussen twee nodes verwisseld, in beide sites. De VMs waren verstandig over de hosts verdeeld. Het was de storage-ownership die naar de verkeerde nodes was afgedreven. Als je dat 'oplost' door elke VM naar de storage te verplaatsen, neem je een gebalanceerde VM-verdeling en concentreer je die op de paar nodes die toevallig de CSVs bezitten. Je ruilt een storage-localiteitsprobleem in voor een load- en geheugenprobleem.</p>
         <p>Ten tweede sloopte massale Live Migration de rolspreiding. Toen we modelleerden wat het verplaatsen van al die VMs zou doen, ging het aantal gelijkfunctionele VMs dat op één node samenkwam <em>omhoog</em>, niet omlaag. Je zou de storage uitlijnen en het cluster tegelijk minder bestand maken tegen een node-uitval, want nu zitten er meer identieke rollen bij elkaar.</p>
         <p>Ten derde was dit een SAN-cluster, Pure FlashArray over iSCSI, waar elke node een direct pad naar de storage heeft. De winst van CSV-eigenaar-uitlijning is reëel, maar kleiner op een SAN dan op Storage Spaces Direct, waar de eigenaar-relatie samenvalt met waar de data fysiek staat. Negentig VMs verplaatsen voor een kleinere winst, terwijl je twee nieuwe problemen creëert, is een slechte ruil.</p>
         <p>Niets hiervan is kritiek op het oorspronkelijke script. Dit is wat er gebeurt wanneer een helder idee een specifieke productiewerkelijkheid ontmoet. Het script stelt de juiste vraag. De omgeving vroeg om een ander antwoord.</p>
 
         <h2 id="nl-3">3. De kern-herformulering: verplaats ownership, niet VMs</h2>
-        <p>Hier is de herformulering die alles op zijn plek liet vallen. Het doel is om elke VM en zijn CSV-eigenaar op dezelfde node te krijgen. Darryl's script bereikt dat door de VM te verplaatsen. Maar er zijn twee verplaatsbare objecten in die zin, en op dit cluster was de goedkopere om te verplaatsen de andere.</p>
-        <p>Dus de primaire actie van de balancer werd CSV-ownership herbalanceren. Voor elke CSV: vind de node waar de meeste van zijn VMs al draaien, en als dat niet de huidige eigenaar is, verplaats de <em>ownership</em> daarheen met <code>Move-ClusterSharedVolume</code>. Die ene aanroep is vrijwel direct en niet-verstorend. De VMs verplaatsen niet, hun geheugen verplaatst niet, de loadverdeling blijft precies zoals de klant het had ingericht. En in één keer lijnt het tientallen VMs tegelijk uit, want het uitlijnen van de eigenaar op de meerderheid repareert elke VM in die meerderheid tegelijk.</p>
+        <p>Hier is de herformulering die alles op zijn plek liet vallen. Het doel is om elke VM en zijn CSV-eigenaar op dezelfde node te krijgen. Darryl's script bereikt dat door de VM te verplaatsen. Maar er zijn twee verplaatsbare objecten in die zin en op dit cluster was de goedkopere om te verplaatsen de andere.</p>
+        <p>Dus de primaire actie van de balancer werd CSV-ownership herbalanceren. Voor elke CSV: vind de node waar de meeste van zijn VMs al draaien en als dat niet de huidige eigenaar is, verplaats de <em>ownership</em> daarheen met <code>Move-ClusterSharedVolume</code>. Die ene aanroep is vrijwel direct en niet-verstorend. De VMs verplaatsen niet, hun geheugen verplaatst niet, de loadverdeling blijft precies zoals de klant het had ingericht. En in één keer lijnt het tientallen VMs tegelijk uit, want het uitlijnen van de eigenaar op de meerderheid repareert elke VM in die meerderheid tegelijk.</p>
 
 <pre><code># De herformulering, in één cmdlet, per CSV:
 #   vind de node die de meeste VMs van deze CSV host,
 #   en geef die de coordinator-rol.
 Move-ClusterSharedVolume -Name $csv -Node $nodeWithMostVMsHere</code></pre>
 
-        <p>In de echte run lijnde de CSV-ownership-fase de overgrote meerderheid van de scheef staande VMs uit zonder ook maar één VM te verplaatsen. Slechts een kleine rest had nog een echte Live Migration nodig, en daar komt de oorspronkelijke techniek weer in beeld: VM-verplaatsingen blijven de fallback voor de VMs die ownership-verplaatsingen niet kunnen repareren. Je kunt het klassieke gedrag nog steeds afdwingen met een switch wanneer je dat wilt. De default stopte alleen met voorop te lopen met de dure actie.</p>
-        <p>De diepere achtergrond van waarom CSV-ownership überhaupt afdrijft, en wat redirected I/O kost, staat in <!--LINK:csv-ownership-imbalance--><a href="csv-ownership-imbalance.html">CSV ownership onbalans in Hyper-V clusters: oorzaken en oplossingen</a><!--/LINK:csv-ownership-imbalance-->.</p>
+        <p>In de echte run lijnde de CSV-ownership-fase de overgrote meerderheid van de scheef staande VMs uit zonder ook maar één VM te verplaatsen. Slechts een kleine rest had nog een echte Live Migration nodig en daar komt de oorspronkelijke techniek weer in beeld: VM-verplaatsingen blijven de fallback voor de VMs die ownership-verplaatsingen niet kunnen repareren. Je kunt het klassieke gedrag nog steeds afdwingen met een switch wanneer je dat wilt. De default stopte alleen met voorop te lopen met de dure actie.</p>
+        <p>De diepere achtergrond van waarom CSV-ownership überhaupt afdrijft en wat redirected I/O kost, staat in <!--LINK:csv-ownership-imbalance--><a href="csv-ownership-imbalance.html">CSV ownership onbalans in Hyper-V clusters: oorzaken en oplossingen</a><!--/LINK:csv-ownership-imbalance-->.</p>
 
         <h2 id="nl-4">4. Site-bewuste rolspreiding</h2>
         <p>Het tweede dat we toevoegden heeft niets met storage te maken en alles met het overleven van een node-uitval. Als je toch al elke VM inventariseert, kun je meteen controleren of VMs met dezelfde functie over nodes verspreid zijn of op één node opgestapeld. Twee domain controllers op dezelfde host is het schoolvoorbeeld dat je nooit wilt.</p>
         <p>De naïeve versie van die controle is op een stretch cluster echter fout. Een pool van remote-desktop hosts die bewust aan één site is gepind, is niet 'slecht verspreid', die staat correct geplaatst. Dus de balancer beoordeelt spreiding <em>per site</em>: een rolgroep is spreidbaar alleen wanneer het aantal leden hooguit gelijk is aan het aantal bruikbare nodes in de sites waar de leden daadwerkelijk draaien. Kleinere groepen worden verspreid en krijgen een <code>AntiAffinityClassNames</code>-waarde, zodat het cluster ze bij toekomstige plaatsing en failover uit elkaar houdt. Grotere groepen worden als pool gerapporteerd met hun scheefstand, niet tegen het site-ontwerp in uit elkaar getrokken. Dat onderscheid is wat de tool ervan weerhoudt om dingen te 'repareren' die nooit kapot waren.</p>
-        <p>Het instellen van de anti-affinity is een paar regels per rolgroep. Geef elk lid van een spreidbare groep dezelfde classnaam, en het cluster houdt ze bij plaatsing en failover op verschillende nodes:</p>
+        <p>Het instellen van de anti-affinity is een paar regels per rolgroep. Geef elk lid van een spreidbare groep dezelfde classnaam en het cluster houdt ze bij plaatsing en failover op verschillende nodes:</p>
 
 <pre><code># Gelijkfunctionele VMs die nooit een node mogen delen
 $roleClass = 'RDP-Frontend'
@@ -221,10 +220,10 @@ Get-ClusterGroup |
         <h2 id="nl-5">5. Ingebouwde beschermingen voor productie</h2>
         <p>Een script dat storage-ownership verplaatst en VMs met Live Migration verschuift op een productiecluster moet betrouwbaar zijn voordat het slim is. De beschermingen die we eromheen hebben gebouwd:</p>
         <ul>
-          <li><strong>Read-only by default.</strong> Zonder switches analyseert en projecteert het script alleen. Het verandert niets. Remediatie zit achter een expliciete <code>-Balance</code> switch, en je krijgt te horen dat je die eerst met <code>-WhatIf</code> moet draaien, wat elke ownership-verplaatsing, elke VM-verplaatsing en elke anti-affinity-wijziging afdrukt zonder het cluster aan te raken.</li>
+          <li><strong>Read-only by default.</strong> Zonder switches analyseert en projecteert het script alleen. Het verandert niets. Remediatie zit achter een expliciete <code>-Balance</code> switch en je krijgt te horen dat je die eerst met <code>-WhatIf</code> moet draaien, wat elke ownership-verplaatsing, elke VM-verplaatsing en elke anti-affinity-wijziging afdrukt zonder het cluster aan te raken.</li>
           <li><strong>Het schakelt nooit een VM uit.</strong> Sommige VMs kunnen niet met Live Migration mee, om bekende redenen. Een draaiende VM op die lijst wordt gerapporteerd als 'handmatig afsluiten vereist', nooit met geweld verplaatst en nooit door het script uitgezet. Een VM wordt alleen uitgeschakeld verplaatst als hij al uit stond.</li>
           <li><strong>Niets verdwijnt stilletjes.</strong> Uitgesloten en out-of-scope VMs staan nog steeds in de lijst, met eigenaar, status, uitlijning en de reden waarom ze zijn overgeslagen, gelabeld als geplande uitsluiting. Een rapport dat je kunt vertrouwen laat net zo duidelijk zien wat het niet heeft aangeraakt als wat het wel heeft gedaan.</li>
-          <li><strong>Het leest op een donker scherm.</strong> De console- en log-output gebruikt wit voor informatie, groen voor uitgelijnd en voor niet-verstorende winst, en rood voor scheefstand, botsingen en alles wat aandacht nodig heeft. Op een typische donkere beheerconsole zie je de status in één oogopslag, zonder te turen naar bijna identieke grijstinten.</li>
+          <li><strong>Het leest op een donker scherm.</strong> De console- en log-output gebruikt wit voor informatie, groen voor uitgelijnd en voor niet-verstorende winst en rood voor scheefstand, botsingen en alles wat aandacht nodig heeft. Op een typische donkere beheerconsole zie je de status in één oogopslag, zonder te turen naar bijna identieke grijstinten.</li>
         </ul>
 
         <div class="callout">
@@ -233,8 +232,8 @@ Get-ClusterGroup |
         </div>
 
         <h2 id="nl-6">6. Voor en na, in één plaatje</h2>
-        <p>Het laatste dat we toevoegden is het deel dat de hele exercitie verdedigbaar maakt: een gemeten voor-en-na. Het script tekent per node een PRE- en een POST-weergave, VM-aantal, geheugen, uitgelijnd versus scheef, en rolbotsingen, als simpele balken in de log en optioneel als HTML-rapport. Daartussen toont het de tussentoestand na alleen de CSV-ownership-fase, zodat je precies ziet hoeveel VMs werden uitgelijnd zonder dat er ook maar één VM verplaatste.</p>
-        <p>Die projectie is wat je in staat stelt om <code>-Balance -WhatIf</code> te draaien, precies te lezen wat er zou veranderen, en pas dan te beslissen. Het verandert 'vertrouw me, dit gaat helpen' in 'hier is het beeld per node ervoor, het beeld na de ownership-verplaatsingen, en het beeld na de paar resterende VM-verplaatsingen'. Een reviewer die niet bij de sessie was kan de uitkomst uit het rapport lezen. De log sluit af met de aanbevelingen en de exacte commando's om te previewen en toe te passen, zodat niemand de aanroep uit het geheugen hoeft te reconstrueren.</p>
+        <p>Het laatste dat we toevoegden is het deel dat de hele exercitie verdedigbaar maakt: een gemeten voor-en-na. Het script tekent per node een PRE- en een POST-weergave, VM-aantal, geheugen, uitgelijnd versus scheef en rolbotsingen, als simpele balken in de log en optioneel als HTML-rapport. Daartussen toont het de tussentoestand na alleen de CSV-ownership-fase, zodat je precies ziet hoeveel VMs werden uitgelijnd zonder dat er ook maar één VM verplaatste.</p>
+        <p>Die projectie is wat je in staat stelt om <code>-Balance -WhatIf</code> te draaien, precies te lezen wat er zou veranderen en pas dan te beslissen. Het verandert 'vertrouw me, dit gaat helpen' in 'hier is het beeld per node ervoor, het beeld na de ownership-verplaatsingen en het beeld na de paar resterende VM-verplaatsingen'. Een reviewer die niet bij de sessie was kan de uitkomst uit het rapport lezen. De log sluit af met de aanbevelingen en de exacte commando's om te previewen en toe te passen, zodat niemand de aanroep uit het geheugen hoeft te reconstrueren.</p>
         <p>Een preview-run leest zo. De namen zijn generiek, maar de vorm is precies wat de tool afdrukt:</p>
 
 <pre><code>PS&gt; .\Optimize-VMPlacement.ps1 -Balance -WhatIf
@@ -279,11 +278,11 @@ RECOMMENDATIONS
   - Preview : .\Optimize-VMPlacement.ps1 -Balance -WhatIf
   - Apply   : .\Optimize-VMPlacement.ps1 -Balance</code></pre>
 
-        <p>Van boven naar beneden lezend zie je het hele betoog van dit artikel zich ontvouwen: de ownership-fase lijnt veertien VMs uit zonder er één te verplaatsen, slechts twee draaiende VMs hebben een Live Migration nodig, de uitgeschakelde en de gepinde VM worden bij naam genoemd en met rust gelaten in plaats van geforceerd, en de te grote rolpool wordt gerapporteerd in plaats van uit elkaar getrokken. Dat is de run die je met vertrouwen een change window in neemt, want je hebt al precies gezien wat hij gaat doen.</p>
+        <p>Van boven naar beneden lezend zie je het hele betoog van dit artikel zich ontvouwen: de ownership-fase lijnt veertien VMs uit zonder er één te verplaatsen, slechts twee draaiende VMs hebben een Live Migration nodig, de uitgeschakelde en de gepinde VM worden bij naam genoemd en met rust gelaten in plaats van geforceerd en de te grote rolpool wordt gerapporteerd in plaats van uit elkaar getrokken. Dat is de run die je met vertrouwen een change window in neemt, want je hebt al precies gezien wat hij gaat doen.</p>
 
-        <h2 id="nl-7">7. Wat we van Darryl hebben behouden, en wat we hem verschuldigd zijn</h2>
-        <p>Pel alles weg wat we toevoegden en de kern is nog steeds van hem: vind het verschil tussen waar een VM draait en waar zijn storage wordt bezeten, en dicht het gat. De strikte CSV mount-prefix-matching, de per-VM primaire-CSV-logica, het instinct om de hele lus vanaf één management server te automatiseren met niets dan clustercmdlets, die lijn loopt rechtstreeks terug naar het oorspronkelijke align-VMs-with-storage script. We hebben het niet vervangen. We hebben het laten uitgroeien voor een grotere, gestrekte, SAN-gebaseerde, rolgevoelige omgeving, en er productiewaardige beschermingen omheen gebouwd.</p>
-        <p>Zo evolueert goede operationele tooling meestal. Iemand ziet het wezenlijke probleem helder en schrijft de strakke versie. Jaren later ontmoet die een omgeving met meer randvoorwaarden, en de strakke versie wordt de kern van iets groters, terwijl het inzicht in het hart precies hetzelfde blijft. Petje af voor Darryl van der Peijl, wiens script een generatie Hyper-V-beheerders heeft geleerd om hun VMs niet langer via de lange weg met hun storage te laten praten. We bouwen er met plezier op voort.</p>
+        <h2 id="nl-7">7. Wat we van Darryl hebben behouden en wat we hem verschuldigd zijn</h2>
+        <p>Pel alles weg wat we toevoegden en de kern is nog steeds van hem: vind het verschil tussen waar een VM draait en waar zijn storage wordt bezeten en dicht het gat. De strikte CSV mount-prefix-matching, de per-VM primaire-CSV-logica, het instinct om de hele lus vanaf één management server te automatiseren met niets dan clustercmdlets, die lijn loopt rechtstreeks terug naar het oorspronkelijke align-VMs-with-storage script. We hebben het niet vervangen. We hebben het laten uitgroeien voor een grotere, gestrekte, SAN-gebaseerde, rolgevoelige omgeving en er productiewaardige beschermingen omheen gebouwd.</p>
+        <p>Zo evolueert goede operationele tooling meestal. Iemand ziet het wezenlijke probleem helder en schrijft de strakke versie. Jaren later ontmoet die een omgeving met meer randvoorwaarden en de strakke versie wordt de kern van iets groters, terwijl het inzicht in het hart precies hetzelfde blijft. Petje af voor Darryl van der Peijl, wiens script een generatie Hyper-V-beheerders heeft geleerd om hun VMs niet langer via de lange weg met hun storage te laten praten. We bouwen er met plezier op voort.</p>
 
         <div class="callout">
           <strong>Het script ophalen</strong>
@@ -291,8 +290,8 @@ RECOMMENDATIONS
         </div>
 
         <div class="mid-cta">
-          <p>Heb je nooit gecontroleerd of je VMs draaien waar hun storage wordt bezeten, dan is de kans groot dat sommige dat niet doen, en een SAN verbergt het symptoom tot een node op het verkeerde moment draint.</p>
-          <p>Een CloudLabs Hyper-V Cluster Health Check meet uitlijning, rolspreiding en ownership-drift, en geeft je het voor-en-na.</p>
+          <p>Heb je nooit gecontroleerd of je VMs draaien waar hun storage wordt bezeten, dan is de kans groot dat sommige dat niet doen en een SAN verbergt het symptoom tot een node op het verkeerde moment draint.</p>
+          <p>Een CloudLabs Hyper-V Cluster Health Check meet uitlijning, rolspreiding en ownership-drift en geeft je het voor-en-na.</p>
           <a href="../book.html">Plan een kennismaking voor een Health Check →</a>
         </div>
 
@@ -305,16 +304,16 @@ RECOMMENDATIONS
           <p>Een VM is uitgelijnd wanneer hij draait op de clusternode die op dat moment het Cluster Shared Volume bezit waar het grootste deel van zijn diskdata op staat. Als VM en CSV-eigenaar op dezelfde node zitten, blijven metadata-operaties lokaal en vermijd je redirected I/O over het clusternetwerk. Het oorspronkelijke script van Darryl van der Peijl automatiseerde het vinden en oplossen van die mismatch door de VM met Live Migration naar de CSV-eigenaar te verplaatsen.</p>
 
           <div class="faq-q">Waarom CSV-ownership verplaatsen in plaats van de VMs?</div>
-          <p>Tientallen VMs met Live Migration verplaatsen concentreert de load op de eigenaar-nodes en kan de rolspreiding slopen, en op SAN-storage is de uitlijningswinst kleiner dan op Storage Spaces Direct. De CSV-ownership verplaatsen naar waar de VMs al draaien is vrijwel direct en niet-verstorend, en lijnt veel VMs tegelijk uit zonder de VM- of geheugenverdeling te veranderen. Wij maakten ownership-verplaatsingen de primaire actie en hielden VM-verplaatsingen als de rest.</p>
+          <p>Tientallen VMs met Live Migration verplaatsen concentreert de load op de eigenaar-nodes en kan de rolspreiding slopen en op SAN-storage is de uitlijningswinst kleiner dan op Storage Spaces Direct. De CSV-ownership verplaatsen naar waar de VMs al draaien is vrijwel direct en niet-verstorend en lijnt veel VMs tegelijk uit zonder de VM- of geheugenverdeling te veranderen. Wij maakten ownership-verplaatsingen de primaire actie en hielden VM-verplaatsingen als de rest.</p>
 
           <div class="faq-q">Is de balancer veilig om op een productiecluster te draaien?</div>
-          <p>De analyse is read-only en altijd veilig. Remediatie gebeurt alleen met een expliciete Balance switch, en je wordt geacht die eerst met WhatIf te draaien, wat elke ownership-verplaatsing, VM-verplaatsing en anti-affinity-wijziging afdrukt zonder iets aan te raken. Het script schakelt nooit een VM uit: een draaiende VM die van Live Migration is uitgesloten wordt gerapporteerd als 'handmatig afsluiten vereist' in plaats van verplaatst.</p>
+          <p>De analyse is read-only en altijd veilig. Remediatie gebeurt alleen met een expliciete Balance switch en je wordt geacht die eerst met WhatIf te draaien, wat elke ownership-verplaatsing, VM-verplaatsing en anti-affinity-wijziging afdrukt zonder iets aan te raken. Het script schakelt nooit een VM uit: een draaiende VM die van Live Migration is uitgesloten wordt gerapporteerd als 'handmatig afsluiten vereist' in plaats van verplaatst.</p>
 
           <div class="faq-q">Wat is site-bewuste rolspreiding?</div>
           <p>Op een stretch cluster horen VMs met dezelfde functie over nodes verspreid te zijn voor weerbaarheid, maar alleen binnen de sites waar ze daadwerkelijk draaien. Een rol is spreidbaar wanneer het aantal leden hooguit gelijk is aan het aantal bruikbare nodes in die sites. Grotere groepen worden als pool behandeld en met hun scheefstand gerapporteerd in plaats van uit elkaar getrokken, wat voorkomt dat site-gebonden pools zoals RDP-hosts ten onrechte als volledig spreidbaar worden bestempeld.</p>
 
           <div class="faq-q">Vervangt dit de automatische balancer van het cluster?</div>
-          <p>Nee, het vult die aan. Automatische CSV-balancing en node-fairness dekken het algemene geval. Dit script richt zich op de specifieke uitlijning tussen VM-plaatsing en CSV-ownership, zet anti-affinity zodat het cluster rolleden bij toekomstige failover uit elkaar houdt, en geeft je een gemeten voor-en-na zodat je kunt aantonen dat de wijziging hielp.</p>
+          <p>Nee, het vult die aan. Automatische CSV-balancing en node-fairness dekken het algemene geval. Dit script richt zich op de specifieke uitlijning tussen VM-plaatsing en CSV-ownership, zet anti-affinity zodat het cluster rolleden bij toekomstige failover uit elkaar houdt en geeft je een gemeten voor-en-na zodat je kunt aantonen dat de wijziging hielp.</p>
         </div>
 <div class="related">
         <h3>Gerelateerde artikelen</h3>
@@ -332,7 +331,7 @@ RECOMMENDATIONS
 </section>
 </main>
 
-<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><a href="/healthcheck/">De HealthCheck</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/tarieven/">Tarieven</a><a href="/partners/">Voor partners</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/vragen/">Veelgestelde vragen</a><a href="/onderwerpen/">Onderwerpen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Gratis script aanvragen</a><a href="/afspraak/#agenda">Afspraak maken</a><a href="/contact/#bericht">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy/">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/voorwaarden/">Algemene voorwaarden</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
 
 
 <script>
@@ -341,6 +340,6 @@ RECOMMENDATIONS
   if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
 })();
 </script>
-<script src="/huisstijl/pagina.js"></script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
 </body>
 </html>

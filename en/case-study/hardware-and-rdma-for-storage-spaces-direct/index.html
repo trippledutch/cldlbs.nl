@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- LET OP: noindex staat aan zolang de waarden met klasse .invul nog
+     invulvelden zijn. Zodra Hans de echte meetwaarden heeft aangeleverd:
+     deze regel verwijderen, de datums in het schema bijwerken en de URL
+     opnemen in sitemap.xml. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>Hardware and RDMA for Storage Spaces Direct &middot; CloudLabs</title>
+<meta name="description" content="Forty VMs on ageing SAN-based Hyper-V. Three intended NIC models were not on the validated list and were replaced before the purchase order went out.">
+<link rel="canonical" href="https://cldlbs.com/en/case-study/hardware-and-rdma-for-storage-spaces-direct/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://cldlbs.com/en/case-study/hardware-and-rdma-for-storage-spaces-direct/">
+<meta property="og:title" content="Hardware and RDMA for Storage Spaces Direct &middot; CloudLabs">
+<meta property="og:description" content="A logistics company wanted to move from SAN-based Hyper-V to Storage Spaces Direct. The measurement checked the order list against the HCL and took three NIC models off it before the purchase order went out.">
+<link rel="alternate" hreflang="nl" href="https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/case-study/hardware-and-rdma-for-storage-spaces-direct/">
+<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/bevinding.css?v=8d065ab5">
+<link rel="stylesheet" href="/huisstijl/voorbeeld.css?v=81befd8f">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://cldlbs.com/"},
+        {"@type":"ListItem","position":2,"name":"Praktijkvoorbeelden","item":"https://cldlbs.com/praktijkvoorbeelden/"},
+        {"@type":"ListItem","position":3,"name":"Hardware and RDMA for Storage Spaces Direct","item":"https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html"}
+      ]
+    },
+    {
+      "@type":"Article",
+      "@id":"https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html#artikel",
+      "headline":"Three NIC models taken off the order list before the purchase of a Storage Spaces Direct cluster",
+      "description":"Forty virtual machines on ageing SAN-based Hyper-V and a hardware replacement coming. The measurement checked the intended order list against the HCL and the network design against the requirements for RDMA.",
+      "inLanguage":"nl-NL",
+      "datePublished":"2026-09-01",
+      "dateModified":"2026-09-01",
+      "mainEntityOfPage":"https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html",
+      "genre":"Praktijkvoorbeeld",
+      "about":[
+        {"@type":"Thing","name":"Storage Spaces Direct"},
+        {"@type":"Thing","name":"RDMA"},
+        {"@type":"Thing","name":"RoCE"},
+        {"@type":"Thing","name":"Hyper-V"}
+      ],
+      "keywords":"Storage Spaces Direct, S2D, RDMA, RoCE, PFC, HCL, hardware compatibility list, SAN migratie, Hyper-V, Azure Local",
+      "author":{
+        "@type":"Person","@id":"https://cldlbs.com/about.html#hans","name":"Hans Vredevoort",
+        "jobTitle":"Cluster- en virtualisatiespecialist",
+        "knowsAbout":["Hyper-V","Failover Clustering","Azure Local","Storage Spaces Direct","Windows Server"],
+        "worksFor":{"@id":"https://cldlbs.com/#organisatie"}
+      },
+      "publisher":{"@type":"Organization","@id":"https://cldlbs.com/#organisatie","name":"CloudLabs","url":"https://cldlbs.com/"}
+    },
+    {
+      "@type":"FAQPage",
+      "@id":"https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html#vragen",
+      "mainEntity":[
+        {"@type":"Question","name":"Why is the hardware list so decisive with Storage Spaces Direct?",
+         "acceptedAnswer":{"@type":"Answer","text":"Because S2D builds the storage layer in software out of the disks and the network cards of the hosts themselves. With a SAN the reliability sits with the storage system; with S2D it sits with the combination of components in your own servers. A network card that supports RDMA on paper but is not on the list of validated configurations can drop packets under load that the cluster sees as a storage fault. That cannot be repaired with a setting: it is the wrong card. That is why the check against the HCL belongs before the purchase order, not after it."}},
+        {"@type":"Question","name":"What goes wrong if PFC classes between host and switch do not match?",
+         "acceptedAnswer":{"@type":"Answer","text":"RoCE expects a network that drops no packets. Priority Flow Control arranges that by pausing traffic in a class instead of discarding it. If the host is on a different priority class than the switch, that pause does not arrive where it is needed and traffic is dropped after all. The cluster then sees no network fault but slow or failing storage, which sends the investigation in the wrong direction. Both sides have to use the same class. That can only be established by putting host and switch side by side."}},
+        {"@type":"Question","name":"Can CloudLabs do this before we order hardware?",
+         "acceptedAnswer":{"@type":"Answer","text":"Yes. That is also the moment at which it delivers the most. After the purchase a wrong model is a write-off or an awkward exchange; before it, it is a line on an order list. The base measurement maps the existing environment; the network and storage modules M1 and M3 check the switches and the storage system."}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Secure the evidence first.</span><a href="/en/triage/#aanvraag">Start free triage &rarr;</a><button type="button" aria-label="Close" id="close-announcement">&times;</button></div>
+
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="/en/" hreflang="en"><b>Cloud<span>Labs</span></b><small>Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-the-healthcheck">The HealthCheck</button><div class="navmenu" id="nav-the-healthcheck"><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div></div><a href="/en/rates/">Rates</a><a href="/en/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-knowledge-base">Knowledge base</button><div class="navmenu" id="nav-knowledge-base"><a href="/en/faq/">FAQ</a><a href="/en/case-studies/">Case studies</a><a href="/en/topics/">Topics</a></div></div><a href="/en/about/">About us</a></div><div class="nav-actions">
+      <span class="taalwissel"><a href="/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html" hreflang="nl" lang="nl">NL</a><span aria-current="true">EN</span></span>
+      <a class="btn primary" href="/en/triage/#aanvraag">Start free triage</a>
+      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+<article class="artikel">
+
+  <p class="kruimel"><a href="/.">CloudLabs</a> / <a href="/praktijkvoorbeelden">Case studies</a> / 03</p>
+
+  <div class="voorbeeldkop">
+    <p class="eyebrow">Case study 03 · base measurement with modules M1 and M3</p>
+    <h1>Three NIC models, taken off the order list</h1>
+    <div class="regel">
+      <b>Logistics</b><i>&middot;</i>
+      <b>40+ virtual machines</b><i>&middot;</i>
+      <b>SAN &rarr; Storage Spaces Direct</b><i>&middot;</i>
+      <b>Hyper-V</b><i>&middot;</i>
+      <b>Baseline<span class="invul">quarter</span></b>
+    </div>
+  </div>
+
+  <div class="inleiding">
+    <p>Over forty virtual machines ran on ageing SAN-based Hyper-V, while a hardware replacement was on the planning. The company wanted to know whether Storage Spaces Direct was a sensible step and had no in-house knowledge of S2D. The measurement was not about the existing cluster but about the order list: three of the intended network card models were not on the list of validated configurations and were replaced before the purchase order went out. On top of that the PFC classes between host and switch turned out not to match, the kind of deviation that shows up later as slow storage and not as a network fault.</p>
+  </div>
+
+  <table class="meetgegevens">
+      <caption>Measurement data</caption>
+      <tbody>
+        <tr><th scope="row">NIC models rejected against the HCL</th><td><span class="invul">n</span>of<span class="invul">n</span></td></tr>
+        <tr><th scope="row">Virtual machines migrated, data loss 0</th><td>40+</td></tr>
+        <tr><th scope="row">Components that had to go back after purchase</th><td>0</td></tr>
+      </tbody>
+    </table>
+
+  <section class="deel">
+    <p class="deel-nr">01</p>
+    <div class="deel-tekst">
+      <h2>The situation</h2>
+  <p>A logistics company with over forty virtual machines on Hyper-V with SAN storage. The hardware was reaching the end of its support term and budget for replacement was available. The vendor had proposed Storage Spaces Direct; internally there was nobody who could judge whether that was right.</p>
+  <p>That is the most dangerous phase of such a track. The decision that is most expensive to reverse is taken at the moment when nothing has been measured yet. Until the last moment an order list looks like an administrative step, while it fixes the reliability of the coming five years.</p>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">02</p>
+    <div class="deel-tekst">
+      <h2>The measurement</h2>
+  <p>The base measurement mapped the existing environment. The modules for Ethernet switches and the storage system also put the intended configuration next to the requirements S2D sets.</p>
+
+  <div class="bev high">
+    <div class="bevkop">
+      <span class="fid">F01</span>
+      <div class="bevtitel">
+        <span class="onderwerp">Hardware &amp; compatibility</span>
+        <h3>Three intended NIC models are not on the list of validated configurations</h3>
+      </div>
+      <span class="chip high">HIGH</span>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Measured</span>
+      <p class="meting">Models on the order list · <span class="invul">n</span><br>
+      Not found on the HCL · <span class="invul">n</span><br>
+      Betrokken modellen &middot; <span class="invul">model designations</span><br>
+      Replaced by · <span class="invul">model designations</span></p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Why this counts</span>
+      <p>Storage Spaces Direct builds the storage layer in software out of the disks and network cards of the hosts themselves. With a SAN the reliability sits with the storage system; with S2D it sits with the combination of components in your own servers. A card that supports RDMA on paper but is not validated can drop packets under load that the cluster sees as a storage fault. That cannot be repaired with a setting: it is the wrong card.</p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Action point</span>
+      <p>Take the three models off the order list and replace them with validated models, before the purchase order. See also the comparison of <a href="/en/blog/san-vs-s2d-vs-azure-local-hyper-v-storage/">SAN, S2D and Azure Local</a>.</p>
+    </div>
+  </div>
+
+  <div class="bev med">
+    <div class="bevkop">
+      <span class="fid">F02</span>
+      <div class="bevtitel">
+        <span class="onderwerp">Network &amp; RDMA</span>
+        <h3>PFC classes do not match between host and switch</h3>
+      </div>
+      <span class="chip med">Medium</span>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Measured</span>
+      <p class="meting">Priority class on the host · <span class="invul">n</span><br>
+      Priority class on the switch · <span class="invul">n</span><br>
+      Bandbreedtereservering &middot; <span class="invul">percentage</span></p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Why this counts</span>
+      <p>RoCE expects a network that drops no packets. Priority Flow Control arranges that by pausing traffic in a class instead of discarding it. If the host is on a different class than the switch, that pause does not arrive where it is needed and traffic is dropped after all. The cluster then reports no network fault but slow or failing storage. That sends the investigation in the wrong direction.</p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Action point</span>
+      <p>Put host and switch on the same priority class and record the reservation. The network design for RDMA was delivered and gone through with the network team; they applied and validated the configuration themselves.</p>
+    </div>
+  </div>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">03</p>
+    <div class="deel-tekst">
+      <h2>What could not be measured</h2>
+  <p>Every CloudLabs report states what stayed out of reach, with the reason. Not because it looks good, but because otherwise a reader does not know how complete the picture is.</p>
+  <div class="nietgemeten">
+    <ul>
+      <li>The new hardware itself: not yet delivered at the time of measurement</li>
+      <li>Behaviour of S2D under production load: only determinable after the migration</li>
+      <li>Firmware of the existing storage system: <span class="invul">reason</span></li>
+    </ul>
+  </div>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">04</p>
+    <div class="deel-tekst">
+      <h2>The repair</h2>
+  <ul>
+    <li>The order list was adjusted: three models replaced by validated alternatives, before the purchase.</li>
+    <li>A network design for RDMA was delivered; the network team applied it and validated the configuration.</li>
+    <li>A migration runbook was written; all forty-plus virtual machines were migrated without data loss.</li>
+  </ul>
+  <p>What the customer left alone: <span class="invul">finding not taken up, with the customer’s reason</span>. That is stated, because an example in which everything is resolved is not an example but an advertisement.</p>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">05</p>
+    <div class="deel-tekst">
+      <h2>The outcome</h2>
+  <p>The migration ran as planned. But the value sat almost entirely in the moment at which the measurement was done. After the purchase a wrong NIC model would have been a write-off, or an awkward exchange with a vendor who could maintain that the model supports RDMA. Before it, it was a line on a list.</p>
+  <p>The deviating PFC classes would not have reported themselves as a network fault but as storage that collapses under load: the kind of problem teams lose weeks to because they are looking in the wrong place.</p>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">06</p>
+    <div class="deel-tekst">
+      <h2>Questions</h2>
+
+  <div class="vraag">
+    <h3>Why is the hardware list so decisive with Storage Spaces Direct?</h3>
+    <p>Because S2D builds the storage layer in software out of the disks and network cards of the hosts themselves. With a SAN the reliability sits with the storage system; with S2D it sits with the combination of components in your own servers.</p>
+    <p>A network card that supports RDMA on paper but is not validated can drop packets under load that the cluster sees as a storage fault. That cannot be solved with a setting.</p>
+  </div>
+
+  <div class="vraag">
+    <h3>What goes wrong if PFC classes between host and switch do not match?</h3>
+    <p>RoCE expects a network that drops no packets. Priority Flow Control arranges that by pausing traffic in a class instead of discarding it. If the host is on a different class than the switch, that pause does not arrive where it is needed.</p>
+    <p>The cluster then sees no network fault but slow storage. That sends the investigation in the wrong direction.</p>
+  </div>
+
+  <div class="vraag">
+    <h3>Can CloudLabs do this before we order hardware?</h3>
+    <p>Yes. That is also the moment at which it delivers the most. After the purchase a wrong model is a write-off; before it, it is a line on an order list.</p>
+  </div>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">07</p>
+    <div class="deel-tekst">
+      <h2>Further reading</h2>
+  <div class="verwant">
+    <a href="/en/blog/san-vs-s2d-vs-azure-local-hyper-v-storage/"><span>Background</span><b>SAN, S2D or Azure Local</b></a>
+    <a href="/en/blog/aligning-vms-with-storage/"><span>Background</span><b>Aligning virtual machines and storage</b></a>
+    <a href="/en/case-study/firmware-drift-and-csv-owner-imbalance/"><span>Case study 01</span><b>Six nodes, two firmware versions</b></a>
+    <a href="/en/case-study/quorum-stretch-cluster-for-rolling-upgrade/"><span>Case study 02</span><b>A quorum that would not survive the second site</b></a>
+  </div>
+
+
+    </div>
+  </section>
+  </article>
+</section>
+
+<section class="cta">
+  <div class="inner">
+  <p class="eyebrow" style="justify-content:center">Your own cluster</p>
+  <h2>What would a measurement<br>find at your site?</h2>
+  <p>The free Cluster Triage only reads and changes nothing. You receive the five heaviest signals around your incident window, with the measured value, the node and the time.</p>
+  <div class="actions">
+    <a class="btn primary" data-icon="script" href="/triage">Start free Cluster Triage &rarr;</a>
+    <a class="btn ghost" data-icon="rapport" href="/praktijkvoorbeelden">All case studies</a>
+  </div>
+</div>
+</section>
+</main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Services</h4><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div><div class="footer-column"><h4>Organisation</h4><a href="/en/about/">About us</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/rates/">Rates</a><a href="/en/partners/">For partners</a></div><div class="footer-column"><h4>Knowledge base</h4><a href="/en/blog/">Blog</a><a href="/en/case-studies/">Case studies</a><a href="/en/blog/top-10-hyper-v-cluster-issues/">Failures and causes</a><a href="/en/blog/cluster-witness-comparison/">Quorum and witness</a><a href="/en/blog/san-vs-s2d-vs-azure-local-hyper-v-storage/">Storage and Storage Spaces Direct</a><a href="/en/faq/">FAQ</a><a href="/en/topics/">Topics</a></div><div class="footer-column"><h4>Contact</h4><a href="/en/triage/#aanvraag">Request the free script</a><a href="/en/appointment/#agenda">Book a call</a><a href="/en/contact/#bericht">Get in touch</a></div><div class="newsletter"><h4>Technical findings by email</h4><form action="#" method="post"><label><span class="skip">Email address</span><input type="email" name="email" placeholder="name@company.com" autocomplete="email"></label><button type="submit">Subscribe</button></form><p>No marketing stream. Only new findings and practical explanation.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="Email"><img src="/assets/icons/email.svg" alt=""></a><a href="/en/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/en/">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/en/privacy/">Privacy statement</a><a href="/en/triage/#veilig">Security</a><a href="/en/terms/">Terms of engagement</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
+
+<script>
+(function(){
+  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
+  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
+})();
+</script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
+</body>
+</html>

@@ -5,22 +5,22 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- Omgezet naar de nieuwe huisstijl met blog-omzetten.py. De Engelse helft is
      eruit; die krijgt later een eigen URL onder /en/. De inhoud is niet
-     herschreven. noindex staat aan zolang de nieuwe stijl niet live is. -->
-<meta name="robots" content="noindex,nofollow">
+     herschreven. Vrijgegeven voor indexering op 2 september 2026. -->
 <meta name="theme-color" content="#0A1024">
-<title>Azure Local migratie readiness checklist: wat 2026 anders maakt &middot; CloudLabs</title>
-<meta name="description" content="Azure Local is Microsofts huidige naam voor het besturingssysteem dat eerder Azure Stack HCI heette. Een hyperconverged Windows-platform beheerd via Azure Arc, gefactureerd per core per maand, en bedoeld voor productie-workloads die on-premises moeten blijven. Voor klanten die uit hun VMware-omgevin">
+<title>Azure Local migratie readiness checklist &middot; CloudLabs</title>
+<meta name="description" content="Azure Local is Microsofts huidige naam voor het besturingssysteem dat eerder Azure Stack HCI heette. Een hyperconverged Windows-platform beheerd via Azure Arc, gefactureerd per core per maand en bedoeld voor productie-workloads die on-premises moeten blijven. Voor klanten die uit hun VMware-omgevin">
 <link rel="canonical" href="https://cldlbs.com/blog/azure-local-migration-readiness.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/azure-local-migration-readiness.html">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/blog/azure-local-migration-readiness/">
 <link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/azure-local-migration-readiness.html">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="nl_NL">
 <meta property="og:url" content="https://cldlbs.com/blog/azure-local-migration-readiness.html">
-<meta property="og:title" content="Azure Local migratie readiness checklist: wat 2026 anders maakt">
-<meta property="og:description" content="Azure Local is Microsofts huidige naam voor het besturingssysteem dat eerder Azure Stack HCI heette. Een hyperconverged Windows-platform beheerd via Azure Arc, gefactureerd per core per maand, en bedoeld voor productie-workloads die on-premises moeten blijven. Voor klanten die uit hun VMware-omgevin">
+<meta property="og:title" content="Azure Local migratie readiness checklist &middot; CloudLabs">
+<meta property="og:description" content="Azure Local is Microsofts huidige naam voor het besturingssysteem dat eerder Azure Stack HCI heette. Een hyperconverged Windows-platform beheerd via Azure Arc, gefactureerd per core per maand en bedoeld voor productie-workloads die on-premises moeten blijven. Voor klanten die uit hun VMware-omgevin">
 <link rel="icon" href="/favicon.png" type="image/png">
-<link rel="stylesheet" href="/huisstijl/pagina.css">
-<link rel="stylesheet" href="/huisstijl/artikel.css">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/artikel.css?v=04e23fbe">
 
 <script type="application/ld+json">
 {
@@ -53,7 +53,7 @@
       "@type": "BlogPosting",
       "@id": "https://cldlbs.com/blog/azure-local-migration-readiness.html#artikel",
       "headline": "Azure Local migratie readiness checklist: wat 2026 anders maakt",
-      "description": "Azure Local is Microsofts huidige naam voor het besturingssysteem dat eerder Azure Stack HCI heette. Een hyperconverged Windows-platform beheerd via Azure Arc, gefactureerd per core per maand, en bedoeld voor productie-workloads die on-premises moeten blijven. Voor klanten die uit hun VMware-omgevin",
+      "description": "Azure Local is Microsofts huidige naam voor het besturingssysteem dat eerder Azure Stack HCI heette. Een hyperconverged Windows-platform beheerd via Azure Arc, gefactureerd per core per maand en bedoeld voor productie-workloads die on-premises moeten blijven. Voor klanten die uit hun VMware-omgevin",
       "inLanguage": "nl-NL",
       "datePublished": "2026-06-01",
       "dateModified": "2026-06-13",
@@ -131,15 +131,14 @@
 </head>
 
 <body>
-<a class="skip" href="#main">Naar inhoud</a>
+<a class="skip" href="#main">Naar inhoud</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Bewaar eerst het bewijs.</span><a href="/triage/#aanvraag">Start gratis triage &rarr;</a><button type="button" aria-label="Sluiten" id="close-announcement">&times;</button></div>
 
 <header class="topbar">
   <nav class="nav">
-    <a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a>
-    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/blog/" aria-current="page">Blog</a></div>
-    <div class="nav-actions">
-      <button class="search" aria-label="Zoeken">&#8981;</button>
-      <a class="btn primary" href="/triage/">Start gratis triage</a>
+    <a class="brand" href="/preview-home.html"><b>Cloud<span>Labs</span></b><small lang="en">Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-de-healthcheck">De HealthCheck</button><div class="navmenu" id="nav-de-healthcheck"><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div></div><a href="/tarieven/">Tarieven</a><a href="/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-kennisbank">Kennisbank</button><div class="navmenu" id="nav-kennisbank"><a href="/vragen/">Veelgestelde vragen</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/onderwerpen/">Onderwerpen</a></div></div><a href="/over-ons/">Over ons</a></div><div class="nav-actions">
+      <span class="taalwissel"><span aria-current="true">NL</span><a href="/en/blog/azure-local-migration-readiness/" hreflang="en" lang="en">EN</a></span>
+      <a class="btn primary" href="/triage/#aanvraag">Start gratis triage</a>
       <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
     </div>
   </nav>
@@ -153,8 +152,8 @@
 
     <header class="artikelkop">
       <h1>Azure Local migratie readiness checklist: wat 2026 anders maakt</h1>
-      <p class="lede">Azure Local is Microsofts huidige naam voor het besturingssysteem dat eerder Azure Stack HCI heette. Een hyperconverged Windows-platform beheerd via Azure Arc, gefactureerd per core per maand, en bedoeld voor productie-workloads die on-premises moeten blijven. Voor klanten die uit hun VMware-omgeving willen of een verouderd Hyper-V cluster vervangen, staat Azure Local opvallend hoog op de optielijst. Terecht.</p>
-        <p class="lede">Maar migreren vanuit traditionele Hyper-V clusters of vanaf oudere Azure Stack HCI-versies is technisch geen rocket science. De readiness-gap maakt meer projecten kapot dan de migratie zelf. Solution-catalog mismatches, switches zonder DCB, Entra ID tenant-keuzes die achteraf niet terug te draaien zijn, en kostenmodellen die op papier kloppen maar in productie 3x duurder uitvallen.</p>
+      <p class="lede">Azure Local is Microsofts huidige naam voor het besturingssysteem dat eerder Azure Stack HCI heette. Een hyperconverged Windows-platform beheerd via Azure Arc, gefactureerd per core per maand en bedoeld voor productie-workloads die on-premises moeten blijven. Voor klanten die uit hun VMware-omgeving willen of een verouderd Hyper-V cluster vervangen, staat Azure Local opvallend hoog op de optielijst. Terecht.</p>
+        <p class="lede">Maar migreren vanuit traditionele Hyper-V clusters of vanaf oudere Azure Stack HCI-versies is technisch geen rocket science. De readiness-gap maakt meer projecten kapot dan de migratie zelf. Solution-catalog mismatches, switches zonder DCB, Entra ID tenant-keuzes die achteraf niet terug te draaien zijn en kostenmodellen die op papier kloppen maar in productie 3x duurder uitvallen.</p>
         <p class="lede">Deze checklist is wat CloudLabs in een Azure Local Readiness Assessment doorloopt, in de volgorde die er werkelijk toe doet. Niet de marketing-volgorde, maar de volgorde waarin je problemen tegenkomt.</p>
       <p class="artikelmeta"><b>Door Hans Vredevoort</b> <i>&middot;</i> <b>1 juni 2026</b> <i>&middot;</i> <b>16 minuten leestijd</b> <i>&middot;</i> <b>Azure Local</b></p>
     </header>
@@ -177,11 +176,11 @@
 
       <div class="tekst">
 <h2 id="nl-1">1. Eerste beslissing: is Azure Local het juiste doel?</h2>
-        <p>Azure Local is geen gratis upgradepad voor elk Hyper-V cluster. Het is het juiste antwoord bij hyperconverged storage met S2D, Arc-native operations, integratie met Azure-diensten (Site Recovery, Backup, AKS on Azure Local), en een duidelijke roadmap-aansluiting op Microsofts huidige koers. Het is het verkeerde antwoord bij een klein two-node cluster met shared SAN, een workload-mix die per-core licensing niet rechtvaardigt, of harde policy-beperkingen die Azure-connectivity blokkeren.</p>
-        <p>CloudLabs begint elke Azure Local Readiness Assessment met die vraag. Als het antwoord is "we blijven beter op Windows Server met Failover Clustering en Hyper-V," is dat een legitieme uitkomst, en eentje die wij voor meerdere klanten gedocumenteerd hebben waar de per-core economics niet uitkwamen.</p>
+        <p>Azure Local is geen gratis upgradepad voor elk Hyper-V cluster. Het is het juiste antwoord bij hyperconverged storage met S2D, Arc-native operations, integratie met Azure-diensten (Site Recovery, Backup, AKS on Azure Local) en een duidelijke roadmap-aansluiting op Microsofts huidige koers. Het is het verkeerde antwoord bij een klein two-node cluster met shared SAN, een workload-mix die per-core licensing niet rechtvaardigt, of harde policy-beperkingen die Azure-connectivity blokkeren.</p>
+        <p>CloudLabs begint elke Azure Local Readiness Assessment met die vraag. Als het antwoord is "we blijven beter op Windows Server met Failover Clustering en Hyper-V," is dat een legitieme uitkomst en eentje die wij voor meerdere klanten gedocumenteerd hebben waar de per-core economics niet uitkwamen.</p>
 
         <div class="callout"><strong>Snelle vuistregel</strong>
-        Azure Local heeft zin bij drie of meer nodes, met workloads die baat hebben bij S2D, en een organisatie die al andere workloads in Azure draait. Onder die grens is Windows Server met traditionele storage vaak nog steeds de betere optie. Een SAN-gebaseerde Hyper-V cluster build is dan niet ouderwets, het is een rationele keuze.</div>
+        Azure Local heeft zin bij drie of meer nodes, met workloads die baat hebben bij S2D en een organisatie die al andere workloads in Azure draait. Onder die grens is Windows Server met traditionele storage vaak nog steeds de betere optie. Een SAN-gebaseerde Hyper-V cluster build is dan niet ouderwets, het is een rationele keuze.</div>
 
         <h2 id="nl-2">2. Hardware compatibiliteit, het niet-onderhandelbare deel</h2>
         <p>Azure Local draait alleen op hardware uit de Azure Local Solutions Catalog. Niet de Windows Server HCL, de Azure Local catalogus. Dit is de grootste bron van projecten die ontsporen die wij zien. Een server die perfect werkte onder Windows Server 2022 en Failover Clustering staat soms helemaal niet op de Azure Local catalogus, of alleen met een specifiek firmware-niveau en een specifieke NIC.</p>
@@ -191,7 +190,7 @@
         <p><strong>NIC's moeten RDMA-capable zijn</strong> voor het storage-netwerk. RoCEv2 (Mellanox/NVIDIA ConnectX-4 of nieuwer, Broadcom NetXtreme-E) of iWARP (Chelsio T5/T6, sommige Intel X722). De catalogus benoemt ondersteunde part numbers per solution. Een ConnectX-5 die in de ene solution staat is niet automatisch geldig in een andere.</p>
         <p><strong>Drives moeten all-NVMe, all-SSD, of een hybride zijn die expliciet voor dat chassis gevalideerd is.</strong> SSD-vendors mixen binnen een node mag, capaciteiten mixen binnen een tier is vragen om scheve slijtage en onvoorspelbare capacity planning.</p>
         <p><strong>TPM 2.0 en Secure Boot</strong> zijn verplicht. Vrijwel alle moderne hardware heeft het, maar BIOS-instellingen moeten expliciet gecontroleerd worden. Bij refurbished hardware staat TPM regelmatig uit.</p>
-        <p><strong>Solution firmware baseline.</strong> Elke OEM publiceert er één, en je moet die matchen vóór deployment. Daarna lopen updates via Azure Update Manager. Een afwijkende BIOS- of NIC-firmware-versie op één node breekt de eerste Update Run.</p>
+        <p><strong>Solution firmware baseline.</strong> Elke OEM publiceert er één en je moet die matchen vóór deployment. Daarna lopen updates via Azure Update Manager. Een afwijkende BIOS- of NIC-firmware-versie op één node breekt de eerste Update Run.</p>
 
         <h2 id="nl-3">3. Netwerkarchitectuur en RDMA</h2>
         <p>Azure Local heeft uitgesproken meningen over netwerktopologie. Het referentieontwerp is twee switches, twee NIC-poorten per node voor storage met RDMA, twee NIC-poorten voor management en compute. Network ATC (Automatic Cluster Networking) is de aanbevolen automatiseringslaag, die genereert de hele SET / vSwitch / QoS-configuratie uit een high-level intent.</p>
@@ -201,7 +200,7 @@
           <li><strong>Storage-netwerk moet RDMA zijn</strong> (RoCEv2 of iWARP) met DCB en PFC geconfigureerd op switchzijde. Voor RoCEv2 betekent dit minimaal PFC op prioriteit 3 en ETS op prioriteit 3 met een gegarandeerd bandbreedtepercentage. Switches zonder DCB-support kun je niet gebruiken voor productie-grade Azure Local.</li>
           <li><strong>Storage-netwerk moet geïsoleerd zijn</strong>, apart VLAN, aparte fysieke NIC-poorten van management. Storage-verkeer combineren met management is in sommige topologieën ondersteund maar reduceert altijd de resilience.</li>
           <li><strong>Minimaal 10 GbE</strong> voor de kleinste productie-deployments, 25 GbE is de praktische ondergrens voor serieuze workloads. 100 GbE is normaal aan de grotere kant. We zien in 2026 nauwelijks meer nieuwe deployments onder 25 GbE.</li>
-          <li><strong>Switches moeten DCB ondersteunen.</strong> Veel oudere datacenter-switches doen dat, maar switch-firmware moet expliciet gecontroleerd worden. Cisco Nexus 9K, Arista 7050, Dell Z9264F, en Mellanox SN3700 zijn praktijkkeuzes die wij vaak zien werken.</li>
+          <li><strong>Switches moeten DCB ondersteunen.</strong> Veel oudere datacenter-switches doen dat, maar switch-firmware moet expliciet gecontroleerd worden. Cisco Nexus 9K, Arista 7050, Dell Z9264F en Mellanox SN3700 zijn praktijkkeuzes die wij vaak zien werken.</li>
         </ul>
 
         <p>Test het vóór je je vastlegt:</p>
@@ -216,7 +215,7 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
         <p>Komt RDMA niet door deze test, dan stopt het project hier tot de switch-zijde is opgelost. Doorgaan en "later regelen" is in de praktijk een garantie voor performance-issues die tot na go-live verborgen blijven.</p>
 
         <h2 id="nl-4">4. Identity: Entra ID, AD en het nieuwe cluster-identiteitsmodel</h2>
-        <p>Dit is waar veel bestaande Hyper-V beheerders verrast worden. Azure Local nodes worden domain-joined aan je on-premises Active Directory <em>én</em> geregistreerd in Microsoft Entra ID voor Arc-management. Het cluster heeft een eigen Entra ID service principal, en meerdere Azure RBAC-rollen moeten correct toegekend zijn voordat de deployment überhaupt start.</p>
+        <p>Dit is waar veel bestaande Hyper-V beheerders verrast worden. Azure Local nodes worden domain-joined aan je on-premises Active Directory <em>én</em> geregistreerd in Microsoft Entra ID voor Arc-management. Het cluster heeft een eigen Entra ID service principal en meerdere Azure RBAC-rollen moeten correct toegekend zijn voordat de deployment überhaupt start.</p>
 
         <p><strong>Pre-deployment identity-checklist:</strong></p>
         <ul>
@@ -224,7 +223,7 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
           <li>Een <strong>deployment user-account</strong> met lokale admin-rechten op alle nodes en het recht om computerobjecten in die OU aan te maken.</li>
           <li>Een <strong>Entra ID tenant</strong> waarin het cluster geregistreerd wordt. Bij multi-tenant organisaties: dit vooraf beslissen. Het is achteraf niet makkelijk te wijzigen.</li>
           <li>Een <strong>Azure subscription</strong> in dezelfde Entra-tenant, met de resource providers <code>Microsoft.AzureStackHCI</code>, <code>Microsoft.HybridConnectivity</code> en <code>Microsoft.Kubernetes</code> geregistreerd.</li>
-          <li><strong>Azure RBAC-rollen</strong> op die subscription: <em>Azure Connected Machine Onboarding</em>, <em>Azure Stack HCI Administrator</em>, en een Reader-rol op resource group-niveau voor de cluster-identiteit.</li>
+          <li><strong>Azure RBAC-rollen</strong> op die subscription: <em>Azure Connected Machine Onboarding</em>, <em>Azure Stack HCI Administrator</em> en een Reader-rol op resource group-niveau voor de cluster-identiteit.</li>
         </ul>
 
         <h2 id="nl-5">5. Licensing en kosten-realiteit</h2>
@@ -265,14 +264,14 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
         </ul>
 
         <h2 id="nl-7">7. Migratiepaden vanuit Hyper-V en Azure Stack HCI</h2>
-        <p>Er is geen in-place upgrade van Windows Server Hyper-V naar Azure Local. Je bouwt een nieuw cluster, migreert workloads ernaartoe, en decommissioneert het oude. Vanaf Azure Stack HCI 22H2 bestaat er wel een in-place upgrade-pad naar Azure Local 23H2 en hoger, met prerequisites die zorgvuldige controle vereisen.</p>
+        <p>Er is geen in-place upgrade van Windows Server Hyper-V naar Azure Local. Je bouwt een nieuw cluster, migreert workloads ernaartoe en decommissioneert het oude. Vanaf Azure Stack HCI 22H2 bestaat er wel een in-place upgrade-pad naar Azure Local 23H2 en hoger, met prerequisites die zorgvuldige controle vereisen.</p>
 
         <p>Migratie-opties voor workloads, in volgorde van afnemende voorkeur voor de meeste productie-VM's:</p>
         <ul>
-          <li><strong>Hyper-V Replica</strong> werkt tussen Hyper-V en Azure Local zolang Hyper-V Replica is geconfigureerd. Cutover vereist een korte uitval (typisch onder een minuut per VM), en je kunt batches plannen tijdens een onderhoudsvenster.</li>
+          <li><strong>Hyper-V Replica</strong> werkt tussen Hyper-V en Azure Local zolang Hyper-V Replica is geconfigureerd. Cutover vereist een korte uitval (typisch onder een minuut per VM) en je kunt batches plannen tijdens een onderhoudsvenster.</li>
           <li><strong>Storage Migration Service</strong> voor fileserver-rollen. Specifiek voor bestand-data, niet voor algemene VM-workloads.</li>
           <li><strong>Backup-and-restore</strong> via Azure Site Recovery, Veeam of Commvault. De traagste optie, maar werkbaar voor grote omgevingen met strikte cutover-vensters waar Hyper-V Replica geen optie is.</li>
-          <li><strong>VHD copy plus register.</strong> Handmatig, scriptable, werkt prima voor laag-belang VM's. Acceptabel voor batch-workloads, dev/test, en alles wat een paar uur downtime mag hebben. Wij scripten dit standaard mee in CloudLabs migratie-opdrachten.</li>
+          <li><strong>VHD copy plus register.</strong> Handmatig, scriptable, werkt prima voor laag-belang VM's. Acceptabel voor batch-workloads, dev/test en alles wat een paar uur downtime mag hebben. Wij scripten dit standaard mee in CloudLabs migratie-opdrachten.</li>
         </ul>
 
         <h2 id="nl-8">8. Vijf gotchas die we steeds tegenkomen</h2>
@@ -306,7 +305,7 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
           <li>Rollback-procedure geschreven en gereviewd</li>
         </ul>
 
-        <p>Een Azure Local Readiness Assessment van CloudLabs loopt als opdracht met vaste scope, levert een readiness-rapport in Nederlands of Engels, en bevat een geschreven go/no-go advies met expliciete trade-offs. Voor klanten die er klaar voor zijn, voor klanten die het beter even niet kunnen doen, en voor klanten waar het antwoord ergens daartussen ligt.</p>
+        <p>Een Azure Local Readiness Assessment van CloudLabs loopt als opdracht met vaste scope, levert een readiness-rapport in Nederlands of Engels en bevat een geschreven go/no-go advies met expliciete trade-offs. Voor klanten die er klaar voor zijn, voor klanten die het beter even niet kunnen doen en voor klanten waar het antwoord ergens daartussen ligt.</p>
         <p><a href="../book.html"><strong>Plan een Azure Local Readiness Assessment →</strong></a></p>
 
         <div class="faq-block">
@@ -342,7 +341,7 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
 </section>
 </main>
 
-<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><a href="/healthcheck/">De HealthCheck</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/tarieven/">Tarieven</a><a href="/partners/">Voor partners</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/vragen/">Veelgestelde vragen</a><a href="/onderwerpen/">Onderwerpen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Gratis script aanvragen</a><a href="/afspraak/#agenda">Afspraak maken</a><a href="/contact/#bericht">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy/">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/voorwaarden/">Algemene voorwaarden</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
 
 
 <script>
@@ -351,6 +350,6 @@ Get-NetAdapter | Select-Object Name, Status, LinkSpeed, MediaType</code></pre>
   if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
 })();
 </script>
-<script src="/huisstijl/pagina.js"></script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
 </body>
 </html>

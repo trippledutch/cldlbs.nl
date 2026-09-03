@@ -10,18 +10,19 @@
      noindex staat aan zolang de nieuwe stijl niet live is. -->
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#0A1024">
-<title>De HealthCheck &middot; van meting naar rapport, vier keer per jaar &middot; CloudLabs</title>
-<meta name="description" content="Een cyclus van een jaar: een basismeting en drie vervolgmetingen, elk kwartaal een. Tussen meting en rapport staan zes stappen, en stap 4 houdt het rapport tegen zolang er iets ontbreekt.">
+<title>Hyper-V cluster assessment &middot; cluster health check &middot; CloudLabs</title>
+<meta name="description" content="Cluster laten controleren: een onafhankelijke beoordeling van uw Hyper-V, Failover Cluster of Azure Local omgeving. Een basismeting en drie kwartaalvervolgmetingen, elk met rapport en een uur bespreking.">
 <link rel="canonical" href="https://cldlbs.com/healthcheck/">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/healthcheck/">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/healthcheck/">
 <link rel="alternate" hreflang="x-default" href="https://cldlbs.com/healthcheck/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="nl_NL">
 <meta property="og:url" content="https://cldlbs.com/healthcheck/">
-<meta property="og:title" content="De HealthCheck &middot; CloudLabs">
+<meta property="og:title" content="Hyper-V cluster assessment &middot; cluster health check &middot; CloudLabs">
 <meta property="og:description" content="Van meting naar rapport, vier keer per jaar. Loop de zes stappen door.">
 <link rel="icon" href="/favicon.png" type="image/png">
-<link rel="stylesheet" href="/huisstijl/pagina.css?v=7c992235">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
 <link rel="stylesheet" href="/huisstijl/cyclus.css?v=bc00e2f8">
 
 <script type="application/ld+json">
@@ -49,22 +50,21 @@
       {"@type":"Question","name":"Wat doet de controle in stap 4?",
        "acceptedAnswer":{"@type":"Answer","text":"Die houdt het document tegen zolang er iets ontbreekt. De controle weigert een rapport waarin een bevinding geen gemeten waarden bevat, waarin bij een hoog risico het actiepunt ontbreekt, waarin een tekst staat die in elk willekeurig rapport zou passen, of waarin een onderdeel van de meting niet is beoordeeld en ook niet buiten scope is verklaard. Zolang een van deze punten openstaat, komt er geen document uit."}},
       {"@type":"Question","name":"Verandert de meting iets aan mijn cluster?",
-       "acceptedAnswer":{"@type":"Answer","text":"Nee. Het script leest alleen en verandert niets. Er wordt niets geïnstalleerd: geen agent, geen service, geen geplande taak. Na afloop blijft er niets achter, het script wijzigt geen instellingen en herstart niets, en er worden geen wachtwoorden verwerkt of bewaard."}}]}
+       "acceptedAnswer":{"@type":"Answer","text":"Nee. Het script leest alleen en verandert niets. Er wordt niets geïnstalleerd: geen agent, geen service, geen geplande taak. Na afloop blijft er niets achter, het script wijzigt geen instellingen en herstart niets en er worden geen wachtwoorden verwerkt of bewaard."}}]}
   ]
 }
 </script>
 </head>
 
 <body>
-<a class="skip" href="#main">Naar inhoud</a>
+<a class="skip" href="#main">Naar inhoud</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Bewaar eerst het bewijs.</span><a href="/triage/#aanvraag">Start gratis triage &rarr;</a><button type="button" aria-label="Sluiten" id="close-announcement">&times;</button></div>
 
 <header class="topbar">
   <nav class="nav">
-    <a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a>
-    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/" aria-current="page">De HealthCheck</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/blog/">Blog</a></div>
-    <div class="nav-actions">
-      <button class="search" aria-label="Zoeken">&#8981;</button>
-      <a class="btn primary" href="/triage/">Start gratis triage</a>
+    <a class="brand" href="/preview-home.html"><b>Cloud<span>Labs</span></b><small lang="en">Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><div class="navgroep" data-hier="ja"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-de-healthcheck">De HealthCheck</button><div class="navmenu" id="nav-de-healthcheck"><a href="/healthcheck/" aria-current="page">De HealthCheck</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div></div><a href="/tarieven/">Tarieven</a><a href="/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-kennisbank">Kennisbank</button><div class="navmenu" id="nav-kennisbank"><a href="/vragen/">Veelgestelde vragen</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/onderwerpen/">Onderwerpen</a></div></div><a href="/over-ons/">Over ons</a></div><div class="nav-actions">
+      <span class="taalwissel"><span aria-current="true">NL</span><a href="/en/healthcheck/" hreflang="en" lang="en">EN</a></span>
+      <a class="btn primary" href="/triage/#aanvraag">Start gratis triage</a>
       <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
     </div>
   </nav>
@@ -73,7 +73,7 @@
 <main id="main">
 
   <!-- De hero staat gecentreerd: oogregel, kop in twee regels waarvan de tweede
-       het accent draagt, de twee alinea's van Hans, en één knop. Daaronder het
+       het accent draagt, de twee alinea's van Hans en één knop. Daaronder het
        venster met de eerste pagina van een bevindingenrapport, afgesneden door
        de onderrand van de band. De klasse .hero zet het accent om naar de
        donkere waarde en maakt de kopbalk doorzichtig zolang je bovenaan staat. -->
@@ -82,7 +82,9 @@
       <p class="eyebrow">De HealthCheck</p>
       <h1>Van meting naar rapport,<br><em>vier keer per jaar</em></h1>
       <p class="hero-copy">Een cyclus van een jaar: een basismeting en drie vervolgmetingen, elk kwartaal een. Elke meting levert een rapport en een uur waarin wij het met u doornemen.</p>
-      <p class="hero-noot">De gratis <a href="/triage/">Cluster Triage</a> is de eerste stap en kost u niets. Wat hieronder staat is wat daarna mogelijk is. Loop de cyclus door: de figuur volgt mee.</p>
+      <p class="hero-copy">Wilt u uw cluster laten controleren, dan is dit de dienst: een cluster health check voor Hyper-V, Failover Cluster, Storage Spaces Direct en Azure Local. Een Hyper-V cluster assessment, een failover cluster assessment, een Storage Spaces Direct assessment en een Azure Local health check draaien alle vier op dezelfde meting; wat verschilt is welke modules meelopen.</p>
+      <p class="hero-copy">Een onafhankelijke beoordeling van uw cluster, bruikbaar als second opinion op een clusterontwerp, als cluster audit, of als risico-inventarisatie voordat u uitbreidt. Wie wil weten of zijn cluster productieklaar is, begint hier.</p>
+      <p class="hero-noot">De gratis <a href="/triage/">Cluster Triage</a> is de eerste stap en kost u niets. Loop de cyclus door: de figuur volgt mee.</p>
       <div class="actions"><a class="btn primary" href="#doorloop">Loop de cyclus door &rarr;</a></div>
     </div>
 
@@ -213,12 +215,12 @@
           <li class="halte" data-halte="intake">
             <p class="halte-nr">Stap 0 &middot; eenmalig</p>
             <h3>Intake</h3>
-            <p>Voor de eerste meting leest <code>Get-ClusterIntake.ps1</code> de identiteit van het cluster: clusternaam, nodes, beheersubnet en domein. Het engagement begint zo met gemeten gegevens in plaats van overgetypte, en een veld dat niet gelezen kon worden, meldt zichzelf met de reden. Dit gebeurt één keer, bij de start.</p>
+            <p>Voor de eerste meting leest <code>Get-ClusterIntake.ps1</code> de identiteit van het cluster: clusternaam, nodes, beheersubnet en domein. Het engagement begint zo met gemeten gegevens in plaats van overgetypte en een veld dat niet gelezen kon worden, meldt zichzelf met de reden. Dit gebeurt één keer, bij de start.</p>
           </li>
           <li class="halte" data-halte="meting">
             <p class="halte-nr">De meting</p>
             <h3>Uitsluitend lezend, vanaf uw eigen beheerserver</h3>
-            <p>Een verzamelscript draait vanaf uw eigen beheerserver, over WinRM, naar de clusternodes. Het script leest alleen en verandert niets. De basismeting duurt ongeveer een kwartier.</p><ul><li>Er wordt niets geïnstalleerd: geen agent, geen service, geen geplande taak. Na afloop blijft er niets achter.</li><li>Het script wijzigt geen instellingen en herstart niets.</li><li>Er worden geen wachtwoorden verwerkt of bewaard. Het script werkt met de rechten van de beheerder die het start, en voordat het overdrachtsbestand wordt geschreven, controleert het zijn eigen uitvoer op waarden die op inloggegevens lijken.</li><li>Het resultaat is een bestand op uw server. Dat blijft bij u tot u het aan ons overdraagt, via een versleutelde Proton-share die wij voor u klaarzetten.</li></ul><p>De modules draaien apart, met toegang die vooraf met u is afgesproken, en lezen wat de basismeting niet kan zien: de opslagarray, de switches, de beheerkaarten en de Azure-kant.</p>
+            <p>Een verzamelscript draait vanaf uw eigen beheerserver, over WinRM, naar de clusternodes. Het script leest alleen en verandert niets. De basismeting duurt ongeveer een kwartier.</p><ul><li>Er wordt niets geïnstalleerd: geen agent, geen service, geen geplande taak. Na afloop blijft er niets achter.</li><li>Het script wijzigt geen instellingen en herstart niets.</li><li>Er worden geen wachtwoorden verwerkt of bewaard. Het script werkt met de rechten van de beheerder die het start en voordat het overdrachtsbestand wordt geschreven, controleert het zijn eigen uitvoer op waarden die op inloggegevens lijken.</li><li>Het resultaat is een bestand op uw server. Dat blijft bij u tot u het aan ons overdraagt, via een versleutelde Proton-share die wij voor u klaarzetten.</li></ul><p>De modules draaien apart, met toegang die vooraf met u is afgesproken en lezen wat de basismeting niet kan zien: de opslagarray, de switches, de beheerkaarten en de Azure-kant.</p>
           </li>
           <li class="halte" data-halte="stap1">
             <p class="halte-nr">Stap 1</p>
@@ -290,7 +292,7 @@
 
 </main>
 
-<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><a href="/healthcheck/">De HealthCheck</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/tarieven/">Tarieven</a><a href="/partners/">Voor partners</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/vragen/">Veelgestelde vragen</a><a href="/onderwerpen/">Onderwerpen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Gratis script aanvragen</a><a href="/afspraak/#agenda">Afspraak maken</a><a href="/contact/#bericht">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy/">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/voorwaarden/">Algemene voorwaarden</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
 
 
 <script>
@@ -333,6 +335,6 @@
   toon(volgorde[0]);
 })();
 </script>
-<script src="/huisstijl/pagina.js?v=94ec48de"></script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
 </body>
 </html>

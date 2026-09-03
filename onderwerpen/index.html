@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="nl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Onderwerpen &middot; wat wij meten en waar het staat &middot; CloudLabs</title>
+<meta name="description" content="21 onderwerpen uit Hyper-V, Failover Cluster en Azure Local omgevingen, van MPIO en Fibre Channel zoning tot Secure Boot en Azure Arc. Elk met een kort antwoord en de pagina waar het is uitgewerkt.">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://cldlbs.com/onderwerpen/">
+<link rel="alternate" hreflang="nl" href="https://cldlbs.com/onderwerpen/">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/topics/">
+<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/onderwerpen/">
+<meta property="og:title" content="Onderwerpen &middot; wat wij meten en waar het staat &middot; CloudLabs">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cldlbs.com/onderwerpen/">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/vragen.css?v=23292c6b">
+<link rel="stylesheet" href="/huisstijl/onderwerpen.css?v=9bdeffd4">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://cldlbs.com/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Onderwerpen",
+     "item": "https://cldlbs.com/onderwerpen/"
+    }
+   ]
+  },
+  {
+   "@type": "CollectionPage",
+   "@id": "https://cldlbs.com/onderwerpen/#pagina",
+   "url": "https://cldlbs.com/onderwerpen/",
+   "name": "Onderwerpen",
+   "inLanguage": "nl-NL",
+   "description": "21 onderwerpen uit Hyper-V, Failover Cluster en Azure Local omgevingen, van MPIO en Fibre Channel zoning tot Secure Boot en Azure Arc. Elk met een kort antwoord en de pagina waar het is uitgewerkt.",
+   "publisher": {
+    "@id": "https://cldlbs.com/#organisatie"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://cldlbs.com/onderwerpen/#vragen",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "MPIO instellingen controleren",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "MPIO met Round Robin op een active/passive array die sterk de voorkeur geeft aan één controller."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Fibre channel zoning controleren",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Zoning, fabricopbouw, poortstatus en padredundantie waar opslag over Fibre Channel gaat."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Padredundantie opslag",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "De array zelf: firmware, pools, LUN's, hostmappings en padopbouw, naast wat de hosts aan hun kant zien."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Storage NIC driver verouderd",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Firmware-drift is onzichtbaar voor de meeste monitoring-tools, omdat de waarden in de BMC of NIC-EEPROM zitten, niet in Windows."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Firmware baseline cluster",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Oplossen: behandel firmware als configuratie. Zet een baseline (vendor solution profile van Dell, HPE of Lenovo), documenteer het in je runbook en upgrade het cluster als geheel tijdens een gepland venster."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "iDRAC firmware versies uit de pas",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Hardware, firmware en BIOS-instellingen via iDRAC, iLO of XClarity; ook bruikbaar bij een node die op dat moment niet meedraait."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Redfish uitlezen hardware",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Hardware, firmware en BIOS-instellingen via iDRAC, iLO of XClarity; ook bruikbaar bij een node die op dat moment niet meedraait."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Cluster netwerk scheiding",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Het cluster overweegt alleen netwerken met rol Cluster of ClusterAndClient voor intern verkeer, inclusief Live Migration."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ntttcp netwerk doorvoer meten",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Een herhaalbare lastmeting met fio en ntttcp, alleen binnen een afgesproken onderhoudsvenster."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "fio benchmark cluster opslag",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Een herhaalbare lastmeting met fio en ntttcp, alleen binnen een afgesproken onderhoudsvenster."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "CAU cluster aware updating inrichten",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Cluster Aware Updating heeft twee operationele modi en de keuze tussen beide is een strategische beslissing die invloed heeft op runbook, audit trail en supportbaarheid."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Patchronde zonder redundantieverlies",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Omdat er tijdens een patchronde telkens een node uit de rotatie staat. Bij twee nodes betekent dat: één node draagt alles en er is geen tweede om naar uit te wijken als er in dat venster iets misgaat."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Time sync cluster afwijking",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Onder 1 seconde in steady state. Tot 5 seconden tijdens een patch-ronde of node-reboot. Boven 30 seconden is een dringend remediation-onderwerp."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Secure Boot uitgeschakeld op host",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Wat hij verliest is de beveiligingsketen voor de vroege bootfase: updates voor de Windows Boot Manager, Secure Boot DB-updates, DBX-intrekkingslijst-updates en mitigaties voor toekomstige boot-niveaukwetsbaarheden van de BlackLotus-klasse (CVE-2023-24932)."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Generation 1 VMs migreren",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Bestaande VM's worden niet bijgewerkt wanneer je de host patcht, omdat hun certificaatstatus in hun eigen NVRAM zit."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "AD Tier 0 blootstelling",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Blootstelling van Tier 0 (Domain Controllers en andere kritieke identiteitsworkloads) vanaf dit cluster. Staat standaard uit en draait alleen op uw verzoek."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Domain controller op hetzelfde cluster",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Blootstelling van Tier 0 (Domain Controllers en andere kritieke identiteitsworkloads) vanaf dit cluster. Staat standaard uit en draait alleen op uw verzoek."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "DRTM secured core server",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Azure Local, HCI en Storage Spaces Direct: gezondheid van pool en virtuele schijven, Network ATC-intents, Arc-connectiviteit, secured-core-status, failovermarge."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Geen backup van clustervolumes",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "De beoordeling van backup en beheer, voorbij de aanwezigheidscontrole uit de basismeting."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Azure Arc registratie cluster",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Microsoft hernoemde het in november 2024 tot Azure Local en zette bestaande clusters automatisch om. Azure Arc bleef verplicht, dus er is geen onafhankelijke, niet-Azure HCI meer te koop."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Azure Migrate gereedheid per VM",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Migratiegereedheid per virtuele machine naast wat er werkelijk draait. Alleen samen met M5."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "ItemList",
+   "@id": "https://cldlbs.com/onderwerpen/#lijst",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "MPIO instellingen controleren",
+     "url": "https://cldlbs.com/onderwerpen/#mpio-instellingen-controleren"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Fibre channel zoning controleren",
+     "url": "https://cldlbs.com/onderwerpen/#fibre-channel-zoning-controleren"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Padredundantie opslag",
+     "url": "https://cldlbs.com/onderwerpen/#padredundantie-opslag"
+    },
+    {
+     "@type": "ListItem",
+     "position": 4,
+     "name": "Storage NIC driver verouderd",
+     "url": "https://cldlbs.com/onderwerpen/#storage-nic-driver-verouderd"
+    },
+    {
+     "@type": "ListItem",
+     "position": 5,
+     "name": "Firmware baseline cluster",
+     "url": "https://cldlbs.com/onderwerpen/#firmware-baseline-cluster"
+    },
+    {
+     "@type": "ListItem",
+     "position": 6,
+     "name": "iDRAC firmware versies uit de pas",
+     "url": "https://cldlbs.com/onderwerpen/#idrac-firmware-versies-uit-de-pas"
+    },
+    {
+     "@type": "ListItem",
+     "position": 7,
+     "name": "Redfish uitlezen hardware",
+     "url": "https://cldlbs.com/onderwerpen/#redfish-uitlezen-hardware"
+    },
+    {
+     "@type": "ListItem",
+     "position": 8,
+     "name": "Cluster netwerk scheiding",
+     "url": "https://cldlbs.com/onderwerpen/#cluster-netwerk-scheiding"
+    },
+    {
+     "@type": "ListItem",
+     "position": 9,
+     "name": "ntttcp netwerk doorvoer meten",
+     "url": "https://cldlbs.com/onderwerpen/#ntttcp-netwerk-doorvoer-meten"
+    },
+    {
+     "@type": "ListItem",
+     "position": 10,
+     "name": "fio benchmark cluster opslag",
+     "url": "https://cldlbs.com/onderwerpen/#fio-benchmark-cluster-opslag"
+    },
+    {
+     "@type": "ListItem",
+     "position": 11,
+     "name": "CAU cluster aware updating inrichten",
+     "url": "https://cldlbs.com/onderwerpen/#cau-cluster-aware-updating-inrichten"
+    },
+    {
+     "@type": "ListItem",
+     "position": 12,
+     "name": "Patchronde zonder redundantieverlies",
+     "url": "https://cldlbs.com/onderwerpen/#patchronde-zonder-redundantieverlies"
+    },
+    {
+     "@type": "ListItem",
+     "position": 13,
+     "name": "Time sync cluster afwijking",
+     "url": "https://cldlbs.com/onderwerpen/#time-sync-cluster-afwijking"
+    },
+    {
+     "@type": "ListItem",
+     "position": 14,
+     "name": "Secure Boot uitgeschakeld op host",
+     "url": "https://cldlbs.com/onderwerpen/#secure-boot-uitgeschakeld-op-host"
+    },
+    {
+     "@type": "ListItem",
+     "position": 15,
+     "name": "Generation 1 VMs migreren",
+     "url": "https://cldlbs.com/onderwerpen/#generation-1-vms-migreren"
+    },
+    {
+     "@type": "ListItem",
+     "position": 16,
+     "name": "AD Tier 0 blootstelling",
+     "url": "https://cldlbs.com/onderwerpen/#ad-tier-0-blootstelling"
+    },
+    {
+     "@type": "ListItem",
+     "position": 17,
+     "name": "Domain controller op hetzelfde cluster",
+     "url": "https://cldlbs.com/onderwerpen/#domain-controller-op-hetzelfde-cluster"
+    },
+    {
+     "@type": "ListItem",
+     "position": 18,
+     "name": "DRTM secured core server",
+     "url": "https://cldlbs.com/onderwerpen/#drtm-secured-core-server"
+    },
+    {
+     "@type": "ListItem",
+     "position": 19,
+     "name": "Geen backup van clustervolumes",
+     "url": "https://cldlbs.com/onderwerpen/#geen-backup-van-clustervolumes"
+    },
+    {
+     "@type": "ListItem",
+     "position": 20,
+     "name": "Azure Arc registratie cluster",
+     "url": "https://cldlbs.com/onderwerpen/#azure-arc-registratie-cluster"
+    },
+    {
+     "@type": "ListItem",
+     "position": 21,
+     "name": "Azure Migrate gereedheid per VM",
+     "url": "https://cldlbs.com/onderwerpen/#azure-migrate-gereedheid-per-vm"
+    }
+   ]
+  }
+ ]
+}</script>
+</head><body>
+<a class="skip" href="#main">Naar inhoud</a>
+<header class="topbar"><nav class="nav">
+<a class="brand" href="/preview-home.html"><b>Cloud<span>Labs</span></b><small lang="en">Decades of server expertise</small></a>
+<div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-de-healthcheck">De HealthCheck</button><div class="navmenu" id="nav-de-healthcheck"><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div></div><a href="/tarieven/">Tarieven</a><a href="/blog/">Blog</a><div class="navgroep" data-hier="ja"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-kennisbank">Kennisbank</button><div class="navmenu" id="nav-kennisbank"><a href="/vragen/">Veelgestelde vragen</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/onderwerpen/" aria-current="page">Onderwerpen</a></div></div><a href="/over-ons/">Over ons</a></div><div class="nav-actions"><span class="taalwissel"><span aria-current="true">NL</span><a href="/en/topics/" hreflang="en" lang="en">EN</a></span>
+<a class="btn primary" href="/triage/#aanvraag">Start gratis triage</a>
+<button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button></div>
+</nav></header>
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+  <div class="vragenpagina">
+
+    <p class="kruimelpad" style="margin-left:var(--inspring);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)"><a href="/" style="color:var(--faint);text-decoration:none">CloudLabs</a> / Onderwerpen</p>
+
+    <div class="vragenkop">
+      <p class="eyebrow">Onderwerpen</p>
+      <h1>Wat wij tegenkomen, en waar het is uitgewerkt</h1>
+      <p class="inleiding">Dit zijn onderwerpen die in Hyper-V, Failover Cluster en Azure Local omgevingen terugkomen. Elk antwoord hieronder staat letterlijk zo in het artikel of op de pagina waarnaar de regel eronder verwijst. Zoekt u iets dat er niet bij staat, stel de vraag dan gerust.</p>
+    </div>
+
+    <nav class="wegwijzer" aria-label="Onderwerpen"><a href="#opslag">Opslag en opslagpaden (4)</a><a href="#firmware">Firmware en beheerkaarten (3)</a><a href="#netwerk">Netwerk en prestaties (3)</a><a href="#patchen">Patchen, tijd en updates (3)</a><a href="#beveiliging">Beveiliging, identiteit en backup (6)</a><a href="#azure">Azure (2)</a></nav>
+
+    <section class="onderwerp-blok" id="opslag"><p class="onderwerp-naam">Opslag en opslagpaden</p><div class="onderwerp-vragen"><div class="vraagblok"><h2 id="mpio-instellingen-controleren">MPIO instellingen controleren</h2><p>MPIO met Round Robin op een active/passive array die sterk de voorkeur geeft aan één controller.</p><p class="waaruit"><a href="/blog/top-10-hyper-v-cluster-issues.html">Uitgewerkt in: Tien issues die we steeds vinden</a></p></div><div class="vraagblok"><h2 id="fibre-channel-zoning-controleren">Fibre channel zoning controleren</h2><p>Zoning, fabricopbouw, poortstatus en padredundantie waar opslag over Fibre Channel gaat.</p><p class="waaruit"><a href="/modules/">Uitgewerkt in: De modules</a></p></div><div class="vraagblok"><h2 id="padredundantie-opslag">Padredundantie opslag</h2><p>De array zelf: firmware, pools, LUN's, hostmappings en padopbouw, naast wat de hosts aan hun kant zien.</p><p class="waaruit"><a href="/modules/">Uitgewerkt in: De modules</a></p></div><div class="vraagblok"><h2 id="storage-nic-driver-verouderd">Storage NIC driver verouderd</h2><p>Firmware-drift is onzichtbaar voor de meeste monitoring-tools, omdat de waarden in de BMC of NIC-EEPROM zitten, niet in Windows.</p><p class="waaruit"><a href="/blog/top-10-hyper-v-cluster-issues.html">Uitgewerkt in: Tien issues die we steeds vinden</a></p></div></div></section><section class="onderwerp-blok" id="firmware"><p class="onderwerp-naam">Firmware en beheerkaarten</p><div class="onderwerp-vragen"><div class="vraagblok"><h2 id="firmware-baseline-cluster">Firmware baseline cluster</h2><p>Oplossen: behandel firmware als configuratie. Zet een baseline (vendor solution profile van Dell, HPE of Lenovo), documenteer het in je runbook en upgrade het cluster als geheel tijdens een gepland venster.</p><p class="waaruit"><a href="/blog/top-10-hyper-v-cluster-issues.html">Uitgewerkt in: Tien issues die we steeds vinden</a></p></div><div class="vraagblok"><h2 id="idrac-firmware-versies-uit-de-pas">iDRAC firmware versies uit de pas</h2><p>Hardware, firmware en BIOS-instellingen via iDRAC, iLO of XClarity; ook bruikbaar bij een node die op dat moment niet meedraait.</p><p class="waaruit"><a href="/modules/">Uitgewerkt in: De modules</a></p></div><div class="vraagblok"><h2 id="redfish-uitlezen-hardware">Redfish uitlezen hardware</h2><p>Hardware, firmware en BIOS-instellingen via iDRAC, iLO of XClarity; ook bruikbaar bij een node die op dat moment niet meedraait.</p><p class="waaruit"><a href="/modules/">Uitgewerkt in: De modules</a></p></div></div></section><section class="onderwerp-blok" id="netwerk"><p class="onderwerp-naam">Netwerk en prestaties</p><div class="onderwerp-vragen"><div class="vraagblok"><h2 id="cluster-netwerk-scheiding">Cluster netwerk scheiding</h2><p>Het cluster overweegt alleen netwerken met rol Cluster of ClusterAndClient voor intern verkeer, inclusief Live Migration.</p><p class="waaruit"><a href="/blog/live-migration-wrong-network.html">Uitgewerkt in: Live Migration over het verkeerde netwerk</a></p></div><div class="vraagblok"><h2 id="ntttcp-netwerk-doorvoer-meten">ntttcp netwerk doorvoer meten</h2><p>Een herhaalbare lastmeting met fio en ntttcp, alleen binnen een afgesproken onderhoudsvenster.</p><p class="waaruit"><a href="/modules/">Uitgewerkt in: De modules</a></p></div><div class="vraagblok"><h2 id="fio-benchmark-cluster-opslag">fio benchmark cluster opslag</h2><p>Een herhaalbare lastmeting met fio en ntttcp, alleen binnen een afgesproken onderhoudsvenster.</p><p class="waaruit"><a href="/modules/">Uitgewerkt in: De modules</a></p></div></div></section><section class="onderwerp-blok" id="patchen"><p class="onderwerp-naam">Patchen, tijd en updates</p><div class="onderwerp-vragen"><div class="vraagblok"><h2 id="cau-cluster-aware-updating-inrichten">CAU cluster aware updating inrichten</h2><p>Cluster Aware Updating heeft twee operationele modi en de keuze tussen beide is een strategische beslissing die invloed heeft op runbook, audit trail en supportbaarheid.</p><p class="waaruit"><a href="/blog/cluster-aware-updating-runbook-audit-trail.html">Uitgewerkt in: Cluster Aware Updating: runbook en audit trail</a></p></div><div class="vraagblok"><h2 id="patchronde-zonder-redundantieverlies">Patchronde zonder redundantieverlies</h2><p>Omdat er tijdens een patchronde telkens een node uit de rotatie staat. Bij twee nodes betekent dat: één node draagt alles en er is geen tweede om naar uit te wijken als er in dat venster iets misgaat.</p><p class="waaruit"><a href="/vragen/">Uitgewerkt in: Veelgestelde vragen</a></p></div><div class="vraagblok"><h2 id="time-sync-cluster-afwijking">Time sync cluster afwijking</h2><p>Onder 1 seconde in steady state. Tot 5 seconden tijdens een patch-ronde of node-reboot. Boven 30 seconden is een dringend remediation-onderwerp.</p><p class="waaruit"><a href="/blog/hyper-v-time-drift-kerberos-csv.html">Uitgewerkt in: Time drift in Hyper-V clusters</a></p></div></div></section><section class="onderwerp-blok" id="beveiliging"><p class="onderwerp-naam">Beveiliging, identiteit en backup</p><div class="onderwerp-vragen"><div class="vraagblok"><h2 id="secure-boot-uitgeschakeld-op-host">Secure Boot uitgeschakeld op host</h2><p>Wat hij verliest is de beveiligingsketen voor de vroege bootfase: updates voor de Windows Boot Manager, Secure Boot DB-updates, DBX-intrekkingslijst-updates en mitigaties voor toekomstige boot-niveaukwetsbaarheden van de BlackLotus-klasse (CVE-2023-24932).</p><p class="waaruit"><a href="/blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html">Uitgewerkt in: Secure Boot-certificaten en Hyper-V Gen 2-VM&rsquo;s</a></p></div><div class="vraagblok"><h2 id="generation-1-vms-migreren">Generation 1 VMs migreren</h2><p>Bestaande VM's worden niet bijgewerkt wanneer je de host patcht, omdat hun certificaatstatus in hun eigen NVRAM zit.</p><p class="waaruit"><a href="/blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html">Uitgewerkt in: Secure Boot-certificaten en Hyper-V Gen 2-VM&rsquo;s</a></p></div><div class="vraagblok"><h2 id="ad-tier-0-blootstelling">AD Tier 0 blootstelling</h2><p>Blootstelling van Tier 0 (Domain Controllers en andere kritieke identiteitsworkloads) vanaf dit cluster. Staat standaard uit en draait alleen op uw verzoek.</p><p class="waaruit"><a href="/modules/">Uitgewerkt in: De modules</a></p></div><div class="vraagblok"><h2 id="domain-controller-op-hetzelfde-cluster">Domain controller op hetzelfde cluster</h2><p>Blootstelling van Tier 0 (Domain Controllers en andere kritieke identiteitsworkloads) vanaf dit cluster. Staat standaard uit en draait alleen op uw verzoek.</p><p class="waaruit"><a href="/modules/">Uitgewerkt in: De modules</a></p></div><div class="vraagblok"><h2 id="drtm-secured-core-server">DRTM secured core server</h2><p>Azure Local, HCI en Storage Spaces Direct: gezondheid van pool en virtuele schijven, Network ATC-intents, Arc-connectiviteit, secured-core-status, failovermarge.</p><p class="waaruit"><a href="/partners/">Uitgewerkt in: Voor partners</a></p></div><div class="vraagblok"><h2 id="geen-backup-van-clustervolumes">Geen backup van clustervolumes</h2><p>De beoordeling van backup en beheer, voorbij de aanwezigheidscontrole uit de basismeting.</p><p class="waaruit"><a href="/modules/">Uitgewerkt in: De modules</a></p></div></div></section><section class="onderwerp-blok" id="azure"><p class="onderwerp-naam">Azure</p><div class="onderwerp-vragen"><div class="vraagblok"><h2 id="azure-arc-registratie-cluster">Azure Arc registratie cluster</h2><p>Microsoft hernoemde het in november 2024 tot Azure Local en zette bestaande clusters automatisch om. Azure Arc bleef verplicht, dus er is geen onafhankelijke, niet-Azure HCI meer te koop.</p><p class="waaruit"><a href="/blog/azure-local-vs-classic-hyper-v-cluster.html">Uitgewerkt in: Klassiek Hyper-V of Azure Local?</a></p></div><div class="vraagblok"><h2 id="azure-migrate-gereedheid-per-vm">Azure Migrate gereedheid per VM</h2><p>Migratiegereedheid per virtuele machine naast wat er werkelijk draait. Alleen samen met M5.</p><p class="waaruit"><a href="/modules/">Uitgewerkt in: De modules</a></p></div></div></section>
+
+  </div>
+</section>
+</main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><a href="/healthcheck/">De HealthCheck</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/tarieven/">Tarieven</a><a href="/partners/">Voor partners</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/vragen/">Veelgestelde vragen</a><a href="/onderwerpen/">Onderwerpen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Gratis script aanvragen</a><a href="/afspraak/#agenda">Afspraak maken</a><a href="/contact/#bericht">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy/">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/voorwaarden/">Algemene voorwaarden</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
+
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
+</body></html>

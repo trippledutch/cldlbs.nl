@@ -62,9 +62,8 @@
 .hero{background:linear-gradient(135deg,var(--band),var(--band-op) 65%,var(--band-rule));color:var(--surface);padding:100px var(--gutter) 72px}.hero-inner{max-width:var(--max);margin:auto;display:grid;grid-template-columns:1.55fr 1fr;gap:70px;align-items:center}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.18em;font-weight:600;display:flex;align-items:center;gap:10px;margin:0 0 20px}.eyebrow:before{content:"";width:7px;height:7px;background:var(--accent)}.hero h1,.display{font-family:var(--serif);font-weight:400;letter-spacing:-.035em;line-height:.98}.hero h1{font-size:clamp(52px,6.2vw,86px);margin:0;max-width:850px}.hero h1 em{font-style:normal;color:var(--accent)}.hero-copy{color:var(--rule);font-size:21px;max-width:700px;margin:34px 0}.actions{display:flex;gap:14px;flex-wrap:wrap}.scan-card{border:1px solid #ffffff31;background:#0b0f1ac7;padding:26px;min-height:380px;position:relative;overflow:hidden}.scan-head{display:flex;justify-content:space-between;text-transform:uppercase;font-size:10px;letter-spacing:.14em;color:var(--band-dim);padding-bottom:18px;border-bottom:1px solid #ffffff22}.bars{height:210px;display:flex;align-items:flex-end;gap:14px;padding:30px 8px 16px;border-bottom:1px solid #ffffff22;background:repeating-linear-gradient(to top,transparent 0 41px,#ffffff12 42px)}.bar{flex:1;background:linear-gradient(var(--accent),var(--accent));min-height:4px;position:relative}.bar:after{content:attr(data-v);position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-size:10px}.scan-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px;font-size:11px;color:var(--band-dim)}.scan-meta b{display:block;color:white;font-size:18px;font-weight:500;margin-top:3px}.scan-alert{position:absolute;right:18px;top:74px;background:var(--accent);color:var(--band);padding:8px 10px;font-size:10px;font-weight:700;letter-spacing:.1em}.trust{background:var(--band);color:var(--band-dim);border-top:1px solid #ffffff18;padding:22px var(--gutter)}.trust-inner{max-width:var(--max);margin:auto;display:grid;grid-template-columns:1.2fr repeat(4,1fr);gap:28px;align-items:center;font-size:11px}.trust b{color:var(--surface);font-size:14px;font-weight:500}
 .proof{background:var(--band);color:var(--surface);padding:64px var(--gutter) 92px}.proof-grid{max-width:var(--max);margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:38px}.proof-item{border-left:1px solid var(--accent);padding-left:30px}.proof-item strong{font-family:var(--serif);font-size:52px;font-weight:400;color:var(--accent)}.proof-item h3{font-size:18px;margin:8px 0}.proof-item p{font-size:14px;color:var(--band-dim);max-width:28ch}.intro{background:var(--band);color:var(--surface);padding:0 var(--gutter) 100px}.intro-inner{max-width:980px;margin:auto}.intro .eyebrow{color:var(--accent)}.intro-inner{max-width:760px}.intro .eyebrow{letter-spacing:.13em}.intro p:not(.eyebrow){font-family:var(--serif);font-size:clamp(17px,1.5vw,21px);line-height:1.62;color:var(--band-ink);margin:0 0 18px;max-width:66ch}.pattern{position:relative}.pattern:before{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(var(--band-dim) .8px,transparent .8px);background-size:16px 16px;opacity:.45;mask-image:linear-gradient(transparent,#000 20%,#000 80%,transparent)}.section{padding:120px var(--gutter);position:relative}.inner{max-width:var(--max);margin:auto;position:relative}.section-head{text-align:center;max-width:780px;margin:0 auto 56px}.section-head .eyebrow{justify-content:center}.section h2{font-family:var(--serif);font-weight:400;font-size:clamp(42px,5vw,68px);line-height:1.02;letter-spacing:-.035em;margin:0 0 22px}.lead{font-size:18px;color:var(--dim);max-width:700px;margin:0 auto}.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.benefit{background:var(--surface);border:1px solid var(--rule);border-radius:8px;padding:32px 26px;min-height:250px}.benefit .icon{color:var(--accent);font-size:28px}.benefit h3{font-size:21px;margin:28px 0 12px}.benefit p{color:var(--dim);font-size:15px}
 .platform{padding:110px var(--gutter);background:var(--ground)}.platform-panel{max-width:var(--max);margin:auto;border-radius:12px;overflow:hidden;background:linear-gradient(120deg,var(--accent-soft),var(--accent-soft));display:grid;grid-template-columns:1fr 1fr;min-height:460px}.platform-copy{padding:58px}.platform-copy h3{font-family:var(--serif);font-size:42px;font-weight:400;margin:0 0 20px}.platform-copy p{color:var(--dim);max-width:48ch}.gate{margin:36px;background:var(--band);color:white;border-radius:8px;padding:28px}.gate-row{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #ffffff21;font-size:13px}.gate-row span:last-child{color:var(--accent);font-weight:600}.gate-outcome{font-family:var(--serif);font-size:38px;color:var(--accent);margin-top:30px}.feature-row{max-width:var(--max);margin:10px auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:30px}.feature{padding:26px 0}.feature h3{font-size:16px}.feature p{font-size:13px;color:var(--dim)}
-.stories{padding:110px var(--gutter);background:linear-gradient(180deg,var(--ground),var(--ground))}.stories-head{max-width:var(--max);margin:0 auto 35px;display:flex;justify-content:space-between;align-items:end}.stories-head h2{font-size:52px}.carousel{max-width:var(--max);margin:auto;display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px}.story{min-height:310px;border-radius:8px;padding:30px;background:var(--accent-soft);display:flex;flex-direction:column;justify-content:space-between}.story:nth-child(2){background:var(--accent-soft)}.story:nth-child(3){background:var(--band);color:white}.story blockquote{font-family:var(--serif);font-size:24px;margin:0}.story small{font-size:12px}.carousel-controls button{border:1px solid var(--ink);background:transparent;width:38px;height:38px;border-radius:4px;cursor:pointer}
-.solutions{background:var(--sunk);padding:115px var(--gutter)}.solutions-grid{max-width:var(--max);margin:auto;display:grid;grid-template-columns:.8fr 1.2fr;gap:70px}.solution-tabs{display:flex;flex-direction:column}.solution-tabs button{text-align:left;border:0;border-left:3px solid transparent;background:none;padding:14px 18px;color:var(--dim);cursor:pointer}.solution-tabs button[aria-selected="true"]{border-left-color:var(--accent);color:var(--ink);font-weight:600}.solution-view{display:grid;grid-template-columns:1.2fr 1fr;gap:42px;align-items:end}.solution-visual{height:340px;background:linear-gradient(145deg,var(--band),var(--band-faint));border-radius:8px;position:relative;overflow:hidden}.solution-visual:before{content:"AZLCL01";position:absolute;left:24px;bottom:20px;font-family:var(--serif);font-size:54px;color:#ffffff3b}.solution-view h3{font-family:var(--serif);font-size:35px;font-weight:400}.solution-view p{color:var(--dim)}.topics{padding:115px var(--gutter)}.topics-list{max-width:var(--max);margin:auto;display:grid;grid-template-columns:2fr repeat(3,1fr);gap:16px}.topic{min-height:260px;border-radius:7px;background:var(--sunk);padding:24px;display:flex;flex-direction:column;justify-content:end;text-decoration:none}.topic:first-child{background:linear-gradient(145deg,var(--band),var(--band-rule));color:white}.topic h3{margin:8px 0 0;font-family:var(--serif);font-size:24px}.topic span{font-size:11px;text-transform:uppercase;letter-spacing:.1em}.cta{background:var(--band);color:white;padding:110px var(--gutter);text-align:center}.cta h2{font-family:var(--serif);font-weight:400;font-size:clamp(42px,5vw,66px);margin:0 0 20px}.cta p{color:var(--band-dim);max-width:660px;margin:0 auto 30px}.footer{background:linear-gradient(180deg,var(--band),var(--band-op));color:var(--band-dim);padding:65px var(--gutter) 35px}.footer-grid{max-width:var(--max);margin:auto;display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:40px}.footer h4{font-size:10px;color:var(--accent);letter-spacing:.14em;text-transform:uppercase}.footer a{display:block;text-decoration:none;font-size:13px;margin:9px 0}.foot-bottom{max-width:var(--max);margin:55px auto 0;padding-top:22px;border-top:1px solid #ffffff20;font-size:11px;display:flex;justify-content:space-between}.reveal{opacity:0;transform:translateY(24px);transition:.75s ease}.reveal.in{opacity:1;transform:none}
-@media(max-width:800px){.announcement{font-size:9px;height:28px}.topbar{height:58px}.nav{padding:0 18px}.navlinks,.nav-actions .search,.nav-actions .btn{display:none}.menu{display:block;margin-left:auto}.navlinks.open{display:flex;position:absolute;top:58px;left:0;right:0;background:var(--band);padding:22px;flex-direction:column}.hero{padding:54px 20px 34px}.hero-inner{display:flex;flex-direction:column;gap:38px}.hero h1{font-size:44px}.hero-copy{font-size:16px}.actions{flex-direction:column}.actions .btn{width:100%}.scan-card{width:100%;min-height:320px}.bars{height:160px}.trust-inner{grid-template-columns:1fr 1fr}.trust-inner span:first-child{grid-column:1/-1}.proof{padding:45px 20px 70px}.proof-grid{grid-template-columns:1fr}.intro{padding:0 20px 72px}.intro p{font-size:17px}.section,.platform,.stories,.solutions,.topics,.cta{padding:78px 20px}.section-head{text-align:left}.section-head .eyebrow{justify-content:flex-start}.section h2{font-size:38px}.benefits,.feature-row{grid-template-columns:1fr}.benefit{min-height:0}.platform-panel{grid-template-columns:1fr}.platform-copy{padding:30px}.gate{margin:0 18px 18px}.feature-row{gap:0}.feature{border-bottom:1px solid var(--rule)}.stories-head{align-items:start}.stories-head h2{font-size:38px}.carousel{display:flex;overflow:auto;scroll-snap-type:x mandatory}.story{min-width:86%;scroll-snap-align:start}.solutions-grid{grid-template-columns:1fr}.solution-tabs{flex-direction:row;overflow:auto}.solution-tabs button{white-space:nowrap;border-left:0;border-bottom:3px solid transparent}.solution-tabs button[aria-selected="true"]{border-bottom-color:var(--accent)}.solution-view{grid-template-columns:1fr}.solution-visual{height:240px}.topics-list{display:flex;overflow:auto}.topic{min-width:86%}.footer-grid{grid-template-columns:1fr 1fr}.footer-grid>div:first-child{grid-column:1/-1}.foot-bottom{display:block}}
+.solutions{background:var(--sunk);padding:115px var(--gutter)}.solutions-grid{max-width:var(--max);margin:auto;display:grid;grid-template-columns:.8fr 1.2fr;gap:70px}.solution-tabs{display:flex;flex-direction:column}.solution-tabs button{text-align:left;border:0;border-left:3px solid transparent;background:none;padding:14px 18px;color:var(--dim);cursor:pointer}.solution-tabs button[aria-selected="true"]{border-left-color:var(--accent);color:var(--ink);font-weight:600}.solution-view{display:grid;grid-template-columns:1.2fr 1fr;gap:42px;align-items:end}.solution-visual{height:340px;background:linear-gradient(145deg,var(--band),var(--band-faint));border-radius:8px;position:relative;overflow:hidden}.solution-visual:before{content:"AZLCL01";position:absolute;left:24px;bottom:20px;font-family:var(--serif);font-size:54px;color:#ffffff3b}.solution-view h3{font-family:var(--serif);font-size:35px;font-weight:400}.solution-view p{color:var(--dim)}.cta{background:var(--band);color:white;padding:110px var(--gutter);text-align:center}.cta h2{font-family:var(--serif);font-weight:400;font-size:clamp(42px,5vw,66px);margin:0 0 20px}.cta p{color:var(--band-dim);max-width:660px;margin:0 auto 30px}.footer{background:linear-gradient(180deg,var(--band),var(--band-op));color:var(--band-dim);padding:65px var(--gutter) 35px}.footer-grid{max-width:var(--max);margin:auto;display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:40px}.footer h4{font-size:10px;color:var(--accent);letter-spacing:.14em;text-transform:uppercase}.footer a{display:block;text-decoration:none;font-size:13px;margin:9px 0}.foot-bottom{max-width:var(--max);margin:55px auto 0;padding-top:22px;border-top:1px solid #ffffff20;font-size:11px;display:flex;justify-content:space-between}.reveal{opacity:0;transform:translateY(24px);transition:.75s ease}.reveal.in{opacity:1;transform:none}
+@media(max-width:800px){.announcement{font-size:9px;height:28px}.topbar{height:58px}.nav{padding:0 18px}.navlinks,.nav-actions .search,.nav-actions .btn{display:none}.menu{display:block;margin-left:auto}.navlinks.open{display:flex;position:absolute;top:58px;left:0;right:0;background:var(--band);padding:22px;flex-direction:column}.hero{padding:54px 20px 34px}.hero-inner{display:flex;flex-direction:column;gap:38px}.hero h1{font-size:44px}.hero-copy{font-size:16px}.actions{flex-direction:column}.actions .btn{width:100%}.scan-card{width:100%;min-height:320px}.bars{height:160px}.trust-inner{grid-template-columns:1fr 1fr}.trust-inner span:first-child{grid-column:1/-1}.proof{padding:45px 20px 70px}.proof-grid{grid-template-columns:1fr}.intro{padding:0 20px 72px}.intro p{font-size:17px}.section,.platform,.solutions,.cta{padding:78px 20px}.section-head{text-align:left}.section-head .eyebrow{justify-content:flex-start}.section h2{font-size:38px}.benefits,.feature-row{grid-template-columns:1fr}.benefit{min-height:0}.platform-panel{grid-template-columns:1fr}.platform-copy{padding:30px}.gate{margin:0 18px 18px}.feature-row{gap:0}.feature{border-bottom:1px solid var(--rule)}.solutions-grid{grid-template-columns:1fr}.solution-tabs{flex-direction:row;overflow:auto}.solution-tabs button{white-space:nowrap;border-left:0;border-bottom:3px solid transparent}.solution-tabs button[aria-selected="true"]{border-bottom-color:var(--accent)}.solution-view{grid-template-columns:1fr}.solution-visual{height:240px}.footer-grid{grid-template-columns:1fr 1fr}.footer-grid>div:first-child{grid-column:1/-1}.foot-bottom{display:block}}
 /* 1-op-1 bronrollen: lokale kopieën van de fonts die de referentie gebruikt. */
 
 
@@ -85,7 +84,7 @@ body{font-family:var(--sans)}
 .scan-card:before{content:"CL";position:absolute;left:0;top:0;bottom:0;width:96px;border-right:1px solid #3fb6d888;display:flex;align-items:flex-start;justify-content:center;padding-top:42px;color:var(--accent);font-family:var(--serif);font-size:28px}
 .scan-head{color:var(--band-faint);border-color:#3fb6d844}.bars{height:300px;background:repeating-linear-gradient(to top,transparent 0 65px,#3fb6d833 66px);border-color:#3fb6d844}.bar{background:linear-gradient(var(--accent),var(--band-rule))}.scan-alert{background:var(--accent)}.trust{min-height:166px;display:flex;align-items:center;border-color:#3fb6d855;background:var(--ink)}.trust-inner{max-width:1470px;font-size:15px;grid-template-columns:1.45fr repeat(4,1fr)}.trust b{font-size:19px}
 .proof{padding:80px var(--gutter) 92px;background:radial-gradient(70% 100% at 50% 0,var(--band-op),var(--ink))}.proof-grid{max-width:1060px;gap:0}.proof-item{min-height:320px;padding:12px 32px;border-left-color:var(--accent)}.proof-item:last-child{border-right:1px solid var(--accent)}.proof-item strong{font-size:86px;color:var(--accent)}.proof-item h3{color:var(--ground)}.proof-item p{color:var(--band-dim);font-size:18px}.intro{background:var(--ink)}.pattern:before{background-image:radial-gradient(var(--band-dim) 1px,transparent 1px)}
-.benefit{border-color:var(--accent)}.benefit .icon{color:var(--accent)}.platform-panel{background:linear-gradient(110deg,var(--accent-soft),var(--accent-soft))}.gate{background:var(--band-sunk)}.gate-row span:last-child,.gate-outcome{color:var(--accent)}.story{background:var(--accent-soft)}.story:nth-child(2){background:var(--accent-soft)}.story:nth-child(3){background:var(--band-sunk)}.solutions{background:var(--sunk)}.solution-tabs button[aria-selected="true"]{border-color:var(--accent)}.solution-visual{background:linear-gradient(145deg,var(--band-sunk),var(--band-rule))}.topic:first-child{background:linear-gradient(145deg,var(--band-sunk),var(--band-rule))}.cta,.footer{background:var(--ink)}
+.benefit{border-color:var(--accent)}.benefit .icon{color:var(--accent)}.platform-panel{background:linear-gradient(110deg,var(--accent-soft),var(--accent-soft))}.gate{background:var(--band-sunk)}.gate-row span:last-child,.gate-outcome{color:var(--accent)}.solutions{background:var(--sunk)}.solution-tabs button[aria-selected="true"]{border-color:var(--accent)}.solution-visual{background:linear-gradient(145deg,var(--band-sunk),var(--band-rule))}.cta,.footer{background:var(--ink)}
 @media(max-width:800px){
   .announcement{height:28px;font-size:10px}.announcement a{padding:2px 6px}.topbar{height:58px}.brand{font-size:20px}
   .hero{min-height:0;padding:54px 20px 34px}.hero-inner{display:flex;gap:38px}.hero h1{font-size:44px}.hero-copy{font-size:18px}
@@ -103,37 +102,25 @@ body{font-family:var(--sans)}
 .platform-copy{position:relative;z-index:3;width:48%;padding:64px 52px}.platform-copy h3{font-size:38px;line-height:1;margin-bottom:38px}.platform-copy p{font-size:15px;line-height:1.38;max-width:38ch;margin:0 0 20px}.platform-copy .actions{margin-top:36px}.platform-copy .btn{font-weight:400}.platform-image{position:absolute;z-index:1;right:0;bottom:0;width:54%;height:84%;overflow:hidden;border-radius:12px 0 17px 0}.platform-image img{width:100%;height:100%;object-fit:cover;object-position:left top;display:block}.platform-image:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 63%,#d3d8e099 100%);backdrop-filter:blur(0)}
 .triage-list{position:absolute;z-index:2;right:34px;top:48px;width:48%;background:var(--band-diep);color:var(--surface);border:1px solid #3fb6d866;border-radius:12px;overflow:hidden}.triage-list-head{display:flex;justify-content:space-between;padding:20px 22px;color:var(--band-dim);font-size:11px;letter-spacing:.13em;border-bottom:1px solid #3fb6d844}.triage-list-head b{color:var(--accent)}.triage-finding{display:grid;grid-template-columns:82px 1fr;gap:14px;align-items:center;padding:17px 20px;border-bottom:1px solid #ffffff17;font-size:14px}.triage-finding:last-child{border:0}.triage-finding strong{font-size:10px;letter-spacing:.1em;color:var(--accent)}.triage-finding:first-of-type strong{background:#000;border:1px solid #ff3b30;border-radius:4px;padding:6px;color:var(--surface);text-align:center}
 .scope{padding:100px var(--gutter);background:var(--surface)}.scope-inner{max-width:1150px;margin:auto}.scope-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.scope-card{border:1px solid var(--band-dim);border-radius:10px;padding:32px;background:var(--surface)}.scope-card h3{font-family:var(--serif);font-size:30px;font-weight:400;margin:0 0 22px}.scope-card ul{margin:0;padding-left:20px}.scope-card li{margin:12px 0}.scope-card.no{background:var(--sunk)}.safety{margin-top:18px;padding:28px 32px;border-left:4px solid var(--accent);background:var(--sunk)}.safety h3{margin:0 0 10px}.safety p{margin:0;color:var(--dim)}
-.topics .topic:first-child{background-image:linear-gradient(#0B0F1Aca,#0B0F1Aca),url('../assets/triage/failover-cluster.png')}
 .social-links{gap:22px}.social-links a{width:27px;height:27px;display:grid;place-items:center;margin:0}.social-links img{width:23px;height:23px;filter:invert(92%) sepia(10%) saturate(250%) hue-rotate(300deg) brightness(112%)}.social-links a:hover img{filter:invert(75%) sepia(36%) saturate(1156%) hue-rotate(314deg) brightness(108%)}.hyperv-logo{display:block;padding:7px 12px;border-radius:7px;background:var(--sunk)}.hyperv-logo img{display:block;width:138px;height:auto}
 /* Grote slotcompositie: CTA en footer als twee duidelijke lagen. */
 .cta{min-height:520px;padding:108px var(--gutter) 90px;border-bottom:1px solid #3fb6d866;background-color:var(--ink);background-image:radial-gradient(var(--band-rule) 1.5px,transparent 1.5px);background-size:24px 24px;background-position:0 0;position:relative}.cta:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 0,var(--ink) 68%);pointer-events:none}.cta>*{position:relative;z-index:1}.cta h2{font-size:56px;line-height:1.05;margin-bottom:26px}.cta p{font-size:18px;line-height:1.45;max-width:620px}.cta .actions{margin-top:32px;justify-content:center}
 .footer{min-height:650px;padding:78px var(--gutter) 42px;background:radial-gradient(80% 80% at 50% 110%,var(--dim),var(--ink) 68%);color:var(--rule)}.footer-main{max-width:1370px;margin:auto;display:grid;grid-template-columns:repeat(4,1fr) 1.45fr;gap:68px}.footer-column h4,.newsletter h4{margin:0 0 20px;color:var(--accent);font-size:11px;letter-spacing:.13em;text-transform:uppercase}.footer-column h4:before,.newsletter h4:before{content:"";display:inline-block;width:6px;height:6px;margin-right:9px;background:var(--accent)}.footer-column a{display:block;margin:0 0 14px;color:var(--rule);text-decoration:none;font-size:16px}.footer-column a:hover{text-decoration:underline}.newsletter{padding-left:20px}.newsletter label{display:block}.newsletter input{width:100%;height:46px;padding:0 16px;border:1px solid var(--band-dim);border-radius:8px;background:var(--surface);color:var(--band-op);font:inherit}.newsletter button{width:100%;height:48px;margin-top:16px;border:0;border-radius:8px;background:var(--accent);color:var(--ink);font-weight:600;cursor:pointer}.newsletter p{font-size:14px;margin:22px 0 0}.newsletter p a{color:var(--accent)}.social-links{display:flex;gap:24px;margin-top:38px}.social-links a{font-size:13px;text-decoration:none;color:var(--band-ink)}.footer-lower{max-width:1370px;margin:86px auto 0;display:flex;align-items:flex-end;justify-content:space-between}.footer-brand .brand{font-size:29px}.footer-brand p{margin:16px 0 0;color:var(--accent)}.footer-legal{display:flex;gap:20px;margin-top:12px}.footer-legal a{font-size:13px;text-decoration:none}.footer-badges{display:flex;align-items:center;gap:24px}.trust-badge{width:66px;height:66px;border:5px solid var(--band-faint);border-radius:50%;display:grid;place-items:center;text-align:center;font-size:10px;line-height:1;color:var(--ink);background:var(--accent)}.platform-badge{font-family:var(--serif);font-size:40px;color:white}
 .feature-row{max-width:1150px;margin:16px auto 0;grid-template-columns:repeat(4,1fr);gap:16px}.feature{padding:0}.feature-media{height:205px;border-radius:14px;overflow:hidden}.feature-media img{width:100%;height:100%;object-fit:cover;display:block}.feature h3{font-family:var(--serif);font-weight:400;font-size:22px;line-height:1.1;margin:19px 0 15px}.feature p{font-size:14px;line-height:1.42;color:var(--band-op);margin:0}
-
-/* Testimonials: brede, horizontale baan met wisselende kaartformaten. */
-.stories{padding:78px 0 130px;background:var(--surface);overflow:hidden}.stories:before{top:auto;height:105px;bottom:0;mask-image:linear-gradient(#000,transparent);background-image:radial-gradient(var(--rule) 1.5px,transparent 1.5px);background-size:18px 18px}.stories-head{max-width:1318px;padding:0 var(--gutter);margin:0 auto 42px}.stories-head h2{font-size:42px;line-height:1.05;margin:0}.carousel-controls{display:flex;gap:10px;padding-bottom:4px}.carousel-controls button{width:36px;height:36px;border-radius:5px;font-size:23px;line-height:1}
-.carousel{max-width:none;width:100%;margin:0;padding-left:max(calc((100vw - 1318px)/2),24px);padding-right:24px;display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none}.carousel::-webkit-scrollbar{display:none}.story{scroll-snap-align:start;flex:0 0 478px;height:288px;min-height:0;border-radius:12px;padding:26px 22px;background:linear-gradient(135deg,var(--accent-soft),var(--accent-soft));color:var(--band-sunk)}.story:nth-child(2){flex-basis:255px;background:var(--band-diep);color:var(--surface);padding:0;overflow:hidden}.story:nth-child(3){background:linear-gradient(135deg,var(--accent-soft),var(--accent-soft))}.story:nth-child(4){flex-basis:220px;background:linear-gradient(135deg,var(--rule),var(--accent-soft))}.story:nth-child(5){background:linear-gradient(135deg,var(--accent-soft),var(--accent-soft))}.story blockquote{font-family:var(--sans);font-size:20px;line-height:1.35}.story small{font-size:14px}.story-metric strong{font-family:var(--serif);font-weight:400;font-size:72px;line-height:1}.story-video{position:relative;background:radial-gradient(circle at 50% 35%,var(--faint),var(--ink) 70%)}.story-video:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 40%,var(--band-faint) 0 17%,transparent 18%),radial-gradient(ellipse at 50% 72%,var(--band-op) 0 31%,transparent 32%);filter:blur(1px)}.story-video small{position:relative;z-index:2;padding:20px;color:white}.story-person{display:flex;align-items:center;gap:10px}.story-person i{display:block;width:34px;height:34px;border-radius:50%;background:linear-gradient(145deg,var(--accent),var(--band-rule))}
 .solutions{padding-top:110px}
-.story-video{background:var(--ink);position:relative}.story-video:before{display:none}.story-video img{width:100%;height:100%;object-fit:cover;display:block}.story-video:after{content:"";position:absolute;inset:55% 0 0;background:linear-gradient(transparent,#0a1024e8)}.story-video span{position:absolute;z-index:2;left:22px;bottom:18px;color:var(--surface);font-size:15px}.story-person img{width:38px;height:38px;border-radius:50%;object-fit:cover}.story-person i{display:none}
 
 /* Industriecarrousel: groot 3-koloms vlak zoals in de bron. */
-.solutions{background:var(--sunk);padding:116px var(--gutter) 126px}.solutions-inner{max-width:1190px;margin:auto}.solutions-inner>h2{font-size:48px;margin:0 0 58px}.solutions-grid{max-width:none;display:grid;grid-template-columns:260px 1fr;gap:46px}.solution-tabs{padding:0 0 0 10px;border-left:1px solid var(--band-dim);justify-content:center}.solution-tabs button{position:relative;font-size:18px;padding:11px 20px;border:0;color:var(--band-faint)}.solution-tabs button[aria-selected="true"]{color:var(--band-sunk);font-weight:400;border:0}.solution-tabs button[aria-selected="true"]:before{content:"";position:absolute;width:14px;height:14px;background:var(--accent);left:-17px;top:17px;border-radius:2px}.solution-view{display:grid;grid-template-columns:430px 1fr;gap:42px;align-items:center}.solution-visual{height:430px;border-radius:16px;overflow:hidden;background:var(--band-op)}.solution-visual:before{display:none}.solution-visual img{width:100%;height:100%;object-fit:cover;filter:saturate(.55) sepia(.2);display:block}.solution-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#3fb6d830,#0a102455)}.solution-visual span{position:absolute;z-index:2;left:24px;top:26px;color:var(--surface);font-size:14px}.solution-copy h3{font-family:var(--serif);font-weight:400;font-size:35px;line-height:1.12;margin:0 0 25px}.solution-copy p{font-size:16px;line-height:1.5;color:var(--band-faint);max-width:35ch}.solution-copy a{display:inline-block;margin-top:8px}
-
-/* Kenniskaarten en slotgebied krijgen dezelfde grote schaal en ademruimte. */
-.topics{padding:112px var(--gutter) 130px;background:var(--surface)}.topics .stories-head{max-width:960px;padding:0;margin-bottom:36px}.topics-list{max-width:960px;grid-template-columns:2fr 1fr 1fr 1.4fr;gap:14px}.topic{min-height:232px;border-radius:7px;padding:20px;background:var(--sunk)}.topic:first-child{background:var(--band-op) url('../assets/triage/failover-cluster.png') center/cover;position:relative}.topic:first-child:before{content:"";position:absolute;inset:0;background:#0B0F1Aca}.topic:first-child>*{position:relative}.topic h3{font-size:22px;line-height:1.25}.cta{min-height:455px;padding:90px var(--gutter) 72px;background:var(--ink)}.cta h2{font-size:54px}.footer{background:radial-gradient(70% 70% at 50% 100%,var(--dim),var(--ink) 65%);padding:70px var(--gutter) 30px}.footer-grid{max-width:1060px}.footer-grid>div:first-child{align-self:end}.footer-grid h4{color:var(--accent)}.foot-bottom{max-width:1060px}
-@media(max-width:800px){.platform{padding:78px 20px}.platform .section-head h2{font-size:38px}.platform-panel{min-height:720px}.platform-copy{width:100%;padding:34px 28px}.platform-copy h3{font-size:34px;margin-bottom:24px}.platform-image{width:100%;height:43%;border-radius:0 0 17px 17px}.feature-row{grid-template-columns:1fr 1fr;gap:26px 12px}.feature-media{height:145px}.feature h3{font-size:19px}.stories{padding:72px 0 100px}.stories-head{padding:0 20px;align-items:flex-end}.stories-head h2{font-size:34px}.stories .eyebrow{margin-bottom:14px}.carousel{padding-left:20px}.story{flex-basis:82vw;height:270px}.story:nth-child(2),.story:nth-child(4){flex-basis:62vw}}
+.solutions{background:var(--sunk);padding:116px var(--gutter) 126px}.solutions-inner{max-width:1190px;margin:auto}.solutions-inner>h2{font-size:48px;margin:0 0 58px}.solutions-grid{max-width:none;display:grid;grid-template-columns:260px 1fr;gap:46px}.solution-tabs{padding:0 0 0 10px;border-left:1px solid var(--band-dim);justify-content:center}.solution-tabs button{position:relative;font-size:18px;padding:11px 20px;border:0;color:var(--band-faint)}.solution-tabs button[aria-selected="true"]{color:var(--band-sunk);font-weight:400;border:0}.solution-tabs button[aria-selected="true"]:before{content:"";position:absolute;width:14px;height:14px;background:var(--accent);left:-17px;top:17px;border-radius:2px}.solution-view{display:grid;grid-template-columns:430px 1fr;gap:42px;align-items:center}.solution-visual{height:430px;border-radius:16px;overflow:hidden;background:var(--band-op)}.solution-visual:before{display:none}.solution-visual img{width:100%;height:100%;object-fit:cover;filter:saturate(.55) sepia(.2);display:block}.solution-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,#3fb6d830,#0a102455)}.solution-visual span{position:absolute;z-index:2;left:24px;top:26px;color:var(--surface);font-size:14px}.solution-copy h3{font-family:var(--serif);font-weight:400;font-size:35px;line-height:1.12;margin:0 0 25px}.solution-copy p{font-size:16px;line-height:1.5;color:var(--band-faint);max-width:35ch}.solution-copy a{display:inline-block;margin-top:8px}.cta{min-height:455px;padding:90px var(--gutter) 72px;background:var(--ink)}.cta h2{font-size:54px}.footer{background:radial-gradient(70% 70% at 50% 100%,var(--dim),var(--ink) 65%);padding:70px var(--gutter) 30px}.footer-grid{max-width:1060px}.footer-grid>div:first-child{align-self:end}.footer-grid h4{color:var(--accent)}.foot-bottom{max-width:1060px}
+@media(max-width:800px){.platform{padding:78px 20px}.platform .section-head h2{font-size:38px}.platform-panel{min-height:720px}.platform-copy{width:100%;padding:34px 28px}.platform-copy h3{font-size:34px;margin-bottom:24px}.platform-image{width:100%;height:43%;border-radius:0 0 17px 17px}.feature-row{grid-template-columns:1fr 1fr;gap:26px 12px}.feature-media{height:145px}.feature h3{font-size:19px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{transition:none}}
 @media(max-width:800px){.triage-list{left:18px;right:18px;top:auto;bottom:18px;width:auto}.triage-list-head{padding:14px}.triage-finding{grid-template-columns:70px 1fr;padding:11px 14px;font-size:12px}.scope{padding:72px 20px}.scope-grid{grid-template-columns:1fr}.scope-card{padding:25px}.safety{padding:22px}}
-@media(max-width:800px){.cta{min-height:500px;padding:82px 20px}.cta h2{font-size:42px}.footer{padding:62px 24px 34px}.footer-main{grid-template-columns:1fr 1fr;gap:40px 24px}.newsletter{grid-column:1/-1;padding-left:0}.footer-column a{font-size:14px}.footer-lower{margin-top:68px;align-items:flex-start;gap:30px}.footer-badges{flex-direction:column;align-items:flex-end}.platform-badge{font-size:28px}.footer-legal{flex-wrap:wrap}}
-
-/* ---- de derde letterrol -------------------------------------------------
-   findings.css bindt drie rollen: sans op koppen en labels, serif op lopende
-   tekst, mono op MEETWAARDEN, codes en metaregels. Die derde ontbrak in deze
-   layout. Hieronder krijgt hij zijn plek, en alleen daar: een getal dat uit een
-   meting komt, een clusternaam, een status. Niets verschuift - het is dezelfde
-   maat, alleen een andere familie. */
-.eyebrow,.scan-head,.scan-alert,.trust-inner,.footer h4,.topic span,
-.foot-bottom,.gate-row,.bar:after,.scan-meta,.story small{
+@media(max-width:800px){.cta{min-height:500px;padding:82px 20px}.cta h2{font-size:42px}.footer{padding:62px 24px 34px}.footer-main{grid-template-columns:1fr 1fr;gap:40px 24px}.newsletter{grid-column:1/-1;padding-left:0}.footer-column a{font-size:14px}.footer-lower{margin-top:68px;align-items:flex-start;gap:30px}.footer-badges{flex-direction:column;align-items:flex-end}.platform-badge{font-size:28px}.footer-legal{flex-wrap:wrap}}/* ---- de derde letterrol -------------------------------------------------
+   findings.css bindt drie rollen: sans op koppen en labels,serif op lopende
+   tekst,mono op MEETWAARDEN,codes en metaregels. Die derde ontbrak in deze
+   layout. Hieronder krijgt hij zijn plek,en alleen daar: een getal dat uit een
+   meting komt,een clusternaam,een status. Niets verschuift - het is dezelfde
+   maat,alleen een andere familie. */
+.eyebrow,.scan-head,.scan-alert,.trust-inner,.footer h4,.foot-bottom,.gate-row,.bar:after,.scan-meta{
   font-family:CLMono,ui-monospace,SFMono-Regular,Menlo,monospace;
 }
 .scan-meta b,.trust b,.gate-row span:last-child,.proof-item strong{
@@ -149,14 +136,26 @@ body{font-family:var(--sans)}
    Dat is dezelfde regel die findings.css hanteert: "niet de hele rij gekleurd,
    want dan is een tabel van vijftig regels een verkeerslicht". Eén streep en
    het signaalwoord in de kleur; de tekst blijft leesbaar. */
-.bar[data-v="KRITIEK"]{background:linear-gradient(var(--crit),var(--band-rule));box-shadow:inset 0 0 0 1px var(--crit-ring)}
-.bar[data-v="HOOG"]  {background:linear-gradient(var(--high),var(--band-rule))}
-.bar[data-v="MIDDEL"]{background:linear-gradient(var(--med),var(--band-rule))}
-.bar[data-v="LAAG"]  {background:linear-gradient(var(--low),var(--band-rule))}
-.bar[data-v="KRITIEK"]:after{color:var(--crit-ring)}
-.bar[data-v="HOOG"]:after{color:var(--high)}
-.bar[data-v="MIDDEL"]:after{color:var(--med)}
-.bar[data-v="LAAG"]:after{color:var(--low)}
+/* De risicokleur hangt aan data-r en niet meer aan het woord in data-v.
+   Die selectors stonden op de Nederlandse woorden, dus op de Engelse
+   homepage kleurde geen enkele staaf en vielen ze allemaal terug op het
+   accent. data-v is het opschrift, data-r is de ernst. */
+/* Vlak, geen verloop. De staven liepen van de risicokleur naar --band-rule,
+   waardoor alleen de bovenste rij pixels de echte waarde droeg en de rest
+   naar donkerblauw wegzakte. Onderweg passeerde HOOG tinten die als MIDDEL
+   te lezen zijn, en dat is precies de misleiding waar Styles.json voor
+   waarschuwt: een kleur die twee niveaus kan betekenen is een leesfout die
+   een beoordelaar kan maken. Hans zet zijn eigen balkjes in findings.css ook
+   vlak (.seg.crit{background:var(--crit)}). KRITIEK is daardoor bijna zwart
+   op het donkere vlak, en dat is bedoeld: de ring doet daar het werk. */
+.bar[data-r="crit"]{background:var(--crit);box-shadow:inset 0 0 0 1px var(--crit-ring)}
+.bar[data-r="high"]{background:var(--high)}
+.bar[data-r="med"] {background:var(--med)}
+.bar[data-r="low"] {background:var(--low)}
+.bar[data-r="crit"]:after{color:var(--crit-ring)}
+.bar[data-r="high"]:after{color:var(--high)}
+.bar[data-r="med"]:after{color:var(--med)}
+.bar[data-r="low"]:after{color:var(--low)}
 
 /* de triageregels: een streep links in de risicokleur en het signaalwoord in
    dezelfde kleur. De regel zelf blijft gewoon leesbaar. */
@@ -205,22 +204,19 @@ body{font-family:var(--sans)}
 @media(max-width:800px){
   .trust-inner .cred{padding-left:0; border-left:0; border-top:1px solid var(--band-rule); padding-top:12px}
   .trust-inner .cred i{max-width:none}
-}
-
-/* ---- het accent volgt de ondergrond --------------------------------------
-   findings.css declareert DRIE accenten, één per stand:
+}/* ---- het accent volgt de ondergrond --------------------------------------
+   findings.css declareert DRIE accenten,één per stand:
        licht  #0A7E9E   (Styles.json Colors.Cyan)
        donker #3FB6D8
        druk   #0A6A85
-   De vorige versie zette overal de donkere waarde neer, ook op de witte
+   De vorige versie zette overal de donkere waarde neer,ook op de witte
    secties. Daardoor stond er een ander blauw op de site dan in de kopbalk van
    healthcheck.html - en dat is dezelfde huisstijl.
 
    Nu is licht de standaard en zetten de donkere secties het token lokaal om.
-   Elke var(--accent) eronder klopt daarmee vanzelf, precies zoals in
+   Elke var(--accent) eronder klopt daarmee vanzelf,precies zoals in
    findings.css. */
-.topbar,.hero,.proof,.intro,.trust,.cta,.footer,
-.gate,.scan-card,.triage-list,.story:nth-child(3),.topic:first-child{
+.topbar,.hero,.proof,.intro,.trust,.cta,.footer,.gate,.scan-card,.triage-list{
   --accent:#3FB6D8; --accent-soft:#102A33;
 }
 
@@ -468,14 +464,20 @@ body{font-family:var(--sans)}
 
 /* De pictogrammen staan in de opmaak en niet in de tekst: één vorm per soort
    vervolgstap, meeschalend met de kleur van de knop. */
-.cta .btn[data-icon]:before{
+:root{
+  --icoon-script:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='4' width='19' height='16' rx='2'/%3E%3Cpath d='M7 10l3 2.5L7 15'/%3E%3Cpath d='M12.5 15.5h4.5'/%3E%3C/svg%3E");
+  --icoon-mail:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='5' width='19' height='14' rx='2'/%3E%3Cpath d='M3 7l9 6.5L21 7'/%3E%3C/svg%3E");
+  --icoon-rapport:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 2.5h8l5 5V21a.5.5 0 0 1-.5.5h-12A.5.5 0 0 1 6 21V3a.5.5 0 0 1 .5-.5Z'/%3E%3Cpath d='M14 2.5V8h5'/%3E%3Cpath d='M9 13h7M9 17h5'/%3E%3C/svg%3E");
+  --icoon-afspraak:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M3 10h18M8 3v4M16 3v4'/%3E%3C/svg%3E");
+}
+.btn[data-icon]:before{
   content:"";flex:0 0 auto;width:18px;height:18px;background:currentColor;
   -webkit-mask:var(--icoon) center/contain no-repeat;mask:var(--icoon) center/contain no-repeat;
 }
-.cta .btn[data-icon="script"]{--icoon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='4' width='19' height='16' rx='2'/%3E%3Cpath d='M7 10l3 2.5L7 15'/%3E%3Cpath d='M12.5 15.5h4.5'/%3E%3C/svg%3E")}
-.cta .btn[data-icon="mail"]{--icoon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2.5' y='5' width='19' height='14' rx='2'/%3E%3Cpath d='M3 7l9 6.5L21 7'/%3E%3C/svg%3E")}
-.cta .btn[data-icon="rapport"]{--icoon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 2.5h8l5 5V21a.5.5 0 0 1-.5.5h-12A.5.5 0 0 1 6 21V3a.5.5 0 0 1 .5-.5Z'/%3E%3Cpath d='M14 2.5V8h5'/%3E%3Cpath d='M9 13h7M9 17h5'/%3E%3C/svg%3E")}
-.cta .btn[data-icon="afspraak"]{--icoon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M3 10h18M8 3v4M16 3v4'/%3E%3C/svg%3E")}
+.btn[data-icon="script"]{--icoon:var(--icoon-script)}
+.btn[data-icon="mail"]{--icoon:var(--icoon-mail)}
+.btn[data-icon="rapport"]{--icoon:var(--icoon-rapport)}
+.btn[data-icon="afspraak"]{--icoon:var(--icoon-afspraak)}
 @media(max-width:800px){.cta .btn{padding:14px 18px}}
 
 /* ---- beweging --------------------------------------------------------------
@@ -487,22 +489,18 @@ body{font-family:var(--sans)}
 html[data-gescrold] .topbar{border-bottom-color:#3fb6d888;box-shadow:0 10px 30px #00000055}
 
 /* De staven groeien vanaf de basislijn en niet vanuit het midden. */
-.bar{transform-origin:50% 100%}
-
-/* Kaarten reageren op de muis. Geen zweefeffect om het zweefeffect: het maakt
+.bar{transform-origin:50% 100%}/* Kaarten reageren op de muis. Geen zweefeffect om het zweefeffect: het maakt
    zichtbaar wat aanklikbaar is. */
-.benefit,.topic,.story,.feature,.scope-card{
+.benefit,.feature,.scope-card{
   transition:transform .22s ease,border-color .22s ease;
 }
-.topic:hover,.story:hover{transform:translateY(-3px);border-color:var(--accent)}
 .benefit:hover{border-color:var(--accent)}
 
 /* Ankerverwijzingen glijden in plaats van te springen. */
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .topbar{transition:none}
-  .benefit,.topic,.story,.feature,.scope-card{transition:none}
+  .topbar{transition:none}.benefit,.feature,.scope-card{transition:none}
 }
 
 /* De begintoestand geldt alleen als het script draait; data-beweegt zet hem aan.
@@ -598,4 +596,714 @@ html[data-beweegt] .op.meteen{transition:none;transition-delay:0s}
   .hero-venster-balk{padding:12px 15px;font-size:9.5px;letter-spacing:.1em}
   .hero-venster-balk span:last-child{display:none}
   .hero-venster-blad{padding:16px 16px 0}
+}
+
+/* ---- de hulpkaart ---------------------------------------------------------
+   Wie met een storing op de site komt, leest niet: die zoekt. Na een halve
+   minuut schuift rechtsonder een kaart in beeld met de vraag of het cluster
+   stilligt. De aanvraag zelf zit in de kaart: hij klapt open met hetzelfde
+   formulier als op de triagepagina, zodat niemand eerst ergens anders heen
+   hoeft. Het formulier verstuurt zelf niets, precies als daar.
+
+   Het is met opzet geen venster in het midden met een waas eroverheen. De
+   pagina blijft gewoon leesbaar en bruikbaar; wie hem niet nodig heeft leest
+   door en wie hem wegklikt ziet hem dertig dagen niet meer.
+
+   De donkere tokens staan hier lokaal, net als bij de andere donkere vlakken. */
+.hulpkaart{
+  --accent:#3FB6D8; --accent-soft:#102A33;
+  position:fixed;right:24px;bottom:24px;z-index:90;/* boven de plakkende kopbalk, die op 80 staat */
+  width:min(370px,calc(100vw - 32px));
+  max-height:calc(100vh - 48px);
+  padding:24px 24px 22px;
+  color:var(--band-ink);
+  border:2px solid transparent;border-radius:12px;
+  box-shadow:0 22px 60px #00000073;
+  opacity:0;transform:translateY(14px);
+  transition:opacity .3s ease,transform .3s ease,width .28s ease;
+  display:flex;flex-direction:column;
+}
+.hulpkaart[data-open]{opacity:1;transform:none}
+
+/* De rand loopt van links naar rechts, zodat de kaart opvalt zonder te
+   knipperen. Twee lagen: de vulling tot aan de rand, de lichtstreep in de rand
+   zelf. Zodra het formulier openstaat houdt hij op; dan is de aandacht al waar
+   hij hoort. */
+.hulpkaart{
+  background:
+    linear-gradient(var(--band-diep),var(--band-diep)) padding-box,
+    linear-gradient(90deg,#3fb6d833 0%,#3fb6d833 26%,#3fb6d8 50%,#3fb6d833 74%,#3fb6d833 100%) border-box;
+  background-size:auto,300% 100%;
+  background-position:0 0,100% 0;
+  animation:hulprand 2.6s linear infinite;
+}
+@keyframes hulprand{
+  from{background-position:0 0,100% 0}
+  to{background-position:0 0,-100% 0}
+}
+.hulpkaart[data-uit]{
+  width:min(420px,calc(100vw - 32px));
+  animation:none;
+  background:
+    linear-gradient(var(--band-diep),var(--band-diep)) padding-box,
+    linear-gradient(#3fb6d866,#3fb6d866) border-box;
+}
+@media(prefers-reduced-motion:reduce){
+  .hulpkaart{transition:none;transform:none;animation:none;
+    background:
+      linear-gradient(var(--band-diep),var(--band-diep)) padding-box,
+      linear-gradient(#3fb6d866,#3fb6d866) border-box;}
+}
+
+.hulpkaart .eyebrow{color:var(--accent);margin:0 0 12px}
+.hulpkaart-intro{font-size:15.5px;line-height:1.55;color:var(--band-ink);margin:0 0 18px}
+.hulpkaart .btn{width:100%;padding:13px 18px;border-radius:6px;font-size:14px}
+.hulpkaart-nee{
+  display:block;width:100%;margin:10px 0 0;padding:7px;
+  background:none;border:0;color:var(--band-dim);font-size:14px;cursor:pointer;
+}
+.hulpkaart-nee:hover{color:var(--band-ink)}
+.hulpkaart-sluit{
+  position:absolute;top:10px;right:10px;width:30px;height:30px;
+  background:none;border:0;color:var(--band-dim);font-size:20px;line-height:1;cursor:pointer;
+}
+.hulpkaart-sluit:hover{color:var(--band-ink)}
+
+/* Het opengeklapte formulier. Dezelfde velden en dezelfde verzendknoppen als op
+   de triagepagina, alleen krapper gezet en met een eigen schuifbalk als het
+   scherm te laag is.
+
+   De labels en de noot stonden in --band-faint, de lichtste grijstint van de
+   huisstijl. Op deze kleine maten is dat te flauw om vlot te lezen; ze staan nu
+   in --band-dim en de leestekst in --band-ink. Beide komen uit hetzelfde
+   donkere blok van findings.css, dus er komt geen kleur bij. */
+.hulpkaart-form{flex:1 1 auto;min-height:0;overflow-y:auto;margin-top:16px;padding-top:16px;
+  border-top:1px solid #3fb6d833}
+/* .btn en .hulpkaart-nee zetten zelf een display, dus het hidden-attribuut
+   moet hier expliciet winnen. */
+.hulpkaart [hidden]{display:none!important}
+.hulpkaart .aanvraag{gap:11px;margin:0}
+.hulpkaart .aanvraag .veldrij{gap:11px}
+.hulpkaart .aanvraag .lbl{color:var(--band-ink);font-size:11.5px;letter-spacing:.06em;margin-bottom:6px}
+.hulpkaart .aanvraag input{
+  background:#ffffff0f;color:var(--band-ink);border-color:#3fb6d866;
+  font-size:15px;padding:10px 12px;
+}
+.hulpkaart .aanvraag input::placeholder{color:var(--band-dim);opacity:1}
+.hulpkaart .verzendhint{font-size:14px;line-height:1.5;color:var(--band-ink);margin:4px 0 0}
+.hulpkaart .verzendrij{display:grid;gap:9px;margin-top:4px}
+.hulpkaart .verzendrij .btn.dark{
+  background:transparent;border-color:var(--accent);color:var(--accent);
+}
+.hulpkaart .aanvraag-noot{
+  font-size:12px;line-height:1.7;color:var(--band-dim);
+  margin:12px 0 0;padding-top:12px;border-top:1px solid #3fb6d833;
+}
+.hulpkaart .aanvraag-noot b{color:var(--band-ink);font-weight:600}
+
+@media(max-width:800px){
+  .hulpkaart,.hulpkaart[data-uit]{right:12px;left:12px;bottom:12px;width:auto;max-height:calc(100vh - 24px)}
+}
+
+/* ---- het knopje dat overblijft --------------------------------------------
+   Wie de kaart wegklikt is hem kwijt, en dat is bij een storing precies het
+   verkeerde moment om iets kwijt te raken. Er blijft daarom een rond knopje
+   rechtsonder staan, op dezelfde plek waar de kaart stond. Eén klik en de
+   kaart is terug, met het formulier erin. */
+.hulpknop{
+  --accent:#3FB6D8;
+  position:fixed;right:24px;bottom:24px;z-index:90;
+  width:54px;height:54px;border-radius:50%;
+  display:grid;place-items:center;cursor:pointer;
+  background:var(--band-diep);color:var(--accent);
+  border:1px solid #3fb6d866;
+  box-shadow:0 14px 34px #00000066;
+  transition:background-color .2s ease,transform .2s ease,border-color .2s ease;
+}
+.hulpknop:before{
+  content:"";width:24px;height:24px;background:currentColor;
+  -webkit-mask:var(--icoon-script) center/contain no-repeat;
+  mask:var(--icoon-script) center/contain no-repeat;
+}
+.hulpknop:hover{background:var(--band-sunk);border-color:var(--accent);transform:translateY(-2px)}
+.hulpknop:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media(max-width:800px){.hulpknop{right:16px;bottom:16px;width:50px;height:50px}}
+@media(prefers-reduced-motion:reduce){.hulpknop{transition:none}}
+
+/* Een kaart die zelf een verwijzing is. .benefit was een div; als anker moet
+   hij zijn onderstreping en kleur afstaan aan de kaart eromheen. */
+a.benefit{display:flex;flex-direction:column;text-decoration:none;color:inherit;
+          transition:border-color .2s,transform .2s}
+a.benefit:hover{border-color:var(--accent);transform:translateY(-3px)}
+a.benefit .meting{font-family:var(--mono);font-size:11px;line-height:1.7;color:var(--dim);
+                  background:var(--sunk);border:1px solid var(--rule);border-radius:4px;
+                  padding:10px 12px;margin:0 0 16px}
+a.benefit .verder{margin-top:auto;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+                  text-transform:uppercase;color:var(--accent);padding-top:16px}
+
+/* Kennisrij: verwijzingen naar artikelen, alleen typografie. Verving .topics,
+   dat op 960px gecentreerd stond binnen 1190 en daardoor niet onder zijn eigen
+   kop uitkwam, met kolommen 2fr 1fr 1fr 1.4fr die de titels scheef braken en
+   een gegenereerde foto op de eerste kaart. */
+.kennisrij{display:grid;grid-template-columns:repeat(3,1fr);gap:34px 26px}
+.kennisrij a{display:flex;flex-direction:column;text-decoration:none;color:inherit;
+             border-top:2px solid var(--ink);padding:18px 0 4px;transition:border-color .2s}
+.kennisrij a:hover{border-top-color:var(--accent)}
+.kennisrij span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.15em;
+                text-transform:uppercase;color:var(--faint);margin:0 0 14px}
+.kennisrij h3{font-family:var(--serif);font-weight:400;font-size:21px;line-height:1.25;
+              margin:0 0 16px;letter-spacing:-.008em;color:var(--ink)}
+.kennisrij a:hover h3{color:var(--accent)}
+.kennisrij b{margin-top:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+             font-weight:400;color:var(--faint)}
+@media(max-width:1040px){ .kennisrij{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:620px){  .kennisrij{grid-template-columns:1fr;gap:26px} }
+
+/* ---- de vervolgstappen na de triage -------------------------------------
+   R1, B1 en C1 stonden in een carrousel: één zichtbaar, twee verstopt achter
+   pijltjes. Dat is het aanbod, dus dat hoort in beeld. En het is geen rij van
+   drie gelijke kaarten maar een vertakking: de gratis triage is de ingang, en
+   daarna kiest de lezer op grond van zijn eigen situatie. De verbindingslijnen
+   maken dat zichtbaar in plaats van dat er tekst over moet. */
+.vervolg{margin:0}
+.vervolg-gratis{border:1.5px solid var(--accent);border-radius:6px;background:var(--accent-soft);
+                padding:22px 26px;display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px}
+.vervolg-gratis .code{font-family:var(--mono);font-size:10px;letter-spacing:.16em;
+                      text-transform:uppercase;color:var(--accent);font-weight:500}
+.vervolg-gratis h3{font-family:var(--serif);font-weight:400;font-size:24px;margin:0;color:var(--ink)}
+.vervolg-gratis p{font-size:15px;line-height:1.6;color:var(--dim);margin:0;flex:1 1 260px}
+
+/* de vork: een steel omlaag, een balk opzij, drie stelen naar de kaarten */
+.vervolg-vork{height:46px;position:relative}
+.vervolg-vork:before{content:"";position:absolute;left:50%;top:0;width:1px;height:22px;background:var(--accent)}
+.vervolg-vork:after{content:"";position:absolute;left:16.6%;right:16.6%;top:22px;height:1px;background:var(--accent)}
+.vervolg-steel{position:absolute;top:22px;width:1px;height:24px;background:var(--accent)}
+.vervolg-steel.s1{left:16.6%} .vervolg-steel.s2{left:50%} .vervolg-steel.s3{left:83.4%}
+
+.vervolg-keuze{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.vervolg-kaart{background:var(--surface);border:1px solid var(--rule);border-radius:6px;
+               padding:28px 26px;display:flex;flex-direction:column;text-decoration:none;color:inherit;
+               transition:border-color .2s,transform .2s}
+a.vervolg-kaart:hover{border-color:var(--accent);transform:translateY(-3px)}
+.vervolg-kaart .code{font-family:var(--mono);font-size:10px;letter-spacing:.16em;
+                     text-transform:uppercase;color:var(--accent);display:block;margin-bottom:16px}
+.vervolg-kaart .wanneer{font-family:var(--serif);font-size:20px;line-height:1.3;color:var(--ink);
+                        margin:0 0 14px;letter-spacing:-.008em}
+.vervolg-kaart p{font-size:15px;line-height:1.65;color:var(--dim);margin:0 0 18px}
+.vervolg-kaart .verder{margin-top:auto;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+                       text-transform:uppercase;color:var(--accent)}
+
+@media(max-width:900px){
+  .vervolg-keuze{grid-template-columns:1fr;gap:14px}
+  .vervolg-vork{height:30px}
+  .vervolg-vork:after,.vervolg-steel{display:none}
+  .vervolg-vork:before{left:28px;height:30px}
+  .vervolg-gratis{display:block}
+  .vervolg-gratis h3{margin:6px 0 8px}
+}
+
+/* ==========================================================================
+   De prijstabel
+   --------------------------------------------------------------------------
+   Hoofdstuk 12 van de dienstbeschrijving is een tabel en blijft hier een
+   tabel: Vorm, Wat u krijgt, Prijs. Prijskaarten naast elkaar zouden de
+   vergelijking juist uit elkaar trekken, en vergelijken is waar dat hoofdstuk
+   voor gemaakt is. De bedragen staan er zoals Hans ze schrijft, in woorden
+   ("5.000 euro") en niet met een euroteken.
+
+   Het enige dat is toegevoegd: de code (C1-jaar, B1, R1) staat als eigen
+   regel boven de naam in plaats van ervoor. Verder is er niets veranderd.
+
+   Dezelfde tabel staat op de landingspagina en op /tarieven/, vandaar dat hij
+   hier staat en niet in een eigen bestand. */
+.prijstabel{width:100%;border-collapse:collapse;margin:0}
+.prijstabel th{
+  font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);font-weight:400;text-align:left;
+  padding:0 0 15px;border-bottom:1px solid var(--rule);
+}
+.prijstabel td{padding:27px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.prijstabel tr:last-child td{border-bottom:0}
+.prijstabel .naam{width:30%;padding-right:30px}
+.prijstabel .naam b{font-family:var(--sans);font-size:19px;font-weight:500;color:var(--ink)}
+.prijstabel .cd{
+  display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  color:var(--accent);margin-bottom:8px;
+}
+.prijstabel .wat{font-family:var(--serif);font-size:17px;line-height:1.6;color:var(--dim);padding-right:30px}
+.prijstabel .prijs{width:19%;text-align:right;white-space:nowrap}
+.prijstabel .bedrag{display:block;font-family:var(--mono);font-size:21px;color:var(--ink)}
+.prijstabel .per{display:block;font-family:var(--mono);font-size:12px;line-height:1.5;color:var(--faint);margin-top:6px}
+/* De regel die het meest gelezen wordt, staat op de standaardvorm. */
+.prijstabel tr.standaard .bedrag{color:var(--accent)}
+.prijsnoot{
+  font-family:var(--serif);font-size:17px;line-height:1.62;color:var(--dim);
+  max-width:74ch;margin:28px 0 0;
+}
+.prijsnoot b{color:var(--ink);font-weight:600}
+.prijskop{
+  font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);margin:0 0 22px;
+}
+
+/* Op een smal scherm valt de tabel uiteen in rijen: naam en bedrag naast
+   elkaar, de omschrijving eronder. De kop vervalt dan, want die hoort bij
+   kolommen die er niet meer zijn. */
+@media(max-width:760px){
+  .prijstabel thead{position:absolute;left:-9999px}
+  .prijstabel tr{display:grid;grid-template-columns:1fr auto;gap:0 18px;
+                 padding:22px 0;border-bottom:1px solid var(--rule)}
+  .prijstabel tr:last-child{border-bottom:0}
+  .prijstabel td{display:block;padding:0;border:0}
+  /* De volgorde in de HTML is naam, omschrijving, prijs; op deze breedte moet
+     de prijs naast de naam staan en de omschrijving eronder. Vandaar dat de
+     drie cellen hier met de hand in het raster worden gezet. */
+  .prijstabel .naam{grid-column:1;grid-row:1;width:auto;padding:0}
+  .prijstabel .prijs{grid-column:2;grid-row:1;width:auto;text-align:right}
+  .prijstabel .wat{grid-column:1/-1;grid-row:2;padding:14px 0 0;font-size:16px}
+  .prijstabel .bedrag{font-size:18px}
+  .prijsnoot{font-size:16px}
+}
+
+/* ==========================================================================
+   De moduletabel
+   --------------------------------------------------------------------------
+   Hoofdstuk 9 van de dienstbeschrijving, met de statuskolom erin. Die kolom is
+   de reden dat deze tabel bestaat: hij zegt per module of hij leverbaar is, en
+   bij drie ervan staat er "in ontwikkeling" of "beschikbaar met benoemde
+   beperkingen". De voetnoot eronder staat er ongewijzigd bij.
+
+   Daarom krijgt "in ontwikkeling" hier geen wegkijkende opmaak maar dezelfde
+   leesbaarheid als de rest: het is geen kleine lettertjes, het is het punt.
+   De risicokleuren blijven eraf; dit is geen bevinding en mag er ook niet als
+   een bevinding uitzien. */
+.moduletabel{width:100%;border-collapse:collapse;margin:0}
+.moduletabel th{
+  font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);font-weight:400;text-align:left;
+  padding:0 0 15px;border-bottom:1px solid var(--rule);
+}
+.moduletabel td{padding:22px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.moduletabel tr:last-child td{border-bottom:0}
+.moduletabel .cd{
+  width:64px;font-family:var(--mono);font-size:13px;color:var(--accent);padding-right:16px;
+}
+.moduletabel .naam{width:20%;padding-right:26px}
+.moduletabel .naam b{font-family:var(--sans);font-size:17px;font-weight:500;color:var(--ink)}
+.moduletabel .wat{font-family:var(--serif);font-size:16px;line-height:1.6;color:var(--dim);padding-right:30px}
+.moduletabel .status{width:16%;font-family:var(--mono);font-size:12px;line-height:1.5;color:var(--dim);white-space:nowrap}
+/* de basismeting is geen module maar de kern; die staat er anders bij */
+.moduletabel tr.kern .status{color:var(--accent)}
+.moduletabel .ster{color:var(--faint)}
+.modulenoot{
+  font-family:var(--mono);font-size:12.5px;line-height:1.75;color:var(--dim);
+  max-width:88ch;margin:30px 0 0;padding-top:22px;border-top:1px solid var(--rule);
+}
+.modulenoot b{color:var(--ink);font-weight:500}
+
+@media(max-width:860px){
+  .moduletabel thead{position:absolute;left:-9999px}
+  .moduletabel tr{display:grid;grid-template-columns:auto 1fr auto;gap:0 14px;
+                  padding:20px 0;border-bottom:1px solid var(--rule)}
+  .moduletabel tr:last-child{border-bottom:0}
+  .moduletabel td{display:block;padding:0;border:0}
+  .moduletabel .cd{grid-column:1;grid-row:1;width:auto;padding:2px 0 0}
+  .moduletabel .naam{grid-column:2;grid-row:1;width:auto;padding:0}
+  .moduletabel .status{grid-column:3;grid-row:1;width:auto;text-align:right;padding-top:3px}
+  .moduletabel .wat{grid-column:1/-1;grid-row:2;padding:12px 0 0;font-size:15px}
+  .modulenoot{font-size:12px}
+}
+
+/* ==========================================================================
+   De taalwissel
+   --------------------------------------------------------------------------
+   Twee talen, twee URL's, en een link ertussen. Hij staat alleen op pagina's
+   die werkelijk een tegenhanger hebben; een taalknop die naar een pagina wijst
+   die niet bestaat is erger dan geen taalknop.
+
+   Zodra de rest vertaald is hoort dit blokje in de kopbalk van elke pagina,
+   met dezelfde opbouw: de huidige taal staat er als tekst, de andere als link.
+   Dat is ook wat een schermlezer nodig heeft; vandaar aria-current en niet
+   alleen een kleurverschil. */
+   Hij staat op de plek van de zoekknop. Die knop had geen enkele handler en
+   deed dus niets; hij is weg. De wissel is smal gehouden omdat de rij ernaast
+   krap zit: 6px zijruimte en 11px letter, samen ongeveer 62px, tegen 30 voor
+   de zoekknop. Dat verschil is in de tussenruimtes van de links terugverdiend.
+
+   Op een pagina die nog niet vertaald is staat EN er wel maar uitgeschakeld.
+   Zo is de kopbalk overal gelijk en wijst hij nergens naar een pagina die niet
+   bestaat. aria-disabled en een title zeggen waarom; het is geen link, dus er
+   valt ook niets te klikken. */
+.taalwissel{
+  display:inline-flex;align-items:center;
+  font-family:var(--mono);font-size:11px;letter-spacing:.04em;
+  border:1px solid #ffffff33;border-radius:5px;overflow:hidden;
+}
+.taalwissel a,.taalwissel span{padding:5px 6px;text-decoration:none;color:var(--band-dim)}
+.taalwissel a:hover{color:var(--surface);background:#ffffff12}
+.taalwissel [aria-current]{background:#ffffff1f;color:var(--surface)}
+.taalwissel .uit{color:var(--band-faint);opacity:.55;cursor:default}
+
+/* ---- de merknaam met de slogan --------------------------------------------
+   De slogan stond alleen in de oude opmaak, onder het woordmerk in de kopbalk.
+   Hij hoort daar, dus staat hij er weer: het woordmerk op de bovenste regel,
+   de slogan eronder, uitgevuld over dezelfde breedte. Precies zoals in
+   style.css, alleen met de kleuren van deze pagina's.
+
+   Alleen in de kopbalk. De merknaam onderaan in de voettekst staat naast het
+   jaartal en de voorwaarden; daar is het een verwijzing en geen kop. */
+.topbar .brand{
+  display:inline-flex;flex-direction:column;line-height:1;
+  text-decoration:none;
+}
+.topbar .brand b{font-weight:400;font-size:29px;letter-spacing:.01em}
+.topbar .brand small{
+  font-family:var(--mono);font-size:10px;color:var(--band-dim);
+  margin-top:7px;line-height:1;white-space:normal;
+  text-align:justify;text-align-last:justify;
+}
+@media(max-width:800px){
+  .topbar .brand b{font-size:20px}
+  .topbar .brand small{font-size:8px;margin-top:5px}
+}
+
+/* ==========================================================================
+   De kopbalk die niet meer paste
+   --------------------------------------------------------------------------
+   Gemeten bij 1600 breed: de zeven labels zijn samen 641px breed (Cluster
+   Triage 100, Na een storing 104, De HealthCheck 116, Modules 62, Wat u krijgt
+   82, Praktijkvoorbeelden 144, Blog 33). Daar kwamen zes tussenruimtes van
+   32px bij, samen 833. Beschikbaar was 782. Dus brak de rij af, en omdat een
+   label ook binnenin mag afbreken werd het "Cluster / Triage" op twee regels.
+
+   Drie ingrepen, van licht naar zwaar:
+     1. een label breekt nooit meer binnenin af;
+     2. de tussenruimtes gaan van 32 naar 28 en van 34 naar 20;
+     3. daaronder valt eerst de knop weg en daarna de hele rij, in plaats van
+        dat er iets afbreekt.
+   Zo ziet de balk er op elke pagina hetzelfde uit, en dat was het punt. */
+.navlinks a{white-space:nowrap}
+
+/* De labels blijven, de knop gaat weg. Op een laptop van 1280 houdt u dus de
+   volledige navigatie. De knop staat op elke pagina ook in de hero en onderaan
+   in de slotband, dus hij raakt niet zoek.
+
+   De grens lag op 1210 en dat was een paar pixel te laag: tussen 1211 en 1239
+   paste de knop nog wel in de rij, maar brak zijn opschrift over twee regels en
+   werd de balk 74 in plaats van 50 hoog.
+
+   Sinds Blog los in de rij staat is die grens opnieuw gemeten, in stappen van
+   tien pixels en met de hoogte van de knop als maat: 50 is een regel, 74 zijn
+   er twee. Het Nederlands houdt de knop heel vanaf 1280, het Engels pas vanaf
+   1310, en de balk hoort in beide talen hetzelfde te zijn. Dus 1310. */
+@media(max-width:1309px){
+  .nav-actions .btn{display:none}
+}
+
+/* Boven die grens moet de knop dan ook heel blijven. De rij is een flexbox,
+   en die laat een vak kleiner worden dan zijn inhoud: op de partnerpagina,
+   waar de knop "Request the briefing" heet in plaats van "Start free triage",
+   werd hij daardoor smaller geperst en brak het opschrift alsnog over twee
+   regels, tot op 1920 aan toe. Het woordmerk kreeg dezelfde behandeling en
+   zette de slogan op twee regels.
+
+   Krimpen mag dus niet, en afbreken ook niet. Gemeten met de knop op een
+   regel: de rij heeft dan op elke breedte ruimte over, ook met de langste
+   knop van de site. */
+.topbar .brand,.nav-actions .btn{flex-shrink:0}
+.nav-actions .btn{white-space:nowrap}
+
+/* Tussen 1310 en 1359 is die ruimte maar een paar pixel, want de balk groeit
+   daar nog mee met het scherm terwijl de knop er al staat. Iets strakkere
+   tussenruimtes geven daar 24px terug. */
+@media(min-width:1310px) and (max-width:1359px){
+  .navlinks{gap:20px}
+}
+
+/* Onder 1100 past de rij ook zonder knop niet meer: dan het menu.
+   top:100% in plaats van een vaste hoogte, zodat de uitklap onder de balk
+   blijft hangen of die nu 72 of 58 hoog is. */
+@media(max-width:1100px){
+  .navlinks,.nav-actions .search{display:none}
+  .menu{display:block;margin-left:auto}
+  .navlinks.open{
+    display:flex;flex-direction:column;gap:14px;
+    position:absolute;top:100%;left:0;right:0;
+    background:var(--band);padding:22px;
+  }
+}
+
+/* ---- de merktekens onderaan -----------------------------------------------
+   Er stond een rond zegel met LEZEND GEMETEN. Dat zei niets: het is geen keurmerk
+   en niemand kan het nakijken. Er staan nu de merken van de omgevingen die
+   gemeten worden.
+
+   Alle drie de tegels zijn even hoog en even breed. Ze kwamen uit verschillende
+   bronnen, een woordmerk in een plaatje naast twee losse iconen, en dan lopen de
+   maten uiteen als je ze om hun eigen inhoud heen zet. Daarom staat de maat vast
+   en schikt de inhoud zich ernaar.
+
+   De iconen komen uit de officiele iconenset van Microsoft; de herkomst en de
+   voorwaarden staan in assets/brands/HERKOMST.txt. Lees dat voordat de site
+   live gaat. */
+.footer-badges{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.merk-logo,.hyperv-logo{
+  box-sizing:border-box;
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  width:186px;height:58px;padding:0 14px;
+  border-radius:8px;background:var(--sunk);
+}
+.merk-logo img{width:26px;height:26px;display:block;flex:0 0 auto}
+.merk-logo b{font-size:15px;font-weight:400;color:var(--band-diep);white-space:nowrap}
+.hyperv-logo img{width:auto;height:36px;display:block}
+@media(max-width:800px){
+  .footer-badges{justify-content:flex-start;flex-direction:row}
+  .merk-logo,.hyperv-logo{width:158px;height:52px;padding:0 12px;gap:8px}
+  .merk-logo img{width:22px;height:22px}
+  .merk-logo b{font-size:13.5px}
+  .hyperv-logo img{height:31px}
+}
+
+/* De merken staan in twee rijen: bovenin de platformen die gemeten worden,
+   eronder de serverhardware waar die platformen op draaien. Twee rijen en niet
+   zes tegels achter elkaar, want zes naast elkaar is breder dan de voettekst
+   en de ordening tussen platform en hardware valt dan weg.
+
+   De tegels van de tweede rij hebben dezelfde maat als die van de eerste. De
+   logo's zelf komen uit drie bronnen met drie verhoudingen, dus de maat staat
+   vast en het logo schaalt binnen de tegel; anders wordt de rij een trapje.
+
+   LET OP: dit zijn merken van Dell, HPE en Lenovo. De herkomst van de
+   bestanden en wat er over het gebruik ervan bekend is, staat in
+   assets/brands/HERKOMST.txt. Lees dat voordat de site live gaat. */
+.footer-badges{flex-direction:column;align-items:flex-end;gap:10px}
+.merkrij{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.hardware-logo{
+  box-sizing:border-box;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:186px;height:58px;padding:0 22px;
+  border-radius:8px;background:var(--sunk);
+}
+.hardware-logo img{max-width:100%;max-height:38px;width:auto;height:auto;display:block}
+/* Per merk bijgesteld op wat het oog ziet en niet op wat de meetlat zegt. De
+   drie woordmerken hebben verhoudingen van 7,9:1 (Dell), 2,4:1 (HPE) en 4,8:1
+   (Lenovo). Op een gelijke hoogte gezet wordt Dell een streepje en HPE een
+   postzegel; op een gelijke breedte wordt Lenovo twee keer zo luid als de
+   rest. Deze drie waarden zetten ze optisch even zwaar. */
+.hardware-logo img[src*="dell"]  {max-width:134px}
+.hardware-logo img[src*="hpe"]   {max-height:40px}
+.hardware-logo img[src*="lenovo"]{max-width:118px}
+@media(max-width:800px){
+  /* Zes tegels passen op een telefoon niet meer naast de merknaam: ze werden
+     een kolom van zes hoog in een strook van nog geen 180 pixels breed. De
+     onderste balk breekt daarom af, de tegels krijgen de volle breedte en
+     staan twee aan twee. */
+  .footer-lower{flex-wrap:wrap}
+  .footer-badges{flex-direction:column;align-items:flex-start;width:100%}
+  .merkrij{justify-content:flex-start}
+  .hardware-logo{width:158px;height:52px;padding:0 18px}
+  .hardware-logo img{max-height:32px}
+  .hardware-logo img[src*="dell"]  {max-width:114px}
+  .hardware-logo img[src*="hpe"]   {max-height:34px}
+  .hardware-logo img[src*="lenovo"]{max-width:100px}
+}
+
+/* Herkenlijst: de zinnen waarmee iemand met een storing zoekt, gegroepeerd naar
+   waar het zich voordoet. Geen beweringen, alleen symptomen; wie er een herkent
+   weet dat hij op de goede pagina is. */
+.herken{display:grid;grid-template-columns:repeat(4,1fr);gap:26px 24px}
+.herken h3{font-family:var(--mono);font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+           color:var(--accent);font-weight:400;margin:0 0 12px;padding-bottom:10px;
+           border-bottom:1px solid var(--rule)}
+.herken ul{list-style:none;margin:0;padding:0}
+.herken li{font-size:15px;line-height:1.5;color:var(--dim);margin:0 0 9px;padding-left:14px;position:relative}
+.herken li:before{content:"";position:absolute;left:0;top:9px;width:5px;height:1px;background:var(--faint)}
+@media(max-width:1040px){ .herken{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:620px){  .herken{grid-template-columns:1fr} }
+
+/* De meldingsbalk blijft weg zodra iemand hem heeft weggeklikt, maar alleen
+   voor de rest van dat bezoek. Wie later terugkomt ziet hem weer. Het merkteken
+   wordt vlak voor de balk gezet door een klein script in de pagina zelf, dus
+   hij springt niet eerst een tel in beeld. Zie sync-melding.py. */
+html[data-melding="weg"] .announcement{display:none}
+
+/* ── Uitklappers in het hoofdmenu ────────────────────────────────────────────
+   Het menu ging van zeven losse links naar zes items, waarvan er twee een
+   uitklap dragen. Aanleiding: Tarieven en Over ons stonden alleen in de
+   voettekst terwijl de rij al zo vol zat dat de tussenruimte tot 17px was
+   teruggebracht. Groeperen levert de ruimte op om ze alsnog te tonen, en
+   scheelt per saldo ongeveer 90px breedte.
+
+   De knop draagt bewust geen href. De pagina zelf staat als eerste regel in
+   de uitklap, zodat hij met muis, toetsenbord en aanraakscherm langs dezelfde
+   weg bereikbaar is. Een knop die zowel navigeert als uitklapt doet op een
+   telefoon altijd het verkeerde. */
+.navgroep{position:relative;display:flex;align-items:center;align-self:stretch}
+.navtop{
+  background:none;border:0;padding:0;margin:0;color:inherit;
+  font:inherit;line-height:1;opacity:.82;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+}
+.navtop::after{
+  content:"";width:6px;height:6px;
+  border-right:1.6px solid currentColor;border-bottom:1.6px solid currentColor;
+  transform:translateY(-2px) rotate(45deg);transition:transform .18s;
+}
+.navgroep:hover .navtop,.navgroep:focus-within .navtop,
+.navtop[aria-expanded="true"]{opacity:1}
+.navgroep:hover .navtop::after,.navgroep:focus-within .navtop::after,
+.navtop[aria-expanded="true"]::after{transform:translateY(1px) rotate(225deg)}
+
+/* De groep is even hoog als de balk (align-self:stretch), dus de uitklap
+   hangt aan de onderrand en er valt geen gat waar de muis doorheen zakt. */
+.navmenu{
+  display:none;position:absolute;top:100%;left:-18px;z-index:30;
+  min-width:232px;padding:8px 0;
+  background:var(--band);border:1px solid #ffffff22;border-top:0;
+  border-radius:0 0 6px 6px;box-shadow:0 20px 44px rgba(10,16,36,.38);
+}
+.navgroep:hover .navmenu,.navgroep:focus-within .navmenu,
+.navtop[aria-expanded="true"]+.navmenu{display:block}
+.navmenu a{
+  display:block;padding:9px 20px;font-size:15px;
+  text-decoration:none;opacity:.8;white-space:nowrap;
+}
+.navmenu a:hover,.navmenu a:focus-visible{opacity:1;background:#ffffff12}
+
+/* Waar u nu bent. In de balk zelf en in de uitklap, plus een streepje aan de
+   linkerkant van de regel die het is. */
+.navlinks a[aria-current="page"],
+.navgroep[data-hier="ja"] .navtop{opacity:1}
+.navmenu a[aria-current="page"]{opacity:1;box-shadow:inset 2px 0 0 var(--accent)}
+
+/* Zeven items, waarvan twee korte groepsnamen. Toen dat er zes waren gaf dat
+   ongeveer 90px terug, en daarom staat de tussenruimte hier ruimer dan de 17px
+   van hierboven. Het zevende item eet een deel daarvan op; wat er onder de
+   1240 nodig was staat verderop, bij de knop.
+
+   Meer lucht tussen de onderdelen, en die moest ergens vandaan komen: op een
+   scherm van 1280 was de rij tot op 8px gevuld en stond de knop strak tegen de
+   zijmarge. Die marge is voor de balk alleen smaller gezet (4vw wordt 2,6vw,
+   op 1280 dus 33 in plaats van 51 px) en wat dat oplevert gaat naar de
+   tussenruimtes. Gemeten op 1101, 1211, 1280, 1366, 1440, 1512, 1600 en 1920,
+   in beide talen: overal blijft er ruimte over.
+
+   Alleen boven de 1100, want daaronder is de rij een uitklapmenu en gelden de
+   marges van de telefoon. */
+@media(min-width:1101px){
+  .nav{padding:0 clamp(20px,2.6vw,44px);gap:32px}
+  .navlinks{gap:24px}
+}
+
+/* Vanaf 1360 loopt de balk tegen zijn maximum van 1350 en groeit de marge mee.
+   Daar is meer over, dus daar mag het ruimer. */
+@media(min-width:1360px){
+  .nav{gap:34px}
+  .navlinks{gap:26px}
+}
+
+/* Blog staat los in de rij, niet meer onder Kennisbank. Dat is een zevende
+   item, en in het Engels ("Blog" plus een tussenruimte) scheelt dat 55px. Tot
+   1239 paste de rij daardoor niet meer: de slogan onder het woordmerk brak
+   over twee regels en het woordmerk kromp mee. Die 55px komt hier terug uit de
+   tussenruimtes. Alleen in deze band, want vanaf 1240 is er ruimte genoeg.
+   Gemeten op 1101, 1150 en 1239, in beide talen. */
+@media(min-width:1101px) and (max-width:1239px){
+  .nav{gap:22px}
+  .navlinks{gap:16px}
+}
+@media(max-width:1100px){
+
+  /* Uitgeklapt menu op een smal scherm: alles staat open. Een uitklap in een
+     uitklap is op een telefoon twee tikken voor niets, dus wordt de
+     groepsnaam een kopje en staan de regels er gewoon onder. */
+  .navlinks.open .navgroep{
+    flex-direction:column;align-items:flex-start;align-self:auto;gap:0;
+  }
+  .navlinks.open .navtop{
+    opacity:.5;font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+    cursor:default;padding-bottom:12px;
+  }
+  .navlinks.open .navtop::after{display:none}
+  .navlinks.open .navmenu{
+    display:block;position:static;min-width:0;padding:0;
+    background:none;border:0;box-shadow:none;
+  }
+  .navlinks.open .navmenu a{padding:0 0 14px 14px;opacity:.82}
+}
+
+/* ── De scankaart in de hero loopt de bevindingen langs ──────────────────────
+   Vier staven van KRITIEK naar MIDDEL, en onder de grafiek staat welke
+   bevinding bij de staaf hoort die op dat moment oplicht. De teksten zijn
+   letterlijk: de eerste komt uit de voorbeeldtriagelijst op /triage/, de
+   andere drie zijn F22, F12 en F18 uit het bevindingenrapport op /rapport/.
+
+   De hoogte staat als --h op de staaf en niet meer als height in de style.
+   Reden: de staaf groeit vanaf de basislijn, en dat moet met height gaan en
+   niet met scaleY, anders wordt het label erboven mee uitgerekt. */
+.scan-card[data-doorloop] .bar{height:var(--h)}
+.scan-card[data-doorloop] .bar[data-r="crit"]{color:var(--crit-ring)}
+.scan-card[data-doorloop] .bar[data-r="high"]{color:var(--high)}
+.scan-card[data-doorloop] .bar[data-r="med"] {color:var(--med)}
+.scan-card[data-doorloop] .bar[data-r="low"] {color:var(--low)}
+
+/* data-groeit staat in de HTML en niet in het script. De kaart staat boven de
+   vouw, dus als het script hem pas onderaan de pagina op nul zet ziet u de
+   staven eerst op volle hoogte staan en daarna terugklappen. Nu beginnen ze
+   op nul, en de noscript-regel naast de kaart zet ze terug op hun hoogte
+   voor wie geen JavaScript heeft. */
+.scan-card[data-groeit] .bar{
+  height:0;
+  transition:height .66s cubic-bezier(.22,1,.36,1),opacity .4s ease,box-shadow .4s ease;
+}
+.scan-card[data-groeit] .bar[data-op]{height:var(--h)}
+
+/* De grafiek staat op 300px. Er komt nu een tekstvlak onder, dus hij levert
+   wat in; anders groeit de kaart een halve regel voorbij de hero-tekst. */
+.scan-card[data-doorloop] .bars{height:258px}
+
+/* Zodra de doorloop draait staat alles behalve de staaf van dit moment
+   gedempt. Zo leest u vanzelf van links naar rechts mee. */
+.scan-card[data-loopt] .bar{opacity:.26}
+.scan-card[data-loopt] .bar[data-actief]{
+  opacity:1;box-shadow:inset 0 0 0 1px currentColor,0 0 30px -8px currentColor;
+}
+.scan-card[data-loopt] .bar:after{opacity:.3;transition:opacity .4s ease}
+.scan-card[data-loopt] .bar[data-actief]:after{opacity:1;font-weight:700}
+.scan-card[data-doorloop] .bar{cursor:pointer}
+
+/* Het tekstvlak onder de grafiek. De vier bevindingen liggen op elkaar en
+   wisselen met een overvloeier, dus de hoogte staat vast: zo verspringt er
+   niets onder de kaart wanneer een langere regel aan de beurt is. */
+.scan-veld{position:relative;min-height:74px;margin-top:20px}
+.scan-signaal{
+  position:absolute;left:0;right:0;top:0;margin:0;
+  opacity:0;transform:translateY(6px);
+  transition:opacity .42s ease,transform .42s ease;
+}
+.scan-veld:not([data-js]) .scan-signaal:first-of-type,
+.scan-signaal[data-actief]{opacity:1;transform:none}
+.scan-bron{
+  margin:0 0 7px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--band-faint);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.scan-signaal[data-r="crit"] .scan-bron{color:var(--crit-ring)}
+.scan-signaal[data-r="high"] .scan-bron{color:var(--high)}
+.scan-signaal[data-r="med"]  .scan-bron{color:var(--med)}
+.scan-signaal b{
+  display:block;color:white;font-size:17px;font-weight:500;line-height:1.32;
+}
+.scan-teller{font-family:var(--mono);letter-spacing:.04em}
+.scan-noot{
+  margin:14px 0 0;font-size:10px;line-height:1.4;color:var(--band-faint);
+}
+
+@media (prefers-reduced-motion:reduce){
+  .scan-card[data-groeit] .bar{height:var(--h);transition:none}
+  .scan-signaal{transition:none}
+}
+@media(max-width:800px){
+  .scan-veld{min-height:88px}
+  .scan-signaal b{font-size:15px}
 }

@@ -1,0 +1,28 @@
+/* CloudLabs · onderwerpen.css · de onderwerpenpagina
+   ==========================================================================
+   Hangt onder vragen.css. Laadvolgorde: pagina.css -> vragen.css -> deze.
+
+   De pagina deelt zijn opbouw met de veelgestelde vragen: een kantlijn met de
+   groepsnaam en daarnaast een kolom met koppen en antwoorden. Eén ding komt
+   erbij, en dat is de herkomstregel. Elk antwoord op deze pagina staat
+   letterlijk zo in een artikel of op een pagina elders op de site, en die
+   regel zegt welke. Dat is geen sierlijk detail: zonder die verwijzing leest
+   het als een losse bewering, en met die verwijzing kan de lezer, en een
+   zoekmachine, doorklikken naar het volledige stuk. */
+
+.waaruit{
+  margin:12px 0 0;
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.vraagblok .waaruit{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.waaruit a{
+  color:var(--faint);text-decoration:none;
+  border-bottom:1px solid var(--rule);padding-bottom:2px;
+}
+.waaruit a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* De zoekzin is hier de kop, en die staat er bewust zoals iemand hem intypt.
+   Dat leest als een fragment en niet als een volzin, dus krijgt hij wat meer
+   ruimte eronder dan een gewone vraagkop. */
+.vraagblok h2{margin-bottom:14px}

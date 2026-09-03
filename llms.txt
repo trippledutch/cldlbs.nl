@@ -20,7 +20,7 @@ Geanonimiseerde metingen. Sector, omvang, bevindingen en uitkomst komen
 ongewijzigd uit de meting; klantnaam, clusternaam, hostnamen, IP-adressen en
 exacte datums zijn vervangen.
 
-- [Praktijkvoorbeelden](https://cldlbs.com/praktijkvoorbeelden.html): overzicht van wat een meting aantreft in clusters die volgens de beheerconsole gezond zijn
+- [Praktijkvoorbeelden](https://cldlbs.com/praktijkvoorbeelden/): overzicht van wat een meting aantreft in clusters die volgens de beheerconsole gezond zijn
 - [Zes nodes, twee firmwareversies](https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html): firmware-drift en scheef CSV-eigenaarschap in een 6-node Hyper-V-cluster, financiële dienstverlening
 - [Een quorum dat de tweede locatie niet zou overleven](https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html): stretch-cluster in de zorg, aangetroffen vóór een rolling upgrade van Windows Server 2019 naar 2022
 - [Drie NIC-modellen, van de bestellijst gehaald](https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html): HCL- en RDMA-toets vóór de inkoop van een Storage Spaces Direct-cluster, logistiek

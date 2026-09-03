@@ -7,19 +7,20 @@
      draai het script opnieuw nadat er een artikel bij komt. -->
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#0A1024">
-<title>Blog &middot; Hyper-V, Failover Clustering en Azure Local &middot; CloudLabs</title>
+<title>Blog &middot; Hyper-V, Failover Cluster en Azure Local &middot; CloudLabs</title>
 <meta name="description" content="Uitleg bij bevindingen die wij in Hyper-V-, Failover Cluster- en Azure Local-omgevingen terugzien: quorum en witness, CSV-eigenaarschap, RDMA, firmware, migraties en patchrondes.">
 <link rel="canonical" href="https://cldlbs.com/blog/">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/blog/">
 <link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="nl_NL">
 <meta property="og:url" content="https://cldlbs.com/blog/">
-<meta property="og:title" content="Blog &middot; CloudLabs">
+<meta property="og:title" content="Blog &middot; Hyper-V, Failover Cluster en Azure Local &middot; CloudLabs">
 <meta property="og:description" content="Uitleg bij de bevindingen die wij in clusters terugzien.">
 <link rel="icon" href="/favicon.png" type="image/png">
-<link rel="stylesheet" href="/huisstijl/pagina.css">
-<link rel="stylesheet" href="/huisstijl/artikel.css">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/artikel.css?v=04e23fbe">
 
 <script type="application/ld+json">
 {
@@ -134,7 +135,7 @@
         },
         {
           "@type": "BlogPosting",
-          "headline": "Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM's niet bijwerken, en wat er in 2026 stukgaat",
+          "headline": "Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM's niet bijwerken en wat er in 2026 stukgaat",
           "url": "https://cldlbs.com/blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html",
           "datePublished": "2026-06-05",
           "articleSection": "Failover Clustering",
@@ -189,7 +190,7 @@
         },
         {
           "@type": "BlogPosting",
-          "headline": "Cluster Aware Updating: runbook, audit trail, en wat niemand documenteert",
+          "headline": "Cluster Aware Updating: runbook, audit trail en wat niemand documenteert",
           "url": "https://cldlbs.com/blog/cluster-aware-updating-runbook-audit-trail.html",
           "datePublished": "2026-05-15",
           "articleSection": "Patching",
@@ -239,15 +240,14 @@
 </head>
 
 <body>
-<a class="skip" href="#main">Naar inhoud</a>
+<a class="skip" href="#main">Naar inhoud</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Bewaar eerst het bewijs.</span><a href="/triage/#aanvraag">Start gratis triage &rarr;</a><button type="button" aria-label="Sluiten" id="close-announcement">&times;</button></div>
 
 <header class="topbar">
   <nav class="nav">
-    <a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a>
-    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/blog/" aria-current="page">Blog</a></div>
-    <div class="nav-actions">
-      <button class="search" aria-label="Zoeken">&#8981;</button>
-      <a class="btn primary" href="/triage/">Start gratis triage</a>
+    <a class="brand" href="/preview-home.html"><b>Cloud<span>Labs</span></b><small lang="en">Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-de-healthcheck">De HealthCheck</button><div class="navmenu" id="nav-de-healthcheck"><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div></div><a href="/tarieven/">Tarieven</a><a href="/blog/" aria-current="page">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-kennisbank">Kennisbank</button><div class="navmenu" id="nav-kennisbank"><a href="/vragen/">Veelgestelde vragen</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/onderwerpen/">Onderwerpen</a></div></div><a href="/over-ons/">Over ons</a></div><div class="nav-actions">
+      <span class="taalwissel"><span aria-current="true">NL</span><a href="/en/blog/" hreflang="en" lang="en">EN</a></span>
+      <a class="btn primary" href="/triage/#aanvraag">Start gratis triage</a>
       <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
     </div>
   </nav>
@@ -264,11 +264,11 @@
     <div class="artikellijst">
       <a class="artikelrij" href="/blog/windows-server-2025-hyper-v-cluster-features.html">
         <div class="rij-meta"><b>Windows Server 2025</b>22 juli 2026<br>13 minuten leestijd</div>
-        <div><h2>Windows Server 2025 Hyper-V: wat het werkelijk toevoegt voor cluster operators</h2><p>Windows Server 2025 is sinds november 2024 algemeen beschikbaar, en in 2026 zien wij bij CloudLabs steeds vaker dat klanten upgrade-planning serieus oppakken. Niet omdat Windows Server...</p></div>
+        <div><h2>Windows Server 2025 Hyper-V: wat het werkelijk toevoegt voor cluster operators</h2><p>Windows Server 2025 is sinds november 2024 algemeen beschikbaar en in 2026 zien wij bij CloudLabs steeds vaker dat klanten upgrade-planning serieus oppakken. Niet omdat Windows Server...</p></div>
       </a>
       <a class="artikelrij" href="/blog/azure-local-vs-classic-hyper-v-cluster.html">
         <div class="rij-meta"><b>Strategy</b>25 juni 2026<br>5 minuten leestijd</div>
-        <div><h2>Wat gaat het worden: Klassiek Hyper-V of Azure Local?</h2><p>Bijna elke maand komt dezelfde vraag op tafel. Een klant staat voor een refresh, het oude cluster is afgeschreven, en iemand in het team heeft op een Microsoft-slide gezien dat alles...</p></div>
+        <div><h2>Wat gaat het worden: Klassiek Hyper-V of Azure Local?</h2><p>Bijna elke maand komt dezelfde vraag op tafel. Een klant staat voor een refresh, het oude cluster is afgeschreven en iemand in het team heeft op een Microsoft-slide gezien dat alles...</p></div>
       </a>
       <a class="artikelrij" href="/blog/csv-ownership-imbalance.html">
         <div class="rij-meta"><b>Storage</b>23 juni 2026<br>12 minuten leestijd</div>
@@ -292,7 +292,7 @@
       </a>
       <a class="artikelrij" href="/blog/secure-boot-2023-certificates-hyper-v-gen2-vms.html">
         <div class="rij-meta"><b>Failover Clustering</b>5 juni 2026<br>13 minuten leestijd</div>
-        <div><h2>Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM&#x27;s niet bijwerken, en wat er in 2026 stukgaat</h2><p>Een vraag blijft terugkomen op Reddit en in de praktijk: heeft een Hyper-V-host bijgewerkte firmware en hardware Secure Boot nodig voordat de Generation 2-VM&#x27;s de Secure...</p></div>
+        <div><h2>Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM&#x27;s niet bijwerken en wat er in 2026 stukgaat</h2><p>Een vraag blijft terugkomen op Reddit en in de praktijk: heeft een Hyper-V-host bijgewerkte firmware en hardware Secure Boot nodig voordat de Generation 2-VM&#x27;s de Secure...</p></div>
       </a>
       <a class="artikelrij" href="/blog/azure-local-migration-readiness.html">
         <div class="rij-meta"><b>Azure Local</b>1 juni 2026<br>16 minuten leestijd</div>
@@ -312,11 +312,11 @@
       </a>
       <a class="artikelrij" href="/blog/cluster-aware-updating-runbook-audit-trail.html">
         <div class="rij-meta"><b>Patching</b>15 mei 2026<br>13 minuten leestijd</div>
-        <div><h2>Cluster Aware Updating: runbook, audit trail, en wat niemand documenteert</h2><p>Cluster Aware Updating (CAU) bestaat sinds Windows Server 2012 en wordt door de meeste organisaties gebruikt. Of beter gezegd: CAU is geconfigureerd, een rol bestaat, een schema staat,...</p></div>
+        <div><h2>Cluster Aware Updating: runbook, audit trail en wat niemand documenteert</h2><p>Cluster Aware Updating (CAU) bestaat sinds Windows Server 2012 en wordt door de meeste organisaties gebruikt. Of beter gezegd: CAU is geconfigureerd, een rol bestaat, een schema staat,...</p></div>
       </a>
       <a class="artikelrij" href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">
         <div class="rij-meta"><b>Storage</b>15 mei 2026<br>15 minuten leestijd</div>
-        <div><h2>SAN vs S2D vs Azure Local: storage-keuze voor Hyper-V in 2026</h2><p>De meeste marketing in 2026 vertelt je dat hyperconverged het antwoord is. Microsoft promoot Azure Local, vendors promoten hun HCI-stack, en op conferenties hoor je dat SAN-gebaseerde...</p></div>
+        <div><h2>SAN vs S2D vs Azure Local: storage-keuze voor Hyper-V in 2026</h2><p>De meeste marketing in 2026 vertelt je dat hyperconverged het antwoord is. Microsoft promoot Azure Local, vendors promoten hun HCI-stack en op conferenties hoor je dat SAN-gebaseerde...</p></div>
       </a>
       <a class="artikelrij" href="/blog/top-10-hyper-v-cluster-issues.html">
         <div class="rij-meta"><b>Cluster Health</b>15 mei 2026<br>14 minuten leestijd</div>
@@ -331,7 +331,7 @@
 </section>
 </main>
 
-<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><a href="/healthcheck/">De HealthCheck</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/tarieven/">Tarieven</a><a href="/partners/">Voor partners</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/vragen/">Veelgestelde vragen</a><a href="/onderwerpen/">Onderwerpen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Gratis script aanvragen</a><a href="/afspraak/#agenda">Afspraak maken</a><a href="/contact/#bericht">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy/">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/voorwaarden/">Algemene voorwaarden</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
 
 
 <script>
@@ -340,6 +340,6 @@
   if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
 })();
 </script>
-<script src="/huisstijl/pagina.js"></script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
 </body>
 </html>

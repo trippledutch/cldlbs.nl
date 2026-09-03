@@ -1,0 +1,83 @@
+Herkomst van de merkbestanden in deze map
+=========================================
+
+hyper-v.png       stond hier al
+
+azure-local.svg   Azure_Public_Service_Icons_V24.zip, map "hybrid + multicloud",
+                  bestand 033745116-icon-service-Azure-Local.svg
+                  Opgehaald op 2 september 2026 van de officiele pagina
+                  https://learn.microsoft.com/en-us/azure/architecture/icons/
+                  De bestanden zijn onveranderd; alleen de naam is ingekort.
+
+DE VOORWAARDEN VAN MICROSOFT BIJ DIE PAGINA, LETTERLIJK:
+
+  "Microsoft permits the use of these icons in architectural diagrams,
+   training materials, or documentation. You can copy, distribute, and
+   display the icons only for the permitted use unless granted explicit
+   permission by Microsoft. Microsoft reserves all other rights."
+
+Een voettekst op een commerciele site is geen architectuurplaat, geen
+lesmateriaal en geen documentatie. Wie deze iconen daar gebruikt, doet dat
+buiten de toestemming die Microsoft hier geeft. Het nette pad is een badge uit
+het Microsoft-partnerprogramma, want die is juist voor dit doel verstrekt.
+
+
+Azure Arc stond hier ook, maar is er op 2 september 2026 weer uit gehaald. Reden:
+op de pagina's die de dienst beschrijven, triage, healthcheck, modules en
+rapport, komt het woord Arc niet voor. Alleen de tekst van het tabblad Azure
+Local op de homepage noemt het, als onderdeel van die controle. Als merkteken
+onderaan zette dat het zwaarder aan dan de site waarmaakt.
+
+Moet het terug, dan is het bestand map "management + governance",
+00756-icon-service-Azure-Arc.svg uit dezelfde zip. Zet het dan ook op de
+modules- en de triagepagina, want dan hoort het daar te staan.
+
+
+De drie hardwaremerken, toegevoegd 3 september 2026
+===================================================
+
+dell.svg     Wikimedia Commons, File:Dell_Technologies_logo.svg
+             https://upload.wikimedia.org/wikipedia/commons/5/56/Dell_Technologies_logo.svg
+hpe.svg      Wikimedia Commons, File:Hewlett_Packard_Enterprise_logo.svg
+             https://upload.wikimedia.org/wikipedia/commons/4/46/Hewlett_Packard_Enterprise_logo.svg
+lenovo.svg   Wikimedia Commons, File:Lenovo_logo_2015.svg
+             https://upload.wikimedia.org/wikipedia/commons/b/b8/Lenovo_logo_2015.svg
+
+Alle drie onveranderd overgenomen; alleen de bestandsnaam is ingekort. Ze staan
+in de voettekst, in de tweede rij tegels, onder de platformmerken.
+
+Wat Wikimedia er zelf bij zet, per bestand hetzelfde:
+
+  Licentie:     Public domain
+  Beperking:    trademarked
+  Rechthebbende: Dell Technologies, Hewlett Packard Enterprise, Lenovo Group
+
+Die twee regels spreken elkaar niet tegen en het onderscheid is belangrijk. Het
+AUTEURSRECHT is hier niet aan de orde: een woordmerk van letters in een vlak
+haalt de drempel van oorspronkelijkheid niet, en daarom mag het bestand vrij
+worden gekopieerd. Het MERKENRECHT geldt onverkort. Dat gaat niet over kopieren
+maar over gebruiken, en de vraag is dan of de lezer het teken opvat als een
+teken van herkomst of van een band tussen twee ondernemingen.
+
+Daar zit het risico, en het is bij deze drie groter dan bij de Microsoft-iconen
+hierboven. Een logo in een voettekst, naast de platformen die worden gemeten,
+leest voor de meeste bezoekers als "wij zijn partner van Dell, HPE en Lenovo".
+Dell, HPE en Lenovo geven hun logo's uit via hun partnerprogramma's en verbinden
+er voorwaarden aan; wie geen partner is, hoort ze in beginsel niet zo te voeren.
+Beschrijvend gebruik is wel toegestaan: dat de HealthCheck iDRAC, iLO en
+XClarity uitleest mag in woorden op de site staan, en dat staat er ook al, op
+/modules/ en in de blog.
+
+Dit is besproken op 3 september 2026. Het bezwaar is voorgelegd, de keuze om de
+logo's toch te plaatsen is die van CloudLabs zelf. Wil het weg of anders, dan
+zijn er twee wegen:
+
+  1. Woordmerken in de huisstijl: DELL, HPE en LENOVO als tekst in dezelfde
+     tegel. Een naam noemen is beschrijvend gebruik en dat mag.
+  2. Een badge uit het partnerprogramma van het merk zelf. Die is juist voor
+     dit doel verstrekt en dekt de lading wel.
+
+De tegel "Azure Stack HCI" draagt hetzelfde bestand als "Azure Local"
+(azure-local.svg). Microsoft hernoemde het product in november 2024 en heeft
+er geen apart icoon meer voor. De oude naam staat er alleen bij omdat veel
+beheerders hun cluster nog zo kennen.

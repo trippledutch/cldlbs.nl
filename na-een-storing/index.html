@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Blok C uit het zoektermendocument van 26-08-2026: "na een storing, wat is
+     er gebeurd". De koppen zijn de zoekzinnen uit dat document, zoals punt 2
+     daarin voorschrijft. De lopende tekst komt woord voor woord uit hoofdstuk
+     10 van huisstijl/healthcheck.html, de dienstbeschrijving v2.2 van Hans.
+     Er wordt geen responstijd beloofd; dat volgt de briefing van 01-09-2026.
+     noindex staat aan zolang de nieuwe stijl niet live is. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>Root cause analyse cluster na een clusterstoring &middot; CloudLabs</title>
+<meta name="description" content="Oorzaak van een clusteruitval achterhalen: uitsluitend lezende verzameling over 29 gebeurteniskanalen per node, tijdlijnen op elkaar gelegd en gecorrigeerd voor klokverschil, opgeleverd als RCA-document voor uw directie of uw leverancier.">
+<link rel="canonical" href="https://cldlbs.com/na-een-storing/">
+<link rel="alternate" hreflang="nl" href="https://cldlbs.com/na-een-storing/">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/after-an-incident/">
+<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/na-een-storing/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:url" content="https://cldlbs.com/na-een-storing/">
+<meta property="og:title" content="Root cause analyse cluster na een clusterstoring &middot; CloudLabs">
+<meta property="og:description" content="Wat er is gebeurd, uit eventbewijs over alle nodes. Opgeleverd als RCA-document.">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/storing.css?v=ec5a1da4">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {"@type":"BreadcrumbList","itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://cldlbs.com/"},
+      {"@type":"ListItem","position":2,"name":"Na een storing","item":"https://cldlbs.com/na-een-storing/"}]},
+    {"@type":"Service",
+     "@id":"https://cldlbs.com/na-een-storing/#dienst",
+     "name":"R1 · Root cause analyse na een clusterstoring",
+     "serviceType":"Root cause analysis",
+     "description":"Een uitsluitend lezende verzameling over het incidentvenster en een analyse die uitmondt in een oorzaakanalyse, opgeleverd als RCA-document.",
+     "inLanguage":"nl-NL",
+     "areaServed":["NL","BE","DE"],
+     "provider":{"@type":"Organization","@id":"https://cldlbs.com/#organisatie","name":"CloudLabs","url":"https://cldlbs.com/",
+       "founder":{"@type":"Person","@id":"https://cldlbs.com/over-ons/#hans","name":"Hans Vredevoort",
+         "knowsAbout":["Hyper-V","Failover Clustering","Azure Local","Storage Spaces Direct","Windows Server"]}},
+     "about":["Hyper-V","Failover Cluster","Azure Local","Storage Spaces Direct","Cluster Shared Volume"]},
+    {"@type":"FAQPage","@id":"https://cldlbs.com/na-een-storing/#vragen","mainEntity":[
+      {"@type":"Question","name":"Wie kan mijn clusterlogboeken analyseren na een storing?",
+       "acceptedAnswer":{"@type":"Answer","text":"De verzamelaar draait vanaf uw beheerserver, uitsluitend lezend. Per node leest hij over het incidentvenster de gebeurtenislogboeken uit: 29 kanalen, voor zover ze op uw cluster aan staan. De tijdlijnen van de nodes worden op elkaar gelegd en gecorrigeerd voor klokverschil, zodat zichtbaar wordt wat er in welke volgorde gebeurde en op welke machine het begon."}},
+      {"@type":"Question","name":"Hoe bewijs ik dat een storing niet aan mijn configuratie lag?",
+       "acceptedAnswer":{"@type":"Answer","text":"Met een reconstructie die de configuratie naast de gebeurtenissen legt. Daarom adviseert CloudLabs R1 in combinatie met een basismeting: een afwijkend firmwareniveau of een scheve netwerkinstelling is anders niet van toeval te onderscheiden. Het RCA-document bevat het incidentvenster, de tijdlijn over alle nodes, de vastgestelde oorzaak voor zover het bewijs die draagt, de gaten met naam en reden en het herstelwerk dat eruit volgt."}},
+      {"@type":"Question","name":"Wat gebeurt er als het bewijs onvolledig is?",
+       "acceptedAnswer":{"@type":"Answer","text":"Gaten zijn onderdeel van het bewijs. Een gebeurteniskanaal dat op een node is doorgerold of uitgeschakeld is, wordt als gat vastgelegd, met de reden. Zolang bewijs ontbreekt, wordt de conclusie niet geschreven. Ontbrak een node bij de verzameling, dan telt een schoon beeld op de overige nodes niet als meting voor die ene."}},
+      {"@type":"Question","name":"Kan ik R1 los bestellen zonder HealthCheck-klant te zijn?",
+       "acceptedAnswer":{"@type":"Answer","text":"Ja. R1 staat los van de jaarcyclus. In dat geval draait CloudLabs eerst een basismeting, want een reconstructie heeft de configuratie naast de gebeurtenissen nodig. Voor klanten in de jaarcyclus ligt dat beeld er al en leest het onderzoek bovendien mee in wat de modules eerder maten: de switchtellers, de arraylogboeken en de Azure-kant rond het incidentvenster."}},
+      {"@type":"Question","name":"Verandert het onderzoek iets aan mijn cluster?",
+       "acceptedAnswer":{"@type":"Answer","text":"Nee. De verzamelaar draait vanaf uw beheerserver en leest uitsluitend. Voordat er ook maar één node wordt benaderd, toont hij het plan van de run: welke nodes, welk tijdvenster, welke onderdelen aan staan, waar de uitvoer landt en per waarde waar die vandaan komt. Daaronder staat één ja-of-nee-vraag en dan pas begint de run."}}]}
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Naar inhoud</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Bewaar eerst het bewijs.</span><a href="/triage/#aanvraag">Start gratis triage &rarr;</a><button type="button" aria-label="Sluiten" id="close-announcement">&times;</button></div>
+
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="/preview-home.html"><b>Cloud<span>Labs</span></b><small lang="en">Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/" aria-current="page">Na een storing</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-de-healthcheck">De HealthCheck</button><div class="navmenu" id="nav-de-healthcheck"><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div></div><a href="/tarieven/">Tarieven</a><a href="/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-kennisbank">Kennisbank</button><div class="navmenu" id="nav-kennisbank"><a href="/vragen/">Veelgestelde vragen</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/onderwerpen/">Onderwerpen</a></div></div><a href="/over-ons/">Over ons</a></div><div class="nav-actions">
+      <span class="taalwissel"><span aria-current="true">NL</span><a href="/en/after-an-incident/" hreflang="en" lang="en">EN</a></span>
+      <a class="btn primary" href="/triage/#aanvraag">Start gratis triage</a>
+      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+<section class="section" style="padding-bottom:60px">
+  <div class="storingpagina">
+
+    <p style="margin-left:var(--inspring);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)"><a href="/" style="color:var(--faint);text-decoration:none">CloudLabs</a> / Na een storing</p>
+
+    <div class="storingkop">
+      <p class="eyebrow">R1 &middot; Onderzoek na een storing</p>
+      <h1>Root cause analyse na een clusterstoring</h1>
+      <p class="lead">De vraag na een storing is niet hoe het cluster ervoor staat, maar wat er is gebeurd. Daarvoor is de R1-module: een verzameling en een analyse die samen uitmonden in een oorzaakanalyse, opgeleverd als RCA-document.</p>
+    </div>
+
+    <div class="direct">
+      <p>Draai de verzamelaar zo snel mogelijk. Niet omdat wij op dat moment kijken, maar omdat het bewijs er dan nog is: clusterlogboeken rollen door en gebeurteniskanalen lopen vol.</p>
+    </div>
+
+    <section class="stap-blok" id="logs">
+      <p class="stap-naam">Cluster log onderzoek</p>
+      <div class="stap-tekst">
+        <h2>Wie kan cluster logs analyseren</h2>
+        <p>De verzamelaar draait vanaf uw beheerserver, uitsluitend lezend. Per node leest hij over het incidentvenster de gebeurtenislogboeken uit: 29 kanalen, voor zover ze op uw cluster aan staan. De tijdlijnen van de nodes worden op elkaar gelegd en gecorrigeerd voor klokverschil, zodat zichtbaar wordt wat er in welke volgorde gebeurde en op welke machine het begon.</p>
+        <p>Voordat er ook maar één node wordt benaderd, toont de verzamelaar het plan van de run: welke nodes, welk tijdvenster, welke onderdelen aan staan, waar de uitvoer landt en per waarde waar die vandaan komt. Daaronder staat één ja-of-nee-vraag en dan pas begint de run. Tijdens de run meldt elke fase zijn verstreken tijd.</p>
+        <p>De verzamelaar is beproefd in ons lab op clusters van zes tot zestien nodes en onlangs op een productiecluster van zes nodes over twee locaties, volledig vanaf de beheerserver.</p>
+      </div>
+    </section>
+
+    <section class="stap-blok" id="bewijs">
+      <p class="stap-naam">Bewijs verzamelen na uitval</p>
+      <div class="stap-tekst">
+        <h2>Twee zware onderdelen kiest u per run</h2>
+        <h3>De clusterlog per node</h3>
+        <p>Verreweg het grootste deel van de run. De omvang verschilt per omgeving; als voorbeeld:</p>
+        <p class="veldwaarde">Eerste veldrun &middot; 828 MB ruwe log<br>Gecomprimeerd &middot; 29,6 MB</p>
+        <p>Wie een tweede run over hetzelfde venster doet, slaat hem over.</p>
+        <h3>Geheugendumps</h3>
+        <p>Gevonden dumps worden altijd geregistreerd met vindplaats, tijdstip, grootte en hash. Hoe groot een dump is, hangt af van het type: een minidump blijft onder een paar megabyte, een kernel of active memory dump loopt op grote hosts in de gigabytes tot tientallen gigabytes en een volledige geheugendump is zo groot als het werkgeheugen van de node.</p>
+        <p>Daarom kiest u wat er meegaat: direct, of achteraf met een verkorte run die alleen de dumps van een eerdere run ophaalt en aan de hash controleert dat het nog hetzelfde bestand is.</p>
+      </div>
+    </section>
+
+    <section class="stap-blok" id="gaten">
+      <p class="stap-naam">Terugkerende storing zelfde node</p>
+      <div class="stap-tekst">
+        <h2>Gaten zijn onderdeel van het bewijs</h2>
+        <p>Een gebeurteniskanaal dat op een node is doorgerold of uitgeschakeld is, wordt als gat vastgelegd, met de reden. Reikt het clusterlog minder ver terug dan het gevraagde venster, dan staat dat er per node bij. Zo weet u bij het lezen van de analyse precies waar het bewijs ophoudt.</p>
+        <p>Aan het eind van de run staat daar een advies voor uw beheerder bij: welke kanalen aangezet moeten worden en of de clusterlogbuffer vergroot moet worden om een volgend incident wel volledig te dekken. De afweging staat erbij, want langer bewaren op hetzelfde logniveau kost schijfruimte en langer bewaren op een lager logniveau kost detail.</p>
+        <p>Daaruit volgt ook de regel achter elke conclusie: zolang bewijs ontbreekt, wordt de conclusie niet geschreven. Ontbrak een node bij de verzameling, dan telt een schoon beeld op de overige nodes niet als meting voor die ene. Wil de onderzoeker toch verder, dan legt hij naam en reden vast en die komen in het rapport te staan.</p>
+      </div>
+    </section>
+
+    <section class="stap-blok" id="rapport">
+      <p class="stap-naam">Rapport voor directie na storing</p>
+      <div class="stap-tekst">
+        <h2>Onderbouwing richting uw directie of uw leverancier</h2>
+        <p>Een RCA-document in dezelfde huisstijl als het bevindingenrapport: het incidentvenster, de tijdlijn over alle nodes, de vastgestelde oorzaak voor zover het bewijs die draagt, de gaten met naam en reden en het herstelwerk dat eruit volgt.</p>
+        <p>Zie <a href="/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html">een uitgewerkt voorbeeld</a> van hoe een reconstructie eruitziet en <a href="/rapport/">hoe een bevinding is opgebouwd</a>.</p>
+      </div>
+    </section>
+
+    <section class="stap-blok" id="bestellen">
+      <p class="stap-naam">Los bestelbaar</p>
+      <div class="stap-tekst">
+        <h2>Sterker met een basismeting</h2>
+        <p>R1 staat los van de jaarcyclus: u kunt het onderzoek ook bestellen als u geen HealthCheck-klant bent. In dat geval draaien wij eerst een basismeting, want een reconstructie heeft de configuratie naast de gebeurtenissen nodig; een afwijkend firmwareniveau of een scheve netwerkinstelling is anders niet van toeval te onderscheiden.</p>
+        <p>Ons advies is daarom R1 in combinatie met een basismeting plus rapport. Voor klanten in de jaarcyclus ligt dat beeld er al en leest het onderzoek bovendien mee in wat de modules eerder maten: de switchtellers, de arraylogboeken en de Azure-kant rond het incidentvenster.</p>
+      </div>
+    </section>
+
+    <section class="stap-blok" id="vragen">
+      <p class="stap-naam">Vragen</p>
+      <div class="stap-tekst">
+        <div class="vraagblok">
+          <h3 id="wie-analyseert">Wie kan mijn clusterlogboeken analyseren na een storing?</h3>
+          <p>De verzamelaar leest per node 29 gebeurteniskanalen over het incidentvenster en legt de tijdlijnen op elkaar, gecorrigeerd voor klokverschil. De analyse wordt geschreven door een specialist, niet door de tooling.</p>
+        </div>
+        <div class="vraagblok">
+          <h3 id="niet-mijn-configuratie">Hoe bewijs ik dat een storing niet aan mijn configuratie lag?</h3>
+          <p>Met een reconstructie die de configuratie naast de gebeurtenissen legt. Daarom adviseren wij R1 in combinatie met een basismeting: een afwijkend firmwareniveau of een scheve netwerkinstelling is anders niet van toeval te onderscheiden.</p>
+        </div>
+        <div class="vraagblok">
+          <h3 id="onvolledig-bewijs">Wat gebeurt er als het bewijs onvolledig is?</h3>
+          <p>Dan staat dat in het rapport. Zolang bewijs ontbreekt, wordt de conclusie niet geschreven. Ontbrak een node bij de verzameling, dan telt een schoon beeld op de overige nodes niet als meting voor die ene.</p>
+        </div>
+        <div class="vraagblok">
+          <h3 id="verandert-er-iets">Verandert het onderzoek iets aan mijn cluster?</h3>
+          <p>Nee. De verzamelaar leest uitsluitend en toont vooraf het plan van de run, met één ja-of-nee-vraag voordat er iets gebeurt.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</section>
+
+<section class="cta">
+  <div class="inner">
+    <p class="eyebrow" style="justify-content:center">Begin bij het bewijs</p>
+    <h2>Draai de verzamelaar<br>nu het er nog is</h2>
+    <p>Clusterlogboeken rollen door en gebeurteniskanalen lopen vol. De gratis Cluster Triage kost niets, leest uitsluitend en verandert niets.</p>
+    <div class="actions">
+      <a class="btn primary" href="/triage/">Start gratis Cluster Triage &rarr;</a>
+      <a class="btn ghost" href="/contact/">Neem contact op</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><a href="/healthcheck/">De HealthCheck</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/tarieven/">Tarieven</a><a href="/partners/">Voor partners</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/vragen/">Veelgestelde vragen</a><a href="/onderwerpen/">Onderwerpen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Gratis script aanvragen</a><a href="/afspraak/#agenda">Afspraak maken</a><a href="/contact/#bericht">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy/">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/voorwaarden/">Algemene voorwaarden</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
+
+
+<script>
+(function(){
+  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
+  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
+})();
+</script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
+</body>
+</html>

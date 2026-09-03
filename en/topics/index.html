@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Topics &middot; what we measure and where it sits &middot; CloudLabs</title>
+<meta name="description" content="21 topics from Hyper-V, Failover Cluster and Azure Local environments, from MPIO and Fibre Channel zoning to Secure Boot and Azure Arc. Each with a short answer and the page where it is worked out.">
+<meta name="robots" content="noindex,follow">
+<link rel="canonical" href="https://cldlbs.com/en/topics/">
+<link rel="alternate" hreflang="nl" href="https://cldlbs.com/onderwerpen/">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/topics/">
+<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/onderwerpen/">
+<meta property="og:title" content="Topics &middot; what we measure and where it sits &middot; CloudLabs">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cldlbs.com/en/topics/">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/vragen.css?v=23292c6b">
+<link rel="stylesheet" href="/huisstijl/onderwerpen.css?v=9bdeffd4">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Home",
+     "item": "https://cldlbs.com/en/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Topics",
+     "item": "https://cldlbs.com/en/topics/"
+    }
+   ]
+  },
+  {
+   "@type": "CollectionPage",
+   "@id": "https://cldlbs.com/en/topics/#pagina",
+   "url": "https://cldlbs.com/en/topics/",
+   "name": "Topics",
+   "inLanguage": "en-GB",
+   "description": "21 topics from Hyper-V, Failover Cluster and Azure Local environments, from MPIO and Fibre Channel zoning to Secure Boot and Azure Arc. Each with a short answer and the page where it is worked out.",
+   "publisher": {
+    "@id": "https://cldlbs.com/#organisatie"
+   }
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://cldlbs.com/en/topics/#vragen",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Check MPIO settings",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "MPIO with Round Robin on an active/passive array that strongly prefers one controller."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Check Fibre Channel zoning",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Zoning, fabric layout, port status and path redundancy where storage runs over Fibre Channel."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Storage path redundancy",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The array itself: firmware, pools, LUNs, host mappings and path layout, against what the hosts see on their side."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Outdated storage NIC driver",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Firmware drift is invisible to most monitoring tools because the values sit in the BMC or NIC EEPROM, not in Windows."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Cluster firmware baseline",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Set a baseline (vendor solution profile from Dell, HPE or Lenovo), document it in your runbook, and upgrade the cluster as a whole during a planned window."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "iDRAC firmware versions out of step",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Hardware, firmware and BIOS settings over iDRAC, iLO or XClarity; also usable on a node that is not running at the time."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Read hardware over Redfish",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Hardware, firmware and BIOS settings over iDRAC, iLO or XClarity; also usable on a node that is not running at the time."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Cluster network separation",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The cluster only considers networks with role Cluster or ClusterAndClient for internal traffic, including Live Migration."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "ntttcp network throughput test",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A repeatable load measurement with fio and ntttcp, only inside an agreed maintenance window."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "fio benchmark cluster storage",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "A repeatable load measurement with fio and ntttcp, only inside an agreed maintenance window."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Set up cluster aware updating",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Cluster Aware Updating has two operational modes, and the choice between them is a strategic decision affecting runbook, audit trail, and supportability."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Patching without losing redundancy",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Because during a patch round there is always a node out of rotation. With two nodes that means: one node carries everything and there is no second one to fall back on if something goes wrong in that window."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Cluster time sync drift",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Acceptable skew between cluster nodes: under 1 second in steady state, under 5 seconds during a patch round or node reboot. Above 30 seconds is an urgent remediation topic."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Secure Boot disabled on host",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "What it loses is the early-boot security pipeline: updates to the Windows Boot Manager, Secure Boot DB updates, DBX revocation-list updates, and mitigations for future boot-level vulnerabilities of the BlackLotus class (CVE-2023-24932)."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Migrate generation 1 VMs",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Existing VMs are not updated when you patch the host, because their certificate state lives in their own NVRAM."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "AD Tier 0 exposure",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Exposure of Tier 0 (Domain Controllers and other critical identity workloads) from this cluster. Off by default; runs only at your request."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Domain controller on the same cluster",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Exposure of Tier 0 (Domain Controllers and other critical identity workloads) from this cluster. Off by default; runs only at your request."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "DRTM secured core server",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Azure Local, HCI and Storage Spaces Direct: pool and virtual disk health, Network ATC intents, Arc connectivity, secured-core posture, failover headroom."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "No backup of cluster volumes",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "The assessment of backup and management, beyond the presence check in the base measurement."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Azure Arc cluster registration",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Azure Arc remained mandatory, so there is no independent, non-Azure HCI to buy anymore."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Azure Migrate readiness per VM",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Per-VM migration readiness against what actually runs. Only together with M5."
+     }
+    }
+   ]
+  },
+  {
+   "@type": "ItemList",
+   "@id": "https://cldlbs.com/en/topics/#lijst",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Check MPIO settings",
+     "url": "https://cldlbs.com/en/topics/#check-mpio-settings"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Check Fibre Channel zoning",
+     "url": "https://cldlbs.com/en/topics/#check-fibre-channel-zoning"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Storage path redundancy",
+     "url": "https://cldlbs.com/en/topics/#storage-path-redundancy"
+    },
+    {
+     "@type": "ListItem",
+     "position": 4,
+     "name": "Outdated storage NIC driver",
+     "url": "https://cldlbs.com/en/topics/#outdated-storage-nic-driver"
+    },
+    {
+     "@type": "ListItem",
+     "position": 5,
+     "name": "Cluster firmware baseline",
+     "url": "https://cldlbs.com/en/topics/#cluster-firmware-baseline"
+    },
+    {
+     "@type": "ListItem",
+     "position": 6,
+     "name": "iDRAC firmware versions out of step",
+     "url": "https://cldlbs.com/en/topics/#idrac-firmware-versions-out-of-step"
+    },
+    {
+     "@type": "ListItem",
+     "position": 7,
+     "name": "Read hardware over Redfish",
+     "url": "https://cldlbs.com/en/topics/#read-hardware-over-redfish"
+    },
+    {
+     "@type": "ListItem",
+     "position": 8,
+     "name": "Cluster network separation",
+     "url": "https://cldlbs.com/en/topics/#cluster-network-separation"
+    },
+    {
+     "@type": "ListItem",
+     "position": 9,
+     "name": "ntttcp network throughput test",
+     "url": "https://cldlbs.com/en/topics/#ntttcp-network-throughput-test"
+    },
+    {
+     "@type": "ListItem",
+     "position": 10,
+     "name": "fio benchmark cluster storage",
+     "url": "https://cldlbs.com/en/topics/#fio-benchmark-cluster-storage"
+    },
+    {
+     "@type": "ListItem",
+     "position": 11,
+     "name": "Set up cluster aware updating",
+     "url": "https://cldlbs.com/en/topics/#set-up-cluster-aware-updating"
+    },
+    {
+     "@type": "ListItem",
+     "position": 12,
+     "name": "Patching without losing redundancy",
+     "url": "https://cldlbs.com/en/topics/#patching-without-losing-redundancy"
+    },
+    {
+     "@type": "ListItem",
+     "position": 13,
+     "name": "Cluster time sync drift",
+     "url": "https://cldlbs.com/en/topics/#cluster-time-sync-drift"
+    },
+    {
+     "@type": "ListItem",
+     "position": 14,
+     "name": "Secure Boot disabled on host",
+     "url": "https://cldlbs.com/en/topics/#secure-boot-disabled-on-host"
+    },
+    {
+     "@type": "ListItem",
+     "position": 15,
+     "name": "Migrate generation 1 VMs",
+     "url": "https://cldlbs.com/en/topics/#migrate-generation-1-vms"
+    },
+    {
+     "@type": "ListItem",
+     "position": 16,
+     "name": "AD Tier 0 exposure",
+     "url": "https://cldlbs.com/en/topics/#ad-tier-0-exposure"
+    },
+    {
+     "@type": "ListItem",
+     "position": 17,
+     "name": "Domain controller on the same cluster",
+     "url": "https://cldlbs.com/en/topics/#domain-controller-on-the-same-cluster"
+    },
+    {
+     "@type": "ListItem",
+     "position": 18,
+     "name": "DRTM secured core server",
+     "url": "https://cldlbs.com/en/topics/#drtm-secured-core-server"
+    },
+    {
+     "@type": "ListItem",
+     "position": 19,
+     "name": "No backup of cluster volumes",
+     "url": "https://cldlbs.com/en/topics/#no-backup-of-cluster-volumes"
+    },
+    {
+     "@type": "ListItem",
+     "position": 20,
+     "name": "Azure Arc cluster registration",
+     "url": "https://cldlbs.com/en/topics/#azure-arc-cluster-registration"
+    },
+    {
+     "@type": "ListItem",
+     "position": 21,
+     "name": "Azure Migrate readiness per VM",
+     "url": "https://cldlbs.com/en/topics/#azure-migrate-readiness-per-vm"
+    }
+   ]
+  }
+ ]
+}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar"><nav class="nav">
+<a class="brand" href="/en/"><b>Cloud<span>Labs</span></b><small lang="en">Decades of server expertise</small></a>
+<div class="navlinks" id="navlinks"><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-the-healthcheck">The HealthCheck</button><div class="navmenu" id="nav-the-healthcheck"><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div></div><a href="/en/rates/">Rates</a><a href="/en/blog/">Blog</a><div class="navgroep" data-hier="ja"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-knowledge-base">Knowledge base</button><div class="navmenu" id="nav-knowledge-base"><a href="/en/faq/">FAQ</a><a href="/en/case-studies/">Case studies</a><a href="/en/topics/" aria-current="page">Topics</a></div></div><a href="/en/about/">About us</a></div><div class="nav-actions"><span class="taalwissel"><a href="/onderwerpen/" hreflang="nl" lang="nl">NL</a><span aria-current="true">EN</span></span>
+<a class="btn primary" href="/en/triage/#aanvraag">Start free triage</a>
+<button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button></div>
+</nav></header>
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+  <div class="vragenpagina">
+
+    <p class="kruimelpad" style="margin-left:var(--inspring);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)"><a href="/en/" style="color:var(--faint);text-decoration:none">CloudLabs</a> / Topics</p>
+
+    <div class="vragenkop">
+      <p class="eyebrow">Topics</p>
+      <h1>What we run into, and where it is worked out</h1>
+      <p class="inleiding">These are topics that keep coming back in Hyper-V, Failover Cluster and Azure Local environments. Every answer below appears word for word in the article or on the page the line underneath points to. If you are looking for something that is not here, ask.</p>
+    </div>
+
+    <nav class="wegwijzer" aria-label="Topics"><a href="#storage">Storage and storage paths (4)</a><a href="#firmware">Firmware and management cards (3)</a><a href="#network">Network and performance (3)</a><a href="#patching">Patching, time and updates (3)</a><a href="#security">Security, identity and backup (6)</a><a href="#azure">Azure (2)</a></nav>
+
+    <section class="onderwerp-blok" id="storage"><p class="onderwerp-naam">Storage and storage paths</p><div class="onderwerp-vragen"><div class="vraagblok"><h2 id="check-mpio-settings">Check MPIO settings</h2><p>MPIO with Round Robin on an active/passive array that strongly prefers one controller.</p><p class="waaruit"><a href="/en/blog/top-10-hyper-v-cluster-issues/">Explained in: Ten issues we keep finding</a></p></div><div class="vraagblok"><h2 id="check-fibre-channel-zoning">Check Fibre Channel zoning</h2><p>Zoning, fabric layout, port status and path redundancy where storage runs over Fibre Channel.</p><p class="waaruit"><a href="/en/modules/">Explained in: The modules</a></p></div><div class="vraagblok"><h2 id="storage-path-redundancy">Storage path redundancy</h2><p>The array itself: firmware, pools, LUNs, host mappings and path layout, against what the hosts see on their side.</p><p class="waaruit"><a href="/en/modules/">Explained in: The modules</a></p></div><div class="vraagblok"><h2 id="outdated-storage-nic-driver">Outdated storage NIC driver</h2><p>Firmware drift is invisible to most monitoring tools because the values sit in the BMC or NIC EEPROM, not in Windows.</p><p class="waaruit"><a href="/en/blog/top-10-hyper-v-cluster-issues/">Explained in: Ten issues we keep finding</a></p></div></div></section><section class="onderwerp-blok" id="firmware"><p class="onderwerp-naam">Firmware and management cards</p><div class="onderwerp-vragen"><div class="vraagblok"><h2 id="cluster-firmware-baseline">Cluster firmware baseline</h2><p>Set a baseline (vendor solution profile from Dell, HPE or Lenovo), document it in your runbook, and upgrade the cluster as a whole during a planned window.</p><p class="waaruit"><a href="/en/blog/top-10-hyper-v-cluster-issues/">Explained in: Ten issues we keep finding</a></p></div><div class="vraagblok"><h2 id="idrac-firmware-versions-out-of-step">iDRAC firmware versions out of step</h2><p>Hardware, firmware and BIOS settings over iDRAC, iLO or XClarity; also usable on a node that is not running at the time.</p><p class="waaruit"><a href="/en/modules/">Explained in: The modules</a></p></div><div class="vraagblok"><h2 id="read-hardware-over-redfish">Read hardware over Redfish</h2><p>Hardware, firmware and BIOS settings over iDRAC, iLO or XClarity; also usable on a node that is not running at the time.</p><p class="waaruit"><a href="/en/modules/">Explained in: The modules</a></p></div></div></section><section class="onderwerp-blok" id="network"><p class="onderwerp-naam">Network and performance</p><div class="onderwerp-vragen"><div class="vraagblok"><h2 id="cluster-network-separation">Cluster network separation</h2><p>The cluster only considers networks with role Cluster or ClusterAndClient for internal traffic, including Live Migration.</p><p class="waaruit"><a href="/en/blog/live-migration-wrong-network/">Explained in: Live Migration on the wrong network</a></p></div><div class="vraagblok"><h2 id="ntttcp-network-throughput-test">ntttcp network throughput test</h2><p>A repeatable load measurement with fio and ntttcp, only inside an agreed maintenance window.</p><p class="waaruit"><a href="/en/modules/">Explained in: The modules</a></p></div><div class="vraagblok"><h2 id="fio-benchmark-cluster-storage">fio benchmark cluster storage</h2><p>A repeatable load measurement with fio and ntttcp, only inside an agreed maintenance window.</p><p class="waaruit"><a href="/en/modules/">Explained in: The modules</a></p></div></div></section><section class="onderwerp-blok" id="patching"><p class="onderwerp-naam">Patching, time and updates</p><div class="onderwerp-vragen"><div class="vraagblok"><h2 id="set-up-cluster-aware-updating">Set up cluster aware updating</h2><p>Cluster Aware Updating has two operational modes, and the choice between them is a strategic decision affecting runbook, audit trail, and supportability.</p><p class="waaruit"><a href="/en/blog/cluster-aware-updating-runbook-audit-trail/">Explained in: Cluster Aware Updating: runbook and audit trail</a></p></div><div class="vraagblok"><h2 id="patching-without-losing-redundancy">Patching without losing redundancy</h2><p>Because during a patch round there is always a node out of rotation. With two nodes that means: one node carries everything and there is no second one to fall back on if something goes wrong in that window.</p><p class="waaruit"><a href="/en/faq/">Explained in: Frequently asked questions</a></p></div><div class="vraagblok"><h2 id="cluster-time-sync-drift">Cluster time sync drift</h2><p>Acceptable skew between cluster nodes: under 1 second in steady state, under 5 seconds during a patch round or node reboot. Above 30 seconds is an urgent remediation topic.</p><p class="waaruit"><a href="/en/blog/hyper-v-time-drift-kerberos-csv/">Explained in: Time drift in Hyper-V clusters</a></p></div></div></section><section class="onderwerp-blok" id="security"><p class="onderwerp-naam">Security, identity and backup</p><div class="onderwerp-vragen"><div class="vraagblok"><h2 id="secure-boot-disabled-on-host">Secure Boot disabled on host</h2><p>What it loses is the early-boot security pipeline: updates to the Windows Boot Manager, Secure Boot DB updates, DBX revocation-list updates, and mitigations for future boot-level vulnerabilities of the BlackLotus class (CVE-2023-24932).</p><p class="waaruit"><a href="/en/blog/secure-boot-2023-certificates-hyper-v-gen2-vms/">Explained in: Secure Boot certificates and Hyper-V Gen 2 VMs</a></p></div><div class="vraagblok"><h2 id="migrate-generation-1-vms">Migrate generation 1 VMs</h2><p>Existing VMs are not updated when you patch the host, because their certificate state lives in their own NVRAM.</p><p class="waaruit"><a href="/en/blog/secure-boot-2023-certificates-hyper-v-gen2-vms/">Explained in: Secure Boot certificates and Hyper-V Gen 2 VMs</a></p></div><div class="vraagblok"><h2 id="ad-tier-0-exposure">AD Tier 0 exposure</h2><p>Exposure of Tier 0 (Domain Controllers and other critical identity workloads) from this cluster. Off by default; runs only at your request.</p><p class="waaruit"><a href="/en/modules/">Explained in: The modules</a></p></div><div class="vraagblok"><h2 id="domain-controller-on-the-same-cluster">Domain controller on the same cluster</h2><p>Exposure of Tier 0 (Domain Controllers and other critical identity workloads) from this cluster. Off by default; runs only at your request.</p><p class="waaruit"><a href="/en/modules/">Explained in: The modules</a></p></div><div class="vraagblok"><h2 id="drtm-secured-core-server">DRTM secured core server</h2><p>Azure Local, HCI and Storage Spaces Direct: pool and virtual disk health, Network ATC intents, Arc connectivity, secured-core posture, failover headroom.</p><p class="waaruit"><a href="/en/partners/">Explained in: For partners</a></p></div><div class="vraagblok"><h2 id="no-backup-of-cluster-volumes">No backup of cluster volumes</h2><p>The assessment of backup and management, beyond the presence check in the base measurement.</p><p class="waaruit"><a href="/en/modules/">Explained in: The modules</a></p></div></div></section><section class="onderwerp-blok" id="azure"><p class="onderwerp-naam">Azure</p><div class="onderwerp-vragen"><div class="vraagblok"><h2 id="azure-arc-cluster-registration">Azure Arc cluster registration</h2><p>Azure Arc remained mandatory, so there is no independent, non-Azure HCI to buy anymore.</p><p class="waaruit"><a href="/en/blog/azure-local-vs-classic-hyper-v-cluster/">Explained in: Classic Hyper-V or Azure Local?</a></p></div><div class="vraagblok"><h2 id="azure-migrate-readiness-per-vm">Azure Migrate readiness per VM</h2><p>Per-VM migration readiness against what actually runs. Only together with M5.</p><p class="waaruit"><a href="/en/modules/">Explained in: The modules</a></p></div></div></section>
+
+  </div>
+</section>
+</main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Services</h4><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div><div class="footer-column"><h4>Organisation</h4><a href="/en/about/">About us</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/rates/">Rates</a><a href="/en/partners/">For partners</a></div><div class="footer-column"><h4>Knowledge base</h4><a href="/en/blog/">Blog</a><a href="/en/case-studies/">Case studies</a><a href="/en/blog/top-10-hyper-v-cluster-issues/">Failures and causes</a><a href="/en/blog/cluster-witness-comparison/">Quorum and witness</a><a href="/en/blog/san-vs-s2d-vs-azure-local-hyper-v-storage/">Storage and Storage Spaces Direct</a><a href="/en/faq/">FAQ</a><a href="/en/topics/">Topics</a></div><div class="footer-column"><h4>Contact</h4><a href="/en/triage/#aanvraag">Request the free script</a><a href="/en/appointment/#agenda">Book a call</a><a href="/en/contact/#bericht">Get in touch</a></div><div class="newsletter"><h4>Technical findings by email</h4><form action="#" method="post"><label><span class="skip">Email address</span><input type="email" name="email" placeholder="name@company.com" autocomplete="email"></label><button type="submit">Subscribe</button></form><p>No marketing stream. Only new findings and practical explanation.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="Email"><img src="/assets/icons/email.svg" alt=""></a><a href="/en/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/en/">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/en/privacy/">Privacy statement</a><a href="/en/triage/#veilig">Security</a><a href="/en/terms/">Terms of engagement</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
+
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
+</body></html>

@@ -24,6 +24,9 @@ verdwijnt en de omhulling verandert.
 """
 import re, sys, json, glob, html, pathlib
 
+# Het hoofdmenu hieronder is een kopie van sync-nav.py. Draai dat script na
+# elke omzetting, dan blijft het gelijk aan de rest van de site.
+
 # ---------------------------------------------------------------- taalspannen
 def strip_taal(s, houd='nl'):
     """Verwijdert <span lang="xx">...</span> van de andere taal en pelt de
@@ -205,7 +208,7 @@ TEMPLATE = '''<!doctype html>
 <header class="topbar">
   <nav class="nav">
     <a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a>
-    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/preview-home.html#rapport">Wat u krijgt</a><a href="/preview-home.html#healthcheck">Vervolgonderzoek</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/blog/" aria-current="page">Blog</a></div>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-de-healthcheck">De HealthCheck</button><div class="navmenu" id="nav-de-healthcheck"><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div></div><a href="/tarieven/">Tarieven</a><div class="navgroep" data-hier="ja"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-kennisbank">Kennisbank</button><div class="navmenu" id="nav-kennisbank"><a href="/blog/" aria-current="page">Blog</a><a href="/vragen/">Veelgestelde vragen</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a></div></div><a href="/over-ons/">Over ons</a></div>
     <div class="nav-actions">
       <button class="search" aria-label="Zoeken">&#8981;</button>
       <a class="btn primary" href="/triage/">Start gratis triage</a>
@@ -287,7 +290,7 @@ INDEX_KOP = '''<!doctype html>
 <header class="topbar">
   <nav class="nav">
     <a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a>
-    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/preview-home.html#rapport">Wat u krijgt</a><a href="/preview-home.html#healthcheck">Vervolgonderzoek</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/blog/" aria-current="page">Blog</a></div>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-de-healthcheck">De HealthCheck</button><div class="navmenu" id="nav-de-healthcheck"><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div></div><a href="/tarieven/">Tarieven</a><div class="navgroep" data-hier="ja"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-kennisbank">Kennisbank</button><div class="navmenu" id="nav-kennisbank"><a href="/blog/" aria-current="page">Blog</a><a href="/vragen/">Veelgestelde vragen</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a></div></div><a href="/over-ons/">Over ons</a></div>
     <div class="nav-actions">
       <button class="search" aria-label="Zoeken">&#8981;</button>
       <a class="btn primary" href="/triage/">Start gratis triage</a>

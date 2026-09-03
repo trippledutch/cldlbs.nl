@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- De vragen en antwoorden komen woord voor woord uit faq.html; er is niets
+     herschreven. De accordeon is vervallen: alles staat open, zodat de tekst
+     leesbaar en doorzoekbaar is. noindex staat aan zolang de nieuwe stijl niet
+     live is. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>Veelgestelde vragen &middot; CloudLabs</title>
+<meta name="description" content="Alles wat u wilt weten voordat een opdracht van start gaat: welke toegang nodig is, hoe lang een meting duurt, wat u ontvangt en hoe het tarief is opgebouwd.">
+<link rel="canonical" href="https://cldlbs.com/vragen/">
+<link rel="alternate" hreflang="nl" href="https://cldlbs.com/vragen/">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/faq/">
+<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/vragen/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:url" content="https://cldlbs.com/vragen/">
+<meta property="og:title" content="Veelgestelde vragen &middot; CloudLabs">
+<meta property="og:description" content="Alles wat u wilt weten voordat een opdracht van start gaat.">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/vragen.css?v=23292c6b">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://cldlbs.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Veelgestelde vragen",
+          "item": "https://cldlbs.com/vragen/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://cldlbs.com/vragen/#vragen",
+      "inLanguage": "nl-NL",
+      "name": "Veelgestelde vragen · CloudLabs",
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://cldlbs.com/#organisatie",
+        "name": "CloudLabs",
+        "url": "https://cldlbs.com/"
+      },
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Moet mijn cluster read-only worden gemeten?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nee. CloudLabs werkt remote-first via een beveiligde sessie (Microsoft Teams, AnyDesk of vergelijkbaar). Er worden geen agents of monitoring-software op uw servers geïnstalleerd. Alle PowerShell-scripts worden door u, of zichtbaar onder begeleiding, uitgevoerd, u behoudt altijd de controle."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Welke gegevens verzamelt een health check?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Leestoegang tot de Hyper-V-hosts en het cluster is voldoende voor de kern-inventarisatie en -analyse. Bij bredere scope komen er waar relevant extra leesaccounts bij: out-of-band (BMC) voor de serverhardware, de storage array, de switch fabric en Azure ARM (Reader) voor Azure Local. Bij herstelwerkzaamheden werkt u in een gedeelde sessie, zodat commando's altijd door iemand aan uw kant worden uitgevoerd. Inloggegevens worden nooit opgeslagen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hoe lang duurt een cluster assessment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "De meting zelf duurt ongeveer een kwartier: een verzamelscript draait vanaf uw eigen beheerserver over WinRM naar de clusternodes en leest alleen. Daarna gaan de resultaatbestanden de CloudLabs Studio in en komen terug als afgerond rapport, normaal gesproken binnen drie tot vijf werkdagen. De intake bepaalt de scope en gebeurt eenmalig, bij de start."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Werkt dit ook voor Azure Local (voorheen Azure Stack HCI)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. CloudLabs behandelt S2D (Storage Spaces Direct) en Azure Local naast traditionele Hyper-V-clusters. Een readiness-assessment voor migratie naar Azure Local is ook een standaard dienst, inclusief firmware-baseline, driver-compatibiliteit en netwerkvereisten."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hoe bereid ik me voor op een cluster assessment?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Heel weinig. Een kort topologie-overzicht (aantal hosts, opslagtype, Windows-versie) helpt bij de scopebepaling. De intake vult de rest in. Formele documentatie is van tevoren niet nodig."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hoe vaak moet een cluster gecontroleerd worden?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Een health check is geen eenmalige actie. Na herstel draait elke vervolgmeting dezelfde read-only meting opnieuw en rapporteert de delta plus een risico-trend grafiek, zodat de voortgang wordt gemeten en niet beweerd. Twee of drie metingen per jaar is een gebruikelijk ritme."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Krijg ik een rapport dat ik aan mijn klant kan geven?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Een klantgericht .docx-rapport met bevindingen op volgorde van ernst en aanbevolen herstelstappen. Bij een vervolgmeting ontvangt u ook een delta-rapport en een restrisico-rapport met een risico-trend grafiek. As-Built systeemdocumentatie en, na een incident, een Root Cause Analysis zijn los te bestellen. Op verzoek: een actielijst (platte tekst, klaar om in uw ticketsysteem te plakken) en de ruwe PowerShell-inventarisoutput. Rapporten worden geleverd in het Nederlands of Engels, naar uw voorkeur."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is een NDA standaard?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. Een NDA wordt getekend vóór het begin van de werkzaamheden. Alle inventaris- en configuratiedata blijft bij u, het wordt door CloudLabs niet opgeslagen buiten de looptijd van de opdracht."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wat kost een cluster health check?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "De HealthCheck is in vier vormen af te nemen. Het jaarabonnement kost 5.000 euro per jaar: een basismeting en drie kwartaalvervolgmetingen, elk met rapport en een uur bespreking. Het kwartaalabonnement is 1.400 euro per kwartaal, het maandabonnement 300 euro per maand en een eenmalige basismeting 1.500 euro. Onderzoek na een storing (R1) kost 1.600 euro per dag, aanvullende uren 200 euro per uur op nacalculatie. Herstelwerk is 175 euro per uur. Alle bedragen zijn exclusief btw. Het volledige overzicht staat op de tarievenpagina."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kunt u ook on-site werken?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, wanneer dat nuttig is. On-site werk is mogelijk; reis- en verblijfskosten worden op nacalculatie gefactureerd. De meeste opdrachten worden volledig remote afgerond, zonder verlies van diepgang of kwaliteit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Werkt u met inkooporders?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja. CloudLabs kan werken via een formeel inkooporderproces. Betalingstermijn op factuur is 30 dagen. BTW is van toepassing voor EU-klanten; de verleggingsregeling geldt voor EU-bedrijven buiten Nederland waar van toepassing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hoe weet ik of mijn Azure Local cluster gezond is?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dat weet u niet uit de beheerconsole. Firmware-drift, scheef CSV-eigenaarschap en afwijkende PFC-klassen zijn niet zichtbaar in Failover Cluster Manager en geven geen waarschuwing. Ze blijken uit een meting. De gratis Cluster Triage leest uw omgeving uitsluitend uit en geeft de vijf zwaarste signalen rond een incidentvenster. De basismeting geeft het volledige beeld, met bevindingenrapport en een uur bespreking."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Waarom draait een twee-node cluster zonder redundantie tijdens patchen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Omdat er tijdens een patchronde telkens een node uit de rotatie staat. Bij twee nodes betekent dat: één node draagt alles en er is geen tweede om naar uit te wijken als er in dat venster iets misgaat. Dat is precies waarom de meting de firmwarestand en de stemverdeling per node vastlegt: een patchronde die op papier veilig is, kan het in de praktijk net niet zijn. Zie ook het artikel over Cluster-Aware Updating."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "In welke talen levert CloudLabs rapporten?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Alle rapportage wordt in het Nederlands of het Engels opgeleverd. De taal wordt bij de intake vastgelegd en geldt voor het hele engagement. Oplevering vindt plaats in de standaardopmaak van CloudLabs, in een bewerkbaar formaat. Wilt u het rapport in uw eigen huisstijl of die van de klant overhandigen, dan past u die opmaak zelf toe."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wat is een as-built document?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Actuele systeemdocumentatie, gegenereerd uit de laatste meting: identiteit, hardware, storage, netwerk, cluster, virtuele machines, beheer en back-up, tot en met firmwareniveaus en VLAN-tabellen. Altijd in overeenstemming met de werkelijkheid, omdat ze uit de werkelijkheid is afgeleid. Omdat ze bij elke meting opnieuw wordt gegenereerd, verdwijnt documentatiedrift: een vervangen switch, een extra VLAN of een nieuwe node verschijnt gewoon in de volgende versie."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Kan iemand mijn clusterlogboeken analyseren na een storing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "De verzamelaar draait vanaf uw beheerserver, uitsluitend lezend. Per node leest hij over het incidentvenster de gebeurtenislogboeken uit: 29 kanalen, voor zover ze op uw cluster aan staan. De tijdlijnen van de nodes worden op elkaar gelegd en gecorrigeerd voor klokverschil. Zie onderzoek na een storing voor wat er precies wordt verzameld en wat u ontvangt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hoe bewijs ik dat een storing niet aan mijn configuratie lag?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Met een reconstructie die de configuratie naast de gebeurtenissen legt. Daarom adviseren wij het onderzoek in combinatie met een basismeting: een afwijkend firmwareniveau of een scheve netwerkinstelling is anders niet van toeval te onderscheiden. U ontvangt een RCA-document met het incidentvenster, de tijdlijn over alle nodes, de vastgestelde oorzaak voor zover het bewijs die draagt en de gaten met naam en reden."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wat is het verschil tussen Azure Stack HCI en Azure Local?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Azure Local is Microsofts huidige naam voor het besturingssysteem dat eerder Azure Stack HCI heette. Een hyperconverged Windows-platform beheerd via Azure Arc, gefactureerd per core per maand en bedoeld voor productie-workloads die on-premises moeten blijven. Zie het artikel over Azure Local migratie readiness voor wat 2026 daarin anders maakt."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Naar inhoud</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Bewaar eerst het bewijs.</span><a href="/triage/#aanvraag">Start gratis triage &rarr;</a><button type="button" aria-label="Sluiten" id="close-announcement">&times;</button></div>
+
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="/preview-home.html"><b>Cloud<span>Labs</span></b><small lang="en">Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-de-healthcheck">De HealthCheck</button><div class="navmenu" id="nav-de-healthcheck"><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div></div><a href="/tarieven/">Tarieven</a><a href="/blog/">Blog</a><div class="navgroep" data-hier="ja"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-kennisbank">Kennisbank</button><div class="navmenu" id="nav-kennisbank"><a href="/vragen/" aria-current="page">Veelgestelde vragen</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/onderwerpen/">Onderwerpen</a></div></div><a href="/over-ons/">Over ons</a></div><div class="nav-actions">
+      <span class="taalwissel"><span aria-current="true">NL</span><a href="/en/faq/" hreflang="en" lang="en">EN</a></span>
+      <a class="btn primary" href="/triage/#aanvraag">Start gratis triage</a>
+      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+  <div class="vragenpagina">
+
+    <p class="kruimelpad" style="margin-left:var(--inspring);font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)"><a href="/" style="color:var(--faint);text-decoration:none">CloudLabs</a> / Veelgestelde vragen</p>
+
+    <div class="vragenkop">
+      <p class="eyebrow">Veelgestelde vragen</p>
+      <h1>Alles wat u wilt weten voordat een opdracht van start gaat</h1>
+    </div>
+
+    <nav class="wegwijzer" aria-label="Onderwerpen">
+            <a href="#access">Toegang en setup (2)</a>
+      <a href="#scope">Scope en duur (6)</a>
+      <a href="#deliverables">Oplevering (4)</a>
+      <a href="#commercial">Commercieel (3)</a>
+      <a href="#storing">Na een storing (2)</a>
+      <a href="#techniek">Techniek (1)</a>
+    </nav>
+
+      <section class="onderwerp-blok" id="access">
+        <p class="onderwerp-naam">Toegang en setup</p>
+        <div class="onderwerp-vragen">
+          <div class="vraagblok">
+            <h2 id="moet-ik-iets-installeren-voor-de">Moet mijn cluster read-only worden gemeten?</h2>
+            <p>Nee. CloudLabs werkt remote-first via een beveiligde sessie (Microsoft Teams, AnyDesk of vergelijkbaar). Er worden geen agents of monitoring-software op uw servers geïnstalleerd. Alle PowerShell-scripts worden door u, of zichtbaar onder begeleiding, uitgevoerd, u behoudt altijd de controle.</p>
+          </div>
+          <div class="vraagblok">
+            <h2 id="welke-toegang-heeft-u-nodig-tot">Welke gegevens verzamelt een health check?</h2>
+            <p>Leestoegang tot de Hyper-V-hosts en het cluster is voldoende voor de kern-inventarisatie en -analyse. Bij bredere scope komen er waar relevant extra leesaccounts bij: out-of-band (BMC) voor de serverhardware, de storage array, de switch fabric en Azure ARM (Reader) voor Azure Local. Bij herstelwerkzaamheden werkt u in een gedeelde sessie, zodat commando's altijd door iemand aan uw kant worden uitgevoerd. Inloggegevens worden nooit opgeslagen.</p>
+          </div>
+        </div>
+      </section>
+      <section class="onderwerp-blok" id="scope">
+        <p class="onderwerp-naam">Scope en duur</p>
+        <div class="onderwerp-vragen">
+          <div class="vraagblok">
+            <h2 id="hoe-lang-duurt-een-hyperv-cluster">Hoe lang duurt een cluster assessment?</h2>
+            <p>De meting zelf duurt ongeveer een kwartier: een verzamelscript draait vanaf uw eigen beheerserver over WinRM naar de clusternodes en leest alleen. Daarna gaan de resultaatbestanden de CloudLabs Studio in en komen terug als afgerond rapport, normaal gesproken binnen drie tot vijf werkdagen. De intake bepaalt de scope en gebeurt eenmalig, bij de start.</p>
+          </div>
+          <div class="vraagblok">
+            <h2 id="werkt-dit-ook-voor-azure-local">Werkt dit ook voor Azure Local (voorheen Azure Stack HCI)?</h2>
+            <p>Ja. CloudLabs behandelt S2D (Storage Spaces Direct) en Azure Local naast traditionele Hyper-V-clusters. Een readiness-assessment voor migratie naar Azure Local is ook een standaard dienst, inclusief firmware-baseline, driver-compatibiliteit en netwerkvereisten.</p>
+          </div>
+          <div class="vraagblok">
+            <h2 id="wat-moet-ik-voorbereiden">Hoe bereid ik me voor op een cluster assessment?</h2>
+            <p>Heel weinig. Een kort topologie-overzicht (aantal hosts, opslagtype, Windows-versie) helpt bij de scopebepaling. De intake vult de rest in. Formele documentatie is van tevoren niet nodig.</p>
+          </div>
+          <div class="vraagblok">
+            <h2 id="hoe-vaak-wordt-er-hermeten">Hoe vaak moet een cluster gecontroleerd worden?</h2>
+            <p>Een health check is geen eenmalige actie. Na herstel draait elke vervolgmeting dezelfde read-only meting opnieuw en rapporteert de delta plus een risico-trend grafiek, zodat de voortgang wordt gemeten en niet beweerd. Twee of drie metingen per jaar is een gebruikelijk ritme.</p>
+          </div>
+          <div class="vraagblok">
+            <h2 id="hoe-weet-ik-of-mijn-azure">Hoe weet ik of mijn Azure Local cluster gezond is?</h2>
+            <p>Dat weet u niet uit de beheerconsole. Firmware-drift, scheef CSV-eigenaarschap en afwijkende PFC-klassen zijn niet zichtbaar in Failover Cluster Manager en geven geen waarschuwing. Ze blijken uit een meting.</p>
+            <p>De gratis <a href="/triage/">Cluster Triage</a> leest uw omgeving uitsluitend uit en geeft de vijf zwaarste signalen rond een incidentvenster. De <a href="/healthcheck/">basismeting</a> geeft het volledige beeld, met bevindingenrapport en een uur bespreking.</p>
+          </div>
+          <div class="vraagblok">
+            <h2 id="waarom-draait-een-tweenode-cluster-zonder">Waarom draait een twee-node cluster zonder redundantie tijdens patchen?</h2>
+            <p>Omdat er tijdens een patchronde telkens een node uit de rotatie staat. Bij twee nodes betekent dat: één node draagt alles en er is geen tweede om naar uit te wijken als er in dat venster iets misgaat.</p>
+            <p>Dat is precies waarom de meting de firmwarestand en de stemverdeling per node vastlegt: een patchronde die op papier veilig is, kan het in de praktijk net niet zijn. Zie ook het artikel over <a href="/blog/cluster-aware-updating-runbook-audit-trail.html">Cluster-Aware Updating</a>.</p>
+          </div>
+        </div>
+      </section>
+      <section class="onderwerp-blok" id="deliverables">
+        <p class="onderwerp-naam">Oplevering</p>
+        <div class="onderwerp-vragen">
+          <div class="vraagblok">
+            <h2 id="wat-ontvang-ik-aan-het-einde">Krijg ik een rapport dat ik aan mijn klant kan geven?</h2>
+            <p>Een klantgericht <strong>.docx-rapport</strong> met bevindingen op volgorde van ernst en aanbevolen herstelstappen. Bij een vervolgmeting ontvangt u ook een <strong>delta-rapport</strong> en een <strong>restrisico-rapport met een risico-trend grafiek</strong>. <strong>As-Built systeemdocumentatie</strong> en, na een incident, een <strong>Root Cause Analysis</strong> zijn los te bestellen. Op verzoek: een actielijst (platte tekst, klaar om in uw ticketsysteem te plakken) en de ruwe PowerShell-inventarisoutput. Rapporten worden geleverd in het Nederlands of Engels, naar uw voorkeur.</p>
+          </div>
+          <div class="vraagblok">
+            <h2 id="is-een-nda-standaard">Is een NDA standaard?</h2>
+            <p>Ja. Een NDA wordt getekend vóór het begin van de werkzaamheden. Alle inventaris- en configuratiedata blijft bij u, het wordt door CloudLabs niet opgeslagen buiten de looptijd van de opdracht.</p>
+          </div>
+          <div class="vraagblok">
+            <h2 id="in-welke-talen-levert-cloudlabs-rapporten">In welke talen levert CloudLabs rapporten?</h2>
+            <p>Alle rapportage wordt in het Nederlands of het Engels opgeleverd. De taal wordt bij de intake vastgelegd en geldt voor het hele engagement.</p>
+            <p>Oplevering vindt plaats in de standaardopmaak van CloudLabs, in een bewerkbaar formaat. Wilt u het rapport in uw eigen huisstijl of die van de klant overhandigen, dan past u die opmaak zelf toe.</p>
+          </div>
+          <div class="vraagblok">
+            <h2 id="wat-is-een-asbuilt-document">Wat is een as-built document?</h2>
+            <p>Actuele systeemdocumentatie, gegenereerd uit de laatste meting: identiteit, hardware, storage, netwerk, cluster, virtuele machines, beheer en back-up, tot en met firmwareniveaus en VLAN-tabellen.</p>
+            <p>Altijd in overeenstemming met de werkelijkheid, omdat ze uit de werkelijkheid is afgeleid. Omdat ze bij elke meting opnieuw wordt gegenereerd, verdwijnt documentatiedrift: een vervangen switch, een extra VLAN of een nieuwe node verschijnt gewoon in de volgende versie.</p>
+          </div>
+        </div>
+      </section>
+      <section class="onderwerp-blok" id="commercial">
+        <p class="onderwerp-naam">Commercieel</p>
+        <div class="onderwerp-vragen">
+          <div class="vraagblok">
+            <h2 id="hoe-is-het-tarief-opgebouwd">Wat kost een cluster health check?</h2>
+            <p>De HealthCheck is in vier vormen af te nemen. Het jaarabonnement kost 5.000 euro per jaar: een basismeting en drie kwartaalvervolgmetingen, elk met rapport en een uur bespreking. Het kwartaalabonnement is 1.400 euro per kwartaal, het maandabonnement 300 euro per maand en een eenmalige basismeting 1.500 euro.</p>
+            <p>Onderzoek na een storing (R1) kost 1.600 euro per dag, aanvullende uren 200 euro per uur op nacalculatie. Herstelwerk is 175 euro per uur. Alle bedragen zijn exclusief btw. Het volledige overzicht staat op de <a href="/tarieven/">tarievenpagina</a>.</p>
+          </div>
+          <div class="vraagblok">
+            <h2 id="kunt-u-ook-onsite-werken">Kunt u ook on-site werken?</h2>
+            <p>Ja, wanneer dat nuttig is. On-site werk is mogelijk; reis- en verblijfskosten worden op nacalculatie gefactureerd. De meeste opdrachten worden volledig remote afgerond, zonder verlies van diepgang of kwaliteit.</p>
+          </div>
+          <div class="vraagblok">
+            <h2 id="werkt-u-met-inkooporders">Werkt u met inkooporders?</h2>
+            <p>Ja. CloudLabs kan werken via een formeel inkooporderproces. Betalingstermijn op factuur is 30 dagen. BTW is van toepassing voor EU-klanten; de verleggingsregeling geldt voor EU-bedrijven buiten Nederland waar van toepassing.</p>
+          </div>
+        </div>
+      </section>
+      <section class="onderwerp-blok" id="storing">
+        <p class="onderwerp-naam">Na een storing</p>
+        <div class="onderwerp-vragen">
+          <div class="vraagblok">
+            <h2 id="kan-iemand-mijn-clusterlogboeken-analyseren-na">Kan iemand mijn clusterlogboeken analyseren na een storing?</h2>
+            <p>De verzamelaar draait vanaf uw beheerserver, uitsluitend lezend. Per node leest hij over het incidentvenster de gebeurtenislogboeken uit: 29 kanalen, voor zover ze op uw cluster aan staan. De tijdlijnen van de nodes worden op elkaar gelegd en gecorrigeerd voor klokverschil.</p>
+            <p>Zie <a href="/na-een-storing/">onderzoek na een storing</a> voor wat er precies wordt verzameld en wat u ontvangt.</p>
+          </div>
+          <div class="vraagblok">
+            <h2 id="hoe-bewijs-ik-dat-een-storing">Hoe bewijs ik dat een storing niet aan mijn configuratie lag?</h2>
+            <p>Met een reconstructie die de configuratie naast de gebeurtenissen legt. Daarom adviseren wij het onderzoek in combinatie met een basismeting: een afwijkend firmwareniveau of een scheve netwerkinstelling is anders niet van toeval te onderscheiden.</p>
+            <p>U ontvangt een RCA-document met het incidentvenster, de tijdlijn over alle nodes, de vastgestelde oorzaak voor zover het bewijs die draagt en de gaten met naam en reden.</p>
+          </div>
+        </div>
+      </section>
+      <section class="onderwerp-blok" id="techniek">
+        <p class="onderwerp-naam">Techniek</p>
+        <div class="onderwerp-vragen">
+          <div class="vraagblok">
+            <h2 id="wat-is-het-verschil-tussen-azure">Wat is het verschil tussen Azure Stack HCI en Azure Local?</h2>
+            <p>Azure Local is Microsofts huidige naam voor het besturingssysteem dat eerder Azure Stack HCI heette. Een hyperconverged Windows-platform beheerd via Azure Arc, gefactureerd per core per maand en bedoeld voor productie-workloads die on-premises moeten blijven.</p>
+            <p>Zie het artikel over <a href="/blog/azure-local-migration-readiness.html">Azure Local migratie readiness</a> voor wat 2026 daarin anders maakt.</p>
+          </div>
+        </div>
+      </section>
+
+  </div>
+</section>
+
+<section class="cta">
+  <div class="inner">
+    <p class="eyebrow" style="justify-content:center">Staat uw vraag er niet bij?</p>
+    <h2>Stel hem gerust</h2>
+    <p>De gratis Cluster Triage leest uitsluitend en verandert niets. Twijfelt u of het bij uw omgeving past, stel de vraag dan eerst.</p>
+    <div class="actions">
+      <a class="btn primary" href="/triage/">Start gratis Cluster Triage &rarr;</a>
+      <a class="btn ghost" href="/contact/">Neem contact op</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><a href="/healthcheck/">De HealthCheck</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/tarieven/">Tarieven</a><a href="/partners/">Voor partners</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/vragen/">Veelgestelde vragen</a><a href="/onderwerpen/">Onderwerpen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Gratis script aanvragen</a><a href="/afspraak/#agenda">Afspraak maken</a><a href="/contact/#bericht">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy/">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/voorwaarden/">Algemene voorwaarden</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
+
+
+<script>
+(function(){
+  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
+  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
+})();
+</script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
+</body>
+</html>

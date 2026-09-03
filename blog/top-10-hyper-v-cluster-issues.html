@@ -5,22 +5,22 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- Omgezet naar de nieuwe huisstijl met blog-omzetten.py. De Engelse helft is
      eruit; die krijgt later een eigen URL onder /en/. De inhoud is niet
-     herschreven. noindex staat aan zolang de nieuwe stijl niet live is. -->
-<meta name="robots" content="noindex,nofollow">
+     herschreven. Vrijgegeven voor indexering op 2 september 2026. -->
 <meta name="theme-color" content="#0A1024">
-<title>Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026 &middot; CloudLabs</title>
+<title>Hyper-V Cluster Health Check: 10 vaste issues &middot; CloudLabs</title>
 <meta name="description" content="Na jaren van Hyper-V Health Checks in Windows Server 2016-, 2019-, 2022- en 2025-omgevingen komen tien bevindingen telkens terug. Over branches, schaalgroottes en beheerteams heen. Geen ervan is exotisch. De meeste blijven stil totdat een patch-ronde, een hardware-refresh of één switch-reboot ze om ">
 <link rel="canonical" href="https://cldlbs.com/blog/top-10-hyper-v-cluster-issues.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/top-10-hyper-v-cluster-issues.html">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/blog/top-10-hyper-v-cluster-issues/">
 <link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/top-10-hyper-v-cluster-issues.html">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="nl_NL">
 <meta property="og:url" content="https://cldlbs.com/blog/top-10-hyper-v-cluster-issues.html">
-<meta property="og:title" content="Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026">
+<meta property="og:title" content="Hyper-V Cluster Health Check: 10 vaste issues &middot; CloudLabs">
 <meta property="og:description" content="Na jaren van Hyper-V Health Checks in Windows Server 2016-, 2019-, 2022- en 2025-omgevingen komen tien bevindingen telkens terug. Over branches, schaalgroottes en beheerteams heen. Geen ervan is exotisch. De meeste blijven stil totdat een patch-ronde, een hardware-refresh of één switch-reboot ze om ">
 <link rel="icon" href="/favicon.png" type="image/png">
-<link rel="stylesheet" href="/huisstijl/pagina.css">
-<link rel="stylesheet" href="/huisstijl/artikel.css">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/artikel.css?v=04e23fbe">
 
 <script type="application/ld+json">
 {
@@ -96,7 +96,7 @@
           "name": "Heeft een Health Check impact op productie?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "De inventarisatie-scripts zijn read-only en draaien zonder impact tijdens kantoortijden. De optionele Test-Cluster validatie kan ook op een productiecluster veilig worden uitgevoerd wanneer de storage-tests worden overgeslagen, of wanneer een aparte test-LUN beschikbaar is die niet door een clusterrol wordt gebruikt. Een volledige storage-validatie op productie-CSV's vereist dat die CSV's tijdelijk offline worden genomen voor de duur van de test, en dat plannen wij altijd buiten kantoortijden, in overleg met de klant."
+            "text": "De inventarisatie-scripts zijn read-only en draaien zonder impact tijdens kantoortijden. De optionele Test-Cluster validatie kan ook op een productiecluster veilig worden uitgevoerd wanneer de storage-tests worden overgeslagen, of wanneer een aparte test-LUN beschikbaar is die niet door een clusterrol wordt gebruikt. Een volledige storage-validatie op productie-CSV's vereist dat die CSV's tijdelijk offline worden genomen voor de duur van de test en dat plannen wij altijd buiten kantoortijden, in overleg met de klant."
           }
         },
         {
@@ -131,15 +131,14 @@
 </head>
 
 <body>
-<a class="skip" href="#main">Naar inhoud</a>
+<a class="skip" href="#main">Naar inhoud</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Bewaar eerst het bewijs.</span><a href="/triage/#aanvraag">Start gratis triage &rarr;</a><button type="button" aria-label="Sluiten" id="close-announcement">&times;</button></div>
 
 <header class="topbar">
   <nav class="nav">
-    <a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a>
-    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/blog/" aria-current="page">Blog</a></div>
-    <div class="nav-actions">
-      <button class="search" aria-label="Zoeken">&#8981;</button>
-      <a class="btn primary" href="/triage/">Start gratis triage</a>
+    <a class="brand" href="/preview-home.html"><b>Cloud<span>Labs</span></b><small lang="en">Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-de-healthcheck">De HealthCheck</button><div class="navmenu" id="nav-de-healthcheck"><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div></div><a href="/tarieven/">Tarieven</a><a href="/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-kennisbank">Kennisbank</button><div class="navmenu" id="nav-kennisbank"><a href="/vragen/">Veelgestelde vragen</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/onderwerpen/">Onderwerpen</a></div></div><a href="/over-ons/">Over ons</a></div><div class="nav-actions">
+      <span class="taalwissel"><span aria-current="true">NL</span><a href="/en/blog/top-10-hyper-v-cluster-issues/" hreflang="en" lang="en">EN</a></span>
+      <a class="btn primary" href="/triage/#aanvraag">Start gratis triage</a>
       <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
     </div>
   </nav>
@@ -154,7 +153,7 @@
     <header class="artikelkop">
       <h1>Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026</h1>
       <p class="lede">Na jaren van Hyper-V Health Checks in Windows Server 2016-, 2019-, 2022- en 2025-omgevingen komen tien bevindingen telkens terug. Over branches, schaalgroottes en beheerteams heen. Geen ervan is exotisch. De meeste blijven stil totdat een patch-ronde, een hardware-refresh of één switch-reboot ze om 03:00 's nachts tot een Sev-1-incident maakt.</p>
-        <p class="lede">Dit artikel is de praktijklijst. Per issue de oorzaak, de PowerShell om het te diagnosticeren, en de remediation die wij in het rapport voor de klant documenteren. Herken je drie of meer in je eigen omgeving? Dat is geen uitschieter, dat is het gemiddelde.</p>
+        <p class="lede">Dit artikel is de praktijklijst. Per issue de oorzaak, de PowerShell om het te diagnosticeren en de remediation die wij in het rapport voor de klant documenteren. Herken je drie of meer in je eigen omgeving? Dat is geen uitschieter, dat is het gemiddelde.</p>
       <p class="artikelmeta"><b>Door Hans Vredevoort</b> <i>&middot;</i> <b>15 mei 2026</b> <i>&middot;</i> <b>14 minuten leestijd</b> <i>&middot;</i> <b>Cluster Health</b></p>
     </header>
 
@@ -178,7 +177,7 @@
       <div class="tekst">
 <h2 id="nl-1">1. Live Migration over het verkeerde netwerk</h2>
         <p>De meest voorkomende bevinding. Live Migration valt terug op het management- of heartbeat-VLAN omdat het toegewezen migratienetwerk niet is aangezet voor clusterverkeer, of nooit is toegevoegd aan de expliciete Live Migration-lijst per Hyper-V host. Het symptoom is zelden een failure. Wel trage migraties tijdens patch-vensters en onverklaarbare latency op cluster-heartbeats wanneer meerdere VM's tegelijk verplaatsen.</p>
-        <p>Twee configuratie-vlakken zijn relevant. De <code>Role</code> per cluster-netwerk op clusterniveau, en de expliciete Live Migration-netwerklijst per host. Die zijn onafhankelijk. Wij vinden regelmatig dat het ene correct staat en het andere vergeten is. Volledige uitleg in <!--LINK:live-migration-wrong-network--><a href="live-migration-wrong-network.html">Live Migration over het verkeerde netwerk: een veelvoorkomende Hyper-V valkuil</a><!--/LINK:live-migration-wrong-network-->.</p>
+        <p>Twee configuratie-vlakken zijn relevant. De <code>Role</code> per cluster-netwerk op clusterniveau en de expliciete Live Migration-netwerklijst per host. Die zijn onafhankelijk. Wij vinden regelmatig dat het ene correct staat en het andere vergeten is. Volledige uitleg in <!--LINK:live-migration-wrong-network--><a href="live-migration-wrong-network.html">Live Migration over het verkeerde netwerk: een veelvoorkomende Hyper-V valkuil</a><!--/LINK:live-migration-wrong-network-->.</p>
         <p>Belangrijk detail bij diagnose: sinds Windows Server 2016 is de default-transportmodus voor Live Migration SMB, dus verkeer loopt over poort 445, niet over de oude TCP-poort 6600. Filteren op alleen 6600 levert op moderne clusters geen resultaat op.</p>
 
         <p><strong>Diagnose:</strong></p>
@@ -197,14 +196,14 @@ Get-NetTCPConnection -RemotePort 445,6600 |
 
         <p>Voor de zekerheid: een korte <code>pktmon</code>-capture op de bron-NIC tijdens een handmatige Live Migration geeft uitsluitsel over welk fysiek pad daadwerkelijk wordt gebruikt.</p>
 
-        <p><strong>Oplossen:</strong> beperk op iedere host de Live Migration-netwerklijst tot het subnet dat je daadwerkelijk wilt gebruiken, en zorg dat dat subnet op het clusterobject <code>Role = ClusterAndClient</code> (of alleen <code>Cluster</code>) heeft. <code>Add-VMMigrationNetwork</code> voegt een subnet toe, <code>Remove-VMMigrationNetwork</code> verwijdert ongewenste subnets. Valideer end-to-end met een handmatige Live Migration.</p>
+        <p><strong>Oplossen:</strong> beperk op iedere host de Live Migration-netwerklijst tot het subnet dat je daadwerkelijk wilt gebruiken en zorg dat dat subnet op het clusterobject <code>Role = ClusterAndClient</code> (of alleen <code>Cluster</code>) heeft. <code>Add-VMMigrationNetwork</code> voegt een subnet toe, <code>Remove-VMMigrationNetwork</code> verwijdert ongewenste subnets. Valideer end-to-end met een handmatige Live Migration.</p>
 
         <div class="callout"><strong>CloudLabs bevindingen-template</strong>
         Wij rapporteren dit met severity <em>Hoog</em> wanneer management- of heartbeat-netwerken Live Migration-verkeer zien. Het bedreigt rechtstreeks de cluster-stabiliteit onder load. De remediation-stap is scripted en wordt live geverifieerd vóór sign-off.</div>
 
         <h2 id="nl-2">2. Witness verkeerd geconfigureerd of afwezig</h2>
-        <p>Quorum is het onzichtbare stuk dat een cluster overeind houdt als nodes verdwijnen. We vinden regelmatig two-node clusters zonder witness, File Share Witnesses op een single-node, single-disk fileserver zonder UPS, en Disk Witnesses op dezelfde SAN-LUN als de CSV's die ze moeten beschermen.</p>
-        <p>Over Dynamic Quorum: op Windows Server 2016 en hoger combineert Dynamic Quorum met Dynamic Witness, en het cluster past de votes dynamisch aan om enkelvoudige failures te overleven. Dat is geen vervanging voor een witness. Bij een gelijktijdige netwerkpartitie of dubbele uitval zonder externe tiebreaker is split-brain niet betrouwbaar opgelost. Een witness blijft vereist voor elke productieconfiguratie.</p>
+        <p>Quorum is het onzichtbare stuk dat een cluster overeind houdt als nodes verdwijnen. We vinden regelmatig two-node clusters zonder witness, File Share Witnesses op een single-node, single-disk fileserver zonder UPS en Disk Witnesses op dezelfde SAN-LUN als de CSV's die ze moeten beschermen.</p>
+        <p>Over Dynamic Quorum: op Windows Server 2016 en hoger combineert Dynamic Quorum met Dynamic Witness en het cluster past de votes dynamisch aan om enkelvoudige failures te overleven. Dat is geen vervanging voor een witness. Bij een gelijktijdige netwerkpartitie of dubbele uitval zonder externe tiebreaker is split-brain niet betrouwbaar opgelost. Een witness blijft vereist voor elke productieconfiguratie.</p>
 
 <pre><code>Get-ClusterQuorum | Format-List *
 
@@ -257,10 +256,10 @@ Invoke-Command -ComputerName (Get-ClusterNode).Name {
 
         <p>Voor betrouwbare firmware-inventarisatie van NIC's, HBA's en BIOS zijn vendor-tools nodig: Dell iDRAC (<code>racadm</code>), HPE iLO (<code>ilorest</code> of SUM), Lenovo XClarity Controller, Supermicro IPMI. Windows-cmdlets zoals <code>Get-NetAdapterAdvancedProperty -RegistryKeyword '*FirmwareVersion'</code> werken voor sommige Mellanox- en Intel-drivers, maar niet universeel.</p>
 
-        <p><strong>Oplossen:</strong> behandel firmware als configuratie. Zet een baseline (vendor solution profile van Dell, HPE of Lenovo), documenteer het in je runbook, en upgrade het cluster als geheel tijdens een gepland venster.</p>
+        <p><strong>Oplossen:</strong> behandel firmware als configuratie. Zet een baseline (vendor solution profile van Dell, HPE of Lenovo), documenteer het in je runbook en upgrade het cluster als geheel tijdens een gepland venster.</p>
 
         <h2 id="nl-5">5. Verschillende Windows Server build-nummers</h2>
-        <p>De Cluster Service tolereert kortdurende mixed-builds tijdens een rolling patch, maar wij vinden regelmatig clusters die al een half jaar mid-patch staan. Het resultaat zijn functionele regressies: een fix in een latere CU is intermitterend omdat de helft van de nodes hem mist, en het gedrag hangt af van welke node een resource bezit op het moment van falen.</p>
+        <p>De Cluster Service tolereert kortdurende mixed-builds tijdens een rolling patch, maar wij vinden regelmatig clusters die al een half jaar mid-patch staan. Het resultaat zijn functionele regressies: een fix in een latere CU is intermitterend omdat de helft van de nodes hem mist en het gedrag hangt af van welke node een resource bezit op het moment van falen.</p>
 
 <pre><code>Invoke-Command -ComputerName (Get-ClusterNode).Name {
     [PSCustomObject]@{
@@ -272,10 +271,10 @@ Invoke-Command -ComputerName (Get-ClusterNode).Name {
     }
 } | Sort-Object Node</code></pre>
 
-        <p>Als de <code>UBR</code>-kolom verschillende waarden toont over nodes, staat het cluster in een toestand die Microsoft Support eerst gerepareerd wil zien voor zij escaleren. Patch het cluster als geheel, valideer met <code>Test-Cluster</code>, en behandel de post-patch toestand als de nieuwe known-good.</p>
+        <p>Als de <code>UBR</code>-kolom verschillende waarden toont over nodes, staat het cluster in een toestand die Microsoft Support eerst gerepareerd wil zien voor zij escaleren. Patch het cluster als geheel, valideer met <code>Test-Cluster</code> en behandel de post-patch toestand als de nieuwe known-good.</p>
 
         <h2 id="nl-6">6. Geen anti-affinity voor DC's en management-VM's</h2>
-        <p>Na een node-drain belanden alle domain controllers vrolijk op dezelfde overlevende host. Eén host-crash legt dan tegelijk alle DC's stil, en daarmee de authenticatie voor de hele omgeving, inclusief de management-plane die je nodig hebt om het cluster te herstellen.</p>
+        <p>Na een node-drain belanden alle domain controllers vrolijk op dezelfde overlevende host. Eén host-crash legt dan tegelijk alle DC's stil en daarmee de authenticatie voor de hele omgeving, inclusief de management-plane die je nodig hebt om het cluster te herstellen.</p>
 
 <pre><code># Clustered VM's zonder anti-affinity
 Get-ClusterGroup | Where-Object GroupType -eq 'VirtualMachine' |
@@ -310,7 +309,7 @@ Get-ClusterSharedVolume | ForEach-Object {
         <p>De trade-off is RAM. Dimensioneer op basis van je VM-dichtheid en bevestig in echte workloads dat de node nog headroom heeft voor VM-consolidatie onder N-1 condities. Dimensioneer BlockCache niet vanuit de failover-geëvacueerde toestand.</p>
 
         <h2 id="nl-8">8. Cluster-netwerk op één fysiek pad</h2>
-        <p>Cluster-heartbeats die via één switch of één uplink lopen. Wij zien dit vooral in lift-and-shift cluster-builds waar het oorspronkelijke twee-switchontwerp in de inkoopfase is uitgekleed. Resultaat: een switch-reboot, een stack-split of een falende SFP partitioneert het cluster, en de overlevende partitie arbitreert slecht omdat de witness ook via datzelfde pad bereikbaar is.</p>
+        <p>Cluster-heartbeats die via één switch of één uplink lopen. Wij zien dit vooral in lift-and-shift cluster-builds waar het oorspronkelijke twee-switchontwerp in de inkoopfase is uitgekleed. Resultaat: een switch-reboot, een stack-split of een falende SFP partitioneert het cluster en de overlevende partitie arbitreert slecht omdat de witness ook via datzelfde pad bereikbaar is.</p>
         <p>Cluster-netwerken vereisen redundantie op <strong>laag 1</strong>, niet alleen op IP-niveau. Twee NIC's in dezelfde switch is geen redundantie. Geteamde NIC's over twee switches is het minimum voor productie.</p>
         <p>Over teaming-technologie: LBFO (Load Balancing and Failover) wordt op Windows Server 2022 en 2025 niet ondersteund onder de Hyper-V virtuele switch. SET (Switch Embedded Teaming) is de enige ondersteunde optie voor nieuwe deployments. Bestaande LBFO-teams die nog onder Hyper-V vSwitch hangen op deze OS-versies zijn een hard remediation-punt, geen advies.</p>
         <p>Tijdens een Hyper-V Cluster Health Check traceren wij cluster-heartbeatverkeer altijd tot de fysieke poort, niet alleen de logische NIC-naam.</p>
@@ -335,12 +334,12 @@ Get-PhysicalDisk | Group-Object MediaType, OperationalStatus, FirmwareVersion</c
         <p>Een volledige storage-validatie inclusief de Storage-categorie vereist een onderhoudsvenster of een aparte test-LUN die niet door een clusterrol wordt gebruikt.</p>
 
         <h2 id="nl-10">10. Geen gedocumenteerde DR-validatie</h2>
-        <p>Stretched- of multisite-clusters die nog nooit end-to-end zijn omgeklapt. Het runbook bestaat, het storage-replicatie dashboard staat groen, en niemand heeft het ooit in productie daadwerkelijk geprobeerd. Een Health Check brengt vaak het verschil tussen runbook en werkelijkheid aan het licht: DNS-TTL's die te lang zijn, applicatielaag-connectionstrings die hardcoded naar één site verwijzen, witness-plaatsing die de test niet overleeft.</p>
+        <p>Stretched- of multisite-clusters die nog nooit end-to-end zijn omgeklapt. Het runbook bestaat, het storage-replicatie dashboard staat groen en niemand heeft het ooit in productie daadwerkelijk geprobeerd. Een Health Check brengt vaak het verschil tussen runbook en werkelijkheid aan het licht: DNS-TTL's die te lang zijn, applicatielaag-connectionstrings die hardcoded naar één site verwijzen, witness-plaatsing die de test niet overleeft.</p>
         <p>We adviseren minimaal een jaarlijkse geplande failover, behandeld als productie-impact en gerepeteerd in een onderhoudsvenster.</p>
 
         <h2>Het patroon achter de lijst</h2>
-        <p>Negen van deze tien bevindingen hebben niets met workload-performance te maken. Het is stille configuration debt die zich opbouwt over patch-cycli, hardware-refreshes en personeelswissels. Het is óók precies het type bevinding dat monitoring-tools missen, omdat ze in isolatie correct lijken: een witness bestaat, een Live Migration-netwerk is geconfigureerd, CSV-ownership is valide. De drift zit in de relatie tussen instellingen, en de enige betrouwbare manier om dat boven water te krijgen is een gestructureerd extern onderzoek.</p>
-        <p>Herken je drie of meer issues hierboven? Je staat niet alleen, en de fix kost meestal niet meer dan één wekelijks onderhoudsvenster.</p>
+        <p>Negen van deze tien bevindingen hebben niets met workload-performance te maken. Het is stille configuration debt die zich opbouwt over patch-cycli, hardware-refreshes en personeelswissels. Het is óók precies het type bevinding dat monitoring-tools missen, omdat ze in isolatie correct lijken: een witness bestaat, een Live Migration-netwerk is geconfigureerd, CSV-ownership is valide. De drift zit in de relatie tussen instellingen en de enige betrouwbare manier om dat boven water te krijgen is een gestructureerd extern onderzoek.</p>
+        <p>Herken je drie of meer issues hierboven? Je staat niet alleen en de fix kost meestal niet meer dan één wekelijks onderhoudsvenster.</p>
         <p><a href="../book.html"><strong>Plan een Hyper-V Cluster Health Check kennismaking →</strong></a></p>
 
         <div class="faq-block">
@@ -350,7 +349,7 @@ Get-PhysicalDisk | Group-Object MediaType, OperationalStatus, FirmwareVersion</c
           <p>Een typische opdracht voor een cluster tot acht nodes duurt twee tot drie werkdagen: één dag inventarisatie via PowerShell-scripts die de klant zelf uitvoert, één dag analyse, een halve dag rapportage en presentatie.</p>
 
           <div class="faq-q">Heeft een Health Check impact op productie?</div>
-          <p>De inventarisatie-scripts zijn read-only en draaien zonder impact tijdens kantoortijden. De optionele <code>Test-Cluster</code> validatie kan ook op een productiecluster veilig worden uitgevoerd wanneer de storage-tests worden overgeslagen, of wanneer een aparte test-LUN beschikbaar is die niet door een clusterrol wordt gebruikt. Een volledige storage-validatie op productie-CSV's vereist dat die CSV's tijdelijk offline worden genomen voor de duur van de test, en dat plannen wij altijd buiten kantoortijden, in overleg met de klant.</p>
+          <p>De inventarisatie-scripts zijn read-only en draaien zonder impact tijdens kantoortijden. De optionele <code>Test-Cluster</code> validatie kan ook op een productiecluster veilig worden uitgevoerd wanneer de storage-tests worden overgeslagen, of wanneer een aparte test-LUN beschikbaar is die niet door een clusterrol wordt gebruikt. Een volledige storage-validatie op productie-CSV's vereist dat die CSV's tijdelijk offline worden genomen voor de duur van de test en dat plannen wij altijd buiten kantoortijden, in overleg met de klant.</p>
 
           <div class="faq-q">Wat is het verschil tussen een Health Check en een audit?</div>
           <p>Een Health Check is technisch en gericht op operationele stabiliteit, performance en supportability. Een audit is breder en raakt vaak ook security en compliance. Wij doen Health Checks; voor audits werken we samen met partners.</p>
@@ -377,7 +376,7 @@ Get-PhysicalDisk | Group-Object MediaType, OperationalStatus, FirmwareVersion</c
 </section>
 </main>
 
-<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><a href="/healthcheck/">De HealthCheck</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/tarieven/">Tarieven</a><a href="/partners/">Voor partners</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/vragen/">Veelgestelde vragen</a><a href="/onderwerpen/">Onderwerpen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Gratis script aanvragen</a><a href="/afspraak/#agenda">Afspraak maken</a><a href="/contact/#bericht">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy/">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/voorwaarden/">Algemene voorwaarden</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
 
 
 <script>
@@ -386,6 +385,6 @@ Get-PhysicalDisk | Group-Object MediaType, OperationalStatus, FirmwareVersion</c
   if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
 })();
 </script>
-<script src="/huisstijl/pagina.js"></script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
 </body>
 </html>

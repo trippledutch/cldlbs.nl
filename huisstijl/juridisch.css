@@ -1,0 +1,102 @@
+/* CloudLabs · juridisch.css · de privacyverklaring
+   ==========================================================================
+   Een juridische pagina leest anders dan de rest van de site: geen banden,
+   geen beeld, geen slotknop. Eén kolom, ruime tussenkoppen en een tabel die
+   precies leesbaar is. Dat is ook waarom hier geen .cta onder staat; een
+   verkoopblok onder een privacyverklaring hoort er niet.
+
+   De maat 760 is de leesbreedte van deze site (zie .tekstkolom in pagina.css),
+   iets smaller genomen omdat de regels hier langer en zakelijker zijn. */
+.juridisch{max-width:760px}
+.juridisch h2{
+  font-family:var(--serif);font-weight:400;font-size:29px;line-height:1.15;
+  letter-spacing:-.015em;color:var(--ink);
+  margin:56px 0 18px;padding-top:26px;border-top:1px solid var(--rule);
+}
+.juridisch h2:first-of-type{margin-top:8px}
+.juridisch h3{
+  font-family:var(--sans);font-weight:600;font-size:17px;color:var(--ink);
+  margin:36px 0 12px;
+}
+.juridisch p{font-family:var(--serif);font-size:17px;line-height:1.7;color:var(--dim);margin:0 0 18px}
+.juridisch ul{margin:0 0 18px;padding-left:22px}
+.juridisch li{font-family:var(--serif);font-size:17px;line-height:1.7;color:var(--dim);margin:0 0 9px}
+.juridisch strong{color:var(--ink);font-weight:600}
+.juridisch a{color:var(--accent)}
+
+/* De cookietabel. De namen van de cookies zijn code en staan in de mono. */
+.cookietabel{width:100%;border-collapse:collapse;margin:6px 0 22px}
+.cookietabel th{
+  font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--faint);font-weight:400;text-align:left;
+  padding:0 14px 12px 0;border-bottom:1px solid var(--rule);
+}
+.cookietabel td{
+  font-family:var(--sans);font-size:15px;line-height:1.5;color:var(--dim);
+  padding:15px 14px 15px 0;border-bottom:1px solid var(--rule);vertical-align:top;
+}
+.cookietabel tr:last-child td{border-bottom:0}
+.cookietabel td:first-child{font-family:var(--mono);font-size:13px;color:var(--ink);white-space:nowrap}
+
+@media(max-width:700px){
+  .juridisch h2{font-size:25px;margin-top:44px}
+  .juridisch p,.juridisch li{font-size:16px}
+  /* Geen kolom verbergen: welk cookie waarvoor dient is juist wat hier
+     gelezen moet worden. De cellen breken af en de tabel wordt smaller. */
+  .cookietabel th,.cookietabel td{padding-right:10px;font-size:13px}
+  /* "BEWAARTERMIJN" is één woord dat niet kan afbreken; op deze breedte liep
+     hij de tabel uit. Kleiner en met minder spatiëring past hij wel. */
+  .cookietabel th{font-size:9.5px;letter-spacing:.04em}
+  /* cl_consent heeft geen breekpunt; afbreken op de letter maakt het
+     onleesbaar. Kleiner zetten past wel binnen de kolom. */
+  .cookietabel td:first-child{font-size:12px}
+}
+
+/* ---- de voorwaardenlijst -------------------------------------------------
+   Term en uitleg horen bij elkaar, dus een <dl> en geen tabel: het is een
+   begrippenlijst en geen vergelijking. */
+/* .breed haalt de leeskolom eraf. Lopende tekst blijft op 760 staan, want
+   daar telt de regellengte; een begrippenlijst niet. Term links, uitleg
+   rechts, over de volle breedte, net als de tabellen op /tarieven/ en
+   /modules/.
+
+   Elk paar staat in een eigen <div> binnen de <dl>. Dat mag in HTML5 en het is
+   hier nodig: met dt en dd los in een raster kreeg elke kolom zijn eigen
+   streep, en die liepen niet gelijk. Nu is er per paar een doorlopende lijn
+   over de volle breedte. */
+.juridisch.breed{max-width:none}
+.voorwaarden{margin:0}
+.voorwaarden > div{
+  display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);
+  column-gap:48px;padding:26px 0;border-top:1px solid var(--rule);
+}
+.voorwaarden > div:first-child{padding-top:0;border-top:0}
+.voorwaarden dt{font-family:var(--sans);font-weight:600;font-size:17px;color:var(--ink)}
+.voorwaarden dd{
+  font-family:var(--serif);font-size:17px;line-height:1.7;color:var(--dim);
+  margin:0;max-width:70ch;
+}
+@media(max-width:760px){
+  /* onder deze breedte is twee kolommen geen winst meer: de term komt boven
+     de uitleg te staan */
+  .voorwaarden > div{display:block}
+  .voorwaarden dd{margin-top:10px}
+  .voorwaarden dt,.voorwaarden dd{font-size:16px}
+}
+}
+
+/* ---- de genummerde bepalingen --------------------------------------------
+   Algemene voorwaarden worden gelezen om er één bepaling in terug te vinden,
+   niet om ze door te lezen. Daarom een nummer per lid en lucht ertussen.
+   De nummering is die van de <ol> zelf; een eigen teller erbij gaf twee
+   nummers naast elkaar. */
+.bepalingen{margin:0 0 6px;padding-left:26px}
+.bepalingen li{
+  font-family:var(--serif);font-size:17px;line-height:1.7;color:var(--dim);
+  margin:0 0 14px;padding-left:8px;
+}
+.bepalingen li::marker{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.juridisch h2{scroll-margin-top:96px}
+@media(max-width:700px){
+  .bepalingen li{font-size:16px}
+}

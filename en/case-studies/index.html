@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- LET OP: noindex staat aan zolang de meetwaarden in de voorbeelden nog
+     invulvelden zijn (klasse .invul). Zodra Hans de echte waarden heeft
+     aangeleverd: deze ene regel verwijderen en de pagina in sitemap.xml zetten. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>Case studies &middot; findings from real clusters &middot; CloudLabs</title>
+<meta name="description" content="Three engagements, anonymised, with the measured values that proved the findings and the outcome.">
+<link rel="canonical" href="https://cldlbs.com/en/case-studies/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://cldlbs.com/en/case-studies/">
+<meta property="og:title" content="Case studies &middot; findings from real clusters &middot; CloudLabs">
+<meta property="og:description" content="What a measurement finds in Hyper-V, Failover Cluster and Azure Local environments. Anonymised, but with the measured values included.">
+<link rel="alternate" hreflang="nl" href="https://cldlbs.com/praktijkvoorbeelden/">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/case-studies/">
+<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/praktijkvoorbeelden/">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<style>
+  /* ---- praktijkvoorbeelden: alleen wat pagina.css nog niet heeft -----------
+     Geen nieuwe kleuren. Alles hieronder gebruikt de tokens uit pagina.css. */
+
+  /* Het directe antwoord. Staat bewust in de eerste schermvulling: taalmodellen
+     citeren overwegend uit het eerste derde deel van een pagina. Een lezer
+     die doorklikt wil hier bovendien meteen weten wat hij krijgt. */
+  /* Geen gekleurd samenvattingskader: dat is de vorm van een blogbericht.
+     Een rapport zet de inleiding gewoon groter en laat hem verder met rust. */
+  .antwoord{max-width:none;margin:0;text-align:center}
+  .antwoord p{font-family:var(--serif);font-size:22px;line-height:1.5;color:var(--ink);margin:0;text-wrap:pretty}
+  .antwoord p+p{margin-top:18px;font-size:18px;line-height:1.65;color:var(--dim)}
+
+  .cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:18px}
+  .case{background:var(--surface);border:1px solid var(--rule);border-radius:8px;
+        padding:30px 28px 0;display:flex;flex-direction:column;text-decoration:none;color:inherit;
+        transition:border-color .2s,transform .2s}
+  .case:hover{border-color:var(--accent);transform:translateY(-3px)}
+  .case-meta{font-family:var(--mono);font-size:10px;letter-spacing:.13em;text-transform:uppercase;
+             color:var(--faint);display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:20px}
+  .case-meta b{font-weight:400;border:1px solid var(--rule);border-radius:3px;padding:4px 8px;color:var(--dim)}
+  .case h3{font-family:var(--serif);font-weight:400;font-size:25px;line-height:1.22;margin:0 0 14px}
+  .case>p{font-size:15px;line-height:1.55;color:var(--dim);margin:0 0 22px}
+  .case .verder{margin-top:auto;font-size:13px;font-weight:600;color:var(--accent);
+                padding:18px 0;border-top:1px solid var(--rule)}
+
+  /* De meetregel. Mono betekent machinewaarde: hier staat wat er gemeten is,
+     niet wat erover gezegd wordt. Dit is het onderdeel dat een voorbeeld
+     onderscheidt van een verkoopverhaal. */
+  .meetregel{font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--ink);
+             background:var(--sunk);border:1px solid var(--rule);border-radius:6px;
+             padding:14px 16px;margin:0 0 22px;font-variant-numeric:tabular-nums}
+  .meetregel span{display:block;color:var(--faint);font-size:10px;letter-spacing:.13em;
+                  text-transform:uppercase;margin-bottom:7px}
+
+  /* Risicochips. Waarden uit Styles.json; KRITIEK is zwart met ring. */
+  .risico{font-family:var(--mono);font-size:10px;letter-spacing:.1em;font-weight:500;
+          border-radius:3px;padding:4px 8px;color:#fff}
+  .risico[data-r="crit"]{background:var(--crit);border:1px solid var(--crit-ring)}
+  .risico[data-r="high"]{background:var(--high)}
+  .risico[data-r="med"] {background:var(--med)}
+  .risico[data-r="low"] {background:var(--low)}
+
+  /* Invulveld: een waarde die Hans nog moet aanleveren. Opzettelijk lelijk,
+     zodat deze pagina niet per ongeluk live gaat met een lege bewering erin. */
+  .invul{background:#FFF4E6;border:1px dashed var(--med);border-radius:3px;
+         padding:1px 6px;color:#8A4B08;font-style:normal}
+
+  .case.uitnodiging{background:var(--sunk);border-style:dashed;padding-bottom:30px}
+  .case.uitnodiging .verder{border-top:0;padding-bottom:0}
+
+  
+  .vraag{border-top:1px solid var(--rule);padding:30px 0}
+  .vraag:last-child{border-bottom:1px solid var(--rule)}
+  
+  
+  
+
+  @media(max-width:var(--kolom)){
+    .antwoord p{font-size:19px}
+    .case{padding:24px 22px 0}.case h3{font-size:22px}
+  }
+
+  /* ---- veelgestelde vragen ------------------------------------------------
+     Kop en knoppen links, de vragen rechts als uitklaplijst. Gebouwd op
+     <details> en <summary>, zodat openklappen werkt zonder JavaScript en met
+     het toetsenbord bedienbaar blijft. */
+  .faq-blok{display:grid;grid-template-columns:.9fr 1.1fr;gap:60px;align-items:start;text-align:left}
+  .faq-kop h2{font-family:var(--serif);font-weight:400;font-size:clamp(32px,3.4vw,46px);margin:0 0 18px;text-align:left}
+  .faq-kop .eyebrow{justify-content:flex-start}
+  .faq-kop .lead{margin:0 0 26px;max-width:34ch}
+  .faq-lijst{display:grid;gap:12px}
+  .faq-item{background:var(--sunk);border:1px solid var(--rule);border-radius:10px;transition:border-color .18s}
+  .faq-item[open]{border-color:var(--accent);background:var(--surface)}
+  .faq-item summary{
+    list-style:none;cursor:pointer;display:flex;gap:20px;align-items:flex-start;
+    justify-content:space-between;padding:20px 24px;font-family:var(--sans);
+    font-weight:600;font-size:16px;color:var(--ink);transition:color .2s;
+  }
+  .faq-item summary::-webkit-details-marker{display:none}
+  .faq-item summary:after{content:"+";font-weight:400;font-size:21px;line-height:1;color:var(--accent);flex:none}
+  .faq-item[open] summary:after{content:"\2212"}
+  .faq-item summary:hover{color:var(--accent)}
+  .faq-antwoord{overflow:hidden}
+  .faq-tekst{padding:0 24px 22px}
+  .faq-tekst p{font-family:var(--serif);font-size:16px;line-height:1.62;color:var(--dim);margin:0 0 12px}
+  .faq-tekst p:last-child{margin-bottom:0}
+  @media(max-width:900px){
+    .faq-blok{grid-template-columns:1fr;gap:34px}
+    .faq-kop .lead{max-width:none}
+  }
+
+  /* Verder lezen. De vier onderwerpen stonden in ongelijke grijze dozen met een
+     gegenereerde foto op de eerste; dat laatste sluit de briefing uit en de
+     eerste maakte de rij scheef. Nu vier gelijke kolommen, alleen typografie:
+     een streep bovenaan die op de accentkleur springt, het onderwerp in mono en
+     de titel in serif. Dezelfde taal als de inhoudsopgave van een artikel. */
+  .leesverder{display:grid;grid-template-columns:repeat(4,1fr);gap:0 26px}
+  .leesverder a{display:flex;flex-direction:column;text-decoration:none;color:inherit;
+                border-top:2px solid var(--ink);padding:18px 0 4px;transition:border-color .2s}
+  .leesverder a:hover{border-top-color:var(--accent)}
+  .leesverder span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.15em;
+                   text-transform:uppercase;color:var(--faint);margin:0 0 14px}
+  .leesverder h3{font-family:var(--serif);font-weight:400;font-size:23px;line-height:1.22;
+                 margin:0 0 18px;letter-spacing:-.008em;color:var(--ink)}
+  .leesverder a:hover h3{color:var(--accent)}
+  .leesverder b{margin-top:auto;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+                font-weight:400;color:var(--faint);transition:color .2s}
+  .leesverder a:hover b{color:var(--accent)}
+  @media(max-width:1040px){ .leesverder{grid-template-columns:repeat(2,1fr);gap:34px 26px} }
+  @media(max-width:620px){  .leesverder{grid-template-columns:1fr;gap:26px} }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"Organization",
+      "@id":"https://cldlbs.com/#organisatie",
+      "name":"CloudLabs",
+      "url":"https://cldlbs.com/",
+      "email":"hans.vredevoort@cldlbs.com",
+      "description":"CloudLabs measures Hyper-V, Failover Cluster and Azure Local environments with a read-only script and delivers the result as a findings report.",
+      "founder":{
+        "@type":"Person",
+        "@id":"https://cldlbs.com/about.html#hans",
+        "name":"Hans Vredevoort",
+        "jobTitle":"Cluster- en virtualisatiespecialist",
+        "description":"Forty years of Windows Server. Over ten years a Microsoft MVP for Failover Clustering and Cloud & Datacenter Management, co-founder of Hyper-V.nu and co-author of Private Cloud Computing.",
+        "knowsAbout":["Hyper-V","Failover Clustering","Azure Local","Storage Spaces Direct","Windows Server"]
+      }
+    },
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://cldlbs.com/"},
+        {"@type":"ListItem","position":2,"name":"Praktijkvoorbeelden","item":"https://cldlbs.com/praktijkvoorbeelden/"}
+      ]
+    },
+    {
+      "@type":"CollectionPage",
+      "@id":"https://cldlbs.com/praktijkvoorbeelden/#pagina",
+      "url":"https://cldlbs.com/praktijkvoorbeelden/",
+      "name":"Praktijkvoorbeelden · CloudLabs",
+      "inLanguage":"nl-NL",
+      "isPartOf":{"@id":"https://cldlbs.com/#organisatie"},
+      "about":["Hyper-V","Failover Cluster","Azure Local","Storage Spaces Direct"],
+      "mainEntity":{
+        "@type":"ItemList",
+        "name":"Geanonimiseerde praktijkvoorbeelden uit CloudLabs-metingen",
+        "numberOfItems":3,
+        "itemListOrder":"https://schema.org/ItemListUnordered",
+        "itemListElement":[
+          {"@type":"ListItem","position":1,
+           "url":"https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html",
+           "name":"Six nodes, two firmware versions: firmware drift and CSV owner imbalance in a production cluster"},
+          {"@type":"ListItem","position":2,
+           "url":"https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html",
+           "name":"Quorum in a stretch cluster, found before the rolling upgrade started"},
+          {"@type":"ListItem","position":3,
+           "url":"https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html",
+           "name":"Three NIC models taken off the order list before the purchase of a Storage Spaces Direct cluster"}
+        ]
+      }
+    },
+    {
+      "@type":"FAQPage",
+      "@id":"https://cldlbs.com/praktijkvoorbeelden/#vragen",
+      "mainEntity":[
+        {"@type":"Question","name":"Why are there no customer names with these case studies?",
+         "acceptedAnswer":{"@type":"Answer","text":"Because a cluster finding tells where an organisation was vulnerable. Anyone who sees their quorum configuration or a firmware version below the required level in a report does not want that sentence on the internet with their name next to it. CloudLabs therefore publishes sector, size, environment type and the measured values. No customer name, no cluster name and no address. A reference call is possible: then the customer explains themselves what was going on, to someone who works with a comparable environment."}},
+        {"@type":"Question","name":"Are the measured values in these examples real?",
+         "acceptedAnswer":{"@type":"Answer","text":"Yes. The sector, the size of the cluster, the type of environment, the findings and the outcome come unchanged from the measurement. Only what is traceable to the organisation has been replaced: customer name, cluster name, host names, IP addresses and exact dates. Where a node name is needed to understand the finding, a replacement name is used. That is stated with the example."}},
+        {"@type":"Question","name":"Can I speak to a previous customer?",
+         "acceptedAnswer":{"@type":"Answer","text":"Yes, on request. We put you in touch with a customer in a comparable environment: the same type of cluster, roughly the same size, preferably the same storage form. That runs through the customer and not around them; they are asked first whether they are willing."}},
+        {"@type":"Question","name":"Hoe weet ik of mijn cluster dezelfde problemen heeft?",
+         "acceptedAnswer":{"@type":"Answer","text":"You do not know that from an example. That is exactly the point: firmware drift, lopsided CSV ownership and deviating PFC classes are not visible in Failover Cluster Manager and give no warning. They emerge from a measurement. The free Cluster Triage only reads your environment and gives the five heaviest signals; the base measurement gives the complete picture."}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Secure the evidence first.</span><a href="/en/triage/#aanvraag">Start free triage &rarr;</a><button type="button" aria-label="Close" id="close-announcement">&times;</button></div>
+
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="/en/" hreflang="en"><b>Cloud<span>Labs</span></b><small>Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-the-healthcheck">The HealthCheck</button><div class="navmenu" id="nav-the-healthcheck"><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div></div><a href="/en/rates/">Rates</a><a href="/en/blog/">Blog</a><div class="navgroep" data-hier="ja"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-knowledge-base">Knowledge base</button><div class="navmenu" id="nav-knowledge-base"><a href="/en/faq/">FAQ</a><a href="/en/case-studies/" aria-current="page">Case studies</a><a href="/en/topics/">Topics</a></div></div><a href="/en/about/">About us</a></div><div class="nav-actions">
+      <span class="taalwissel"><a href="/praktijkvoorbeelden/" hreflang="nl" lang="nl">NL</a><span aria-current="true">EN</span></span>
+      <a class="btn primary" href="/en/triage/#aanvraag">Start free triage</a>
+      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+  <!-- ================= kop + direct antwoord ================= -->
+  <section class="section" style="padding-bottom:0">
+    <div class="inner">
+      <div class="section-head" style="max-width:var(--kolom)">
+        <p class="eyebrow">Case studies</p>
+        <h1 style="font-family:var(--serif);font-weight:400;font-size:clamp(38px,5vw,58px);line-height:1.06;letter-spacing:-.02em;margin:0 0 22px">
+          What a measurement finds<br>in a cluster that is doing fine
+        </h1>
+        <p class="lead">Anonymised, because it concerns someone else’s environment. With the measured values included, because without those values it is not a finding but an opinion.</p>
+      </div>
+
+      <div class="antwoord">
+        <p>CloudLabs measures Hyper-V, Failover Cluster and Azure Local environments with a read-only PowerShell script and records the result in a findings report. In the examples below four things come back most often: firmware and driver versions that differ per node, Cluster Shared Volume ownership that sits lopsided, quorum and witness configurations that would not survive a second site, and RDMA settings that do not match between host and switch.</p>
+        <p>None of these four gives a warning in Failover Cluster Manager. All four are visible in a measurement. Each example below names the measured value, the node involved and the moment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= drie getallen ================= -->
+  <section class="section" style="padding-top:90px;padding-bottom:90px">
+    <div class="inner">
+      <div class="benefits">
+        <article class="benefit">
+          <span class="icon" style="font-family:var(--serif);font-size:46px;line-height:1">324</span>
+          <h3>Findings in the catalogue</h3>
+          <p>Written out, with the measured value that proves the finding and the action that follows from it. The examples on this page come from there.</p>
+        </article>
+        <article class="benefit">
+          <span class="icon" style="font-family:var(--serif);font-size:46px;line-height:1">6</span>
+          <h3>Steps between measurement and document</h3>
+          <p>Step 4 is a check that holds the report back: a finding without measured values does not get through. Nor does a text that would fit in any report whatsoever.</p>
+        </article>
+        <article class="benefit">
+          <span class="icon" style="font-family:var(--serif);font-size:46px;line-height:1">0</span>
+          <h3>Changes to the cluster</h3>
+          <p>The measurement only reads. No agent, no installation, no passwords. What you read below was found, not caused.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= wat er wel en niet in staat ================= -->
+  <section class="scope">
+    <div class="scope-inner">
+      <div class="section-head">
+        <p class="eyebrow">The anonymisation</p>
+        <h2 style="font-family:var(--serif);font-weight:400">What we publish and what never</h2>
+        <p class="lead">A case study is only usable once you know what has been taken out of it. That is why it stands here and not in a footnote.</p>
+      </div>
+      <div class="scope-grid">
+        <div class="scope-card">
+          <h3>What is in it</h3>
+          <ul>
+            <li>Sector, with the size and shape of the cluster: number of nodes, storage form, number of sites.</li>
+            <li>The findings as they stood in the report, with risk level.</li>
+            <li>The measured value that proves the finding and the value that was required.</li>
+            <li>What could not be measured, with the reason included.</li>
+            <li>What was repaired and what the customer left alone.</li>
+          </ul>
+        </div>
+        <div class="scope-card no">
+          <h3>What is never in it</h3>
+          <ul>
+            <li>The name of the organisation and the name of the cluster.</li>
+            <li>Host names, IP addresses, serial numbers and licence data.</li>
+            <li>The exact date. A month is given, or a quarter.</li>
+            <li>Anything by which the environment can be found or reached.</li>
+            <li>A logo or a quote the customer did not give permission for.</li>
+          </ul>
+        </div>
+      </div>
+      <p style="max-width:var(--max);margin:26px auto 0;font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--faint)">
+        Node names have been replaced by NODE01 to NODE06. Where a replaced name appears in a finding, that is stated with the example.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= de voorbeelden ================= -->
+  <section class="section pattern">
+    <div class="inner">
+      <div class="section-head">
+        <p class="eyebrow">Three measurements</p>
+        <h2 style="font-family:var(--serif);font-weight:400">From practice</h2>
+        <p class="lead">Each example starts with what the customer thought was going on and ends with what was measured.</p>
+      </div>
+
+      <div class="cases">
+
+        <!-- ---- 01 ---- -->
+        <a class="case" href="/en/case-study/firmware-drift-and-csv-owner-imbalance/">
+          <div class="case-meta">
+            <span class="risico" data-r="high">HIGH</span>
+            <b>Financial services</b>
+            <b>6-node Hyper-V</b>
+          </div>
+          <h3>Six nodes, two firmware versions</h3>
+          <p>The cluster had run for three years without a structured review. The customer reported slow storage and could not put a finger on it. The measurement found two hosts on a build with a known NVMe regression and CSV ownership that sat lopsided.</p>
+          <div class="meetregel">
+            <span>Measured</span>
+            NODE03, NODE05 &middot; firmware <i class="invul">build number</i><br>
+            NODE01, 02, 04, 06 &middot; firmware <i class="invul">build number</i><br>CSV ownership ·<i class="invul">n</i> of 6 volumes op één node
+          </div>
+          <div class="verder">Read the example &rarr;</div>
+        </a>
+
+        <!-- ---- 02 ---- -->
+        <a class="case" href="/en/case-study/quorum-stretch-cluster-for-rolling-upgrade/">
+          <div class="case-meta">
+            <span class="risico" data-r="crit">CRITICAL</span>
+            <b>Healthcare</b>
+            <b>Two sites</b>
+          </div>
+          <h3>A quorum that would not survive the second site</h3>
+          <p>A hospital group planned a rolling upgrade from Windows Server 2019 to 2022 while keeping clinical systems available, and wanted an independent judgement on the order. The measurement looked at something else first.</p>
+          <div class="meetregel">
+            <span>Measured</span>
+            Witness &middot; <i class="invul">type and location</i><br>Vote distribution across sites ·<i class="invul">n</i> / <i class="invul">n</i><br>
+            Outcome on loss of site B · <i class="invul">finding</i>
+          </div>
+          <div class="verder">Read the example &rarr;</div>
+        </a>
+
+        <!-- ---- 03 ---- -->
+        <a class="case" href="/en/case-study/hardware-and-rdma-for-storage-spaces-direct/">
+          <div class="case-meta">
+            <span class="risico" data-r="high">HIGH</span>
+            <b>Logistics</b>
+            <b>SAN &rarr; Storage Spaces Direct</b>
+          </div>
+          <h3>Three NIC models, taken off the order list</h3>
+          <p>Forty virtual machines on ageing SAN-based Hyper-V, with a hardware replacement coming. There was no in-house knowledge of Storage Spaces Direct. The measurement was about the order list, before the purchase order.</p>
+          <div class="meetregel">
+            <span>Measured</span>
+            NIC models against the HCL · <i class="invul">n</i>of<i class="invul">n</i>rejected<br>PFC classes host and switch ·<i class="invul">finding</i><br>Migration<i class="invul">n</i> VM&rsquo;s, dataverlies 0
+          </div>
+          <div class="verder">Read the example &rarr;</div>
+        </a>
+
+        <!-- ---- uitnodiging ---- -->
+        <div class="case uitnodiging">
+          <div class="case-meta"><b>Your environment</b></div>
+          <h3>What is in your cluster you only know after a measurement</h3>
+          <p>The free Cluster Triage only reads your environment and gives the five heaviest signals around an incident window: with measured value, node and time. No installation, no change, no subscription attached.</p>
+          <div class="verder">
+            <a class="btn primary" href="/en/triage/" style="width:fit-content">Start free Cluster Triage &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= vragen ================= -->
+  <section class="section" id="vragen" style="background:var(--surface)">
+  <div class="inner">
+    <div class="faq-blok">
+      <div class="faq-kop">
+        <p class="eyebrow">Questions about these examples</p>
+        <h2>What you rightly ask of this</h2>
+        <p class="lead">All answers are on the frequently asked questions page. If your question is not there, write to us.</p>
+        <div class="actions">
+          <a class="btn dark" href="/en/faq/">All frequently asked questions</a>
+          <a class="btn" href="/en/contact/">hans.vredevoort@cldlbs.com</a>
+        </div>
+      </div>
+      <div class="faq-lijst">
+      <details class="faq-item">
+        <summary>Why are there no customer names with these case studies?</summary>
+        <div class="faq-antwoord"><div class="faq-tekst"><p>Because a cluster finding tells where an organisation was vulnerable. Anyone who sees their quorum configuration or a firmware version below the required level in a report does not want that sentence on the internet with their name next to it.</p>
+          <p>CloudLabs therefore publishes sector, size, environment type and the measured values. No customer name, no cluster name and no address. A reference call is possible: then the customer explains it themselves, to someone who works with a comparable environment.</p></div></div>
+      </details>
+      <details class="faq-item">
+        <summary>Are the measured values in these examples real?</summary>
+        <div class="faq-antwoord"><div class="faq-tekst"><p>Yes. The sector, the size of the cluster, the type of environment, the findings and the outcome come unchanged from the measurement. Only what is traceable to the organisation has been replaced: customer name, cluster name, host names, IP addresses and exact dates.</p>
+          <p>Where a node name is needed to understand the finding, a replacement name is used. That is stated with the example.</p></div></div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I speak to a previous customer?</summary>
+        <div class="faq-antwoord"><div class="faq-tekst"><p>Yes, on request. We put you in touch with a customer in a comparable environment: the same type of cluster, roughly the same size, preferably the same storage form. That runs through the customer and not around them; they are asked first whether they are willing.</p></div></div>
+      </details>
+      <details class="faq-item">
+        <summary>How do I know whether my cluster has the same problems?</summary>
+        <div class="faq-antwoord"><div class="faq-tekst"><p>You do not know that from an example. That is exactly the point. Firmware drift, lopsided CSV ownership and deviating PFC classes are not visible in Failover Cluster Manager and give no warning. They emerge from a measurement.</p>
+          <p>The free <a href="/en/triage/" style="color:var(--accent)">Cluster Triage</a> gives the five heaviest signals around an incident window. The base measurement gives the complete picture, with <a href="/en/report/" style="color:var(--accent)">findings report</a> and a one-hour review.</p></div></div>
+      </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- ================= verder lezen ================= -->
+  <section class="section" id="kennis" style="background:var(--surface)">
+    <div class="inner">
+      <div class="section-head" style="text-align:left;margin-left:0;max-width:var(--kolom)">
+        <p class="eyebrow" style="justify-content:flex-start">Background to these findings</p>
+        <h2 style="font-family:var(--serif);font-weight:400">The explanation behind the examples</h2>
+        <p class="lead" style="margin:0">Each example above touches on a finding that occurs more often. These four articles explain why it goes wrong.</p>
+      </div>
+      <div class="leesverder">
+        <a href="/en/blog/csv-ownership-imbalance/">
+          <span>Storage</span><h3>Why CSV ownership ends up lopsided</h3><b>Read &rarr;</b>
+        </a>
+        <a href="/en/blog/cluster-witness-comparison/">
+          <span>Quorum</span><h3>Which witness suits which cluster</h3><b>Read &rarr;</b>
+        </a>
+        <a href="/en/blog/top-10-hyper-v-cluster-issues/">
+          <span>Findings</span><h3>The ten most common cluster problems</h3><b>Read &rarr;</b>
+        </a>
+        <a href="/en/blog/san-vs-s2d-vs-azure-local-hyper-v-storage/">
+          <span>Storage form</span><h3>SAN, S2D or Azure Local</h3><b>Read &rarr;</b>
+        </a>
+      </div>
+      <p style="margin:38px 0 0"><a class="btn" href="/en/blog/">All articles in the knowledge base &rarr;</a></p>
+    </div>
+  </section>
+
+  <!-- ================= cta ================= -->
+  <section class="cta">
+  <div class="inner">
+    <p class="eyebrow" style="justify-content:center">Your own cluster</p>
+    <h2>What would a measurement<br>find at your site?</h2>
+    <p>The free Cluster Triage only reads and changes nothing. You receive the five heaviest signals around your incident window, with the measured value, the node and the time.</p>
+    <div class="actions">
+      <a class="btn primary" data-icon="script" href="/en/triage/">Start free Cluster Triage &rarr;</a>
+      <a class="btn ghost" data-icon="rapport" href="/en/report/">See the report</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Services</h4><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div><div class="footer-column"><h4>Organisation</h4><a href="/en/about/">About us</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/rates/">Rates</a><a href="/en/partners/">For partners</a></div><div class="footer-column"><h4>Knowledge base</h4><a href="/en/blog/">Blog</a><a href="/en/case-studies/">Case studies</a><a href="/en/blog/top-10-hyper-v-cluster-issues/">Failures and causes</a><a href="/en/blog/cluster-witness-comparison/">Quorum and witness</a><a href="/en/blog/san-vs-s2d-vs-azure-local-hyper-v-storage/">Storage and Storage Spaces Direct</a><a href="/en/faq/">FAQ</a><a href="/en/topics/">Topics</a></div><div class="footer-column"><h4>Contact</h4><a href="/en/triage/#aanvraag">Request the free script</a><a href="/en/appointment/#agenda">Book a call</a><a href="/en/contact/#bericht">Get in touch</a></div><div class="newsletter"><h4>Technical findings by email</h4><form action="#" method="post"><label><span class="skip">Email address</span><input type="email" name="email" placeholder="name@company.com" autocomplete="email"></label><button type="submit">Subscribe</button></form><p>No marketing stream. Only new findings and practical explanation.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="Email"><img src="/assets/icons/email.svg" alt=""></a><a href="/en/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/en/">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/en/privacy/">Privacy statement</a><a href="/en/triage/#veilig">Security</a><a href="/en/terms/">Terms of engagement</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
+
+<script>
+(function(){
+  var c=document.getElementById('close-announcement');
+  if(c)c.onclick=function(){document.getElementById('announcement').remove()};
+  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
+  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
+})();
+</script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
+</body>
+</html>

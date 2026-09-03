@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- LET OP: noindex staat aan zolang de waarden met klasse .invul nog
+     invulvelden zijn. Zodra Hans de echte meetwaarden heeft aangeleverd:
+     deze regel verwijderen, de datums in het schema bijwerken en de URL
+     opnemen in sitemap.xml. -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>Quorum in a stretch cluster &middot; case study &middot; CloudLabs</title>
+<meta name="description" content="Two datacenter sites, a rolling upgrade to Windows Server 2022. The vote distribution would not have survived the loss of site B.">
+<link rel="canonical" href="https://cldlbs.com/en/case-study/quorum-stretch-cluster-for-rolling-upgrade/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://cldlbs.com/en/case-study/quorum-stretch-cluster-for-rolling-upgrade/">
+<meta property="og:title" content="Quorum in a stretch cluster &middot; case study &middot; CloudLabs">
+<meta property="og:description" content="A hospital group planned a rolling upgrade from Windows Server 2019 to 2022 across two sites. The measurement found a vote distribution that would not have survived the loss of the second site.">
+<link rel="alternate" hreflang="nl" href="https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/case-study/quorum-stretch-cluster-for-rolling-upgrade/">
+<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/bevinding.css?v=8d065ab5">
+<link rel="stylesheet" href="/huisstijl/voorbeeld.css?v=81befd8f">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://cldlbs.com/"},
+        {"@type":"ListItem","position":2,"name":"Praktijkvoorbeelden","item":"https://cldlbs.com/praktijkvoorbeelden/"},
+        {"@type":"ListItem","position":3,"name":"Quorum in a stretch cluster","item":"https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html"}
+      ]
+    },
+    {
+      "@type":"Article",
+      "@id":"https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html#artikel",
+      "headline":"A quorum that would not survive the second site, found before the rolling upgrade started",
+      "description":"A hospital group with two datacenter sites planned a rolling upgrade from Windows Server 2019 to 2022. The measurement looked at the quorum first and found a vote distribution that would not have survived the loss of site B.",
+      "inLanguage":"nl-NL",
+      "datePublished":"2026-09-01",
+      "dateModified":"2026-09-01",
+      "mainEntityOfPage":"https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html",
+      "genre":"Praktijkvoorbeeld",
+      "about":[
+        {"@type":"Thing","name":"Failover Clustering"},
+        {"@type":"Thing","name":"Quorum"},
+        {"@type":"Thing","name":"Cluster witness"},
+        {"@type":"Thing","name":"Windows Server"}
+      ],
+      "keywords":"quorum, witness, stretch cluster, multisite failover cluster, rolling upgrade, Windows Server 2019 2022, Hyper-V",
+      "author":{
+        "@type":"Person","@id":"https://cldlbs.com/about.html#hans","name":"Hans Vredevoort",
+        "jobTitle":"Cluster- en virtualisatiespecialist",
+        "knowsAbout":["Hyper-V","Failover Clustering","Azure Local","Storage Spaces Direct","Windows Server"],
+        "worksFor":{"@id":"https://cldlbs.com/#organisatie"}
+      },
+      "publisher":{"@type":"Organization","@id":"https://cldlbs.com/#organisatie","name":"CloudLabs","url":"https://cldlbs.com/"}
+    },
+    {
+      "@type":"FAQPage",
+      "@id":"https://cldlbs.com/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html#vragen",
+      "mainEntity":[
+        {"@type":"Question","name":"Why is quorum in a cluster across two sites harder than in a cluster at one site?",
+         "acceptedAnswer":{"@type":"Answer","text":"Because the question is not how many nodes fail, but which. A cluster with an even number of nodes spread across two sites has the same number of votes on both sides. If the link between the sites drops, neither half keeps a majority, unless a third vote stands elsewhere. If the witness sits at one of the two sites, the witness effectively decides which site may keep running: lose that site and the whole cluster stops. A witness belongs in a third place, separate from both datacenters."}},
+        {"@type":"Question","name":"Why does a rolling upgrade not check the quorum itself?",
+         "acceptedAnswer":{"@type":"Answer","text":"A cluster rolling upgrade from Windows Server 2019 to 2022 looks at the functional level of the cluster and at the nodes taking part, not at the question of whether the vote distribution survives the loss of a site. During the upgrade there is moreover always a node out of rotation, which makes the margin in the quorum smaller than normal. A configuration that just about holds in daily operation can, during the upgrade, be missing exactly the vote it needs."}},
+        {"@type":"Question","name":"How long does such a measurement take and does it affect production?",
+         "acceptedAnswer":{"@type":"Answer","text":"The collection script runs for about fifteen minutes from the customer management server over WinRM to the nodes. It only reads, installs nothing, processes no passwords and leaves nothing behind. No maintenance window is needed and production notices nothing of it."}}
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Secure the evidence first.</span><a href="/en/triage/#aanvraag">Start free triage &rarr;</a><button type="button" aria-label="Close" id="close-announcement">&times;</button></div>
+
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="/en/" hreflang="en"><b>Cloud<span>Labs</span></b><small>Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-the-healthcheck">The HealthCheck</button><div class="navmenu" id="nav-the-healthcheck"><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div></div><a href="/en/rates/">Rates</a><a href="/en/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-knowledge-base">Knowledge base</button><div class="navmenu" id="nav-knowledge-base"><a href="/en/faq/">FAQ</a><a href="/en/case-studies/">Case studies</a><a href="/en/topics/">Topics</a></div></div><a href="/en/about/">About us</a></div><div class="nav-actions">
+      <span class="taalwissel"><a href="/praktijkvoorbeeld/quorum-stretch-cluster-voor-rolling-upgrade.html" hreflang="nl" lang="nl">NL</a><span aria-current="true">EN</span></span>
+      <a class="btn primary" href="/en/triage/#aanvraag">Start free triage</a>
+      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+<article class="artikel">
+
+  <p class="kruimel"><a href="/.">CloudLabs</a> / <a href="/praktijkvoorbeelden">Case studies</a> / 02</p>
+
+  <div class="voorbeeldkop">
+    <p class="eyebrow">Case study 02 · base measurement</p>
+    <h1>A quorum that would not survive the second site</h1>
+    <div class="regel">
+      <b>Healthcare</b><i>&middot;</i>
+      <b>Two datacenter sites</b><i>&middot;</i>
+      <b>Failover Cluster</b><i>&middot;</i>
+      <b>Windows Server 2019 &rarr; 2022</b><i>&middot;</i>
+      <b>Baseline<span class="invul">quarter</span></b>
+    </div>
+  </div>
+
+  <div class="inleiding">
+    <p>A hospital group with two datacenter sites planned a rolling upgrade from Windows Server 2019 to 2022, keeping clinical systems available. An independent judgement was asked on the order of the upgrade. The measurement looked somewhere else first and found the heaviest finding there: the vote distribution across the two sites would not have survived the loss of site B. And during a rolling upgrade, with a node out of rotation each time, that margin was smaller still. The quorum was corrected before the first node was touched.</p>
+  </div>
+
+  <table class="meetgegevens">
+      <caption>Measurement data</caption>
+      <tbody>
+        <tr><th scope="row">Sites, with a shared vote distribution</th><td>2</td></tr>
+        <tr><th scope="row">Nodes out of rotation during the upgrade</th><td><span class="invul">n</span></td></tr>
+        <tr><th scope="row">Unplanned interruptions during the upgrade</th><td>0</td></tr>
+      </tbody>
+    </table>
+
+  <section class="deel">
+    <p class="deel-nr">01</p>
+    <div class="deel-tekst">
+      <h2>The situation</h2>
+  <p>Two datacenter sites, clinical systems that must not go down and an upgrade path that had to be walked once. The internal team had worked out the rolling upgrade themselves and wanted to know whether the order was right: which node first, how long between the steps and where the way back lay if a node did not come back.</p>
+  <p>That is a sensible question. It just was not the question that delivered the most. A rolling upgrade temporarily changes the composition of the cluster: there is a node out of rotation each time. Whether that is safe depends not on the order but on what remains if something else goes wrong during that period as well.</p>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">02</p>
+    <div class="deel-tekst">
+      <h2>The measurement</h2>
+  <p>The collection script ran from the management server over WinRM to all nodes at both sites: read-only, about fifteen minutes. The heaviest finding was not about the upgrade.</p>
+
+  <div class="bev crit">
+    <div class="bevkop">
+      <span class="fid">F01</span>
+      <div class="bevtitel">
+        <span class="onderwerp">Quorum &amp; witness</span>
+        <h3>The vote distribution across the two sites does not survive the loss of site B</h3>
+      </div>
+      <span class="chip crit">CRITICAL</span>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Measured</span>
+      <p class="meting">Nodes locatie A &middot; <span class="invul">n</span> &middot; stemmen <span class="invul">n</span><br>
+      Nodes locatie B &middot; <span class="invul">n</span> &middot; stemmen <span class="invul">n</span><br>
+      Witness &middot; <span class="invul">Type</span>, placed at <span class="invul">site</span><br>
+      Outcome on loss of site B · <span class="invul">finding</span></p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Why this counts</span>
+      <p>In a cluster across two sites the question is not how many nodes fail, but which. If the witness sits at one of the two sites, that witness effectively decides which site may keep running. If you lose the site where it stands, the whole cluster stops, including the nodes that are doing fine at the other site. A witness belongs in a third place, separate from both datacenters.</p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Action point</span>
+      <p>Move the witness to a place separate from both sites and re-establish the vote distribution, before the upgrade starts. See also the comparison of <a href="/en/blog/cluster-witness-comparison/">witness types</a>.</p>
+    </div>
+  </div>
+
+  <div class="bev med">
+    <div class="bevkop">
+      <span class="fid">F02</span>
+      <div class="bevtitel">
+        <span class="onderwerp">Upgrade order</span>
+        <h3>The intended order leaves both sites with a minority at one moment</h3>
+      </div>
+      <span class="chip med">Medium</span>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Measured</span>
+      <p class="meting">Stap in de voorgenomen volgorde &middot; <span class="invul">n</span><br>
+      Active votes at that moment · <span class="invul">n</span>of<span class="invul">n</span><br>
+      Marge &middot; <span class="invul">finding</span></p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Why this counts</span>
+      <p>A rolling upgrade is not a brief moment but a period of days. During that period the margin in the quorum is smaller than normal. A second event then does not have to be large to bring the cluster down: a node that does not come back, or a network interruption between the sites.</p>
+    </div>
+    <div class="veld">
+      <span class="veldnaam">Action point</span>
+      <p>Rearrange the order so that at no moment two votes are missing at the same site at once, with the way back recorded for each step.</p>
+    </div>
+  </div>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">03</p>
+    <div class="deel-tekst">
+      <h2>What could not be measured</h2>
+  <p>Every CloudLabs report states what stayed out of reach, with the reason. Not because it looks good, but because otherwise a reader does not know how complete the picture is.</p>
+  <div class="nietgemeten">
+    <ul>
+      <li>The link between the two sites: managed by a third party; out of scope</li>
+      <li>Switch configuration: outside the scope of the base measurement; covered by module M1</li>
+      <li>Behaviour of the storage on loss of a site: <span class="invul">reason</span></li>
+    </ul>
+  </div>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">04</p>
+    <div class="deel-tekst">
+      <h2>The repair</h2>
+  <ul>
+    <li>The witness was moved to a place separate from both sites; the vote distribution was re-established and tested.</li>
+    <li>The upgrade order was rearranged, with a recorded way back for each step.</li>
+    <li>A node-by-node playbook was delivered, which the internal team carried out themselves.</li>
+    <li>Afterwards a validation report was delivered stating that the cluster runs on functional level 2022 and the quorum stands as intended.</li>
+  </ul>
+  <p>What the customer left alone: <span class="invul">finding not taken up, with the customer’s reason</span>. That is stated, because an example in which everything is resolved is not an example but an advertisement.</p>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">05</p>
+    <div class="deel-tekst">
+      <h2>The outcome</h2>
+  <p>The upgrade was completed without unplanned interruption. That is the outcome the team wanted, but not the most important one: the critical finding stood apart from the upgrade and had been there for years. Without a measurement it would only have been found at the moment site B actually dropped out, not as a finding but as an incident.</p>
+  <p>For the IT manager the value sat in the validation report: a document that shows the board that the upgrade was done, what was checked and what was found in order.</p>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">06</p>
+    <div class="deel-tekst">
+      <h2>Questions</h2>
+
+  <div class="vraag">
+    <h3>Why is quorum across two sites harder than at one site?</h3>
+    <p>Because the question is not how many nodes fail, but which. A cluster with an even number of nodes spread across two sites has the same number of votes on both sides. If the link between the sites drops, neither half keeps a majority, unless there is a third vote elsewhere.</p>
+    <p>If the witness sits at one of the two sites, it effectively decides which site may keep running. If you lose that site, the whole cluster stops.</p>
+  </div>
+
+  <div class="vraag">
+    <h3>Why does a rolling upgrade not check the quorum itself?</h3>
+    <p>A cluster rolling upgrade looks at the functional level of the cluster and at the nodes taking part, not at the question of whether the vote distribution survives the loss of a site.</p>
+    <p>During the upgrade there is moreover a node out of rotation each time. A configuration that just about holds in daily operation can, during the upgrade, be missing exactly the vote it needs.</p>
+  </div>
+
+  <div class="vraag">
+    <h3>Does the measurement affect production?</h3>
+    <p>No. The script runs for about fifteen minutes from the management server over WinRM, only reads, installs nothing and leaves nothing behind. No maintenance window is needed.</p>
+  </div>
+
+  
+    </div>
+  </section>
+  <section class="deel">
+    <p class="deel-nr">07</p>
+    <div class="deel-tekst">
+      <h2>Further reading</h2>
+  <div class="verwant">
+    <a href="/en/blog/cluster-witness-comparison/"><span>Background</span><b>Which witness suits which cluster</b></a>
+    <a href="/en/blog/top-10-hyper-v-cluster-issues/"><span>Background</span><b>The ten most common cluster problems</b></a>
+    <a href="/en/case-study/firmware-drift-and-csv-owner-imbalance/"><span>Case study 01</span><b>Six nodes, two firmware versions</b></a>
+    <a href="/findings.html"><span>The document</span><b>What a findings report looks like</b></a>
+  </div>
+
+
+    </div>
+  </section>
+  </article>
+</section>
+
+<section class="cta">
+  <div class="inner">
+  <p class="eyebrow" style="justify-content:center">Your own cluster</p>
+  <h2>What would a measurement<br>find at your site?</h2>
+  <p>The free Cluster Triage only reads and changes nothing. You receive the five heaviest signals around your incident window, with the measured value, the node and the time.</p>
+  <div class="actions">
+    <a class="btn primary" data-icon="script" href="/triage">Start free Cluster Triage &rarr;</a>
+    <a class="btn ghost" data-icon="rapport" href="/praktijkvoorbeelden">All case studies</a>
+  </div>
+</div>
+</section>
+</main>
+
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Services</h4><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div><div class="footer-column"><h4>Organisation</h4><a href="/en/about/">About us</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/rates/">Rates</a><a href="/en/partners/">For partners</a></div><div class="footer-column"><h4>Knowledge base</h4><a href="/en/blog/">Blog</a><a href="/en/case-studies/">Case studies</a><a href="/en/blog/top-10-hyper-v-cluster-issues/">Failures and causes</a><a href="/en/blog/cluster-witness-comparison/">Quorum and witness</a><a href="/en/blog/san-vs-s2d-vs-azure-local-hyper-v-storage/">Storage and Storage Spaces Direct</a><a href="/en/faq/">FAQ</a><a href="/en/topics/">Topics</a></div><div class="footer-column"><h4>Contact</h4><a href="/en/triage/#aanvraag">Request the free script</a><a href="/en/appointment/#agenda">Book a call</a><a href="/en/contact/#bericht">Get in touch</a></div><div class="newsletter"><h4>Technical findings by email</h4><form action="#" method="post"><label><span class="skip">Email address</span><input type="email" name="email" placeholder="name@company.com" autocomplete="email"></label><button type="submit">Subscribe</button></form><p>No marketing stream. Only new findings and practical explanation.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="Email"><img src="/assets/icons/email.svg" alt=""></a><a href="/en/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/en/">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/en/privacy/">Privacy statement</a><a href="/en/triage/#veilig">Security</a><a href="/en/terms/">Terms of engagement</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
+
+<script>
+(function(){
+  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
+  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
+})();
+</script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
+</body>
+</html>

@@ -5,22 +5,22 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <!-- Omgezet naar de nieuwe huisstijl met blog-omzetten.py. De Engelse helft is
      eruit; die krijgt later een eigen URL onder /en/. De inhoud is niet
-     herschreven. noindex staat aan zolang de nieuwe stijl niet live is. -->
-<meta name="robots" content="noindex,nofollow">
+     herschreven. Vrijgegeven voor indexering op 2 september 2026. -->
 <meta name="theme-color" content="#0A1024">
-<title>File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster? &middot; CloudLabs</title>
+<title>Cluster witness: File Share, Cloud of Disk &middot; CloudLabs</title>
 <meta name="description" content="Quorum is het onzichtbare stuk dat een Windows Server Failover Cluster overeind houdt wanneer nodes verdwijnen. Witness-configuratie is ook een van de top drie gebieden waar CloudLabs Hyper-V Cluster Health Checks stille resilience-gaten vinden. De witness bestaat, het cluster rapporteert gezond, va">
 <link rel="canonical" href="https://cldlbs.com/blog/cluster-witness-comparison.html">
 <link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/cluster-witness-comparison.html">
+<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/blog/cluster-witness-comparison/">
 <link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/cluster-witness-comparison.html">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="nl_NL">
 <meta property="og:url" content="https://cldlbs.com/blog/cluster-witness-comparison.html">
-<meta property="og:title" content="File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster?">
+<meta property="og:title" content="Cluster witness: File Share, Cloud of Disk &middot; CloudLabs">
 <meta property="og:description" content="Quorum is het onzichtbare stuk dat een Windows Server Failover Cluster overeind houdt wanneer nodes verdwijnen. Witness-configuratie is ook een van de top drie gebieden waar CloudLabs Hyper-V Cluster Health Checks stille resilience-gaten vinden. De witness bestaat, het cluster rapporteert gezond, va">
 <link rel="icon" href="/favicon.png" type="image/png">
-<link rel="stylesheet" href="/huisstijl/pagina.css">
-<link rel="stylesheet" href="/huisstijl/artikel.css">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=34835181">
+<link rel="stylesheet" href="/huisstijl/artikel.css?v=04e23fbe">
 
 <script type="application/ld+json">
 {
@@ -131,15 +131,14 @@
 </head>
 
 <body>
-<a class="skip" href="#main">Naar inhoud</a>
+<a class="skip" href="#main">Naar inhoud</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Bewaar eerst het bewijs.</span><a href="/triage/#aanvraag">Start gratis triage &rarr;</a><button type="button" aria-label="Sluiten" id="close-announcement">&times;</button></div>
 
 <header class="topbar">
   <nav class="nav">
-    <a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a>
-    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/rapport/">Wat u krijgt</a><a href="/healthcheck/">De HealthCheck</a><a href="/preview-home.html#modules">Omgevingen</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/blog/" aria-current="page">Blog</a></div>
-    <div class="nav-actions">
-      <button class="search" aria-label="Zoeken">&#8981;</button>
-      <a class="btn primary" href="/triage/">Start gratis triage</a>
+    <a class="brand" href="/preview-home.html"><b>Cloud<span>Labs</span></b><small lang="en">Decades of server expertise</small></a>
+    <div class="navlinks" id="navlinks"><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-de-healthcheck">De HealthCheck</button><div class="navmenu" id="nav-de-healthcheck"><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div></div><a href="/tarieven/">Tarieven</a><a href="/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-kennisbank">Kennisbank</button><div class="navmenu" id="nav-kennisbank"><a href="/vragen/">Veelgestelde vragen</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/onderwerpen/">Onderwerpen</a></div></div><a href="/over-ons/">Over ons</a></div><div class="nav-actions">
+      <span class="taalwissel"><span aria-current="true">NL</span><a href="/en/blog/cluster-witness-comparison/" hreflang="en" lang="en">EN</a></span>
+      <a class="btn primary" href="/triage/#aanvraag">Start gratis triage</a>
       <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
     </div>
   </nav>
@@ -153,8 +152,8 @@
 
     <header class="artikelkop">
       <h1>File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster?</h1>
-      <p class="lede">Quorum is het onzichtbare stuk dat een Windows Server Failover Cluster overeind houdt wanneer nodes verdwijnen. Witness-configuratie is ook een van de top drie gebieden waar CloudLabs Hyper-V Cluster Health Checks stille resilience-gaten vinden. De witness bestaat, het cluster rapporteert gezond, validatie komt door, en één fault domain legt het cluster alsnog plat omdat de witness precies op de verkeerde plek staat.</p>
-        <p class="lede">Dit artikel vergelijkt de drie witness-types in productie-termen: failure modes, topologie-fit, de configuratiefouten die wij blijven vinden, en de beslissingen die je in één keer goed wilt maken.</p>
+      <p class="lede">Quorum is het onzichtbare stuk dat een Windows Server Failover Cluster overeind houdt wanneer nodes verdwijnen. Witness-configuratie is ook een van de top drie gebieden waar CloudLabs Hyper-V Cluster Health Checks stille resilience-gaten vinden. De witness bestaat, het cluster rapporteert gezond, validatie komt door en één fault domain legt het cluster alsnog plat omdat de witness precies op de verkeerde plek staat.</p>
+        <p class="lede">Dit artikel vergelijkt de drie witness-types in productie-termen: failure modes, topologie-fit, de configuratiefouten die wij blijven vinden en de beslissingen die je in één keer goed wilt maken.</p>
       <p class="artikelmeta"><b>Door Hans Vredevoort</b> <i>&middot;</i> <b>24 mei 2026</b> <i>&middot;</i> <b>14 minuten leestijd</b> <i>&middot;</i> <b>Quorum</b></p>
     </header>
 
@@ -175,9 +174,9 @@
 
       <div class="tekst">
 <h2 id="nl-1">1. Korte primer, quorum en Dynamic Quorum</h2>
-        <p>Een cluster stemt over zijn eigen gezondheid. Elke draaiende node krijgt een stem, de witness (indien geconfigureerd) krijgt een stem, en het cluster heeft een meerderheid van stemmen nodig om te blijven draaien. Verlies van de meerderheid betekent dat de Cluster Service stopt om split-brain te voorkomen.</p>
-        <p>Dynamic Quorum (geïntroduceerd in Windows Server 2012 R2, sindsdien default aan) past het aantal stemmen aan terwijl nodes het cluster verlaten. Verlies één node uit een vijf-node cluster, het cluster reduceert het stemmenaantal en draait door. In een twee-node cluster met witness kun je elk van beide nodes verliezen en op één node plus de witness overleven. Verlies de witness en één node tegelijk, en Dynamic Witness heeft het stemgewicht van de witness al aangepast om de overlevingskans te maximaliseren.</p>
-        <p>De witness bestaat om patstellingen op te breken, en om een meerderheid te behouden bij even-aantallen waar natuurlijke meerderheden onmogelijk zijn. Zonder witness in een even-node cluster legt elke 50/50 splitsing het cluster plat.</p>
+        <p>Een cluster stemt over zijn eigen gezondheid. Elke draaiende node krijgt een stem, de witness (indien geconfigureerd) krijgt een stem en het cluster heeft een meerderheid van stemmen nodig om te blijven draaien. Verlies van de meerderheid betekent dat de Cluster Service stopt om split-brain te voorkomen.</p>
+        <p>Dynamic Quorum (geïntroduceerd in Windows Server 2012 R2, sindsdien default aan) past het aantal stemmen aan terwijl nodes het cluster verlaten. Verlies één node uit een vijf-node cluster, het cluster reduceert het stemmenaantal en draait door. In een twee-node cluster met witness kun je elk van beide nodes verliezen en op één node plus de witness overleven. Verlies de witness en één node tegelijk en Dynamic Witness heeft het stemgewicht van de witness al aangepast om de overlevingskans te maximaliseren.</p>
+        <p>De witness bestaat om patstellingen op te breken en om een meerderheid te behouden bij even-aantallen waar natuurlijke meerderheden onmogelijk zijn. Zonder witness in een even-node cluster legt elke 50/50 splitsing het cluster plat.</p>
 
         <div class="callout"><strong>Het twee-node geval</strong>
         Twee-node clusters <em>vereisen</em> een witness voor enige vorm van betrouwbare resilience. Alleen Dynamic Quorum geeft je overleving op de juiste overlevende node, maar je kunt niet voorspellen welke dat zal zijn. De witness maakt overleving deterministisch.</div>
@@ -204,7 +203,7 @@
             <tr>
               <td><strong>Cloud Witness</strong></td>
               <td>Azure Storage Account, benaderd via HTTPS</td>
-              <td>Elk cluster met betrouwbare Azure-connectivity, inclusief two-node, stretched, en disaster recovery clusters</td>
+              <td>Elk cluster met betrouwbare Azure-connectivity, inclusief two-node, stretched en disaster recovery clusters</td>
               <td>Clusters zonder toegestane uitgaande Azure-connectivity</td>
             </tr>
           </tbody>
@@ -348,7 +347,7 @@ Set-ClusterQuorum -DiskWitness 'Cluster Disk Witness'</code></pre>
 
         <blockquote>Een witness in hetzelfde fault domain als het cluster is geen witness, het is decoratie.</blockquote>
 
-        <p>De CloudLabs Hyper-V Cluster Health Check bevat witness-topologie-analyse in de standaardscope. Als de witness niet past bij de topologie, wordt dat gedocumenteerd met severity die schaalt met de blast radius, en de remediation-stap wordt opgenomen in de actielijst.</p>
+        <p>De CloudLabs Hyper-V Cluster Health Check bevat witness-topologie-analyse in de standaardscope. Als de witness niet past bij de topologie, wordt dat gedocumenteerd met severity die schaalt met de blast radius en de remediation-stap wordt opgenomen in de actielijst.</p>
         <p><a href="../book.html"><strong>Plan een Hyper-V Cluster Health Check kennismaking →</strong></a></p>
 
         <div class="faq-block">
@@ -385,7 +384,7 @@ Set-ClusterQuorum -DiskWitness 'Cluster Disk Witness'</code></pre>
 </section>
 </main>
 
-<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/healthcheck/">De HealthCheck</a><a href="/healthcheck/#doorloop">Van meting naar rapport</a><a href="/services.html">Root cause analysis</a><a href="/partners/#modules">Modules en omgevingen</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/method.html">Werkwijze</a><a href="/engagement.html">Tarieven en voorwaarden</a><a href="/partners/">Voor partners</a><a href="/praktijkvoorbeelden.html">Praktijkvoorbeelden</a><a href="/privacy.html">Privacyverklaring</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/faq.html">Veelgestelde vragen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Script aanvragen</a><a href="/rapport/">Wat u ontvangt</a><a href="/triage/#veilig">Veiligheid en dataverwerking</a><a href="/afspraak/">Afspraak maken</a><a href="/contact/">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy.html">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/engagement.html">Algemene voorwaarden</a></div></div><div class="footer-badges"><span class="trust-badge">LEZEND<br>GEMETEN</span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div></div></footer>
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><a href="/healthcheck/">De HealthCheck</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/tarieven/">Tarieven</a><a href="/partners/">Voor partners</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/vragen/">Veelgestelde vragen</a><a href="/onderwerpen/">Onderwerpen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Gratis script aanvragen</a><a href="/afspraak/#agenda">Afspraak maken</a><a href="/contact/#bericht">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy/">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/voorwaarden/">Algemene voorwaarden</a></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
 
 
 <script>
@@ -394,6 +393,6 @@ Set-ClusterQuorum -DiskWitness 'Cluster Disk Witness'</code></pre>
   if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
 })();
 </script>
-<script src="/huisstijl/pagina.js"></script>
+<script src="/huisstijl/pagina.js?v=dfd53dd0"></script>
 </body>
 </html>
