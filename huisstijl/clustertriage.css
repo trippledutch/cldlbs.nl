@@ -130,6 +130,50 @@
 .lang-set a,.lang-set span{opacity:.65;text-decoration:none}
 .lang-set [aria-current="true"]{opacity:1;color:var(--band-accent)}
 
+/* 2026 visual refinement: depth, bold type and restrained motion.
+   Deliberately selective: ClusterTriage is an enterprise engineering brand,
+   so no novelty navigation, maximalism or decorative 3D for its own sake. */
+.topbar{position:sticky;top:0;z-index:80;background:rgba(10,16,36,.94);backdrop-filter:saturate(135%) blur(14px);-webkit-backdrop-filter:saturate(135%) blur(14px)}
+.navlinks>a{position:relative}
+.navlinks>a:after{content:"";position:absolute;left:0;right:100%;bottom:-7px;height:1px;background:var(--band-accent);transition:right .22s ease}
+.navlinks>a:hover:after,.navlinks>a:focus-visible:after{right:0}
+.assurance-hero{background:radial-gradient(58% 66% at 78% 30%,rgba(63,182,216,.12),transparent 72%),linear-gradient(135deg,var(--band),var(--band-op) 62%,var(--band-rule))}
+.assurance-hero h1{font-size:clamp(54px,6.7vw,92px);text-wrap:balance}
+.assurance-hero .hero-copy,.cycle-summary p,.section-head h2,.incident-bridge h2,.ct-close h2{text-wrap:balance}
+.assurance-hero .hero-copy,.lead{max-width:64ch;text-wrap:pretty}
+.assurance-visual{border-radius:14px;box-shadow:0 32px 90px rgba(0,0,0,.33),0 0 0 1px rgba(63,182,216,.06);isolation:isolate;transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .35s ease,box-shadow .35s ease}
+.assurance-visual:before{content:"";position:absolute;width:260px;height:260px;right:-80px;top:-100px;border-radius:50%;background:radial-gradient(circle,rgba(63,182,216,.20),transparent 68%);filter:blur(2px);pointer-events:none;z-index:0}
+.assurance-visual:hover{transform:translateY(-4px);border-color:#3fb6d866;box-shadow:0 38px 100px rgba(0,0,0,.38),0 0 0 1px rgba(63,182,216,.12)}
+.quarter-card{border-radius:7px;transition:transform .22s ease,border-color .22s ease,background-color .22s ease}
+.quarter-card:hover{transform:translateY(-3px);border-color:#ffffff44;background:rgba(24,32,50,.94)}
+.quarter-card.current{box-shadow:inset 0 0 0 1px rgba(63,182,216,.08)}
+.ct-proof .proof-item{transition:transform .22s ease}
+.ct-proof .proof-item:hover{transform:translateY(-3px)}
+.cycle-step,.method-card,.report-snapshot,.down-card{transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s ease,box-shadow .25s ease}
+.cycle-step:hover,.method-card:hover{transform:translateY(-5px);border-color:color-mix(in srgb,var(--accent) 58%,var(--rule));box-shadow:0 18px 44px rgba(10,16,36,.08)}
+.method-card code{transition:background-color .2s ease,color .2s ease}
+.method-card:hover code{background:var(--accent);color:var(--chip-ink)}
+.report-snapshot{border-radius:12px;box-shadow:0 28px 70px rgba(10,16,36,.10)}
+.report-snapshot:hover{transform:translateY(-4px);box-shadow:0 34px 82px rgba(10,16,36,.14)}
+.scope-item{transition:padding-left .22s ease,border-color .22s ease}
+.scope-item:hover{padding-left:8px;border-color:var(--ink)}
+.down-card{border-radius:12px;box-shadow:0 24px 70px rgba(0,0,0,.18)}
+.down-card:hover{transform:translateY(-4px);border-color:#3fb6d866}
+.btn{position:relative;overflow:hidden}
+.btn:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.ct-close{background:radial-gradient(55% 100% at 50% 100%,var(--accent-soft),transparent 72%),var(--surface)}
+
+@media(prefers-reduced-motion:no-preference){
+  .assurance-visual{animation:ct-enter .7s cubic-bezier(.2,.8,.2,1) both}
+  .trend-bars i{transform-origin:50% 100%;animation:ct-bar .8s cubic-bezier(.2,.8,.2,1) both}
+  .trend-bars i:nth-child(2){animation-delay:.08s}.trend-bars i:nth-child(3){animation-delay:.16s}.trend-bars i:nth-child(4){animation-delay:.24s}
+  .quarter-card{animation:ct-card .5s ease both}
+  .quarter-card:nth-child(2){animation-delay:.07s}.quarter-card:nth-child(3){animation-delay:.14s}.quarter-card:nth-child(4){animation-delay:.21s}
+}
+@keyframes ct-enter{from{opacity:0;transform:translateY(16px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes ct-bar{from{transform:scaleY(.08);opacity:.25}to{transform:scaleY(1);opacity:1}}
+@keyframes ct-card{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
 @media(max-width:1050px){
   .assurance-hero .hero-inner{grid-template-columns:1fr;gap:46px}
   .assurance-visual{max-width:720px}
@@ -148,9 +192,10 @@
   .ct-proof .proof-grid,.cycle-strip,.method-grid,.scope-grid{grid-template-columns:1fr}
   .cycle-step{min-height:0}
   .cycle-summary{padding-left:20px}
-  .assurance-visual{min-height:0;padding:18px}
+  .assurance-visual{min-height:0;padding:18px;border-radius:10px}
   .deliverables{gap:32px}
   .ct-footer-inner{grid-template-columns:1fr 1fr;gap:30px}
+  .assurance-visual:hover,.cycle-step:hover,.method-card:hover,.report-snapshot:hover,.down-card:hover{transform:none}
 }
 
 @media(max-width:520px){
