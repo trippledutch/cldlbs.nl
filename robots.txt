@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://cldlbs.com/sitemap.xml
+Sitemap: https://clustertriage.com/sitemap.xml
