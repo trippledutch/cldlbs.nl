@@ -1,57 +1,75 @@
-# IBM Plex, meegeleverd en niet opgehaald
+# IBM Plex — statische WOFF2-faces, lokaal meegeleverd
 
-Zestien woff2-bestanden, latin en latin-ext, samen ongeveer 297 KB. Ze staan hier
-omdat het rapport ze niet mag ophalen op het moment dat het gedrukt wordt.
+De website gebruikt lokale, statische IBM Plex WOFF2-bestanden. De fonts worden
+niet bij Google Fonts opgehaald en er worden geen variable-fontbestanden gebruikt.
 
-## Waarom niet van Google Fonts
+Dat is een bewuste productiekeuze. De Google Fonts-versie van IBM Plex kan als
+variable font worden geleverd: één bestand dekt dan meerdere gewichten. Bij de
+HTML-naar-PDF-productie met headless Chrome bleek zo'n variable font stil te
+kunnen worden geweigerd wanneer het als data-URI was ingebakken. Chrome gaf geen
+bruikbare foutmelding en viel terug op een systeemfont. Het document werd dus wel
+gemaakt, maar zag er niet meer exact uit zoals bedoeld.
 
-Gemeten op 27 augustus 2026, op het bevindingenrapport dat al bij een klant lag:
+De statische faces uit IBM's eigen repository laden wel betrouwbaar. Daarom geldt
+voor CloudLabs / ClusterTriage:
+
+- gebruik statische WOFF2-faces per gewicht;
+- host die bestanden lokaal in deze map;
+- geen Google Fonts-runtime-afhankelijkheid;
+- geen variable IBM Plex voor productie-output;
+- bij zelfstandige HTML/PDF-output mogen dezelfde statische faces als base64
+  data-URI in het document worden ingebakken.
+
+## Bron
+
+De bestanden komen uit IBM's officiële Plex-repository, uit de `complete/woff2`
+map van de betreffende familie. De bronstructuur is onder andere:
 
 ```
-faces in de geleverde pdf   IBMPlexMono-Regular, IBMPlexSerif-SemiBold,
-                            IBMPlexMono-Medium, Helvetica
-IBM Plex Sans               ONTBREEKT
+https://raw.githubusercontent.com/IBM/plex/master/packages/
+plex-<sans|serif|mono>/fonts/complete/woff2/IBMPlex<Sans|Serif|Mono>-<gewicht>.woff2
 ```
 
-De lopende tekst - het grootste deel van het rapport - was teruggevallen op de
-systeemletter. Het reproduceert, dus het was geen mislukte download op een
-ongelukkig moment. Op dezelfde machine:
+De site gebruikt momenteel onder andere:
 
 ```
-fc-match "IBM Plex Sans"    -> Verdana
-fc-match "IBM Plex Serif"   -> Times New Roman
-fc-match "IBM Plex Mono"    -> Andale Mono
+IBMPlexSans-400.woff2
+IBMPlexSans-500.woff2
+IBMPlexSans-600.woff2
+IBMPlexMono-400.woff2
 ```
 
-Niets van Plex staat lokaal geinstalleerd. De pagina haalde de faces bij Google
-Fonts, en waar dat niet lukt kiest de browser stil iets anders. Er komt gewoon
-een pdf uit die er anders uitziet dan het scherm, en niemand ziet het.
+Voor de bestaande visuele stijl zijn ook statische Plex Serif-faces aanwezig.
+Alle families blijven dus statisch; de keuze Sans / Serif / Mono is een
+ontwerpkeuze en staat los van het technische probleem met variable fonts.
 
-Dat is precies het gedrag dat de docx-route NIET heeft:
-check_pdf_font_guarantee weigert liever te converteren dan een stil verminderd
-document af te leveren. Meeleveren geeft de html-route dezelfde eigenschap langs
-een andere weg - er valt niets terug te vallen, dus de vraag komt niet op.
+## Website versus PDF
 
-Een klant heeft bovendien niet altijd internet op de machine waar het rapport
-wordt gedrukt, en dat is juist de situatie waarin de knop moet werken.
+Voor de website worden de WOFF2-bestanden als gewone lokale assets geserveerd.
+Dat maakt browsercaching mogelijk en houdt de HTML klein.
 
-## Waarom latin EN latin-ext
+Voor een zelfstandige rapport-HTML die ook zonder netwerk identiek moet renderen,
+kunnen de statische WOFF2-faces rechtstreeks als base64 data-URI in de pagina
+worden ingebakken. Daarmee heeft de printgang geen internetverbinding of lokaal
+geïnstalleerd IBM Plex nodig.
 
-Google splitst per tekenset en levert er 32. Cyrillisch, Grieks en Vietnamees
-hebben wij niet nodig. Latin-ext wel: die draagt onder meer de Poolse, Tsjechische
-en Hongaarse tekens, en die komen voor in nodenamen en klantnamen. Alleen latin
-zou ongeveer 150 KB schelen en een Poolse naam laten terugvallen - Hans koos
-297 KB op 27 aug 2026.
+## Controle van PDF-output
+
+Een correcte HTML-pagina op het scherm is geen bewijs dat de juiste fonts in de
+PDF terecht zijn gekomen. De betrouwbare controle is de fonttabel van de
+uiteindelijke PDF zelf. De productiecontrole moet daarom verifiëren dat de
+verwachte IBM Plex-faces als `/BaseFont` voorkomen en mag niet vertrouwen op een
+lokaal geïnstalleerde fontfamilie.
 
 ## Licentie
 
-SIL Open Font License 1.1, zie OFL.txt. Herdistributie is toegestaan; de licentie
-moet meereizen en dat is wat dat bestand hier doet. Reserved Font Name "Plex":
-een gewijzigde versie mag niet meer zo heten.
+IBM Plex valt onder de SIL Open Font License 1.1. Zie `OFL.txt`. De licentie moet
+met de fonts meereizen. De Reserved Font Name-regels uit de licentie blijven van
+toepassing.
 
 ## Bijwerken
 
-De bestanden komen uit de css die Google Fonts teruggeeft voor de families en
-gewichten die findings.css noemt. Verandert die lijst, dan verandert deze map
-mee - en dan moet de @font-face-blok in findings.css opnieuw gegenereerd worden,
-want de unicode-range hoort bij het bestand.
+Nieuwe of vervangende fontbestanden uitsluitend uit IBM's officiële
+Plex-repository halen. Houd bestandsnaam, gewicht en `@font-face`-declaratie één
+op één bij elkaar. Voeg geen Google Fonts variable font toe als vervanging voor
+meerdere statische gewichten.
