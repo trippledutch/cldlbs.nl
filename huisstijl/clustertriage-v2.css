@@ -1,0 +1,122 @@
+/* ClusterTriage redesign v2 — page hierarchy, leadership and Methodology integration */
+
+/* Brand lock-up: strapline visually matches the ClusterTriage wordmark width. */
+.brand.ct-brand{display:flex;flex-direction:column;align-items:flex-start;width:128px;min-width:128px;line-height:1.04}
+.brand.ct-brand b{display:block;width:128px;font-size:20px;letter-spacing:-.02em;white-space:nowrap}
+.brand.ct-brand small{display:block;width:128px;margin-top:5px;font-family:var(--mono);font-size:8.2px;font-weight:500;line-height:1.1;letter-spacing:0;text-align:justify;text-align-last:justify;white-space:nowrap;color:var(--band-dim)}
+
+/* Main navigation is page-level now, not a collection of homepage anchors. */
+.navlinks a[aria-current="page"]{color:var(--band-ink)}
+.navlinks a[aria-current="page"]:after{right:0}
+
+/* Four equal proof items. */
+.trust.ct-trust .trust-inner{grid-template-columns:repeat(4,1fr)}
+.trust.ct-trust .cred{min-width:0}
+
+/* Standalone page hero */
+.page-hero{background:radial-gradient(58% 72% at 78% 24%,rgba(63,182,216,.13),transparent 72%),linear-gradient(135deg,var(--band),var(--band-op) 62%,var(--band-rule));color:var(--band-ink);padding:88px var(--gutter) 82px}
+.page-hero-inner{max-width:var(--max);margin:auto;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(340px,.65fr);gap:72px;align-items:end}
+.page-hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(52px,6.5vw,88px);line-height:.99;letter-spacing:-.045em;margin:0 0 26px;text-wrap:balance}
+.page-hero h1 em{font-style:italic;color:var(--band-accent)}
+.page-hero .hero-copy{font-size:18px;line-height:1.62;color:var(--band-dim);max-width:66ch;margin:0}
+.page-hero-side{border-left:1px solid #ffffff2e;padding-left:28px}
+.page-hero-side p{margin:0 0 20px;color:var(--band-dim);font-size:14px}
+.page-hero-side strong{display:block;font-family:var(--serif);font-size:30px;font-weight:400;color:var(--band-ink);line-height:1.15;margin-bottom:7px}
+
+/* Home */
+.home-hero .hero-inner{grid-template-columns:minmax(0,1.05fr) minmax(400px,.95fr)}
+.home-hero h1{font-size:clamp(54px,7vw,94px)}
+.home-hero .assurance-visual{min-height:390px}
+.home-services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px}
+.home-service{border:1px solid var(--rule);background:var(--surface);padding:30px;min-height:260px;position:relative;text-decoration:none;color:var(--ink)}
+.home-service:before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--accent);transform:scaleX(.18);transform-origin:left;transition:transform .25s ease}
+.home-service:hover:before{transform:scaleX(1)}
+.home-service .n{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--accent)}
+.home-service h3{font-family:var(--serif);font-size:30px;font-weight:400;line-height:1.08;margin:30px 0 13px}
+.home-service p{font-size:14px;color:var(--dim);margin:0}
+.home-service .more{display:block;margin-top:22px;font-family:var(--mono);font-size:10px;color:var(--accent)}
+
+/* Shared split feature */
+.feature-split{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:68px;align-items:center}
+.feature-copy h2{font-family:var(--serif);font-size:clamp(40px,5vw,64px);font-weight:400;line-height:1.03;letter-spacing:-.035em;margin:0 0 20px}
+.feature-copy p{color:var(--dim);font-size:16px;max-width:58ch}
+.feature-copy .actions{margin-top:25px}
+.method-preview{background:var(--band);border:1px solid var(--band-rule);border-radius:14px;padding:22px;box-shadow:0 26px 70px rgba(10,16,36,.16)}
+.method-preview-head{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--band-faint);padding-bottom:14px;border-bottom:1px solid var(--band-rule)}
+.method-preview-flow{display:grid;grid-template-columns:1fr 22px 1fr 22px 1fr;gap:8px;align-items:center;margin-top:17px}
+.method-preview-flow .node{border:1px solid #ffffff27;background:#ffffff08;border-radius:7px;padding:13px;color:var(--band-ink);font-size:12px;min-height:78px}
+.method-preview-flow .node b{display:block;font-size:13px;margin-bottom:3px}
+.method-preview-flow .node small{color:var(--band-dim);font-size:9px}
+.method-preview-flow .arrow{text-align:center;color:var(--band-accent);font-family:var(--mono)}
+
+/* Enterprise assurance */
+.benefit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px}
+.benefit-card{border:1px solid var(--rule);background:var(--surface);padding:30px;min-height:250px;position:relative}
+.benefit-card .n{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--accent)}
+.benefit-card h3{font-family:var(--serif);font-size:29px;font-weight:400;line-height:1.08;margin:30px 0 13px}
+.benefit-card p{font-size:14px;color:var(--dim);margin:0}
+.benefit-card:before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--accent);transform:scaleX(.18);transform-origin:left;transition:transform .25s ease}
+.benefit-card:hover:before{transform:scaleX(1)}
+.enterprise-band{background:var(--band);color:var(--band-ink);padding:82px var(--gutter)}
+.enterprise-band-inner{max-width:var(--max);margin:auto;display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:start}
+.enterprise-band h2{font-family:var(--serif);font-size:clamp(40px,5vw,64px);font-weight:400;line-height:1.03;letter-spacing:-.035em;margin:0}
+.enterprise-points{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--band-rule);border:1px solid var(--band-rule)}
+.enterprise-point{background:var(--band);padding:25px}
+.enterprise-point b{display:block;color:var(--band-ink);margin-bottom:7px}
+.enterprise-point span{font-size:13px;color:var(--band-dim)}
+
+/* Output preview */
+.output-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+.output-card{border:1px solid var(--rule);background:var(--surface);text-decoration:none;color:var(--ink);overflow:hidden;transition:border-color .2s ease,box-shadow .2s ease}
+.output-card:hover{border-color:var(--accent);box-shadow:0 18px 42px rgba(10,16,36,.09)}
+.output-card img{display:block;width:100%;height:210px;object-fit:cover;object-position:top;background:var(--ground);border-bottom:1px solid var(--rule)}
+.output-card .inside{padding:18px}
+.output-card .tag{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent)}
+.output-card h3{font-size:17px;margin:7px 0 6px}
+.output-card p{font-size:13px;color:var(--dim);margin:0}
+
+/* Leadership */
+.people-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:42px}
+.person-card{border:1px solid var(--rule);background:var(--surface);padding:30px;display:grid;grid-template-columns:72px 1fr;gap:22px;align-items:start}
+.person-mark{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--band);color:var(--band-accent);font-family:var(--mono);font-size:17px;letter-spacing:.04em;border:1px solid var(--band-rule)}
+.person-role{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:5px}
+.person-card h3{font-family:var(--serif);font-size:29px;font-weight:400;margin:0 0 10px}
+.person-card p{font-size:14px;color:var(--dim);margin:0 0 14px}
+.person-card a{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--accent);text-decoration:none}
+.person-card a:hover{text-decoration:underline}
+
+/* Methodology: preserve the complete proven Architecture application and all
+   zoom panels, but mount it in the ClusterTriage page shell. */
+.methodology-shell{background:var(--ground);padding:70px var(--gutter) 90px}
+.methodology-shell-inner{max-width:var(--max);margin:auto}
+.methodology-intro{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;margin-bottom:38px;align-items:start}
+.methodology-intro h2{font-family:var(--serif);font-size:clamp(38px,4.5vw,60px);font-weight:400;line-height:1.04;letter-spacing:-.035em;margin:0}
+.methodology-intro p{margin:0;color:var(--dim);font-size:16px;max-width:64ch}
+.method-frame-wrap{border:1px solid var(--rule);background:#f4f7fa;border-radius:14px;padding:18px;box-shadow:0 24px 60px rgba(10,16,36,.08);overflow:hidden}
+.method-frame{display:block;width:100%;border:0;min-height:950px;background:transparent}
+.method-note{font-family:var(--mono);font-size:9px;color:var(--faint);margin:12px 2px 0;letter-spacing:.03em}
+
+/* About */
+.about-story{display:grid;grid-template-columns:.82fr 1.18fr;gap:70px;align-items:start}
+.about-story h2{font-family:var(--serif);font-weight:400;font-size:clamp(40px,5vw,64px);line-height:1.03;letter-spacing:-.035em;margin:0}
+.about-story p{font-size:16px;color:var(--dim);margin:0 0 16px}
+
+@media(max-width:1050px){
+  .page-hero-inner,.feature-split,.methodology-intro,.about-story,.enterprise-band-inner{grid-template-columns:1fr;gap:38px}
+  .page-hero-side{border-left:0;border-top:1px solid #ffffff2e;padding:24px 0 0}
+  .benefit-grid,.output-grid,.home-services{grid-template-columns:repeat(2,1fr)}
+  .trust.ct-trust .trust-inner{grid-template-columns:repeat(2,1fr)}
+}
+
+@media(max-width:700px){
+  .brand.ct-brand,.brand.ct-brand b,.brand.ct-brand small{width:118px;min-width:118px}
+  .brand.ct-brand small{font-size:7.55px}
+  .page-hero{padding-top:66px}
+  .page-hero h1{font-size:clamp(44px,12.5vw,62px)}
+  .benefit-grid,.output-grid,.people-grid,.home-services,.trust.ct-trust .trust-inner,.enterprise-points{grid-template-columns:1fr}
+  .person-card{grid-template-columns:56px 1fr;padding:22px;gap:16px}
+  .person-mark{width:52px;height:52px;font-size:14px}
+  .method-frame-wrap{padding:8px;border-radius:10px;margin-left:calc(var(--gutter) * -.45);margin-right:calc(var(--gutter) * -.45)}
+  .method-preview-flow{grid-template-columns:1fr}
+  .method-preview-flow .arrow{transform:rotate(90deg)}
+}
