@@ -1,0 +1,64 @@
+/* Temporary ClusterDown preview mega-menu.
+   Remove when clusterdown.com has its own live navigation target. */
+
+.ct-down-nav{position:relative;display:flex;align-items:center}
+.ct-down-trigger{appearance:none;border:0;background:transparent;color:var(--band-dim);font:inherit;padding:0;cursor:pointer;display:flex;align-items:center;gap:7px;white-space:nowrap}
+.ct-down-trigger:hover,.ct-down-trigger:focus-visible,.ct-down-nav.is-open .ct-down-trigger{color:var(--band-ink)}
+.ct-down-trigger small{display:none}
+.ct-down-chevron{font-family:var(--mono);font-size:12px;color:var(--band-accent);transition:transform .18s ease}
+.ct-down-nav.is-open .ct-down-chevron{transform:rotate(180deg)}
+.ct-down-nav:before{content:"";position:absolute;left:-12px;right:-12px;top:100%;height:18px}
+
+.ct-down-preview{position:absolute;top:calc(100% + 17px);right:-128px;width:min(980px,calc(100vw - 48px));z-index:120;opacity:0;visibility:hidden;pointer-events:none;transform:translateY(-7px);transition:opacity .18s ease,transform .18s ease,visibility .18s ease;background:linear-gradient(180deg,rgba(13,27,55,.985),rgba(8,18,38,.995));border:1px solid rgba(121,160,205,.22);border-radius:15px;box-shadow:0 34px 90px rgba(0,0,0,.46),0 0 0 1px rgba(63,182,216,.035);overflow:hidden}
+.ct-down-preview:after{content:"";position:absolute;width:440px;height:440px;right:-170px;top:-240px;border-radius:50%;background:radial-gradient(circle,rgba(63,182,216,.16),transparent 67%);pointer-events:none}
+.ct-down-nav:hover .ct-down-preview,.ct-down-nav:focus-within .ct-down-preview,.ct-down-nav.is-open .ct-down-preview{opacity:1;visibility:visible;pointer-events:auto;transform:translateY(0)}
+.ct-down-panel-inner{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.18fr) minmax(310px,.82fr);gap:32px;padding:30px}
+
+.ct-down-list{display:grid;align-content:start}
+.ct-down-item{display:grid;grid-template-columns:58px 1fr 22px;gap:18px;align-items:center;padding:12px 4px;border-bottom:1px solid rgba(255,255,255,.105)}
+.ct-down-item:last-child{border-bottom:0}
+.ct-down-icon{width:54px;height:54px;border-radius:11px;display:grid;place-items:center;background:rgba(75,147,225,.11);border:1px solid rgba(121,160,205,.10);font-family:var(--mono);font-size:20px;font-weight:500;color:var(--band-accent)}
+.ct-down-item:first-child .ct-down-icon{color:#ff6b77;background:rgba(255,107,119,.08)}
+.ct-down-item strong{display:block;color:var(--band-ink);font-size:16px;font-weight:600;margin-bottom:3px}
+.ct-down-item span:not(.ct-down-icon):not(.ct-down-arrow){display:block;color:var(--band-dim);font-size:12px;line-height:1.42}
+.ct-down-arrow{color:var(--band-faint);font-size:22px;text-align:right}
+
+.ct-down-promo{align-self:stretch;border:1px solid rgba(121,160,205,.14);border-radius:13px;background:rgba(255,255,255,.028);padding:27px 28px;display:flex;flex-direction:column;justify-content:center;min-height:390px}
+.ct-down-kicker{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--band-accent);margin-bottom:18px}
+.ct-down-promo h3{font-family:var(--serif);font-size:34px;font-weight:400;line-height:1.04;letter-spacing:-.025em;color:var(--band-ink);margin:0 0 18px}
+.ct-down-promo>p{font-size:14px;line-height:1.65;color:var(--band-dim);margin:0 0 22px}
+.ct-down-benefits{list-style:none;margin:0 0 26px;padding:20px 0 0;border-top:1px solid rgba(255,255,255,.10);display:grid;gap:11px}
+.ct-down-benefits li{position:relative;padding-left:27px;color:var(--band-dim);font-size:12px;line-height:1.42}
+.ct-down-benefits li:before{content:"✓";position:absolute;left:0;top:-1px;width:17px;height:17px;border-radius:50%;display:grid;place-items:center;background:var(--band-accent);color:#071425;font-family:var(--mono);font-size:10px;font-weight:600}
+.ct-down-status{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:auto;padding-top:4px}
+.ct-down-coming{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--band-faint)}
+.ct-down-status .btn{white-space:nowrap}
+
+/* Any temporary ClusterDown CTA can open the preview instead of a dead domain. */
+a[data-clusterdown-open]{cursor:pointer}
+
+@media(max-width:1050px){
+  .ct-down-preview{right:-72px;width:min(860px,calc(100vw - 32px))}
+  .ct-down-panel-inner{grid-template-columns:1fr 330px;gap:22px;padding:22px}
+}
+
+@media(max-width:700px){
+  .ct-down-nav{display:block;width:100%}
+  .ct-down-trigger{width:100%;justify-content:space-between;padding:12px 0;color:var(--band-dim)}
+  .ct-down-trigger small{display:block;margin-left:auto;margin-right:8px;font-family:var(--mono);font-size:8px;color:var(--band-faint);letter-spacing:.04em}
+  .ct-down-nav:before{display:none}
+  .ct-down-preview{position:static;width:100%;margin:6px 0 14px;display:none;opacity:1;visibility:visible;pointer-events:auto;transform:none;border-radius:10px;box-shadow:none}
+  .ct-down-nav:hover .ct-down-preview,.ct-down-nav:focus-within .ct-down-preview{display:none}
+  .ct-down-nav.is-open .ct-down-preview{display:block}
+  .ct-down-panel-inner{grid-template-columns:1fr;padding:16px;gap:16px}
+  .ct-down-item{grid-template-columns:42px 1fr;padding:10px 0;gap:12px}
+  .ct-down-icon{width:40px;height:40px;border-radius:8px;font-size:15px}
+  .ct-down-arrow{display:none}
+  .ct-down-promo{min-height:0;padding:20px}
+  .ct-down-promo h3{font-size:28px}
+  .ct-down-status{align-items:flex-start;flex-direction:column}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .ct-down-preview,.ct-down-chevron{transition:none}
+}
