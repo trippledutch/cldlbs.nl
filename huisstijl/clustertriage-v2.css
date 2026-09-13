@@ -1,9 +1,10 @@
 /* ClusterTriage redesign v2 — page hierarchy, leadership and Methodology integration */
 
-/* Brand lock-up: strapline visually matches the ClusterTriage wordmark width. */
-.brand.ct-brand{display:flex;flex-direction:column;align-items:flex-start;width:128px;min-width:128px;line-height:1.04}
-.brand.ct-brand b{display:block;width:128px;font-size:20px;letter-spacing:-.02em;white-space:nowrap}
-.brand.ct-brand small{display:block;width:128px;margin-top:5px;font-family:var(--mono);font-size:8.2px;font-weight:500;line-height:1.1;letter-spacing:0;text-align:justify;text-align-last:justify;white-space:nowrap;color:var(--band-dim)}
+/* Brand lock-up: make ClusterTriage itself a little larger so the wordmark
+   and the strapline read as one balanced block. Do not stretch the strapline. */
+.brand.ct-brand{display:inline-flex;flex-direction:column;align-items:flex-start;width:max-content;min-width:max-content;line-height:1.04}
+.brand.ct-brand b{display:block;font-size:21.75px;letter-spacing:-.025em;white-space:nowrap}
+.brand.ct-brand small{display:block;margin-top:5px;font-family:var(--mono);font-size:8.2px;font-weight:500;line-height:1.1;letter-spacing:0;white-space:nowrap;color:var(--band-dim)}
 
 /* Main navigation is page-level now, not a collection of homepage anchors. */
 .navlinks a[aria-current="page"]{color:var(--band-ink)}
@@ -75,15 +76,35 @@
 .output-card h3{font-size:17px;margin:7px 0 6px}
 .output-card p{font-size:13px;color:var(--dim);margin:0}
 
-/* Leadership */
+/* Leadership and profiles */
 .people-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:42px}
-.person-card{border:1px solid var(--rule);background:var(--surface);padding:30px;display:grid;grid-template-columns:72px 1fr;gap:22px;align-items:start}
-.person-mark{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--band);color:var(--band-accent);font-family:var(--mono);font-size:17px;letter-spacing:.04em;border:1px solid var(--band-rule)}
+.person-card{border:1px solid var(--rule);background:var(--surface);padding:30px;display:grid;grid-template-columns:104px 1fr;gap:24px;align-items:start}
+.person-photo,.person-mark{width:96px;height:96px;border-radius:12px;border:1px solid var(--rule);background:var(--ground)}
+.person-photo{display:block;object-fit:cover;object-position:center 22%}
+.person-photo.hans{object-position:center 18%}
+.person-mark{display:grid;place-items:center;background:var(--band);color:var(--band-accent);font-family:var(--mono);font-size:20px;letter-spacing:.04em;border-color:var(--band-rule)}
 .person-role{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:5px}
 .person-card h3{font-family:var(--serif);font-size:29px;font-weight:400;margin:0 0 10px}
 .person-card p{font-size:14px;color:var(--dim);margin:0 0 14px}
 .person-card a{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--accent);text-decoration:none}
 .person-card a:hover{text-decoration:underline}
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:42px}
+.profile-card{border:1px solid var(--rule);background:var(--surface);overflow:hidden}
+.profile-card .profile-head{display:grid;grid-template-columns:180px 1fr;min-height:220px;border-bottom:1px solid var(--rule)}
+.profile-card .profile-photo{width:180px;height:100%;min-height:220px;object-fit:cover;object-position:center 18%;background:var(--ground)}
+.profile-card .profile-photo-placeholder{width:180px;min-height:220px;display:grid;place-items:center;background:var(--band);color:var(--band-accent);font-family:var(--mono);font-size:34px;letter-spacing:.05em}
+.profile-card .profile-title{padding:28px;align-self:center}
+.profile-card .profile-role{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:7px}
+.profile-card h3{font-family:var(--serif);font-size:34px;font-weight:400;line-height:1.05;margin:0 0 12px}
+.profile-card .profile-sub{font-size:14px;color:var(--dim);margin:0}
+.profile-card .profile-body{padding:28px}
+.profile-card .profile-body p{font-size:14px;color:var(--dim);margin:0 0 14px}
+.profile-card .profile-meta{display:grid;grid-template-columns:max-content 1fr;gap:5px 14px;margin:18px 0 0;padding-top:16px;border-top:1px solid var(--rule);font-size:12px;color:var(--dim)}
+.profile-card .profile-meta b{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint)}
+.profile-card .profile-link{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:10px;color:var(--accent);text-decoration:none}
+.profile-card .profile-link:hover{text-decoration:underline}
+.profile-card .specialisations{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.profile-card .specialisations span{font-family:var(--mono);font-size:9px;border:1px solid var(--rule);background:var(--ground);padding:5px 7px;color:var(--dim)}
 
 /* Methodology: preserve the complete proven Architecture application and all
    zoom panels, but mount it in the ClusterTriage page shell. */
@@ -106,16 +127,22 @@
   .page-hero-side{border-left:0;border-top:1px solid #ffffff2e;padding:24px 0 0}
   .benefit-grid,.output-grid,.home-services{grid-template-columns:repeat(2,1fr)}
   .trust.ct-trust .trust-inner{grid-template-columns:repeat(2,1fr)}
+  .profile-grid{grid-template-columns:1fr}
 }
 
 @media(max-width:700px){
-  .brand.ct-brand,.brand.ct-brand b,.brand.ct-brand small{width:118px;min-width:118px}
-  .brand.ct-brand small{font-size:7.55px}
+  .brand.ct-brand b{font-size:20.5px}
+  .brand.ct-brand small{font-size:7.8px}
   .page-hero{padding-top:66px}
   .page-hero h1{font-size:clamp(44px,12.5vw,62px)}
   .benefit-grid,.output-grid,.people-grid,.home-services,.trust.ct-trust .trust-inner,.enterprise-points{grid-template-columns:1fr}
-  .person-card{grid-template-columns:56px 1fr;padding:22px;gap:16px}
-  .person-mark{width:52px;height:52px;font-size:14px}
+  .person-card{grid-template-columns:76px 1fr;padding:22px;gap:16px}
+  .person-photo,.person-mark{width:70px;height:70px}
+  .person-mark{font-size:16px}
+  .profile-card .profile-head{grid-template-columns:120px 1fr;min-height:170px}
+  .profile-card .profile-photo,.profile-card .profile-photo-placeholder{width:120px;min-height:170px}
+  .profile-card .profile-title,.profile-card .profile-body{padding:20px}
+  .profile-card h3{font-size:27px}
   .method-frame-wrap{padding:8px;border-radius:10px;margin-left:calc(var(--gutter) * -.45);margin-right:calc(var(--gutter) * -.45)}
   .method-preview-flow{grid-template-columns:1fr}
   .method-preview-flow .arrow{transform:rotate(90deg)}
