@@ -1,20 +1,18 @@
-/* ClusterTriage redesign v2 — page hierarchy, leadership and Methodology integration */
+/* ClusterTriage redesign v2 — page hierarchy, leadership and Method integration */
 
 /* Brand lock-up: make ClusterTriage itself a little larger so the wordmark
    and the strapline read as one balanced block. Do not stretch the strapline. */
 .brand.ct-brand{display:inline-flex;flex-direction:column;align-items:flex-start;width:max-content;min-width:max-content;line-height:1.04}
 .brand.ct-brand b{display:block;font-size:21.75px;letter-spacing:-.025em;white-space:nowrap}
 .brand.ct-brand small{display:block;margin-top:5px;font-family:var(--mono);font-size:8.2px;font-weight:500;line-height:1.1;letter-spacing:0;white-space:nowrap;color:var(--band-dim)}
-
-/* Main navigation is page-level now, not a collection of homepage anchors. */
 .navlinks a[aria-current="page"]{color:var(--band-ink)}
 .navlinks a[aria-current="page"]:after{right:0}
 
-/* Four equal proof items. */
-.trust.ct-trust .trust-inner{grid-template-columns:repeat(4,1fr)}
-.trust.ct-trust .cred{min-width:0}
+/* Equal proof rows: headings and supporting lines remain aligned even when a heading wraps. */
+.trust.ct-trust .trust-inner{grid-template-columns:repeat(4,1fr);align-items:stretch}
+.trust.ct-trust .cred{min-width:0;display:grid;grid-template-rows:minmax(58px,auto) minmax(34px,auto);align-content:start}
+.trust.ct-trust .cred b,.trust.ct-trust .cred i{align-self:start}
 
-/* Standalone page hero */
 .page-hero{background:radial-gradient(58% 72% at 78% 24%,rgba(63,182,216,.13),transparent 72%),linear-gradient(135deg,var(--band),var(--band-op) 62%,var(--band-rule));color:var(--band-ink);padding:88px var(--gutter) 82px}
 .page-hero-inner{max-width:var(--max);margin:auto;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(340px,.65fr);gap:72px;align-items:end}
 .page-hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(52px,6.5vw,88px);line-height:.99;letter-spacing:-.045em;margin:0 0 26px;text-wrap:balance}
@@ -24,20 +22,18 @@
 .page-hero-side p{margin:0 0 20px;color:var(--band-dim);font-size:14px}
 .page-hero-side strong{display:block;font-family:var(--serif);font-size:30px;font-weight:400;color:var(--band-ink);line-height:1.15;margin-bottom:7px}
 
-/* Home */
 .home-hero .hero-inner{grid-template-columns:minmax(0,1.05fr) minmax(400px,.95fr)}
 .home-hero h1{font-size:clamp(54px,7vw,94px)}
 .home-hero .assurance-visual{min-height:390px}
-.home-services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px}
-.home-service{border:1px solid var(--rule);background:var(--surface);padding:30px;min-height:260px;position:relative;text-decoration:none;color:var(--ink)}
+.home-services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px;align-items:stretch}
+.home-service{border:1px solid var(--rule);background:var(--surface);padding:30px;min-height:280px;position:relative;text-decoration:none;color:var(--ink);display:grid;grid-template-rows:22px minmax(78px,auto) minmax(94px,1fr) 24px;align-content:start}
 .home-service:before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--accent);transform:scaleX(.18);transform-origin:left;transition:transform .25s ease}
 .home-service:hover:before{transform:scaleX(1)}
 .home-service .n{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--accent)}
-.home-service h3{font-family:var(--serif);font-size:30px;font-weight:400;line-height:1.08;margin:30px 0 13px}
-.home-service p{font-size:14px;color:var(--dim);margin:0}
-.home-service .more{display:block;margin-top:22px;font-family:var(--mono);font-size:10px;color:var(--accent)}
+.home-service h3{font-family:var(--serif);font-size:30px;font-weight:400;line-height:1.08;margin:24px 0 13px;align-self:start}
+.home-service p{font-size:14px;color:var(--dim);margin:0;align-self:start}
+.home-service .more{display:block;margin:0;font-family:var(--mono);font-size:10px;color:var(--accent);align-self:end}
 
-/* Shared split feature */
 .feature-split{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:68px;align-items:center}
 .feature-copy h2{font-family:var(--serif);font-size:clamp(40px,5vw,64px);font-weight:400;line-height:1.03;letter-spacing:-.035em;margin:0 0 20px}
 .feature-copy p{color:var(--dim);font-size:16px;max-width:58ch}
@@ -50,46 +46,45 @@
 .method-preview-flow .node small{color:var(--band-dim);font-size:9px}
 .method-preview-flow .arrow{text-align:center;color:var(--band-accent);font-family:var(--mono)}
 
-/* Enterprise assurance */
-.benefit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px}
-.benefit-card{border:1px solid var(--rule);background:var(--surface);padding:30px;min-height:250px;position:relative}
+.benefit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px;align-items:stretch}
+.benefit-card{border:1px solid var(--rule);background:var(--surface);padding:30px;min-height:270px;position:relative;display:grid;grid-template-rows:22px minmax(96px,auto) 1fr;align-content:start}
 .benefit-card .n{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--accent)}
-.benefit-card h3{font-family:var(--serif);font-size:29px;font-weight:400;line-height:1.08;margin:30px 0 13px}
-.benefit-card p{font-size:14px;color:var(--dim);margin:0}
+.benefit-card h3{font-family:var(--serif);font-size:29px;font-weight:400;line-height:1.08;margin:24px 0 13px;align-self:start}
+.benefit-card p{font-size:14px;color:var(--dim);margin:0;align-self:start}
 .benefit-card:before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--accent);transform:scaleX(.18);transform-origin:left;transition:transform .25s ease}
 .benefit-card:hover:before{transform:scaleX(1)}
 .enterprise-band{background:var(--band);color:var(--band-ink);padding:82px var(--gutter)}
 .enterprise-band-inner{max-width:var(--max);margin:auto;display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:start}
 .enterprise-band h2{font-family:var(--serif);font-size:clamp(40px,5vw,64px);font-weight:400;line-height:1.03;letter-spacing:-.035em;margin:0}
 .enterprise-points{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--band-rule);border:1px solid var(--band-rule)}
-.enterprise-point{background:var(--band);padding:25px}
+.enterprise-point{background:var(--band);padding:25px;display:grid;grid-template-rows:minmax(27px,auto) 1fr}
 .enterprise-point b{display:block;color:var(--band-ink);margin-bottom:7px}
 .enterprise-point span{font-size:13px;color:var(--band-dim)}
 
-/* Output preview */
-.output-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
-.output-card{border:1px solid var(--rule);background:var(--surface);text-decoration:none;color:var(--ink);overflow:hidden;transition:border-color .2s ease,box-shadow .2s ease}
+.output-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px;align-items:stretch}
+.output-card{border:1px solid var(--rule);background:var(--surface);text-decoration:none;color:var(--ink);overflow:hidden;transition:border-color .2s ease,box-shadow .2s ease;display:grid;grid-template-rows:210px 1fr}
 .output-card:hover{border-color:var(--accent);box-shadow:0 18px 42px rgba(10,16,36,.09)}
 .output-card img{display:block;width:100%;height:210px;object-fit:cover;object-position:top;background:var(--ground);border-bottom:1px solid var(--rule)}
-.output-card .inside{padding:18px}
+.output-card .inside{padding:18px;display:grid;grid-template-rows:18px minmax(31px,auto) 1fr;align-content:start}
 .output-card .tag{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent)}
 .output-card h3{font-size:17px;margin:7px 0 6px}
 .output-card p{font-size:13px;color:var(--dim);margin:0}
 
-/* Leadership and profiles */
-.people-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:42px}
-.person-card{border:1px solid var(--rule);background:var(--surface);padding:30px;display:grid;grid-template-columns:104px 1fr;gap:24px;align-items:start}
+.people-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:42px;align-items:stretch}
+.person-card{border:1px solid var(--rule);background:var(--surface);padding:30px;display:grid;grid-template-columns:104px 1fr;gap:24px;align-items:start;height:100%}
 .person-photo,.person-mark{width:96px;height:96px;border-radius:12px;border:1px solid var(--rule);background:var(--ground)}
 .person-photo{display:block;object-fit:cover;object-position:center 22%}
 .person-photo.hans{object-position:center 18%}
 .person-mark{display:grid;place-items:center;background:var(--band);color:var(--band-accent);font-family:var(--mono);font-size:20px;letter-spacing:.04em;border-color:var(--band-rule)}
+.person-copy{display:grid;grid-template-rows:18px 44px minmax(86px,1fr) 22px;align-content:start;height:100%}
 .person-role{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:5px}
 .person-card h3{font-family:var(--serif);font-size:29px;font-weight:400;margin:0 0 10px}
 .person-card p{font-size:14px;color:var(--dim);margin:0 0 14px}
-.person-card a{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--accent);text-decoration:none}
+.person-card a{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--accent);text-decoration:none;align-self:end}
 .person-card a:hover{text-decoration:underline}
-.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:42px}
-.profile-card{border:1px solid var(--rule);background:var(--surface);overflow:hidden}
+
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:42px;align-items:stretch}
+.profile-card{border:1px solid var(--rule);background:var(--surface);overflow:hidden;display:grid;grid-template-rows:auto 1fr;height:100%}
 .profile-card .profile-head{display:grid;grid-template-columns:180px 1fr;min-height:220px;border-bottom:1px solid var(--rule)}
 .profile-card .profile-photo{width:180px;height:100%;min-height:220px;object-fit:cover;object-position:center 18%;background:var(--ground)}
 .profile-card .profile-photo-placeholder{width:180px;min-height:220px;display:grid;place-items:center;background:var(--band);color:var(--band-accent);font-family:var(--mono);font-size:34px;letter-spacing:.05em}
@@ -97,17 +92,14 @@
 .profile-card .profile-role{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:7px}
 .profile-card h3{font-family:var(--serif);font-size:34px;font-weight:400;line-height:1.05;margin:0 0 12px}
 .profile-card .profile-sub{font-size:14px;color:var(--dim);margin:0}
-.profile-card .profile-body{padding:28px}
+.profile-card .profile-body{padding:28px;display:grid;grid-template-rows:minmax(190px,auto) minmax(102px,auto) 24px;align-content:start}
+.profile-card .profile-copy{align-self:start}
 .profile-card .profile-body p{font-size:14px;color:var(--dim);margin:0 0 14px}
-.profile-card .profile-meta{display:grid;grid-template-columns:max-content 1fr;gap:5px 14px;margin:18px 0 0;padding-top:16px;border-top:1px solid var(--rule);font-size:12px;color:var(--dim)}
-.profile-card .profile-meta b{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint)}
-.profile-card .profile-link{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:10px;color:var(--accent);text-decoration:none}
+.profile-card .profile-link{display:inline-block;margin-top:6px;font-family:var(--mono);font-size:10px;color:var(--accent);text-decoration:none;align-self:end}
 .profile-card .profile-link:hover{text-decoration:underline}
-.profile-card .specialisations{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.profile-card .specialisations{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px;align-content:flex-start}
 .profile-card .specialisations span{font-family:var(--mono);font-size:9px;border:1px solid var(--rule);background:var(--ground);padding:5px 7px;color:var(--dim)}
 
-/* Methodology: preserve the complete proven Architecture application and all
-   zoom panels, but mount it in the ClusterTriage page shell. */
 .methodology-shell{background:var(--ground);padding:70px var(--gutter) 90px}
 .methodology-shell-inner{max-width:var(--max);margin:auto}
 .methodology-intro{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;margin-bottom:38px;align-items:start}
@@ -116,8 +108,6 @@
 .method-frame-wrap{border:1px solid var(--rule);background:#f4f7fa;border-radius:14px;padding:18px;box-shadow:0 24px 60px rgba(10,16,36,.08);overflow:hidden}
 .method-frame{display:block;width:100%;border:0;min-height:950px;background:transparent}
 .method-note{font-family:var(--mono);font-size:9px;color:var(--faint);margin:12px 2px 0;letter-spacing:.03em}
-
-/* About */
 .about-story{display:grid;grid-template-columns:.82fr 1.18fr;gap:70px;align-items:start}
 .about-story h2{font-family:var(--serif);font-weight:400;font-size:clamp(40px,5vw,64px);line-height:1.03;letter-spacing:-.035em;margin:0}
 .about-story p{font-size:16px;color:var(--dim);margin:0 0 16px}
@@ -128,22 +118,15 @@
   .benefit-grid,.output-grid,.home-services{grid-template-columns:repeat(2,1fr)}
   .trust.ct-trust .trust-inner{grid-template-columns:repeat(2,1fr)}
   .profile-grid{grid-template-columns:1fr}
+  .profile-card .profile-body{grid-template-rows:auto auto auto}
 }
-
 @media(max-width:700px){
-  .brand.ct-brand b{font-size:20.5px}
-  .brand.ct-brand small{font-size:7.8px}
-  .page-hero{padding-top:66px}
-  .page-hero h1{font-size:clamp(44px,12.5vw,62px)}
+  .brand.ct-brand b{font-size:20.5px}.brand.ct-brand small{font-size:7.8px}
+  .page-hero{padding-top:66px}.page-hero h1{font-size:clamp(44px,12.5vw,62px)}
   .benefit-grid,.output-grid,.people-grid,.home-services,.trust.ct-trust .trust-inner,.enterprise-points{grid-template-columns:1fr}
-  .person-card{grid-template-columns:76px 1fr;padding:22px;gap:16px}
-  .person-photo,.person-mark{width:70px;height:70px}
-  .person-mark{font-size:16px}
-  .profile-card .profile-head{grid-template-columns:120px 1fr;min-height:170px}
-  .profile-card .profile-photo,.profile-card .profile-photo-placeholder{width:120px;min-height:170px}
-  .profile-card .profile-title,.profile-card .profile-body{padding:20px}
-  .profile-card h3{font-size:27px}
+  .trust.ct-trust .cred,.home-service,.benefit-card,.person-copy{grid-template-rows:auto}
+  .person-card{grid-template-columns:76px 1fr;padding:22px;gap:16px}.person-photo,.person-mark{width:70px;height:70px}.person-mark{font-size:16px}
+  .profile-card .profile-head{grid-template-columns:120px 1fr;min-height:170px}.profile-card .profile-photo,.profile-card .profile-photo-placeholder{width:120px;min-height:170px}.profile-card .profile-title,.profile-card .profile-body{padding:20px}.profile-card h3{font-size:27px}
   .method-frame-wrap{padding:8px;border-radius:10px;margin-left:calc(var(--gutter) * -.45);margin-right:calc(var(--gutter) * -.45)}
-  .method-preview-flow{grid-template-columns:1fr}
-  .method-preview-flow .arrow{transform:rotate(90deg)}
+  .method-preview-flow{grid-template-columns:1fr}.method-preview-flow .arrow{transform:rotate(90deg)}
 }
