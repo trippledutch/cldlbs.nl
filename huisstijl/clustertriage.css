@@ -8,8 +8,7 @@
 /* Brand lock-up */
 .brand.ct-brand{display:flex;flex-direction:column;line-height:1.05;min-width:max-content}
 .brand.ct-brand b{font-size:20px;letter-spacing:-.02em}
-.brand.ct-brand small{margin-top:5px;font-family:var(--mono);font-size:8px;font-weight:500;letter-spacing:.11em;text-transform:uppercase;color:var(--band-dim)}
-.brand.ct-brand .by{color:var(--band-faint)}
+.brand.ct-brand small{margin-top:5px;font-family:var(--mono);font-size:10.5px;line-height:1.15;font-weight:500;letter-spacing:.065em;white-space:nowrap;color:var(--band-dim)}
 
 /* Homepage hero */
 .assurance-hero{padding-top:86px;padding-bottom:82px}
