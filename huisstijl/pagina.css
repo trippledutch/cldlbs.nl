@@ -35,7 +35,7 @@
   --opgelost:#0CA678; --accepted:#868E96; --geen:#2B8A3E;
 
   --sans:ATOnsite,Arial,sans-serif;
-  --serif:ATStringer,Georgia,serif;
+  --serif:ATOnsite,Arial,sans-serif;
   --mono:CLMono,ui-monospace,SFMono-Regular,Menlo,monospace;
   /* de nog in te vullen waarde van .invul in voorbeeld.css. Stond daar hard
      in het bestand; hier als token, zodat de donkere stand hem mee kan nemen. */
