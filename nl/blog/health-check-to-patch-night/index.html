@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A1024">
+<title>Van Health Check tot Patch Night: de CloudLabs-werkwijze in de praktijk &middot; ClusterTriage</title>
+<meta name="description" content="Dit artikel volgt een praktijkvoorbeeld van de vijfstaps CloudLabs-werkwijze, toegepast op een productie Hyper-V cluster. Twaalf High Risk-bevindingen werden ontdekt, opgelost in afhankelijkheidsvolgorde, opnieuw gemeten om de fixes te verifiëren, en daarna uitgevoerd als een patchrun zo schoon dat ">
+<link rel="canonical" href="https://clustertriage.com/nl/blog/health-check-to-patch-night/">
+<link rel="alternate" hreflang="nl" href="https://clustertriage.com/nl/blog/health-check-to-patch-night/">
+<link rel="alternate" hreflang="en" href="https://clustertriage.com/en/blog/health-check-to-patch-night/">
+<link rel="alternate" hreflang="x-default" href="https://clustertriage.com/en/blog/health-check-to-patch-night/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:url" content="https://clustertriage.com/nl/blog/health-check-to-patch-night/">
+<meta property="og:title" content="Van Health Check tot Patch Night: de CloudLabs-werkwijze in de praktijk">
+<meta property="og:description" content="Dit artikel volgt een praktijkvoorbeeld van de vijfstaps CloudLabs-werkwijze, toegepast op een productie Hyper-V cluster. Twaalf High Risk-bevindingen werden ontdekt, opgelost in afhankelijkheidsvolgorde, opnieuw gemeten om de fixes te verifiëren, en daarna uitgevoerd als een patchrun zo schoon dat ">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=011923a6">
+<link rel="stylesheet" href="/huisstijl/artikel.css?v=9a147c57">
+<link rel="stylesheet" href="/huisstijl/clustertriage.css?v=250eb31b">
+<link rel="stylesheet" href="/huisstijl/clustertriage-v2.css?v=c711d81a">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://clustertriage.com/nl/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://clustertriage.com/nl/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Van Health Check tot Patch Night: de CloudLabs-werkwijze in de praktijk",
+          "item": "https://clustertriage.com/nl/blog/health-check-to-patch-night/"
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://clustertriage.com/nl/blog/health-check-to-patch-night/#artikel",
+      "headline": "Van Health Check tot Patch Night: de CloudLabs-werkwijze in de praktijk",
+      "description": "Dit artikel volgt een praktijkvoorbeeld van de vijfstaps CloudLabs-werkwijze, toegepast op een productie Hyper-V cluster. Twaalf High Risk-bevindingen werden ontdekt, opgelost in afhankelijkheidsvolgorde, opnieuw gemeten om de fixes te verifiëren, en daarna uitgevoerd als een patchrun zo schoon dat ",
+      "inLanguage": "nl-NL",
+      "datePublished": "2026-06-12",
+      "dateModified": "2026-06-12",
+      "mainEntityOfPage": "https://clustertriage.com/nl/blog/health-check-to-patch-night/",
+      "articleSection": "Clustergezondheid",
+      "author": {
+        "@type": "Person",
+        "name": "Hans Vredevoort",
+        "jobTitle": "Cluster- en virtualisatiespecialist",
+        "knowsAbout": [
+          "Hyper-V",
+          "Failover Clustering",
+          "Azure Local",
+          "Storage Spaces Direct",
+          "Windows Server"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ClusterTriage",
+        "url": "https://clustertriage.com/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://clustertriage.com/nl/blog/health-check-to-patch-night/#vragen",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Wat is de CloudLabs-werkwijze voor een Health Check?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "De vijfstaps werkwijze: (1) Intake: begrijp topologie, storage, tooling, backup, monitoring. (2) Scripted inventory: read-only, herhaalbare PowerShell over alle nodes. (3) Analyse: vergelijk met Microsoft-baselines, rangschik afwijkingen op risico. (4) Bevindingen-document: gestructureerde output met herhaalde metingen om remediation te verifiëren. (5) Actielijst: voer aanbevelingen uit in afhankelijkheidsvolgorde, bewaakt door validatie."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Waarom heeft dit cluster twaalf High Risk-bevindingen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Clock drift tot 86 seconden (breekt Kerberos en CSV), geen Defender exclusions (veroorzaakt trage I/O), pending reboots op vijf nodes, en zeven maanden gemiste patches. Niets daarvan zichtbaar op een dashboard dat alleen groene VM's toont. Een gescripte meting vindt wat dashboards verbergen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wat bewaakte de patchrun?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Klokken binnen een seconde, pending reboots opgelost, WinRM bereikbaar op alle nodes, en DNS geverifieerd, kritiek omdat de domeincontrollers midden in een migratie zaten. Elke voorwaarde had een verificatiestap. Een volledige Failover Cluster Validation, met elke regel gelezen en niets overgeslagen, was het laatste groene licht."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hoelang duurde de patchrun?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Van 06:37 tot 09:08 Amsterdamse tijd (2 uur en 31 minuten). Zes nodes, 23 updates geïnstalleerd, nul fouten, nul geannuleerd. Elke node weer up, elke VM waar die hoort, voordat de eerste gebruikers binnenkwamen op een rustige vrijdagochtend."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Waarom werd de Linux-VM uitgeschakeld vóór het patchen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "De VM had een bekend Live Migration-probleem dat een drain om drie uur 's nachts zou laten vastlopen. Het script verifieert expliciet dat de VM offline is en breekt af als dat niet zo is, want een vastgelopen drain midden in het patchen is onacceptabel. Bekende blokkades moeten vóór de run zijn weggenomen."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Naar inhoud</a><header class="topbar"><nav class="nav"><a class="brand ct-brand" href="/nl/"><b>Cluster<span>Triage</span></b><small>Decades of server expertise</small></a><div class="navlinks" id="navlinks"><a href="/nl/assurance/">Assurance</a><a href="/nl/methodologie/">Methode</a><a href="/nl/over-ons/">Over ons</a><a href="/nl/blog/" aria-current="page">Blog</a><a href="https://clusterdown.com/nl/">Cluster down?</a><span class="lang-set"><span aria-current="true">NL</span><a href="/en/blog/health-check-to-patch-night/">EN</a></span></div><div class="nav-actions"><a class="btn primary" href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Plan een kennismaking</a><button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button></div></nav></header>
+
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+  <article class="artikelpagina">
+
+    <p class="kruimelpad"><a href="/nl/">ClusterTriage</a> / <a href="/nl/blog/">Blog</a> / Clustergezondheid</p>
+
+    <header class="artikelkop">
+      <h1>Van Health Check tot Patch Night: de CloudLabs-werkwijze in de praktijk</h1>
+      <p class="lede">Dit artikel volgt een praktijkvoorbeeld van de vijfstaps CloudLabs-werkwijze, toegepast op een productie Hyper-V cluster. Twaalf High Risk-bevindingen werden ontdekt, opgelost in afhankelijkheidsvolgorde, opnieuw gemeten om de fixes te verifiëren, en daarna uitgevoerd als een patchrun zo schoon dat de on-call beheerder niet uit bed hoefde.</p>
+      <p class="artikelmeta"><b>Door Hans Vredevoort</b> <i>&middot;</i> <b>12 juni 2026</b> <i>&middot;</i> <b>9 minuten leestijd</b> <i>&middot;</i> <b>Clustergezondheid</b></p>
+    </header>
+
+    <div class="artikelbody">
+      <nav class="toc" aria-label="Inhoud van dit artikel">
+        <p class="toc-title">In dit artikel</p>
+        <ol start="0">
+            <li><a href="#nl-1">De situatie geschetst</a></li>
+            <li><a href="#nl-2">Intake, weet waar je staat</a></li>
+            <li><a href="#nl-3">Scripted inventory: read-only, herhaalbaar, geen agents</a></li>
+            <li><a href="#nl-4">Analyse op basis van best practice: getallen, geen indrukken</a></li>
+            <li><a href="#nl-5">Het Bevindingen-document en een herhaalde meting</a></li>
+            <li><a href="#nl-6">De actielijst en de afhankelijkheidsketen die alles bewaakt</a></li>
+            <li><a href="#nl-7">De patch-night</a></li>
+            <li><a href="#nl-8">Waarom dit werkte en wat het kostte</a></li>
+          </ol>
+      </nav>
+
+      <div class="tekst">
+<h2 id="nl-1">0. De situatie geschetst</h2>
+        <p>Dit was een geplande Windows Update-ronde op een productie multi-site Hyper-V cluster: zes Windows Server 2022 nodes, verspreid over twee Nederlandse datacenters, met ongeveer 135 VM's. De updates waren bewust ingepland als laatste stap van een Health Check engagement, na meerdere dagen remediation verspreid over enkele weken, en op afstand uitgevoerd met Cluster Aware Updating.</p>
+        <p>Mijn ochtend in Bangkok had ik besteed aan de laatste controles: het run script, een nieuwe DNS-audit van alle nodes, en een volledige Failover Cluster Validation, allemaal schoon om kwart over elf. Daarna, om 06:37 Amsterdamse tijd, terwijl de beheerders van de klant nog sliepen, startte ik de run. Om 09:08 was het klaar: 23 updates geïnstalleerd, nul fouten, nul geannuleerd, elke node weer up, elke VM waar die hoort, voordat de eerste gebruikers binnenkwamen op een stille vrijdagochtend. Een van de twee beheerders was met vakantie. De ander checkte in via Teams, midden in een wandeling met zijn hond, toen de run al bijna klaar was. Niemand hoefde uit bed.</p>
+        <p>Dat is het hele verhaal, en dat is precies het punt. Een patchrun op een productie multi-site cluster zou de saaiste gebeurtenis van de maand moeten zijn. Dat was het ook, maar alleen omdat alles wat eraan voorafging zo zorgvuldig was uitgevoerd.</p>
+
+        <h2 id="nl-2">1. Intake, weet waar je staat</h2>
+        <p>De eerste stap van de CloudLabs-werkwijze. Elk engagement begint met een gesprek over topologie, storagemodel, beheertools, backup, monitoring en recente incidenten. Niet omdat het een formaliteit is, maar omdat elk later oordeel ervan afhangt.</p>
+        <p>Dit cluster: de zes nodes van hierboven, SAN-storage via iSCSI op dedicated 25 GbE-netwerken, SET virtual switches voor LAN en Live Migration, beheerd via Virtual Machine Manager, geback-upt met Veeam. De VM's waren ongelijk verdeeld over de twee sites.</p>
+        <p>De intake brengt ook aan het licht wat er in beweging is. Hier waren dat twee dingen: de klant was halverwege het vervangen van zijn domeincontrollers, waardoor het DNS-landschap onder het cluster veranderde, en een Linux-VM had een bekend live-migratieprobleem. Beide zouden er aan het eind toe doen. Een intake die de bewegende delen mist, levert een Bevindingen-document op dat al verouderd is bij aflevering.</p>
+
+        <h2 id="nl-3">2. Scripted inventory: read-only, herhaalbaar, geen agents</h2>
+        <p>Stap twee. De data komt van PowerShell-inventarisatiescripts die op maat voor de omgeving zijn geschreven, uitgevoerd vanaf de eigen managementserver van de klant. Niets wordt geïnstalleerd, niets wordt veranderd. Het inventory script is read-only by design en zegt dat in de header, omdat degene die de run goedkeurt dat in de source moet kunnen verifiëren.</p>
+        <p>Een paar designkeuzes hebben zich over meerdere engagements bewezen:</p>
+        <p><strong>Pre-flight vóór inventory.</strong> Fase 0 test elke node op DNS-resolutie in het management-subnet, ICMP, WinRM-bereikbaarheid, listener-bindings en firewallstatus. Elke node die pre-flight niet doorstaat, wordt uitgesloten van alle volgende secties, met een inline banner die de server benoemt, zodat het rapport zelfdocumenterend blijft in plaats van stil onvolledig.</p>
+        <p><strong>Hervatbaarheid.</strong> Een state file registreert welke secties klaar zijn. Als een run wordt onderbroken bij sectie 9 van 12, begint de volgende run bij sectie 10 en voegt toe aan hetzelfde outputbestand. Op een zes-node cluster duurt een volledige inventory lang; die verliezen door een verbroken sessie is niet acceptabel.</p>
+        <p><strong>Resultaat.</strong> De output is één tekstbestand. Het toont de verschillen ten opzichte van de vorige meting, wat van groot belang is voor stap vier.</p>
+
+        <h2 id="nl-4">3. Analyse op basis van best practice: getallen, geen indrukken</h2>
+        <p>Stap drie. Elk gegeven wordt vergeleken met de Microsoft-baseline voor de topologie, en elke afwijking krijgt een risiconiveau met een ondersteunende referentie. De eerste volledige meting van dit cluster leverde twaalf High Risk-bevindingen op. Een voorbeeld, want het zijn de concrete getallen die een Bevindingen-document bruikbaar maken:</p>
+        <p><strong>Clock drift tot 86 seconden.</strong> Eén site was schoon, binnen een seconde. De andere site, plus een verdwaalde node, zat er 64 tot 86 seconden naast. Dat patroon wijst op een mislukte time source aan de ene kant, niet op willekeurige drift. Kerberos tolereert vijf minuten; CSV ownership en cluster heartbeats degraderen veel eerder. Bevinding, richting van de root cause, en een harde randvoorwaarde: geen patchronde tot alle nodes binnen een seconde van elkaar liggen.</p>
+        <p><strong>Defender-uitsluitingen: leeg op alle zes nodes.</strong> Geen paths, geen processen, geen extensies. Elke VHDX-I/O kwam in aanmerking voor real-time scanning, de meest voorkomende oorzaak van Event ID 9 (trage I/O op een clustered volume) en vrijwel zeker de reden achter de trage backup-window waar de klant al een jaar mee leefde.</p>
+        <p><strong>Pending reboots op vijf van de zes nodes,</strong> bevestigd tot in PendingFileRenameOperations in de registry, met ongeveer 200 dagen sinds de laatste restart.</p>
+        <p><strong>Patch-level zeven maanden achter.</strong> De nieuwste hotfix op elke node dateerde van oktober vorig jaar.</p>
+        <p>Geen ervan is exotisch. Allemaal onzichtbaar op een dashboard dat alleen groene VM's toont.</p>
+
+        <h2 id="nl-5">4. Het Bevindingen-document en een herhaalde meting</h2>
+        <p>Stap vier. Bevindingen worden verzameld in een gestructureerd document: (1) huidige situatie, (2) best practice, (3) afwijking, (4) aanbeveling, (5) actie, (6) referentie, kleurgecodeerd op risico. Maar een Bevindingen-document is een momentopname, en remediation verandert het beeld. Daarom krijgt het document deltaversies: meet opnieuw, vergelijk met het vorige outputbestand, en verplaats bevindingen pas naar opgelost wanneer de data dat bevestigt.</p>
+        <p>Die discipline werkt beter dan een afvinklijst. Een voorbeeld dat het delen waard is: de klant rolde de Defender exclusions uit via Group Policy, exact zoals aanbevolen. De verificatie-run liet zien dat alle zes nodes nog steeds alles scanden. De oorzaak zat in de GPO-editor: in de Administrative Template voor exclusions waren de waardenaam en de waarde verwisseld. Defender neemt de waardenaam als de exclusion, dus de policy had twintig labels als exclusion list geladen en sloot in feite niets uit. Kolommen omdraaien, gpupdate, opnieuw verifiëren: 162 checks passed. Zonder een herhaalde meting met het script zou die policy er jarenlang compliant uit blijven zien.</p>
+        <p>Over drie deltacycli kromp de High Risk-lijst van twaalf naar een handvol: BIOS-versies gelijkgetrokken over de sites, drivers gelijkgetrokken, pending reboots van vóór de Health Check opgelost via een gecontroleerde restartcyclus (weken vóór de patchrun), clock drift opgelost bij de time source, exclusions geverifieerd actief. Wat High Risk bleef, was de patch backlog zelf, bewust als laatste gepland, want een cluster patchen met verbroken time sync, openstaande file renames en een veranderende DNS-laag is precies hoe je een backlog in een storing verandert.</p>
+
+        <h2 id="nl-6">5. De actielijst en de afhankelijkheidsketen die alles bewaakt</h2>
+        <p>De vijfde stap zet aanbevelingen om in een actieplan, en de volgorde is daarbij doorslaggevend. Elke actie krijgt een eigenaar, een afhankelijkheidsketen en een verificatiestap. Voor de patchrun zag de keten er zo uit: klokken binnen een seconde, pending reboots opgelost, WinRM bereikbaar op alle nodes, en, vanwege de lopende domeincontroller-migratie, DNS geverifieerd schoon op elke node.</p>
+        <p>Die laatste vereiste verdient nadruk. De nieuwe domeincontrollers hadden andere IP-adressen dan de servers die ze vervingen. Een clusternode die midden in het patchen herstart en opstart terwijl hij naar een buiten gebruik gestelde resolver wijst, kan mogelijk niet schoon rejoinen. Dus op de ochtend van de run draaide opnieuw een standalone read-only DNS-audit over iedere node: ingestelde DNS-servers, suffixes, registration settings, met een expliciete match flag tegen de lijst met oude DC-adressen. Nul hits. Elke node verwees naar twee geldige, nieuwe domeincontrollers.</p>
+        <p>Daarna de laatste randvoorwaarde: een volledige Failover Cluster Validation. Geen gedeeltelijke run, het hele rapport inclusief storage, en elke regel gelezen, niets overgeslagen. Het kwam schoon terug. Dat was het groene licht.</p>
+
+        <h2 id="nl-7">6. De patch-night</h2>
+        <p>De run zelf was gescript rond Invoke-CauRun in remote-updating mode. Geen CAU-clusterrol, geen virtual computer-object, geen permanent account in het cluster, omdat deze klant doelbewust patcht, op zijn eigen schema, niet automatisch. Het script doet vier dingen die de moeite waard zijn om te kopiëren.</p>
+        <p><strong>De checks zijn op maat gemaakt voor de omgeving.</strong> Alle zes nodes actief, geen al lopende CAU-run, en één zeer specifieke check: de Linux-VM met het bekende Live Migration-probleem was van tevoren handmatig uitgeschakeld, met de cluster stop action navenant ingesteld. Het script verifieert dat de VM daadwerkelijk offline is en stopt als dat niet zo is, omdat een onvolledige drain midden in het patchen niet acceptabel is. (Dit had geautomatiseerd kunnen worden met een successful-run trigger, maar handmatig uitschakelen was veiliger: als een geautomatiseerd script een VM stopt en daarna midden in het patchen blijft hangen, moet je aan de klant uitleggen waarom hun VM offline is. Dat risico is het niet waard.)</p>
+        <p><strong>Het script patcht één site per keer.</strong> CAU heeft geen native site awareness, maar -NodeOrder accepteert een expliciete lijst. Eerst de drie nodes op site 1, daarna die op site 2. Op een multi-site cluster houd je zo het verhaal rond failovercapaciteit op elk moment van de run eenvoudig: hooguit één node down, en je weet altijd welke site de gedrainde workload draait.</p>
+        <pre><code>$cauParams = @{
+    ClusterName           = $Cluster          # FQDN
+    CauPluginName         = 'Microsoft.WindowsUpdatePlugin'
+    NodeOrder             = $NodeOrder        # site 1, then site 2
+    RequireAllNodesOnline = $true
+    Force                 = $true
+    EnableFirewallRules   = $true
+}
+$job = Start-Job { param($p)
+    Import-Module ClusterAwareUpdating
+    Invoke-CauRun @p
+} -ArgumentList $cauParams</code></pre>
+        <p><strong>Het laat je zien wat er gebeurt.</strong> Invoke-CauRun blokkeert en drukt niets nuttigs af naar de console. Door het als background job te starten blijft de main thread vrij om Get-CauRun en Get-ClusterNode elke twintig seconden te pollen en alleen de wijzigingen te tonen: een node die naar Suspending gaat terwijl hij draint, Restarting bij een herstart, de cluster state die naar Down klapt en terug naar Up. Ik volgde de run tijdens een ontspannen lunch aan mijn bureau: de tamelijk saaie logfeed die zijn voortgang toonde op het ene scherm, Failover Cluster Manager open op de node in behandeling op het tweede, en de Cluster Aware Updating-console op het derde. Alle drie waren het elke twintig seconden met elkaar eens. Het was duidelijk dat dit uitstekend ging. Die driedubbele bevestiging is het verschil tussen vertrouwen en bijna drie uur lang zenuwachtig verversen.</p>
+        <p><strong>Een valse start.</strong> De eerste poging stierf in zes seconden op een foute pluginnaam (Microsoft.WindowsUpdatePlugin, niet Microsoft.WindowsUpdate; Get-CauPlugin geeft de geregistreerde namen weer). De les die daarna in het script is ingebakken: verzamel de error stream van de job en meld de fout luid, want een script dat "complete" afdrukt na een run die nooit begon, is erger dan geen script.</p>
+        <p>De run installeerde de cumulatieve update, de .NET-rollup en de definition updates op elke node, waarbij elke node om de beurt werd gedraind, gepatcht, herstart en hervat, eerst de ene site en daarna de andere. Get-CauReport bevestigde het daarna: succeeded, drieëntwintig updates, niets gefaald, niets geannuleerd.</p>
+
+        <h2 id="nl-8">7. Waarom dit werkte en wat het kostte</h2>
+        <p>De verleiding bij een patch backlog van zeven maanden is om de updates gewoon uit te voeren en te hopen. De backlog was het symptoom dat zichtbaar was. De omstandigheden die patchen gevaarlijk maakten, driftende klokken, verouderde openstaande operaties, een niet-geverifieerde policy-rollout, een DNS-laag midden in een migratie, waren niet zichtbaar totdat het inventarisatiescript ze had gemeten.</p>
+        <p>In die volgorde doet de werkwijze haar werk. Meet alles, benoem de afwijkingen, bepaal de afhankelijkheidsvolgorde, meet opnieuw na elke wijziging, en voer dan pas de riskante operatie uit, afgeschermd achter een laatste validatie en verpakt in een script dat zijn eigen precondities controleert. De patch-night was saai omdat niets eraan aan het toeval werd overgelaten, inclusief de timing. Het verschil van vijf tot zes uur tussen Bangkok en Nederland blijkt een echt operationeel voordeel voor kritiek onderhoud. Ik kon uitgerust aan de laatste checks beginnen, het CAU-script starten in het rustigste uur van de klant, en zag het klaar zijn tijdens mijn lunch, terwijl hun werkdag net begon.</p>
+
+        <div class="mid-cta">
+          <span class="label">Je volgende patchronde</span>
+          <p>Waar staat je cluster voordat je aan de volgende Windows Update begint? Een CloudLabs Hyper-V Cluster Health Check volgt precies deze werkwijze, en eindigt met de gescripte patchrun die het verschil maakt tussen een saaie nacht en een incident om drie uur 's nachts.</p>
+          <a href="/book.html">Boek een Hyper-V Cluster Health Check →</a>
+        </div>
+
+        <div class="faq-block">
+          <h2>Veelgestelde vragen</h2>
+          <div class="faq-q">Wat is de CloudLabs-werkwijze voor een Health Check?</div>
+          <p>De vijfstaps werkwijze: (1) Intake: begrijp topologie, storage, tooling, backup, monitoring. (2) Scripted inventory: read-only, herhaalbare PowerShell over alle nodes. (3) Analyse: vergelijk met Microsoft-baselines, rangschik afwijkingen op risico. (4) Bevindingen-document: gestructureerde output met herhaalde metingen om remediation te verifiëren. (5) Actielijst: voer aanbevelingen uit in afhankelijkheidsvolgorde, bewaakt door validatie.</p>
+          <div class="faq-q">Waarom heeft dit cluster twaalf High Risk-bevindingen?</div>
+          <p>Clock drift tot 86 seconden (breekt Kerberos en CSV), geen Defender exclusions (veroorzaakt trage I/O), pending reboots op vijf nodes, en zeven maanden gemiste patches. Niets daarvan zichtbaar op een dashboard dat alleen groene VM's toont. Een gescripte meting vindt wat dashboards verbergen.</p>
+          <div class="faq-q">Wat bewaakte de patchrun?</div>
+          <p>Klokken binnen een seconde, pending reboots opgelost, WinRM bereikbaar op alle nodes, en DNS geverifieerd, kritiek omdat de domeincontrollers midden in een migratie zaten. Elke voorwaarde had een verificatiestap. Een volledige Failover Cluster Validation, met elke regel gelezen en niets overgeslagen, was het laatste groene licht.</p>
+          <div class="faq-q">Hoelang duurde de patchrun?</div>
+          <p>Van 06:37 tot 09:08 Amsterdamse tijd (2 uur en 31 minuten). Zes nodes, 23 updates geïnstalleerd, nul fouten, nul geannuleerd. Elke node weer up, elke VM waar die hoort, voordat de eerste gebruikers binnenkwamen op een rustige vrijdagochtend.</p>
+          <div class="faq-q">Waarom werd de Linux-VM uitgeschakeld vóór het patchen?</div>
+          <p>De VM had een bekend Live Migration-probleem dat een drain om drie uur 's nachts zou laten vastlopen. Het script verifieert expliciet dat de VM offline is en breekt af als dat niet zo is, want een vastgelopen drain midden in het patchen is onacceptabel. Bekende blokkades moeten vóór de run zijn weggenomen.</p>
+        </div>
+<div class="related">
+        <h3>Gerelateerde artikelen</h3>
+        <ul>
+          <!--LINK:top-10-hyper-v-cluster-issues--><li><a href="/nl/blog/top-10-hyper-v-cluster-issues/">Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026</a></li><!--/LINK:top-10-hyper-v-cluster-issues-->
+          <!--LINK:cluster-aware-updating-runbook-audit-trail--><!--draft:<li><a href="/nl/blog/cluster-aware-updating-runbook-audit-trail/">Cluster Aware Updating: runbook, audit trail, en wat niemand documenteert</a></li>--><!--/LINK:cluster-aware-updating-runbook-audit-trail-->
+        </ul>
+      </div>
+      </div>
+    </div>
+
+  </article>
+</section>
+</main>
+
+<footer class="ct-footer"><div class="ct-footer-inner"><div class="ct-footer-brand"><b>Cluster<span>Triage</span></b><p>Onafhankelijke Failover Cluster Assessment, Risk &amp; Remediation Assurance.</p></div><div><h4>Dienst</h4><a href="/nl/assurance/">Assurance</a><a href="/nl/methodologie/">Methode</a></div><div><h4>Bedrijf</h4><a href="/nl/over-ons/">Over ons</a><a href="/nl/blog/">Blog</a><a href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Contact</a></div><div><h4>Incident</h4><a href="https://clusterdown.com/nl/">ClusterDown</a></div></div><div class="ct-footer-bottom"><span>© ClusterTriage</span><span>Windows Server · Hyper-V · Failover Clustering · Storage Spaces Direct · Azure Local</span></div></footer><script>(function(){{var m=document.getElementById('menu'),n=document.getElementById('navlinks');if(m&&n)m.addEventListener('click',function(){{var o=m.getAttribute('aria-expanded')==='true';m.setAttribute('aria-expanded',String(!o));n.classList.toggle('open',!o)}});}})();</script></body></html>

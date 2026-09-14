@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A1024">
+<title>Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026 &middot; ClusterTriage</title>
+<meta name="description" content="Na jaren van Hyper-V Health Checks in Windows Server 2016-, 2019-, 2022- en 2025-omgevingen komen tien bevindingen telkens terug. Over branches, schaalgroottes en beheerteams heen. Geen ervan is exotisch. De meeste blijven stil totdat een patch-ronde, een hardware-refresh of één switch-reboot ze om ">
+<link rel="canonical" href="https://clustertriage.com/nl/blog/top-10-hyper-v-cluster-issues/">
+<link rel="alternate" hreflang="nl" href="https://clustertriage.com/nl/blog/top-10-hyper-v-cluster-issues/">
+<link rel="alternate" hreflang="en" href="https://clustertriage.com/en/blog/top-10-hyper-v-cluster-issues/">
+<link rel="alternate" hreflang="x-default" href="https://clustertriage.com/en/blog/top-10-hyper-v-cluster-issues/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:url" content="https://clustertriage.com/nl/blog/top-10-hyper-v-cluster-issues/">
+<meta property="og:title" content="Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026">
+<meta property="og:description" content="Na jaren van Hyper-V Health Checks in Windows Server 2016-, 2019-, 2022- en 2025-omgevingen komen tien bevindingen telkens terug. Over branches, schaalgroottes en beheerteams heen. Geen ervan is exotisch. De meeste blijven stil totdat een patch-ronde, een hardware-refresh of één switch-reboot ze om ">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=011923a6">
+<link rel="stylesheet" href="/huisstijl/artikel.css?v=9a147c57">
+<link rel="stylesheet" href="/huisstijl/clustertriage.css?v=250eb31b">
+<link rel="stylesheet" href="/huisstijl/clustertriage-v2.css?v=c711d81a">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://clustertriage.com/nl/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://clustertriage.com/nl/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026",
+          "item": "https://clustertriage.com/nl/blog/top-10-hyper-v-cluster-issues/"
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://clustertriage.com/nl/blog/top-10-hyper-v-cluster-issues/#artikel",
+      "headline": "Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026",
+      "description": "Na jaren van Hyper-V Health Checks in Windows Server 2016-, 2019-, 2022- en 2025-omgevingen komen tien bevindingen telkens terug. Over branches, schaalgroottes en beheerteams heen. Geen ervan is exotisch. De meeste blijven stil totdat een patch-ronde, een hardware-refresh of één switch-reboot ze om ",
+      "inLanguage": "nl-NL",
+      "datePublished": "2026-05-15",
+      "dateModified": "2026-05-16",
+      "mainEntityOfPage": "https://clustertriage.com/nl/blog/top-10-hyper-v-cluster-issues/",
+      "articleSection": "Clustergezondheid",
+      "author": {
+        "@type": "Person",
+        "name": "Hans Vredevoort",
+        "jobTitle": "Cluster- en virtualisatiespecialist",
+        "knowsAbout": [
+          "Hyper-V",
+          "Failover Clustering",
+          "Azure Local",
+          "Storage Spaces Direct",
+          "Windows Server"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ClusterTriage",
+        "url": "https://clustertriage.com/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://clustertriage.com/nl/blog/top-10-hyper-v-cluster-issues/#vragen",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Hoe lang duurt een Hyper-V Cluster Health Check?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Een typische opdracht voor een cluster tot acht nodes duurt twee tot drie werkdagen: één dag inventarisatie via PowerShell-scripts die de klant zelf uitvoert, één dag analyse, een halve dag rapportage en presentatie."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Heeft een Health Check impact op productie?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "De inventarisatie-scripts zijn read-only en draaien zonder impact tijdens kantoortijden. De optionele Test-Cluster validatie kan ook op een productiecluster veilig worden uitgevoerd wanneer de storage-tests worden overgeslagen, of wanneer een aparte test-LUN beschikbaar is die niet door een clusterrol wordt gebruikt. Een volledige storage-validatie op productie-CSV's vereist dat die CSV's tijdelijk offline worden genomen voor de duur van de test, en dat plannen wij altijd buiten kantoortijden, in overleg met de klant."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wat is het verschil tussen een Health Check en een audit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Een Health Check is technisch en gericht op operationele stabiliteit, performance en supportability. Een audit is breder en raakt vaak ook security en compliance. Wij doen Health Checks; voor audits werken we samen met partners."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Werkt dit ook voor Azure Local of Azure Stack HCI clusters?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ja, met een aangepaste scope. Storage Fabric- en Storage Array-secties vervangen we door een Storage Spaces Direct-sectie. Zie Azure Local migratie-readiness checklist."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Bieden jullie ook remediation, of alleen advies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Beide. Een Health Check kan op zichzelf opgeleverd worden, of als startpunt voor een remediation-traject waar wij de gevonden issues samen met de klant oplossen."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Naar inhoud</a><header class="topbar"><nav class="nav"><a class="brand ct-brand" href="/nl/"><b>Cluster<span>Triage</span></b><small>Decades of server expertise</small></a><div class="navlinks" id="navlinks"><a href="/nl/assurance/">Assurance</a><a href="/nl/methodologie/">Methode</a><a href="/nl/over-ons/">Over ons</a><a href="/nl/blog/" aria-current="page">Blog</a><a href="https://clusterdown.com/nl/">Cluster down?</a><span class="lang-set"><span aria-current="true">NL</span><a href="/en/blog/top-10-hyper-v-cluster-issues/">EN</a></span></div><div class="nav-actions"><a class="btn primary" href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Plan een kennismaking</a><button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button></div></nav></header>
+
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+  <article class="artikelpagina">
+
+    <p class="kruimelpad"><a href="/nl/">ClusterTriage</a> / <a href="/nl/blog/">Blog</a> / Clustergezondheid</p>
+
+    <header class="artikelkop">
+      <h1>Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026</h1>
+      <p class="lede">Na jaren van Hyper-V Health Checks in Windows Server 2016-, 2019-, 2022- en 2025-omgevingen komen tien bevindingen telkens terug. Over branches, schaalgroottes en beheerteams heen. Geen ervan is exotisch. De meeste blijven stil totdat een patch-ronde, een hardware-refresh of één switch-reboot ze om 03:00 's nachts tot een Sev-1-incident maakt.</p>
+        <p class="lede">Dit artikel is de praktijklijst. Per issue de oorzaak, de PowerShell om het te diagnosticeren, en de remediation die wij in het rapport voor de klant documenteren. Herken je drie of meer in je eigen omgeving? Dat is geen uitschieter, dat is het gemiddelde.</p>
+      <p class="artikelmeta"><b>Door Hans Vredevoort</b> <i>&middot;</i> <b>15 mei 2026</b> <i>&middot;</i> <b>14 minuten leestijd</b> <i>&middot;</i> <b>Clustergezondheid</b></p>
+    </header>
+
+    <div class="artikelbody">
+      <nav class="toc" aria-label="Inhoud van dit artikel">
+        <p class="toc-title">In dit artikel</p>
+        <ol>
+            <li><a href="#nl-1">Live Migration over het verkeerde netwerk</a></li>
+            <li><a href="#nl-2">Witness verkeerd geconfigureerd of afwezig</a></li>
+            <li><a href="#nl-3">CSV ownership-onbalans</a></li>
+            <li><a href="#nl-4">Firmware- en driver-drift tussen nodes</a></li>
+            <li><a href="#nl-5">Verschillende Windows Server build-nummers</a></li>
+            <li><a href="#nl-6">Geen anti-affinity voor DC's en management-VM's</a></li>
+            <li><a href="#nl-7">CSV BlockCache uit of te klein</a></li>
+            <li><a href="#nl-8">Cluster-netwerk op één fysiek pad</a></li>
+            <li><a href="#nl-9">Niet-ondersteunde of niet-gevalideerde storage-configuraties</a></li>
+            <li><a href="#nl-10">Geen gedocumenteerde DR-validatie</a></li>
+          </ol>
+      </nav>
+
+      <div class="tekst">
+<h2 id="nl-1">1. Live Migration over het verkeerde netwerk</h2>
+        <p>De meest voorkomende bevinding. Live Migration valt terug op het management- of heartbeat-VLAN omdat het toegewezen migratienetwerk niet is aangezet voor clusterverkeer, of nooit is toegevoegd aan de expliciete Live Migration-lijst per Hyper-V host. Het symptoom is zelden een failure. Wel trage migraties tijdens patch-vensters en onverklaarbare latency op cluster-heartbeats wanneer meerdere VM's tegelijk verplaatsen.</p>
+        <p>Twee configuratie-vlakken zijn relevant. De <code>Role</code> per cluster-netwerk op clusterniveau, en de expliciete Live Migration-netwerklijst per host. Die zijn onafhankelijk. Wij vinden regelmatig dat het ene correct staat en het andere vergeten is. Volledige uitleg in <!--LINK:live-migration-wrong-network--><a href="/nl/blog/live-migration-wrong-network/">Live Migration over het verkeerde netwerk: een veelvoorkomende Hyper-V valkuil</a><!--/LINK:live-migration-wrong-network-->.</p>
+        <p>Belangrijk detail bij diagnose: sinds Windows Server 2016 is de default-transportmodus voor Live Migration SMB, dus verkeer loopt over poort 445, niet over de oude TCP-poort 6600. Filteren op alleen 6600 levert op moderne clusters geen resultaat op.</p>
+
+        <p><strong>Diagnose:</strong></p>
+<pre><code># Cluster-netwerkrollen
+Get-ClusterNetwork | Select-Object Name, Role, Address, AutoMetric, Metric
+
+# Live Migration-configuratie per host
+Get-VMHost | Select-Object Name, VirtualMachineMigrationEnabled,
+    VirtualMachineMigrationAuthenticationType,
+    VirtualMachineMigrationPerformanceOption,
+    @{N='MigrationNetworks';E={(Get-VMMigrationNetwork).Subnet -join ', '}}
+
+# Effectief pad tijdens een test-move (SMB-modus: poort 445, TCP-modus: poort 6600)
+Get-NetTCPConnection -RemotePort 445,6600 |
+    Select-Object LocalAddress, RemoteAddress, OwningProcess</code></pre>
+
+        <p>Voor de zekerheid: een korte <code>pktmon</code>-capture op de bron-NIC tijdens een handmatige Live Migration geeft uitsluitsel over welk fysiek pad daadwerkelijk wordt gebruikt.</p>
+
+        <p><strong>Oplossen:</strong> beperk op iedere host de Live Migration-netwerklijst tot het subnet dat je daadwerkelijk wilt gebruiken, en zorg dat dat subnet op het clusterobject <code>Role = ClusterAndClient</code> (of alleen <code>Cluster</code>) heeft. <code>Add-VMMigrationNetwork</code> voegt een subnet toe, <code>Remove-VMMigrationNetwork</code> verwijdert ongewenste subnets. Valideer end-to-end met een handmatige Live Migration.</p>
+
+        <div class="callout"><strong>CloudLabs bevindingen-template</strong>
+        Wij rapporteren dit met severity <em>Hoog</em> wanneer management- of heartbeat-netwerken Live Migration-verkeer zien. Het bedreigt rechtstreeks de cluster-stabiliteit onder load. De remediation-stap is scripted en wordt live geverifieerd vóór sign-off.</div>
+
+        <h2 id="nl-2">2. Witness verkeerd geconfigureerd of afwezig</h2>
+        <p>Quorum is het onzichtbare stuk dat een cluster overeind houdt als nodes verdwijnen. We vinden regelmatig two-node clusters zonder witness, File Share Witnesses op een single-node, single-disk fileserver zonder UPS, en Disk Witnesses op dezelfde SAN-LUN als de CSV's die ze moeten beschermen.</p>
+        <p>Over Dynamic Quorum: op Windows Server 2016 en hoger combineert Dynamic Quorum met Dynamic Witness, en het cluster past de votes dynamisch aan om enkelvoudige failures te overleven. Dat is geen vervanging voor een witness. Bij een gelijktijdige netwerkpartitie of dubbele uitval zonder externe tiebreaker is split-brain niet betrouwbaar opgelost. Een witness blijft vereist voor elke productieconfiguratie.</p>
+
+<pre><code>Get-ClusterQuorum | Format-List *
+
+Get-ClusterResource | Where-Object {$_.OwnerGroup -eq 'Cluster Group'} |
+    Format-Table Name, State, OwnerNode, ResourceType</code></pre>
+
+        <p><strong>Beslissingsmatrix als vuistregel:</strong></p>
+        <ul>
+          <li><strong>Single-site twee nodes:</strong> Cloud Witness, per definitie buiten je failure domain.</li>
+          <li><strong>Single-site drie of meer nodes:</strong> Cloud Witness, tenzij Azure-connectivity geen optie is, anders File Share Witness op infrastructuur die echt onafhankelijk is.</li>
+          <li><strong>Two-site stretched:</strong> Cloud Witness, of een File Share Witness in een derde site, nooit in een van de twee cluster-sites.</li>
+          <li><strong>Disconnected of air-gapped:</strong> File Share Witness op gedocumenteerd onafhankelijke storage en voeding.</li>
+        </ul>
+        <p>Volledige vergelijking in <!--LINK:cluster-witness-comparison--><a href="/nl/blog/cluster-witness-comparison/">File Share Witness vs Cloud Witness vs Disk Witness: welk type kies je?</a><!--/LINK:cluster-witness-comparison-->.</p>
+
+        <h2 id="nl-3">3. CSV ownership-onbalans</h2>
+        <p>Cluster Shared Volume-eigendom stapelt zich op één node na een patch-ronde, een failover, of een node-drain die niemand achteraf herbalanceerd heeft. Het symptoom is ongelijke CPU op de coordinator-node en read-heavy workloads die latency-pieken ervaren die er random uitzien, totdat je ze correleert met CSV-ownership.</p>
+
+<pre><code># Huidige verdeling
+Get-ClusterSharedVolume | Select-Object Name, OwnerNode, State |
+    Group-Object OwnerNode | Select-Object Name, Count
+
+# Rebalance round-robin over actieve nodes, met korte pauze per move
+$nodes = (Get-ClusterNode | Where-Object State -eq 'Up').Name
+$i = 0
+Get-ClusterSharedVolume | ForEach-Object {
+    Move-ClusterSharedVolume -Name $_.Name -Node $nodes[$i % $nodes.Count]
+    Start-Sleep -Seconds 5
+    $i++
+}</code></pre>
+
+        <p>Elke move veroorzaakt een korte I/O-pauze op de betrokken CSV. Plan rebalance in een rustig venster of na een patch-ronde, niet midden op de dag. Wij behandelen dit als een doorlopende operationele taak; de post-patch checklist in onze remediation-rapporten eindigt altijd met een CSV-rebalance. Diepere uitleg in <!--LINK:csv-ownership-imbalance--><a href="/nl/blog/csv-ownership-imbalance/">CSV ownership-onbalans: oorzaken en oplossingen</a><!--/LINK:csv-ownership-imbalance-->.</p>
+
+        <h2 id="nl-4">4. Firmware- en driver-drift tussen nodes</h2>
+        <p>Cluster-nodes komen identiek uit de doos en drijven langzaam uit elkaar. Eén host krijgt een NIC-firmware update tijdens een incident, een andere een nieuwe HBA-driver tijdens een gepland onderhoudsvenster, een derde geen van beide. Zes maanden later faalt het cluster op subtiele manieren: Live Migration duurt drie keer zo lang over een Intel X710 versus een Mellanox CX-4, of storage-timeouts treden alleen op één host op.</p>
+        <p>Dit is de voornaamste oorzaak van intermitterende cluster-instabiliteit die wij onderzoeken. Firmware-drift is onzichtbaar voor de meeste monitoring-tools, omdat de waarden in de BMC of NIC-EEPROM zitten, niet in Windows.</p>
+
+<pre><code># NIC driver-versie per node (firmware via Windows is vendor-afhankelijk)
+Invoke-Command -ComputerName (Get-ClusterNode).Name {
+    Get-NetAdapter | Select-Object PSComputerName, Name, InterfaceDescription,
+        DriverVersion, DriverDate
+} | Sort-Object PSComputerName, Name
+
+# Storport en MPIO driver-versies
+Invoke-Command -ComputerName (Get-ClusterNode).Name {
+    Get-CimInstance Win32_PnPSignedDriver |
+        Where-Object DeviceClass -in 'SCSIADAPTER','SYSTEM' |
+        Select-Object PSComputerName, DeviceName, DriverVersion, DriverDate
+}</code></pre>
+
+        <p>Voor betrouwbare firmware-inventarisatie van NIC's, HBA's en BIOS zijn vendor-tools nodig: Dell iDRAC (<code>racadm</code>), HPE iLO (<code>ilorest</code> of SUM), Lenovo XClarity Controller, Supermicro IPMI. Windows-cmdlets zoals <code>Get-NetAdapterAdvancedProperty -RegistryKeyword '*FirmwareVersion'</code> werken voor sommige Mellanox- en Intel-drivers, maar niet universeel.</p>
+
+        <p><strong>Oplossen:</strong> behandel firmware als configuratie. Zet een baseline (vendor solution profile van Dell, HPE of Lenovo), documenteer het in je runbook, en upgrade het cluster als geheel tijdens een gepland venster.</p>
+
+        <h2 id="nl-5">5. Verschillende Windows Server build-nummers</h2>
+        <p>De Cluster Service tolereert kortdurende mixed-builds tijdens een rolling patch, maar wij vinden regelmatig clusters die al een half jaar mid-patch staan. Het resultaat zijn functionele regressies: een fix in een latere CU is intermitterend omdat de helft van de nodes hem mist, en het gedrag hangt af van welke node een resource bezit op het moment van falen.</p>
+
+<pre><code>Invoke-Command -ComputerName (Get-ClusterNode).Name {
+    [PSCustomObject]@{
+        Node     = $env:COMPUTERNAME
+        OS       = (Get-CimInstance Win32_OperatingSystem).Caption
+        Build    = (Get-CimInstance Win32_OperatingSystem).BuildNumber
+        UBR      = (Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion').UBR
+        LastBoot = (Get-CimInstance Win32_OperatingSystem).LastBootUpTime
+    }
+} | Sort-Object Node</code></pre>
+
+        <p>Als de <code>UBR</code>-kolom verschillende waarden toont over nodes, staat het cluster in een toestand die Microsoft Support eerst gerepareerd wil zien voor zij escaleren. Patch het cluster als geheel, valideer met <code>Test-Cluster</code>, en behandel de post-patch toestand als de nieuwe known-good.</p>
+
+        <h2 id="nl-6">6. Geen anti-affinity voor DC's en management-VM's</h2>
+        <p>Na een node-drain belanden alle domain controllers vrolijk op dezelfde overlevende host. Eén host-crash legt dan tegelijk alle DC's stil, en daarmee de authenticatie voor de hele omgeving, inclusief de management-plane die je nodig hebt om het cluster te herstellen.</p>
+
+<pre><code># Clustered VM's zonder anti-affinity
+Get-ClusterGroup | Where-Object GroupType -eq 'VirtualMachine' |
+    Select-Object Name, OwnerNode, AntiAffinityClassNames |
+    Where-Object {-not $_.AntiAffinityClassNames}
+
+# Anti-affinity instellen voor alle DC's
+Get-ClusterGroup | Where-Object Name -like 'DC*' | ForEach-Object {
+    $g = Get-ClusterGroup -Name $_.Name
+    $g.AntiAffinityClassNames.Clear()
+    $g.AntiAffinityClassNames.Add('DomainControllers') | Out-Null
+}</code></pre>
+
+        <p>Anti-affinity is <em>soft</em>: het wordt geschonden als er geen andere geldige host is. Dat is precies het juiste gedrag. Het cluster houdt de DC's draaiend; het stapelt ze alleen niet standaard op.</p>
+
+        <h2 id="nl-7">7. CSV BlockCache uit of te klein</h2>
+        <p>CSV BlockCache was jarenlang opt-in en veel oudere clusters staan nog op nul. Aanzetten voor read-heavy workloads (VDI, fileserver-clusters, OLTP-databases met hoge cache-locality) kan read-latency een orde van grootte verlagen zonder risico voor data-integriteit. Het is een read-side cache, geen write buffer.</p>
+
+<pre><code># Huidige waarde
+(Get-Cluster).BlockCacheSize
+
+# Aanzetten op een vijf-node cluster, 2 GB per node
+(Get-Cluster).BlockCacheSize = 2048
+
+# Per-CSV cache-status verifiëren
+Get-ClusterSharedVolume | ForEach-Object {
+    $_ | Select-Object Name,
+        @{N='CacheEnabled';E={$_.SharedVolumeInfo.Partition.IsCsvCacheEnabled}}
+}</code></pre>
+
+        <p><strong>Belangrijk:</strong> de nieuwe BlockCache-waarde wordt pas actief per CSV nadat die offline en weer online gaat, of na een cluster-restart. In productie betekent dit een gefaseerde rebalance, niet een directe activatie. Plan dat in.</p>
+        <p>De trade-off is RAM. Dimensioneer op basis van je VM-dichtheid en bevestig in echte workloads dat de node nog headroom heeft voor VM-consolidatie onder N-1 condities. Dimensioneer BlockCache niet vanuit de failover-geëvacueerde toestand.</p>
+
+        <h2 id="nl-8">8. Cluster-netwerk op één fysiek pad</h2>
+        <p>Cluster-heartbeats die via één switch of één uplink lopen. Wij zien dit vooral in lift-and-shift cluster-builds waar het oorspronkelijke twee-switchontwerp in de inkoopfase is uitgekleed. Resultaat: een switch-reboot, een stack-split of een falende SFP partitioneert het cluster, en de overlevende partitie arbitreert slecht omdat de witness ook via datzelfde pad bereikbaar is.</p>
+        <p>Cluster-netwerken vereisen redundantie op <strong>laag 1</strong>, niet alleen op IP-niveau. Twee NIC's in dezelfde switch is geen redundantie. Geteamde NIC's over twee switches is het minimum voor productie.</p>
+        <p>Over teaming-technologie: LBFO (Load Balancing and Failover) wordt op Windows Server 2022 en 2025 niet ondersteund onder de Hyper-V virtuele switch. SET (Switch Embedded Teaming) is de enige ondersteunde optie voor nieuwe deployments. Bestaande LBFO-teams die nog onder Hyper-V vSwitch hangen op deze OS-versies zijn een hard remediation-punt, geen advies.</p>
+        <p>Tijdens een Hyper-V Cluster Health Check traceren wij cluster-heartbeatverkeer altijd tot de fysieke poort, niet alleen de logische NIC-naam.</p>
+
+        <h2 id="nl-9">9. Niet-ondersteunde of niet-gevalideerde storage-configuraties</h2>
+        <p>De vergaarbak. Voorbeelden die wij hebben opgeschreven:</p>
+        <ul>
+          <li>SMB Direct-paden gepresenteerd als RDMA-capable omdat de NIC RoCEv2 ondersteunt, maar DCB en PFC zijn niet ingericht op switch-zijde. Stille terugval naar TCP zonder waarschuwing. iWARP heeft deze switch-afhankelijkheid niet, RoCEv2 wel.</li>
+          <li>SMB Multichannel over ongelijksoortige NIC's (één 25 GbE, één 10 GbE), waar het cluster voor de helft van de sessies het tragere pad kiest.</li>
+          <li>MPIO met Round Robin op een active/passive array die sterk de voorkeur geeft aan één controller.</li>
+          <li>S2D-deployments waar één node na een hardware-swap een afwijkende drive bay-configuratie heeft, onzichtbaar voor het cluster maar zichtbaar in Storage Spaces health.</li>
+        </ul>
+
+        <p>Valideren met de native tools, productie-veilige variant zonder storage-disruptie:</p>
+<pre><code>Test-Cluster -Include 'Inventory','Network','System Configuration','Cluster Configuration' `
+             -ReportName HealthCheck
+
+Get-SmbClientNetworkInterface | Select-Object FriendlyName, RdmaCapable, Speed, IpAddress
+
+Get-PhysicalDisk | Group-Object MediaType, OperationalStatus, FirmwareVersion</code></pre>
+
+        <p>Een volledige storage-validatie inclusief de Storage-categorie vereist een onderhoudsvenster of een aparte test-LUN die niet door een clusterrol wordt gebruikt.</p>
+
+        <h2 id="nl-10">10. Geen gedocumenteerde DR-validatie</h2>
+        <p>Stretched- of multisite-clusters die nog nooit end-to-end zijn omgeklapt. Het runbook bestaat, het storage-replicatie dashboard staat groen, en niemand heeft het ooit in productie daadwerkelijk geprobeerd. Een Health Check brengt vaak het verschil tussen runbook en werkelijkheid aan het licht: DNS-TTL's die te lang zijn, applicatielaag-connectionstrings die hardcoded naar één site verwijzen, witness-plaatsing die de test niet overleeft.</p>
+        <p>We adviseren minimaal een jaarlijkse geplande failover, behandeld als productie-impact en gerepeteerd in een onderhoudsvenster.</p>
+
+        <h2>Het patroon achter de lijst</h2>
+        <p>Negen van deze tien bevindingen hebben niets met workload-performance te maken. Het is stille configuration debt die zich opbouwt over patch-cycli, hardware-refreshes en personeelswissels. Het is óók precies het type bevinding dat monitoring-tools missen, omdat ze in isolatie correct lijken: een witness bestaat, een Live Migration-netwerk is geconfigureerd, CSV-ownership is valide. De drift zit in de relatie tussen instellingen, en de enige betrouwbare manier om dat boven water te krijgen is een gestructureerd extern onderzoek.</p>
+        <p>Herken je drie of meer issues hierboven? Je staat niet alleen, en de fix kost meestal niet meer dan één wekelijks onderhoudsvenster.</p>
+        <p><a href="/book.html"><strong>Plan een Hyper-V Cluster Health Check kennismaking →</strong></a></p>
+
+        <div class="faq-block">
+          <h2>Veelgestelde vragen</h2>
+
+          <div class="faq-q">Hoe lang duurt een Hyper-V Cluster Health Check?</div>
+          <p>Een typische opdracht voor een cluster tot acht nodes duurt twee tot drie werkdagen: één dag inventarisatie via PowerShell-scripts die de klant zelf uitvoert, één dag analyse, een halve dag rapportage en presentatie.</p>
+
+          <div class="faq-q">Heeft een Health Check impact op productie?</div>
+          <p>De inventarisatie-scripts zijn read-only en draaien zonder impact tijdens kantoortijden. De optionele <code>Test-Cluster</code> validatie kan ook op een productiecluster veilig worden uitgevoerd wanneer de storage-tests worden overgeslagen, of wanneer een aparte test-LUN beschikbaar is die niet door een clusterrol wordt gebruikt. Een volledige storage-validatie op productie-CSV's vereist dat die CSV's tijdelijk offline worden genomen voor de duur van de test, en dat plannen wij altijd buiten kantoortijden, in overleg met de klant.</p>
+
+          <div class="faq-q">Wat is het verschil tussen een Health Check en een audit?</div>
+          <p>Een Health Check is technisch en gericht op operationele stabiliteit, performance en supportability. Een audit is breder en raakt vaak ook security en compliance. Wij doen Health Checks; voor audits werken we samen met partners.</p>
+
+          <div class="faq-q">Werkt dit ook voor Azure Local of Azure Stack HCI clusters?</div>
+          <p>Ja, met een aangepaste scope. Storage Fabric- en Storage Array-secties vervangen we door een Storage Spaces Direct-sectie. Zie <!--LINK:azure-local-migration-readiness--><a href="/nl/blog/azure-local-migration-readiness/">Azure Local migratie-readiness checklist</a><!--/LINK:azure-local-migration-readiness-->.</p>
+
+          <div class="faq-q">Bieden jullie ook remediation, of alleen advies?</div>
+          <p>Beide. Een Health Check kan op zichzelf opgeleverd worden, of als startpunt voor een remediation-traject waar wij de gevonden issues samen met de klant oplossen.</p>
+        </div>
+<div class="related">
+        <h3>Gerelateerde artikelen</h3>
+        <ul>
+          <!--LINK:csv-ownership-imbalance--><li><a href="/nl/blog/csv-ownership-imbalance/">CSV ownership-onbalans: oorzaken en oplossingen</a></li><!--/LINK:csv-ownership-imbalance-->
+          <!--LINK:live-migration-wrong-network--><li><a href="/nl/blog/live-migration-wrong-network/">Live Migration over het verkeerde netwerk</a></li><!--/LINK:live-migration-wrong-network-->
+          <!--LINK:cluster-witness-comparison--><li><a href="/nl/blog/cluster-witness-comparison/">File Share Witness vs Cloud Witness vs Disk Witness</a></li><!--/LINK:cluster-witness-comparison-->
+          <!--LINK:azure-local-migration-readiness--><li><a href="/nl/blog/azure-local-migration-readiness/">Azure Local migratie-readiness checklist</a></li><!--/LINK:azure-local-migration-readiness-->
+        </ul>
+      </div>
+      </div>
+    </div>
+
+  </article>
+</section>
+</main>
+
+<footer class="ct-footer"><div class="ct-footer-inner"><div class="ct-footer-brand"><b>Cluster<span>Triage</span></b><p>Onafhankelijke Failover Cluster Assessment, Risk &amp; Remediation Assurance.</p></div><div><h4>Dienst</h4><a href="/nl/assurance/">Assurance</a><a href="/nl/methodologie/">Methode</a></div><div><h4>Bedrijf</h4><a href="/nl/over-ons/">Over ons</a><a href="/nl/blog/">Blog</a><a href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Contact</a></div><div><h4>Incident</h4><a href="https://clusterdown.com/nl/">ClusterDown</a></div></div><div class="ct-footer-bottom"><span>© ClusterTriage</span><span>Windows Server · Hyper-V · Failover Clustering · Storage Spaces Direct · Azure Local</span></div></footer><script>(function(){{var m=document.getElementById('menu'),n=document.getElementById('navlinks');if(m&&n)m.addEventListener('click',function(){{var o=m.getAttribute('aria-expanded')==='true';m.setAttribute('aria-expanded',String(!o));n.classList.toggle('open',!o)}});}})();</script></body></html>
