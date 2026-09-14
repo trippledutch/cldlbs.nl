@@ -492,6 +492,15 @@ body{font-family:var(--sans)}
 [id]{scroll-margin-top:100px}
 @media(max-width:800px){ [id]{scroll-margin-top:78px} }
 
+/* Zelfde probleem, maar dan voor scrollIntoView() vanuit de architecture-
+   source.html-iframe op de Methode-pagina: die iframe is even hoog als zijn
+   eigen inhoud (geen eigen scrollbalk), dus een klik op een zoompanel
+   scrollt het BUITENste venster. scroll-margin-top op het doelelement zit
+   in het andere document en helpt daar niet; scroll-padding-top op html van
+   dit document wel, want dat is de scrollbox die uiteindelijk beweegt. */
+html{scroll-padding-top:100px}
+@media(max-width:800px){ html{scroll-padding-top:78px} }
+
 /* De strook was op 166px gezet toen de omschrijvingen nog drie regels liepen.
    Nu alles op twee regels past bleef daar lege ruimte onder staan. */
 .trust{min-height:118px;padding:18px var(--gutter)}
