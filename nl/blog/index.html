@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0A1024"><title>Blog · Notities uit het cluster · ClusterTriage</title><meta name="description" content="Praktische artikelen over Hyper-V clustergezondheid, Azure Local readiness, CSV-ownership, Live Migration-netwerken en cluster witnesses."><link rel="canonical" href="https://clustertriage.com/nl/blog/"><link rel="alternate" hreflang="nl" href="https://clustertriage.com/nl/blog/"><link rel="alternate" hreflang="en" href="https://clustertriage.com/en/blog/"><link rel="alternate" hreflang="x-default" href="https://clustertriage.com/en/blog/"><link rel="icon" href="/favicon.png" type="image/png"><link rel="stylesheet" href="/huisstijl/pagina.css?v=011923a6"><link rel="stylesheet" href="/huisstijl/clustertriage.css?v=250eb31b"><link rel="stylesheet" href="/huisstijl/clustertriage-v2.css?v=c711d81a"><link rel="stylesheet" href="/huisstijl/blog.css?v=f86bb677">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Blog","name":"ClusterTriage Blog","url":"https://clustertriage.com/nl/blog/","description":"Praktische artikelen over Hyper-V clustergezondheid, Azure Local readiness en Windows Server clusterbeheer."}
+</script>
+</head>
+<body><a class="skip" href="#main">Naar inhoud</a><header class="topbar"><nav class="nav"><a class="brand ct-brand" href="/nl/"><b>Cluster<span>Triage</span></b><small>Decades of server expertise</small></a><div class="navlinks" id="navlinks"><a href="/nl/assurance/">Assurance</a><a href="/nl/methodologie/">Methode</a><a href="/nl/over-ons/">Over ons</a><a href="/nl/blog/" aria-current="page">Blog</a><a href="https://clusterdown.com/nl/">Cluster down?</a><span class="lang-set"><span aria-current="true">NL</span><a href="/en/blog/">EN</a></span></div><div class="nav-actions"><a class="btn primary" href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Plan een kennismaking</a><button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button></div></nav></header>
+<main id="main"><section class="page-hero"><div class="page-hero-inner"><div><p class="eyebrow">Blog</p><h1>Notities<br><em>uit het cluster.</em></h1><p class="hero-copy">Praktische artikelen op basis van echte Hyper-V-clustermetingen. Bevindingen die we steeds tegenkomen, beslissingen die u in één keer goed wilt maken, en migratiepaden die in productie ook echt werken.</p></div><aside class="page-hero-side"><p><strong>Echte bevindingen</strong>uit meting, niet uit mening</p><p><strong>13 artikelen</strong>en groeiend</p><p><strong>Doorzoekbaar</strong>op categorie en zoekterm</p></aside></div></section>
+
+<section class="section"><div class="inner">
+
+<div class="blog-filter" role="group" aria-label="Artikelen filteren">
+  <div id="blogCats" class="bf-cats"></div>
+  <div class="bf-searchrow">
+    <div class="bf-search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <input id="blogSearch" type="search" autocomplete="off" spellcheck="false" aria-label="Zoek in artikelen" placeholder="Zoek in artikelen...">
+    </div>
+    <span id="blogCount" class="bf-count" aria-live="polite" hidden></span>
+  </div>
+</div>
+
+<div class="blog-grid">
+
+<a class="blog-card featured" href="/nl/blog/windows-server-2025-hyper-v-cluster-features/">
+  <span class="tag">Windows Server 2025</span>
+  <h2>Windows Server 2025 Hyper-V: wat het werkelijk toevoegt voor cluster operators</h2>
+  <p>De vier Hyper-V-features die er werkelijk toe doen voor cluster operators: Dynamic CPU compatibility, GPU-P voor productie, vTPM 2.0 standaard, hot-patching, plus de 2012 R2/2016 guest-valkuil en een upgradestrategie in 6 stappen.</p>
+  <div class="meta">2026-07-22 · 13 min leestijd</div>
+  <span class="read-more">Lees artikel →</span>
+</a>
+
+<a class="blog-card featured" href="/nl/blog/reporting-remediation-progress/">
+  <span class="tag">Clustergezondheid</span>
+  <h2>Hoe we de Hyper-V clustermeting opvolgen</h2>
+  <p>Een health check is geen eenmalige PDF. Hoe voortgang van remediatie wordt gerapporteerd over meetrondes: een delta-rapport, een restrisico-rapport en een risico-trendgrafiek.</p>
+  <div class="meta">2026-06-18 · 11 min leestijd</div>
+  <span class="read-more">Lees artikel →</span>
+</a>
+
+<a class="blog-card featured" href="/nl/blog/top-10-hyper-v-cluster-issues/">
+  <span class="tag">Clustergezondheid</span>
+  <h2>Hyper-V clustermeting: 10 issues die we steeds vinden in 2026</h2>
+  <p>Na jaren van opdrachten komen tien bevindingen telkens terug. Live Migration-netwerken, witness-problemen, firmware-drift, CSV-onbalans, met PowerShell-diagnostiek en remediation per issue.</p>
+  <div class="meta">2026-05-15 · 14 min leestijd</div>
+  <span class="read-more">Lees artikel →</span>
+</a>
+
+<a class="blog-card" href="/nl/blog/azure-local-vs-classic-hyper-v-cluster/">
+  <span class="tag">Strategie</span>
+  <h2>Wat gaat het worden: klassiek Hyper-V of Azure Local?</h2>
+  <p>Azure Stack HCI is weg. Wanneer een klassiek Hyper-V failover cluster op gedeelde storage wint van Azure Local met Arc, en wanneer niet. Met een poll.</p>
+  <div class="meta">2026-06-25 · 5 min leestijd</div>
+  <span class="read-more">Lees artikel →</span>
+</a>
+
+<a class="blog-card" href="/nl/blog/csv-ownership-imbalance/">
+  <span class="tag">Storage</span>
+  <h2>CSV-ownership-onbalans in Hyper-V clusters: oorzaken en oplossingen</h2>
+  <p>Eén node die alle CSV's bezit is een stille performance-killer. Waarom ownership scheef raakt na patching of failover, de gemeten impact (4,5x slechtere P99 read-latency), en hoe je veilig herbalanceert.</p>
+  <div class="meta">2026-06-23 · 12 min leestijd</div>
+  <span class="read-more">Lees artikel →</span>
+</a>
+
+<a class="blog-card" href="/nl/blog/aligning-vms-with-storage/">
+  <span class="tag">Storage</span>
+  <h2>VM's uitlijnen met hun storage: voortbouwen op het script van Darryl van der Peijl</h2>
+  <p>Hoe het klassieke align-VMs-with-storage script van Darryl van der Peijl werd uitgebouwd tot een site-bewuste, CSV-ownership-first placement balancer voor productie-Hyper-V-clusters, met WhatIf-veiligheid en before/after-visualisatie.</p>
+  <div class="meta">2026-06-18 · 10 min leestijd</div>
+  <span class="read-more">Lees artikel →</span>
+</a>
+
+<a class="blog-card" href="/nl/blog/health-check-to-patch-night/">
+  <span class="tag">Clustergezondheid</span>
+  <h2>Van meting tot patch night: de werkwijze in de praktijk</h2>
+  <p>Een praktijkvoorbeeld van de vijfstaps werkwijze: meten, rangschikken, in volgorde repareren, opnieuw meten, uitvoeren. Hoe een multi-site Hyper-V cluster van twaalf High Risk bevindingen naar een schone, saaie patchnacht ging.</p>
+  <div class="meta">2026-06-12 · 9 min leestijd</div>
+  <span class="read-more">Lees artikel →</span>
+</a>
+
+<a class="blog-card" href="/nl/blog/azure-local-documented-flaws-exit-strategy/">
+  <span class="tag">Azure Local</span>
+  <h2>Azure Local in 2026: de gebreken zijn gedocumenteerd. Plan je exit voordat je instapt.</h2>
+  <p>Microsoft documenteert de problemen zelf: fragiele solution updates, de Arc-certificaatketting, een disconnected modus die zijn eigen doel tegenspreekt. De vier kwalificerende vragen, de Server 2022 rollback-mythe, en waarom Veeam het exitpad is dat je op dag één ontwerpt.</p>
+  <div class="meta">2026-06-11 · 12 min leestijd</div>
+  <span class="read-more">Lees artikel →</span>
+</a>
+
+<a class="blog-card" href="/nl/blog/secure-boot-2023-certificates-hyper-v-gen2-vms/">
+  <span class="tag">Failover Clustering</span>
+  <h2>Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM's niet bijwerken in 2026</h2>
+  <p>De Microsoft Secure Boot-certificaten uit 2011 verlopen vanaf juni 2026. Op Windows Server Gen 2-VM's gaat de 2023-update niet automatisch en mislukt hij vaak stilletjes met Event ID 1795, opt-in gezet, certificaten afwezig, elk dashboard groen. Diagnose, herstel, voorkom de bootmedia-valkuil.</p>
+  <div class="meta">2026-06-05 · 13 min leestijd</div>
+  <span class="read-more">Lees artikel →</span>
+</a>
+
+<a class="blog-card" href="/nl/blog/azure-local-migration-readiness/">
+  <span class="tag">Azure Local</span>
+  <h2>Azure Local migratie readiness checklist: wat 2026 anders maakt</h2>
+  <p>Weg van VMware of een verouderd Hyper-V cluster vervangen? Praktische readiness-checklist voor hardware-compatibiliteit, RDMA-netwerk, Entra ID, licensing, operationele shift, en de gotchas die projecten breken.</p>
+  <div class="meta">2026-06-01 · 16 min leestijd</div>
+  <span class="read-more">Lees artikel →</span>
+</a>
+
+<a class="blog-card" href="/nl/blog/hyper-v-time-drift-kerberos-csv/">
+  <span class="tag">Time Service</span>
+  <h2>Time drift in Hyper-V clusters: de stille killer van Kerberos en CSV</h2>
+  <p>Vijf minuten klok-skew breekt Kerberos, vijftig seconden breekt heartbeats. De w32time-hiërarchie voor Hyper-V hosts, PDC emulator-configuratie, Time Sync IS-advies, drift-detectie en een remediation-playbook in 7 stappen.</p>
+  <div class="meta">2026-05-28 · 13 min leestijd</div>
+  <span class="read-more">Lees artikel →</span>
+</a>
+
+<a class="blog-card" href="/nl/blog/cluster-witness-comparison/">
+  <span class="tag">Quorum</span>
+  <h2>File Share Witness vs Cloud Witness vs Disk Witness: welk type past bij jouw cluster?</h2>
+  <p>Drie witness-types vergeleken in productie-termen. Beslissingsmatrix per topologie, vijf configuratiefouten die we blijven vinden, en een one-liner: een witness in hetzelfde fault domain als het cluster is decoratie.</p>
+  <div class="meta">2026-05-24 · 14 min leestijd</div>
+  <span class="read-more">Lees artikel →</span>
+</a>
+
+<a class="blog-card" href="/nl/blog/live-migration-wrong-network/">
+  <span class="tag">Netwerk</span>
+  <h2>Live Migration over het verkeerde netwerk: de stille Hyper-V valkuil</h2>
+  <p>De meest voorkomende bevinding bij een clustermeting. Drie onafhankelijke configuratielagen, de PowerShell om het werkelijke TCP-pad tijdens migratie te verifiëren, en de remediation die bij elke opdracht wordt toegepast.</p>
+  <div class="meta">2026-05-17 · 12 min leestijd</div>
+  <span class="read-more">Lees artikel →</span>
+</a>
+
+<a class="blog-card" href="/nl/blog/vmware-to-hyper-v-migration-assessment/">
+  <span class="tag">Migratie</span>
+  <h2>VMware naar Hyper-V clustermigratie: pre-migration assessment in 6 stappen</h2>
+  <p>Na Broadcom voorspelt Gartner dat 35% van de VMware-workloads tot 2028 verhuist. De pre-migration assessment in 6 stappen: capacity, network parity, CSV-ontwerp, guest readiness, backup/DR, en cutover met rollback-criteria.</p>
+  <div class="meta">2026-05-15 · 15 min leestijd</div>
+  <span class="read-more">Lees artikel →</span>
+</a>
+
+</div>
+
+<p id="blogEmpty" class="blog-empty" hidden>Geen artikelen gevonden.</p>
+
+</div></section>
+
+<section class="ct-close"><div class="ct-close-inner"><p class="eyebrow" style="justify-content:center">ClusterTriage</p><h2>Meet de omgeving. Maak de redenering zichtbaar.</h2><p>Dat principe verbindt Assurance, Methode en incidentonderzoek.</p><div class="actions"><a class="btn dark" href="/nl/assurance/">Bekijk Assurance</a><a class="btn" href="/nl/methodologie/">Bekijk de Methode</a></div></div></section>
+</main><footer class="ct-footer"><div class="ct-footer-inner"><div class="ct-footer-brand"><b>Cluster<span>Triage</span></b><p>Onafhankelijke Failover Cluster Assessment, Risk &amp; Remediation Assurance.</p></div><div><h4>Dienst</h4><a href="/nl/assurance/">Assurance</a><a href="/nl/methodologie/">Methode</a></div><div><h4>Bedrijf</h4><a href="/nl/over-ons/">Over ons</a><a href="/nl/blog/">Blog</a><a href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Contact</a></div><div><h4>Incident</h4><a href="https://clusterdown.com/nl/">ClusterDown</a></div></div><div class="ct-footer-bottom"><span>© ClusterTriage</span><span>Windows Server · Hyper-V · Failover Clustering · Storage Spaces Direct · Azure Local</span></div></footer>
+<script>
+(function(){
+  var m=document.getElementById('menu'),n=document.getElementById('navlinks');
+  if(m&&n)m.addEventListener('click',function(){var o=m.getAttribute('aria-expanded')==='true';m.setAttribute('aria-expanded',String(!o));n.classList.toggle('open',!o)});
+
+  var cards=[].slice.call(document.querySelectorAll('.blog-card'));
+  var catsEl=document.getElementById('blogCats'),searchEl=document.getElementById('blogSearch'),emptyEl=document.getElementById('blogEmpty'),countEl=document.getElementById('blogCount');
+  if(!catsEl||!searchEl)return;
+  var counts={},order=[];
+  cards.forEach(function(c){var t=c.querySelector('.tag');var tag=t?t.textContent.trim():'';if(!tag)return;if(!(tag in counts)){counts[tag]=0;order.push(tag);}counts[tag]++;});
+  order.sort(function(a,b){return counts[b]-counts[a]||a.localeCompare(b);});
+  var activeCat='all';
+  var all=document.createElement('button');all.className='bf-btn active';all.setAttribute('data-filter','all');all.textContent='Alle';catsEl.appendChild(all);
+  order.forEach(function(t){var b=document.createElement('button');b.className='bf-btn';b.setAttribute('data-filter',t);b.textContent=t;catsEl.appendChild(b);});
+  var btns=[].slice.call(catsEl.querySelectorAll('.bf-btn'));
+  function cardText(c){return (c.textContent||'').toLowerCase();}
+  function apply(){
+    var terms=(searchEl.value||'').trim().toLowerCase().split(/\s+/).filter(Boolean);
+    var shown=0;
+    cards.forEach(function(c){
+      var t=c.querySelector('.tag');var tag=t?t.textContent.trim():'';
+      var catOk=activeCat==='all'||tag===activeCat;
+      var txt=terms.length?cardText(c):'';
+      var qOk=!terms.length||terms.every(function(w){return txt.indexOf(w)>=0;});
+      var vis=catOk&&qOk;c.classList.toggle('hide',!vis);if(vis)shown++;
+    });
+    if(emptyEl)emptyEl.hidden=shown>0;
+    if(countEl){
+      var filtering=terms.length>0||activeCat!=='all';
+      if(filtering&&shown>0){countEl.textContent='Gevonden in '+shown+' '+(shown===1?'blog':'blogs');countEl.hidden=false;}
+      else countEl.hidden=true;
+    }
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){btns.forEach(function(x){x.classList.remove('active')});b.classList.add('active');activeCat=b.getAttribute('data-filter');apply();});});
+  searchEl.addEventListener('input',apply);
+})();
+</script>
+</body></html>
