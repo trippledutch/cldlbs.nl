@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!-- Concept, nog niet gepubliceerd. Wacht op lezing/correctie voordat de
+     kaart op /nl/blog/ ontstoken wordt (publish.py rdp-regression-n-minus-1-patch-strategy). -->
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0A1024">
+<title>September 2026 Patch Tuesday: de RDS/RDP-regressie en de zaak voor N-1-patchen &middot; ClusterTriage</title>
+<meta name="description" content="Wat de september-2026 Cumulative Update herstelde, welke RDS/RDP-regressie hij veroorzaakte op Server 2019/2022/2025, hoe Microsoft reageerde, en of N-1-patchen de juiste standaard is.">
+<link rel="canonical" href="https://clustertriage.com/nl/blog/rdp-regression-n-minus-1-patch-strategy/">
+<link rel="alternate" hreflang="nl" href="https://clustertriage.com/nl/blog/rdp-regression-n-minus-1-patch-strategy/">
+<link rel="alternate" hreflang="x-default" href="https://clustertriage.com/nl/blog/rdp-regression-n-minus-1-patch-strategy/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:url" content="https://clustertriage.com/nl/blog/rdp-regression-n-minus-1-patch-strategy/">
+<meta property="og:title" content="September 2026 Patch Tuesday: de RDS/RDP-regressie en de zaak voor N-1-patchen">
+<meta property="og:description" content="Wat de september-2026 Cumulative Update herstelde, welke RDS/RDP-regressie hij veroorzaakte, hoe Microsoft reageerde, en of N-1-patchen de juiste standaard is.">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=5279f5a9">
+<link rel="stylesheet" href="/huisstijl/artikel.css?v=9a147c57">
+<link rel="stylesheet" href="/huisstijl/clustertriage.css?v=30af5db3">
+<link rel="stylesheet" href="/huisstijl/clustertriage-v2.css?v=c711d81a">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://clustertriage.com/nl/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://clustertriage.com/nl/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "September 2026 Patch Tuesday: de RDS/RDP-regressie en de zaak voor N-1-patchen",
+          "item": "https://clustertriage.com/nl/blog/rdp-regression-n-minus-1-patch-strategy/"
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://clustertriage.com/nl/blog/rdp-regression-n-minus-1-patch-strategy/#artikel",
+      "headline": "September 2026 Patch Tuesday: de RDS/RDP-regressie en de zaak voor N-1-patchen",
+      "description": "Wat de september-2026 Cumulative Update herstelde, welke RDS/RDP-regressie hij veroorzaakte op Server 2019/2022/2025, hoe Microsoft reageerde, en of N-1-patchen de juiste standaard is.",
+      "inLanguage": "nl-NL",
+      "datePublished": "2026-09-15",
+      "dateModified": "2026-09-15",
+      "mainEntityOfPage": "https://clustertriage.com/nl/blog/rdp-regression-n-minus-1-patch-strategy/",
+      "articleSection": "Patching",
+      "author": {
+        "@type": "Person",
+        "name": "Hans Vredevoort",
+        "jobTitle": "Cluster- en virtualisatiespecialist",
+        "knowsAbout": [
+          "Hyper-V",
+          "Failover Clustering",
+          "Azure Local",
+          "Storage Spaces Direct",
+          "Windows Server"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ClusterTriage",
+        "url": "https://clustertriage.com/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://clustertriage.com/nl/blog/rdp-regression-n-minus-1-patch-strategy/#vragen",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Wat is een Known Issue Rollback precies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Een Known Issue Rollback (KIR) is een group policy die alleen het gedrag van een specifieke regressie terugdraait, niet de beveiligingsfix zelf. De cumulative update blijft geinstalleerd en alle CVE's blijven gedicht; de KIR schakelt via een group policy alleen het stukje gewijzigde code uit dat het probleem veroorzaakt. Dat maakt een KIR sneller te vertrouwen dan een hotfix, en het is meestal binnen een week na Patch Tuesday beschikbaar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Betekent dit dat ik altijd een maand moet wachten met patchen?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nee. N-1 als standaard beschermt tegen regressies zoals deze, maar kost ook een maand extra blootstelling aan kwetsbaarheden die al actief worden misbruikt op het moment van patchen, zoals de twee zero-days in deze ronde. De regel die wij aanhouden: N-1 als standaard, met een uitzondering voor elke CVE die door Microsoft of NCSC-NL als actively exploited wordt aangemerkt. Die fix trek je los van de maandcyclus naar voren."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Welke Windows Server-versies zijn getroffen door de RDS/RDP-regressie?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Windows Server 2019 (KB5122876), Windows Server 2022 (KB5122882) en Windows Server 2025 (KB5122871). Alle drie via dezelfde wijziging in het audio-redirection-codepad van RDP. De out-of-band fix KB5129237 van 14 september dekt op dit moment alleen Server 2022; voor 2019 en 2025 is de Known Issue Rollback vooralsnog de weg."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is de WSUS-synchronisatiemelding een losse bug in deze update?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nee. WSUS toont sinds deze ronde tijdelijk geen synchronisatie-foutdetails meer, maar dat is een bewuste maatregel die samenhangt met CVE-2025-59287, geen onbedoelde regressie. Het voelt hetzelfde als een bug omdat het diagnostische informatie wegneemt, maar het gedrag is opzettelijk."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hoe snel moet een actively exploited CVE dan wel toegepast worden?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Zodra Microsoft of NCSC-NL het label actively exploited aan een CVE hangt, past dat niet meer in een maandelijkse cyclus. Wij passen die specifieke fix dan versneld toe, meestal via de standalone security-only update voor die CVE of een KB-specifieke actie, zonder op de volgende reguliere ronde te wachten en zonder de rest van de N-1-regeling los te laten."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Naar inhoud</a><header class="topbar"><nav class="nav"><a class="brand ct-brand" href="/nl/"><b>Cluster<span>Triage</span></b><small>Decades of server expertise</small></a><div class="navlinks" id="navlinks"><a href="/nl/assurance/">Assurance</a><a href="/nl/methodologie/">Methode</a><a href="/nl/over-ons/">Over ons</a><a href="/nl/blog/" aria-current="page">Blog</a><a href="https://clusterdown.com/nl/">Cluster down?</a><span class="lang-set"><span aria-current="true">NL</span><a href="/en/blog/">EN</a></span></div><div class="nav-actions"><a class="btn primary" href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Plan een kennismaking</a><button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button></div></nav></header>
+
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+  <article class="artikelpagina">
+
+    <p class="kruimelpad"><a href="/nl/">ClusterTriage</a> / <a href="/nl/blog/">Blog</a> / Patching</p>
+
+    <header class="artikelkop">
+      <h1>September 2026 Patch Tuesday: de RDS/RDP-regressie en de zaak voor N-1-patchen</h1>
+      <p class="lede">Patch Tuesday van september 2026 was de grootste ooit, en negen dagen later stonden Remote Desktop Services-sessiehosts op Server 2019, 2022 en 2025 vast bij bedrijven die precies deden wat wordt aangeraden: elke maand op tijd patchen. Wie de cumulative update netjes binnen een week toepaste, kreeg een sessiehost die na een paar uur vastloopt, RDP-verbindingen die blijven hangen op "Connecting…" en een MMC die niet meer reageert.</p>
+      <p class="lede">Dit artikel zet uiteen wat de update herstelde, wat hij kapotmaakte, hoe Microsoft heeft gereageerd, en of dat betekent dat een N-1-patchregeling, bewust een maand achterblijven op de meest recente cumulative update, de juiste standaard is voor Failover Cluster-nodes.</p>
+      <p class="artikelmeta"><b>Door Hans Vredevoort</b> <i>&middot;</i> <b>15 september 2026</b> <i>&middot;</i> <b>8 minuten leestijd</b> <i>&middot;</i> <b>Patching</b></p>
+    </header>
+
+    <div class="artikelbody">
+      <nav class="toc" aria-label="Inhoud van dit artikel">
+        <p class="toc-title">In dit artikel</p>
+        <ol>
+          <li><a href="#nl-1">Wat de september-CU herstelde</a></li>
+          <li><a href="#nl-2">De RDS/RDP-regressie: wat kapot ging en waarom</a></li>
+          <li><a href="#nl-3">Hoe Microsoft reageerde: Known Issue Rollback, toen een echte fix</a></li>
+          <li><a href="#nl-4">Waarom N-1 deze regressie automatisch ontliep</a></li>
+          <li><a href="#nl-5">Kanttekening 1: N-1 kost ook het zero-day-venster</a></li>
+          <li><a href="#nl-6">Kanttekening 2: een KIR is sneller dan een hele maand wachten</a></li>
+          <li><a href="#nl-7">De patchronde-procedure die ik zou aanhouden</a></li>
+        </ol>
+      </nav>
+
+      <div class="tekst">
+<h2 id="nl-1">1. Wat de september-CU herstelde</h2>
+        <p>Deze ronde was met een marge de grootste Patch Tuesday tot nu toe. De exacte telling verschilt naargelang je alleen Microsoft's eigen CVE's meerekent of ook die van derde partijen die via de Microsoft-catalogus meelopen, maar de meest gebruikte kern komt neer op ongeveer 974 Microsoft-CVE's in één ronde.</p>
+        <p>Twee daarvan stonden op het moment van patchen al actief onder misbruik: <code>CVE-2026-81963</code> in de Windows Update-stack zelf, en <code>CVE-2026-85880</code> in Windows ALPC. Voor wie Failover Clusters met Remote Desktop Services draait was er ook een kritieke remote-code-executionkwetsbaarheid bij, <code>CVE-2026-69525</code>, met een CVSS-score van 9,8, uitgerekend in de component die een paar dagen later ook de regressie zou veroorzaken.</p>
+        <p>Dat laatste is geen samenloop van toeval. Het is precies waarom een patchronde niet alleen gaat over de vraag of je de nieuwste cumulative update installeert, maar ook over welke component die update raakt en hoe kritiek die component in jouw omgeving is.</p>
+
+        <h2 id="nl-2">2. De RDS/RDP-regressie: wat kapot ging en waarom</h2>
+        <p>Binnen negen dagen na Patch Tuesday was er een bevestigde, grote regressie in drie cumulative updates: <code>KB5122876</code> (Server 2019), <code>KB5122882</code> (Server 2022) en <code>KB5122871</code> (Server 2025). RDS-sessiehosts lopen enkele uren na een reboot vast. RDP-verbindingen blijven hangen op "Connecting…" zonder ooit een sessie op te bouwen. En het stopt niet bij RDP: MMC, Verkenner, de RDS Licensing Diagnoser en zelfs de Windows Update-pagina zelf hangen mee.</p>
+        <p>De oorzaak ligt in een wijziging in het audio-redirection-codepad van RDP, het stuk code dat geluid van de sessiehost naar de cliënt doorstuurt. Een aanpassing daarin, waarschijnlijk bedoeld voor een van de beveiligingsfixes in deze ronde, blokkeert onder de juiste omstandigheden de rest van de sessie. Voor Failover Cluster-nodes die RDS-rollen dragen, of die simpelweg via RDP beheerd worden, is dat direct operationeel: een sessiehost die enkele uren na boot vastloopt merk je niet tijdens de patchronde zelf, maar wel op het moment dat het beheerteam er middenin zit.</p>
+        <p>Een kleinere, apart te vermelden verandering in dezelfde ronde: WSUS toont tijdelijk geen synchronisatie-foutdetails meer. Dat is geen bug, maar een bewuste maatregel die samenhangt met <code>CVE-2025-59287</code>. Het voelt hetzelfde als een regressie, omdat het diagnostische informatie weghaalt op het moment dat je die het hardst nodig hebt, maar het gedrag is opzettelijk.</p>
+
+        <div class="mid-cta">
+          <p>Draait uw patchronde nog op "installeren en hopen dat er niets misgaat"? Een Hyper-V Cluster Health Check legt de huidige staat van uw patchcyclus, CAU-configuratie en escalatiepad vast voordat de volgende Patch Tuesday dat voor u doet.</p>
+          <a href="/nl/afspraak/">Plan een patchstrategie-assessment →</a>
+        </div>
+
+        <h2 id="nl-3">3. Hoe Microsoft reageerde: Known Issue Rollback, toen een echte fix</h2>
+        <p>Microsoft's reactie kwam in twee stappen. Eerst een Known Issue Rollback: een group policy die alleen het gedrag van de regressie terugdraait, niet de onderliggende beveiligingsfix. De cumulative update blijft staan, alle CVE's uit deze ronde blijven gedicht, alleen het gewijzigde stukje audio-redirection-code wordt via policy uitgeschakeld. De rollback-ID's zijn <code>260911_18471</code> voor Server 2022 en <code>260911_18474</code> voor Server 2019.</p>
+        <p>Op 14 september, negen dagen na Patch Tuesday, volgde een echte out-of-band fix: <code>KB5129237</code>, vooralsnog alleen voor Server 2022. Voor 2019 en 2025 blijft de Known Issue Rollback op dit moment de weg, tot Microsoft daar ook een specifieke hotfix voor uitbrengt.</p>
+
+        <h2 id="nl-4">4. Waarom N-1 deze regressie automatisch ontliep</h2>
+        <p>Dit is precies het scenario waarvoor een N-1-patchregeling bedoeld is. Een omgeving die op 6 september bewust nog de augustus-CU installeerde, in plaats van meteen over te stappen op de nieuwste september-ronde, loopt automatisch buiten het bereik van deze RDS-regressie. De nodes zijn niet expres beschermd tegen deze specifieke bug; ze zijn beschermd tegen elke regressie die zich in de eerste weken na een Patch Tuesday openbaart, en dat gebeurt vaker dan één keer per jaar.</p>
+        <p>Dat is geen toeval, maar precies het ontwerp achter N-1. Eén maand respijt tussen het uitkomen van een cumulative update en het moment waarop die update op productie-nodes belandt, is in onze eigen conventie geen afwijking. Twee maanden is dat wel: dan loop je zo ver achter dat je zelf een risico wordt in plaats van dat je er een vermijdt.</p>
+
+        <h2 id="nl-5">5. Kanttekening 1: N-1 kost ook het zero-day-venster</h2>
+        <p>N-1 als blinde regel heeft een prijs, en die prijs is zichtbaar in deze exact ronde: dezelfde CU die de RDS-regressie bevatte, dichtte ook twee kwetsbaarheden die op het moment van patchen al actief werden misbruikt. Een maand vertraging op alles is geen gratis veiligheid. Het ruilt een zichtbare, meetbare regressie in voor een onzichtbaar verlengd venster waarin een actief misbruikte kwetsbaarheid openstaat op productie-nodes.</p>
+        <p>Daarom houden wij N-1 aan als standaard, maar met een expliciete uitzondering: zodra Microsoft of NCSC-NL een CVE aanmerkt als actively exploited, trekken we de fix voor die specifieke kwetsbaarheid los van de maandcyclus naar voren, via de standalone security-only update of een KB-specifieke actie, in plaats van blind te wachten op de volgende ronde.</p>
+
+        <h2 id="nl-6">6. Kanttekening 2: een KIR is sneller dan een hele maand wachten</h2>
+        <p>Een Known Issue Rollback is meestal binnen een dag of negen na Patch Tuesday beschikbaar, ruim voordat de volgende maandronde in zicht komt. Zodra die KIR gepubliceerd is, kun je de CU van de lopende maand alsnog toepassen, mét de KIR-group policy erbij. Je krijgt dan de beveiligingsfixes zonder de regressie, zonder de volle maand N-1-vertraging.</p>
+        <p>Dat verdient een vaste plek in de patchronde-procedure, als eerste check vóórdat je besluit: "we wachten tot volgende maand." Is er al een Known Issue Rollback gepubliceerd voor een bekend probleem in de vorige ronde? Dan is toepassen-met-KIR vaak de betere keuze dan nog een maand extra wachten.</p>
+
+        <h2 id="nl-7">7. De patchronde-procedure die ik zou aanhouden</h2>
+        <p>Samengevat komt dat neer op drie regels die elkaar aanvullen, niet één regel die de andere twee overbodig maakt.</p>
+        <ol>
+          <li><strong>N-1 als standaard.</strong> Nieuwe cumulative updates gaan eerst een maand naar een niet-productieomgeving of een canary-node, en pas daarna naar de rest van het cluster. Dat vangt de meeste regressies op voordat ze productie raken.</li>
+          <li><strong>Escape hatch voor actively exploited CVE's.</strong> Zodra Microsoft of NCSC-NL een kwetsbaarheid als actief misbruikt aanmerkt, wordt die specifieke fix los van de maandcyclus vooruitgetrokken. N-1 geldt voor de reguliere ronde, niet voor een kwetsbaarheid die vandaag al wordt gebruikt.</li>
+          <li><strong>KIR-check vóór de wacht-beslissing.</strong> Voordat je een volledige maand vertraging accepteert op basis van een bekende regressie, check je of Microsoft al een Known Issue Rollback heeft gepubliceerd. Is dat het geval, dan patch je de lopende ronde alsnog, met de KIR erbij, in plaats van de hele maand te wachten.</li>
+        </ol>
+        <p>Geen van de drie regels is nieuw. De combinatie is wat een patchronde van "installeren en hopen" naar een procedure verandert die standhoudt, ook wanneer de grootste Patch Tuesday tot nu toe toevallig ook de rommeligste is.</p>
+
+        <div class="faq-block">
+          <h2>Veelgestelde vragen</h2>
+
+          <div class="faq-q">Wat is een Known Issue Rollback precies?</div>
+          <p>Een Known Issue Rollback (KIR) is een group policy die alleen het gedrag van een specifieke regressie terugdraait, niet de beveiligingsfix zelf. De cumulative update blijft geinstalleerd en alle CVE's blijven gedicht; de KIR schakelt via een group policy alleen het stukje gewijzigde code uit dat het probleem veroorzaakt. Dat maakt een KIR sneller te vertrouwen dan een hotfix, en het is meestal binnen een week na Patch Tuesday beschikbaar.</p>
+
+          <div class="faq-q">Betekent dit dat ik altijd een maand moet wachten met patchen?</div>
+          <p>Nee. N-1 als standaard beschermt tegen regressies zoals deze, maar kost ook een maand extra blootstelling aan kwetsbaarheden die al actief worden misbruikt op het moment van patchen, zoals de twee zero-days in deze ronde. De regel die wij aanhouden: N-1 als standaard, met een uitzondering voor elke CVE die door Microsoft of NCSC-NL als actively exploited wordt aangemerkt. Die fix trek je los van de maandcyclus naar voren.</p>
+
+          <div class="faq-q">Welke Windows Server-versies zijn getroffen door de RDS/RDP-regressie?</div>
+          <p>Windows Server 2019 (<code>KB5122876</code>), Windows Server 2022 (<code>KB5122882</code>) en Windows Server 2025 (<code>KB5122871</code>). Alle drie via dezelfde wijziging in het audio-redirection-codepad van RDP. De out-of-band fix <code>KB5129237</code> van 14 september dekt op dit moment alleen Server 2022; voor 2019 en 2025 is de Known Issue Rollback vooralsnog de weg.</p>
+
+          <div class="faq-q">Is de WSUS-synchronisatiemelding een losse bug in deze update?</div>
+          <p>Nee. WSUS toont sinds deze ronde tijdelijk geen synchronisatie-foutdetails meer, maar dat is een bewuste maatregel die samenhangt met <code>CVE-2025-59287</code>, geen onbedoelde regressie. Het voelt hetzelfde als een bug omdat het diagnostische informatie weghaalt, maar het gedrag is opzettelijk.</p>
+
+          <div class="faq-q">Hoe snel moet een actively exploited CVE dan wel toegepast worden?</div>
+          <p>Zodra Microsoft of NCSC-NL het label actively exploited aan een CVE hangt, past dat niet meer in een maandelijkse cyclus. Wij passen die specifieke fix dan versneld toe, meestal via de standalone security-only update voor die CVE of een KB-specifieke actie, zonder op de volgende reguliere ronde te wachten en zonder de rest van de N-1-regeling los te laten.</p>
+        </div>
+<div class="related">
+        <h3>Gerelateerde artikelen</h3>
+        <ul>
+          <!--LINK:cluster-aware-updating-runbook-audit-trail--><!--draft:<li><a href="/nl/blog/cluster-aware-updating-runbook-audit-trail/">Cluster Aware Updating: runbook, audit trail, en wat niemand documenteert</a></li>--><!--/LINK:cluster-aware-updating-runbook-audit-trail-->
+          <!--LINK:health-check-to-patch-night--><li><a href="/nl/blog/health-check-to-patch-night/">Van Health Check naar Patch Night: de methode in de praktijk</a></li><!--/LINK:health-check-to-patch-night-->
+        </ul>
+      </div>
+      </div>
+    </div>
+
+  </article>
+</section>
+</main>
+
+<footer class="ct-footer"><div class="ct-footer-inner"><div class="ct-footer-brand"><b>Cluster<span>Triage</span></b><p>Onafhankelijke Failover Cluster Assessment, Risk &amp; Remediation Assurance.</p></div><div><h4>Dienst</h4><a href="/nl/assurance/">Assurance</a><a href="/nl/methodologie/">Methode</a></div><div><h4>Bedrijf</h4><a href="/nl/over-ons/">Over ons</a><a href="/nl/blog/">Blog</a><a href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Contact</a></div><div><h4>Incident</h4><a href="https://clusterdown.com/nl/">ClusterDown</a></div></div><div class="ct-footer-bottom"><span>© ClusterTriage</span><span>Windows Server · Hyper-V · Failover Clustering · Storage Spaces Direct · Azure Local</span></div></footer><script>(function(){var m=document.getElementById('menu'),n=document.getElementById('navlinks');if(m&&n)m.addEventListener('click',function(){var o=m.getAttribute('aria-expanded')==='true';m.setAttribute('aria-expanded',String(!o));n.classList.toggle('open',!o)});})();</script></body></html>
