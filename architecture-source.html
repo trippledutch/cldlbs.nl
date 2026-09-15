@@ -124,6 +124,16 @@
   .langpick button:hover{color:var(--acc-mod);border-color:var(--acc-mod)}
   .langpick button.on{background:var(--acc-mod);border-color:var(--acc-mod);color:#fff}
   .langpick button:focus-visible{outline:2px solid var(--acc-mod);outline-offset:2px}
+  /* de Top-knop linksboven op de tekening, zelfde jasje als de taalknoppen
+     rechtsboven. Zet de tekening bovenaan het scherm, ook in de ingebedde
+     stand op de methodepagina, waar de zwevende springknoppen niet werken. */
+  .stage-top{position:absolute;top:.7rem;left:.85rem;z-index:2;
+    font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.08em;
+    cursor:pointer;background:var(--surface);color:var(--slate);
+    border:1px solid var(--hairline);border-radius:6px;padding:.24rem .55rem;
+    transition:background .15s ease,color .15s ease,border-color .15s ease}
+  .stage-top:hover{color:var(--acc-mod);border-color:var(--acc-mod)}
+  .stage-top:focus-visible{outline:2px solid var(--acc-mod);outline-offset:2px}
 
   .eyebrow{font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.14em;
            text-transform:uppercase;color:var(--faint)}
@@ -456,6 +466,7 @@
   </header>
 
   <div class="stage-wrap">
+    <button type="button" class="stage-top" id="stage-top" data-i18n="jtop" data-i18n-aria="aTop" aria-label="Naar boven">Top</button>
     <div class="langpick" id="langpick" role="group" data-i18n-aria="aLang" aria-label="Taal">
       <button type="button" data-l="nl">NL</button>
       <button type="button" data-l="en" class="on">EN</button>
@@ -692,7 +703,7 @@ const L = {
   nWrite:"<strong>Schrijven is geen opmaak maar een stap.</strong> Het register zegt of iets afwijkt; pas het schrijven zegt wat het betekent en wat eraan te doen is. Daarom staat het als eigen trede en niet als onderdeel van renderen: de taal is een keuze bij het renderen, de tekst is dat niet.",
   nSubset:"<strong>De modules zijn een subset van het proces.</strong> Ze staan daarom als stap in de keten, en die ene stap vergroot uit tot alle vijftien modules met hun afhankelijkheden. Dat is een zoom op dit diagram en geen tweede diagram ernaast: hetzelfde blok, van dichterbij. Wat bij de intake aanstaat bepaalt welke collectors meegaan, welke vlakken bij de import samenkomen en welke recepten er straks iets te zeggen hebben. Een module die uit staat is geen ontbrekend blokje maar een tak die nooit is ingegaan.",
   nU:"<strong>Waarom de U-vorm iets zegt.</strong> Een rechte keten suggereert dat de reis bij het laatste blok ophoudt. Hier komt er iets terug: dezelfde bevindingen die omlaag gingen komen als beoordeeld document weer omhoog, en de vervolgmeting sluit de lus bij Meten en niet bij Intake. Dat is geen tekenkeuze maar hoe het werkt: de scope wordt niet opnieuw vastgesteld, alleen opnieuw gemeten.",
-  aLang:"Taal", aNav:"Snel navigeren", aTop:"Naar boven", aClose:"Sluiten",
+  aLang:"Taal", aNav:"Snel navigeren", aTop:"Naar boven", jtop:"\u2191 Top", aClose:"Sluiten",
   fresh:"vers", stale:"oud",
   hLeg:"Wat waar gebeurt", pLeg:"Elke trede van de tekening, met het onderdeel dat het werk doet. Blauw gaat omlaag door de toolchain, amber komt weer omhoog.",
   h1:"Hoe wij uw cluster meten", sample:"voorbeeld uit de demo-estate",
@@ -788,7 +799,7 @@ const L = {
   nWrite:"<strong>Writing is a step, not formatting.</strong> The register says whether something deviates; only the writing says what it means and what to do about it. That is why it stands as its own tread and not as part of rendering: the language is a choice at render time, the text is not.",
   nSubset:"<strong>The modules are a subset of the process.</strong> That is why they stand as a step in the chain, and why that one step magnifies into all fifteen modules with their dependencies. This is a zoom on this diagram and not a second diagram beside it: the same block, from closer up. What is switched on at intake decides which collectors go along, which planes come together at import and which recipes will have something to say later. A module that is off is not a missing box but a branch never entered.",
   nU:"<strong>Why the U shape says something.</strong> A straight chain suggests the journey stops at the last block. Here something comes back: the same findings that went down come up again as a judged document, and the follow-up measurement closes the loop at Measure and not at Intake. That is not a drawing choice but how it works: the scope is not established again, only measured again.",
-  aLang:"Language", aNav:"Quick navigation", aTop:"Back to top", aClose:"Close",
+  aLang:"Language", aNav:"Quick navigation", aTop:"Back to top", jtop:"\u2191 Top", aClose:"Close",
   fresh:"fresh", stale:"stale",
   hLeg:"What happens where", pLeg:"Every step of the diagram, with the component that does the work. Blue travels down through the toolchain, amber comes back up.",
   h1:"How we measure your cluster", sample:"sample from the demo estate",
@@ -884,7 +895,7 @@ const L = {
   nWrite:"<strong>Schreiben ist ein Schritt, keine Formatierung.</strong> Das Register sagt, ob etwas abweicht; erst das Schreiben sagt, was es bedeutet und was zu tun ist. Darum steht es als eigene Stufe und nicht als Teil des Renderns: die Sprache ist eine Wahl beim Rendern, der Text ist es nicht.",
   nSubset:"<strong>Die Module sind eine Teilmenge des Prozesses.</strong> Darum stehen sie als Schritt in der Kette, und dieser eine Schritt vergrößert sich zu allen fünfzehn Modulen mit ihren Abhängigkeiten. Das ist ein Zoom auf dieses Diagramm und kein zweites Diagramm daneben: derselbe Block, aus der Nähe. Was bei der Aufnahme eingeschaltet ist, bestimmt, welche Collectors mitgehen, welche Ebenen beim Import zusammenkommen und welche Rezepte später etwas zu sagen haben. Ein ausgeschaltetes Modul ist kein fehlender Kasten, sondern ein Ast, in den nie eingebogen wurde.",
   nU:"<strong>Warum die U-Form etwas aussagt.</strong> Eine gerade Kette legt nahe, dass die Reise beim letzten Block endet. Hier kommt etwas zurück: dieselben Befunde, die hinuntergingen, kommen als beurteiltes Dokument wieder herauf, und die Folgemessung schließt die Schleife bei Messen und nicht bei der Aufnahme. Das ist keine Zeichenentscheidung, sondern die Arbeitsweise: der Umfang wird nicht neu festgelegt, nur neu gemessen.",
-  aLang:"Sprache", aNav:"Schnellnavigation", aTop:"Nach oben", aClose:"Schließen",
+  aLang:"Sprache", aNav:"Schnellnavigation", aTop:"Nach oben", jtop:"\u2191 Oben", aClose:"Schließen",
   fresh:"frisch", stale:"alt",
   hLeg:"Was wo geschieht", pLeg:"Jede Stufe des Diagramms mit der Komponente, die die Arbeit tut. Blau geht abwärts durch die Toolchain, Bernstein kommt wieder herauf.",
   h1:"Wie wir Ihren Cluster messen", sample:"Beispiel aus dem Demo-Bestand",
@@ -2258,6 +2269,10 @@ document.querySelectorAll("button.close").forEach(b=>b.addEventListener("click",
   LENSES.forEach(fn=>fn());
   toStage();
 }));
+
+// de Top-knop op de tekening zet de tekening bovenaan het scherm
+const stageTop = document.getElementById("stage-top");
+if (stageTop) stageTop.addEventListener("click", toStage);
 
 // de drie cataloguskaarten openen hun eigen scherm
 const CATTARGETS = ["zoom","packpanel","catpanel2","hwpanel"];
