@@ -11,13 +11,13 @@
 <meta name="theme-color" content="#0A1024">
 <title>Firmware-drift en scheef CSV-eigenaarschap · CloudLabs</title>
 <meta name="description" content="Een productiecluster van zes nodes met trage opslag. De meting vond twee hosts op een firmwarebuild met een bekende NVMe-regressie en eigenaarschap van Cluster Shared Volumes dat scheef stond. Met de gemeten waarden.">
-<link rel="canonical" href="https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html">
-<link rel="alternate" hreflang="nl" href="https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html">
-<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/case-study/firmware-drift-and-csv-owner-imbalance/">
-<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html">
+<link rel="canonical" href="https://clustertriage.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html">
+<link rel="alternate" hreflang="nl" href="https://clustertriage.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html">
+<link rel="alternate" hreflang="en" href="https://clustertriage.com/en/case-study/firmware-drift-and-csv-owner-imbalance/">
+<link rel="alternate" hreflang="x-default" href="https://clustertriage.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="nl_NL">
-<meta property="og:url" content="https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html">
+<meta property="og:url" content="https://clustertriage.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html">
 <meta property="og:title" content="Firmware-drift en scheef CSV-eigenaarschap · CloudLabs">
 <meta property="og:description" content="Wat een basismeting aantrof in een Hyper-V-cluster dat volgens de beheerconsole gezond was.">
 <link rel="icon" href="../favicon.png" type="image/png">
@@ -32,20 +32,20 @@
     {
       "@type":"BreadcrumbList",
       "itemListElement":[
-        {"@type":"ListItem","position":1,"name":"Home","item":"https://cldlbs.com/"},
-        {"@type":"ListItem","position":2,"name":"Praktijkvoorbeelden","item":"https://cldlbs.com/praktijkvoorbeelden/"},
-        {"@type":"ListItem","position":3,"name":"Firmware-drift en scheef CSV-eigenaarschap","item":"https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html"}
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://clustertriage.com/"},
+        {"@type":"ListItem","position":2,"name":"Praktijkvoorbeelden","item":"https://clustertriage.com/praktijkvoorbeelden/"},
+        {"@type":"ListItem","position":3,"name":"Firmware-drift en scheef CSV-eigenaarschap","item":"https://clustertriage.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html"}
       ]
     },
     {
       "@type":"Article",
-      "@id":"https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html#artikel",
+      "@id":"https://clustertriage.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html#artikel",
       "headline":"Zes nodes, twee firmwareversies: firmware-drift en scheef CSV-eigenaarschap in een productiecluster",
       "description":"Een 6-node Hyper-V-cluster met trage opslag en geen zichtbare storing. De basismeting vond twee hosts op een firmwarebuild met een bekende NVMe-regressie en eigenaarschap van Cluster Shared Volumes dat scheef stond.",
       "inLanguage":"nl-NL",
       "datePublished":"2026-09-01",
       "dateModified":"2026-09-01",
-      "mainEntityOfPage":"https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html",
+      "mainEntityOfPage":"https://clustertriage.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html",
       "genre":"Praktijkvoorbeeld",
       "about":[
         {"@type":"Thing","name":"Hyper-V"},
@@ -56,23 +56,23 @@
       "keywords":"Hyper-V cluster, firmware drift, CSV eigenaarschap, Cluster Shared Volumes, NVMe, failover cluster health check",
       "author":{
         "@type":"Person",
-        "@id":"https://cldlbs.com/about.html#hans",
+        "@id":"https://clustertriage.com/about.html#hans",
         "name":"Hans Vredevoort",
         "jobTitle":"Cluster- en virtualisatiespecialist",
         "description":"Veertig jaar Windows Server. Ruim tien jaar Microsoft MVP voor Failover Clustering en Cloud & Datacenter Management, medeoprichter van Hyper-V.nu en medeauteur van Private Cloud Computing.",
         "knowsAbout":["Hyper-V","Failover Clustering","Azure Local","Storage Spaces Direct","Windows Server"],
-        "worksFor":{"@id":"https://cldlbs.com/#organisatie"}
+        "worksFor":{"@id":"https://clustertriage.com/#organisatie"}
       },
       "publisher":{
         "@type":"Organization",
-        "@id":"https://cldlbs.com/#organisatie",
+        "@id":"https://clustertriage.com/#organisatie",
         "name":"CloudLabs",
-        "url":"https://cldlbs.com/"
+        "url":"https://clustertriage.com/"
       }
     },
     {
       "@type":"FAQPage",
-      "@id":"https://cldlbs.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html#vragen",
+      "@id":"https://clustertriage.com/praktijkvoorbeeld/firmware-drift-en-csv-eigenaarsonbalans.html#vragen",
       "mainEntity":[
         {"@type":"Question","name":"Waarom waarschuwt Failover Cluster Manager niet bij firmware-drift?",
          "acceptedAnswer":{"@type":"Answer","text":"Omdat Failover Cluster Manager de clusterrollen bewaakt, niet de firmware van de hosts. Een node met een oudere of nieuwere firmwarebuild is voor het cluster een geldige node: hij neemt rollen aan, houdt zijn stem en meldt zich gezond. De validatiewizard vergelijkt driver- en firmwareversies tussen nodes evenmin. Verschillen komen pas boven water als iemand de versies per node naast elkaar legt, of als het gedrag onder belasting per node uiteen begint te lopen."}},
@@ -306,7 +306,7 @@
 </section>
 </main>
 
-<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><a href="/healthcheck/">De HealthCheck</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/tarieven/">Tarieven</a><a href="/partners/">Voor partners</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/vragen/">Veelgestelde vragen</a><a href="/onderwerpen/">Onderwerpen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Gratis script aanvragen</a><a href="/afspraak/#agenda">Afspraak maken</a><a href="/contact/#bericht">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p class="footer-tagline">Onafhankelijke metingen aan Hyper-V, Failover Cluster en Azure Local omgevingen. Rapporten in het Nederlands, Engels, Duits, Spaans en Frans.</p><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy/">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/voorwaarden/">Algemene voorwaarden</a><button type="button" class="cookiebalk-open">Cookievoorkeuren</button></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Diensten</h4><a href="/triage/">Cluster Triage</a><a href="/na-een-storing/">Na een storing</a><a href="/healthcheck/">De HealthCheck</a><a href="/modules/">De modules</a><a href="/rapport/">Het bevindingenrapport</a></div><div class="footer-column"><h4>Organisatie</h4><a href="/over-ons/">Over ons</a><a href="/healthcheck/#doorloop">Werkwijze</a><a href="/tarieven/">Tarieven</a><a href="/partners/">Voor partners</a></div><div class="footer-column"><h4>Kennisbank</h4><a href="/blog/">Blog</a><a href="/praktijkvoorbeelden/">Praktijkvoorbeelden</a><a href="/blog/top-10-hyper-v-cluster-issues.html">Storingen en oorzaken</a><a href="/blog/cluster-witness-comparison.html">Quorum en witness</a><a href="/blog/san-vs-s2d-vs-azure-local-hyper-v-storage.html">Opslag en Storage Spaces Direct</a><a href="/vragen/">Veelgestelde vragen</a><a href="/onderwerpen/">Onderwerpen</a></div><div class="footer-column"><h4>Contact</h4><a href="/triage/#aanvraag">Gratis script aanvragen</a><a href="/afspraak/#agenda">Afspraak maken</a><a href="/contact/#bericht">Neem contact op</a></div><div class="newsletter"><h4>Technische bevindingen per e-mail</h4><form action="#" method="post"><label><span class="skip">E-mailadres</span><input type="email" name="email" placeholder="naam@bedrijf.nl" autocomplete="email"></label><button type="submit">Aanmelden</button></form><p>Geen marketingstroom. Alleen nieuwe bevindingen en praktische uitleg.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans@vredevoort.com" aria-label="E-mail"><img src="/assets/icons/email.svg" alt=""></a><a href="/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/preview-home.html">Cloud<span>Labs</span></a><p class="footer-tagline">Onafhankelijke metingen aan Hyper-V, Failover Cluster en Azure Local omgevingen. Rapporten in het Nederlands, Engels, Duits, Spaans en Frans.</p><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/privacy/">Privacyverklaring</a><a href="/triage/#veilig">Beveiliging</a><a href="/voorwaarden/">Algemene voorwaarden</a><button type="button" class="cookiebalk-open">Cookievoorkeuren</button></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
 
 <script>
 (function(){

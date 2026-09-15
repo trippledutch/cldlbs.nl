@@ -137,28 +137,28 @@ def omzetten(pad):
     graaf = [{
         "@type": "BreadcrumbList",
         "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://cldlbs.com/"},
-            {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://cldlbs.com/blog/"},
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://clustertriage.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://clustertriage.com/blog/"},
             {"@type": "ListItem", "position": 3, "name": h1,
-             "item": f"https://cldlbs.com/blog/{slug}.html"}]
+             "item": f"https://clustertriage.com/blog/{slug}.html"}]
     }, {
         "@type": "BlogPosting",
-        "@id": f"https://cldlbs.com/blog/{slug}.html#artikel",
+        "@id": f"https://clustertriage.com/blog/{slug}.html#artikel",
         "headline": h1, "description": beschrijving,
         "inLanguage": "nl-NL", "datePublished": pub, "dateModified": mod,
-        "mainEntityOfPage": f"https://cldlbs.com/blog/{slug}.html",
+        "mainEntityOfPage": f"https://clustertriage.com/blog/{slug}.html",
         "articleSection": onderwerp,
-        "author": {"@type": "Person", "@id": "https://cldlbs.com/over-ons/#hans",
+        "author": {"@type": "Person", "@id": "https://clustertriage.com/over-ons/#hans",
                    "name": "Hans Vredevoort",
                    "jobTitle": "Cluster- en virtualisatiespecialist",
                    "knowsAbout": ["Hyper-V", "Failover Clustering", "Azure Local",
                                   "Storage Spaces Direct", "Windows Server"]},
-        "publisher": {"@type": "Organization", "@id": "https://cldlbs.com/#organisatie",
-                      "name": "CloudLabs", "url": "https://cldlbs.com/"}
+        "publisher": {"@type": "Organization", "@id": "https://clustertriage.com/#organisatie",
+                      "name": "CloudLabs", "url": "https://clustertriage.com/"}
     }]
     if vragen:
         graaf.append({"@type": "FAQPage",
-                      "@id": f"https://cldlbs.com/blog/{slug}.html#vragen",
+                      "@id": f"https://clustertriage.com/blog/{slug}.html#vragen",
                       "mainEntity": [{"@type": "Question", "name": v,
                                       "acceptedAnswer": {"@type": "Answer", "text": a}}
                                      for v, a in vragen]})
@@ -185,12 +185,12 @@ TEMPLATE = '''<!doctype html>
 <meta name="theme-color" content="#0A1024">
 <title>{titel} &middot; CloudLabs</title>
 <meta name="description" content="{beschrijving}">
-<link rel="canonical" href="https://cldlbs.com/blog/{slug}.html">
-<link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/{slug}.html">
-<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/{slug}.html">
+<link rel="canonical" href="https://clustertriage.com/blog/{slug}.html">
+<link rel="alternate" hreflang="nl" href="https://clustertriage.com/blog/{slug}.html">
+<link rel="alternate" hreflang="x-default" href="https://clustertriage.com/blog/{slug}.html">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="nl_NL">
-<meta property="og:url" content="https://cldlbs.com/blog/{slug}.html">
+<meta property="og:url" content="https://clustertriage.com/blog/{slug}.html">
 <meta property="og:title" content="{titel}">
 <meta property="og:description" content="{beschrijving}">
 <link rel="icon" href="/favicon.png" type="image/png">
@@ -267,12 +267,12 @@ INDEX_KOP = '''<!doctype html>
 <meta name="theme-color" content="#0A1024">
 <title>Blog &middot; Hyper-V, Failover Clustering en Azure Local &middot; CloudLabs</title>
 <meta name="description" content="Uitleg bij bevindingen die wij in Hyper-V-, Failover Cluster- en Azure Local-omgevingen terugzien: quorum en witness, CSV-eigenaarschap, RDMA, firmware, migraties en patchrondes.">
-<link rel="canonical" href="https://cldlbs.com/blog/">
-<link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/">
-<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/">
+<link rel="canonical" href="https://clustertriage.com/blog/">
+<link rel="alternate" hreflang="nl" href="https://clustertriage.com/blog/">
+<link rel="alternate" hreflang="x-default" href="https://clustertriage.com/blog/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="nl_NL">
-<meta property="og:url" content="https://cldlbs.com/blog/">
+<meta property="og:url" content="https://clustertriage.com/blog/">
 <meta property="og:title" content="Blog &middot; CloudLabs">
 <meta property="og:description" content="Uitleg bij de bevindingen die wij in clusters terugzien.">
 <link rel="icon" href="/favicon.png" type="image/png">
@@ -360,15 +360,15 @@ def index_bouwen():
 
     ld = json.dumps({"@context": "https://schema.org", "@graph": [
         {"@type": "BreadcrumbList", "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://cldlbs.com/"},
-            {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://cldlbs.com/blog/"}]},
-        {"@type": "Blog", "@id": "https://cldlbs.com/blog/#blog",
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://clustertriage.com/"},
+            {"@type": "ListItem", "position": 2, "name": "Blog", "item": "https://clustertriage.com/blog/"}]},
+        {"@type": "Blog", "@id": "https://clustertriage.com/blog/#blog",
          "name": "CloudLabs Blog", "inLanguage": "nl-NL",
          "description": "Uitleg bij bevindingen uit Hyper-V-, Failover Cluster- en Azure Local-metingen.",
-         "publisher": {"@type": "Organization", "@id": "https://cldlbs.com/#organisatie",
-                       "name": "CloudLabs", "url": "https://cldlbs.com/"},
+         "publisher": {"@type": "Organization", "@id": "https://clustertriage.com/#organisatie",
+                       "name": "CloudLabs", "url": "https://clustertriage.com/"},
          "blogPost": [{"@type": "BlogPosting", "headline": p['h1'],
-                       "url": f"https://cldlbs.com/blog/{p['slug']}.html",
+                       "url": f"https://clustertriage.com/blog/{p['slug']}.html",
                        "datePublished": p['iso'], "articleSection": p['onderwerp'],
                        "author": {"@type": "Person", "name": "Hans Vredevoort"}} for p in posts]}]},
         ensure_ascii=False, indent=2)

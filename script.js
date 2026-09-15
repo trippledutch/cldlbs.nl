@@ -71,7 +71,7 @@
       var body = lang === 'nl'
         ? 'Naam: ' + v('f-name') + '\nOrganisatie: ' + v('f-org') + '\nE-mail: ' + v('f-email') + '\nDienst: ' + v('f-svc') + '\nRichtblok: ' + v('f-block') + '\n\nToelichting:\n' + v('f-notes') + '\n'
         : 'Name: ' + v('f-name') + '\nOrganisation: ' + v('f-org') + '\nEmail: ' + v('f-email') + '\nService: ' + v('f-svc') + '\nIndicative block: ' + v('f-block') + '\n\nNotes:\n' + v('f-notes') + '\n';
-      location.href = 'mailto:hans.vredevoort@cldlbs.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+      location.href = 'mailto:hans@vredevoort.com?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
     });
   }
 

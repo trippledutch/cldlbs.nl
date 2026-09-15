@@ -79,7 +79,7 @@ def bouw(t, groepen):
         {"@type": "CollectionPage", "@id": t['url'] + "#pagina", "url": t['url'],
          "name": t['naam'], "inLanguage": t['taal'],
          "description": t['omschrijving'].format(n=n),
-         "publisher": {"@id": "https://cldlbs.com/#organisatie"}},
+         "publisher": {"@id": "https://clustertriage.com/#organisatie"}},
         {"@type": "FAQPage", "@id": t['url'] + "#vragen", "mainEntity": [
             {"@type": "Question", "name": html.unescape(z),
              "acceptedAnswer": {"@type": "Answer", "text": html.unescape(a)}}
@@ -97,9 +97,9 @@ def bouw(t, groepen):
 <meta name="description" content="{t['omschrijving'].format(n=n)}">
 <meta name="robots" content="noindex,follow">
 <link rel="canonical" href="{t['url']}">
-<link rel="alternate" hreflang="nl" href="https://cldlbs.com/onderwerpen/">
-<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/topics/">
-<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/onderwerpen/">
+<link rel="alternate" hreflang="nl" href="https://clustertriage.com/onderwerpen/">
+<link rel="alternate" hreflang="en" href="https://clustertriage.com/en/topics/">
+<link rel="alternate" hreflang="x-default" href="https://clustertriage.com/onderwerpen/">
 <meta property="og:title" content="{t['titel']}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{t['url']}">
@@ -142,7 +142,7 @@ def bouw(t, groepen):
 
 NL = dict(
     naam='Onderwerpen', taal='nl-NL', htmltaal='nl',
-    url='https://cldlbs.com/onderwerpen/', thuis='Home', thuisurl='https://cldlbs.com/',
+    url='https://clustertriage.com/onderwerpen/', thuis='Home', thuisurl='https://clustertriage.com/',
     thuispad='/', brand='/preview-home.html', knopurl='/triage/', knop='Start gratis triage',
     naarinhoud='Naar inhoud', uit='Uitgewerkt in',
     taalwissel='<span aria-current="true">NL</span><a href="/en/topics/" hreflang="en" lang="en">EN</a>',
@@ -153,7 +153,7 @@ NL = dict(
 
 EN = dict(
     naam='Topics', taal='en-GB', htmltaal='en',
-    url='https://cldlbs.com/en/topics/', thuis='Home', thuisurl='https://cldlbs.com/en/',
+    url='https://clustertriage.com/en/topics/', thuis='Home', thuisurl='https://clustertriage.com/en/',
     thuispad='/en/', brand='/en/', knopurl='/en/triage/', knop='Start free triage',
     naarinhoud='Skip to content', uit='Explained in',
     taalwissel='<a href="/onderwerpen/" hreflang="nl" lang="nl">NL</a><span aria-current="true">EN</span>',

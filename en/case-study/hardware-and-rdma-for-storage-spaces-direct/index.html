@@ -11,15 +11,15 @@
 <meta name="theme-color" content="#0A1024">
 <title>Hardware and RDMA for Storage Spaces Direct &middot; CloudLabs</title>
 <meta name="description" content="Forty VMs on ageing SAN-based Hyper-V. Three intended NIC models were not on the validated list and were replaced before the purchase order went out.">
-<link rel="canonical" href="https://cldlbs.com/en/case-study/hardware-and-rdma-for-storage-spaces-direct/">
+<link rel="canonical" href="https://clustertriage.com/en/case-study/hardware-and-rdma-for-storage-spaces-direct/">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_GB">
-<meta property="og:url" content="https://cldlbs.com/en/case-study/hardware-and-rdma-for-storage-spaces-direct/">
+<meta property="og:url" content="https://clustertriage.com/en/case-study/hardware-and-rdma-for-storage-spaces-direct/">
 <meta property="og:title" content="Hardware and RDMA for Storage Spaces Direct &middot; CloudLabs">
 <meta property="og:description" content="A logistics company wanted to move from SAN-based Hyper-V to Storage Spaces Direct. The measurement checked the order list against the HCL and took three NIC models off it before the purchase order went out.">
-<link rel="alternate" hreflang="nl" href="https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html">
-<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/case-study/hardware-and-rdma-for-storage-spaces-direct/">
-<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html">
+<link rel="alternate" hreflang="nl" href="https://clustertriage.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html">
+<link rel="alternate" hreflang="en" href="https://clustertriage.com/en/case-study/hardware-and-rdma-for-storage-spaces-direct/">
+<link rel="alternate" hreflang="x-default" href="https://clustertriage.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html">
 <link rel="icon" href="/favicon.png" type="image/png">
 <link rel="stylesheet" href="/huisstijl/pagina.css?v=5279f5a9">
 <link rel="stylesheet" href="/huisstijl/bevinding.css?v=4b1f3bbc">
@@ -32,20 +32,20 @@
     {
       "@type":"BreadcrumbList",
       "itemListElement":[
-        {"@type":"ListItem","position":1,"name":"Home","item":"https://cldlbs.com/"},
-        {"@type":"ListItem","position":2,"name":"Praktijkvoorbeelden","item":"https://cldlbs.com/praktijkvoorbeelden/"},
-        {"@type":"ListItem","position":3,"name":"Hardware and RDMA for Storage Spaces Direct","item":"https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html"}
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://clustertriage.com/"},
+        {"@type":"ListItem","position":2,"name":"Praktijkvoorbeelden","item":"https://clustertriage.com/praktijkvoorbeelden/"},
+        {"@type":"ListItem","position":3,"name":"Hardware and RDMA for Storage Spaces Direct","item":"https://clustertriage.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html"}
       ]
     },
     {
       "@type":"Article",
-      "@id":"https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html#artikel",
+      "@id":"https://clustertriage.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html#artikel",
       "headline":"Three NIC models taken off the order list before the purchase of a Storage Spaces Direct cluster",
       "description":"Forty virtual machines on ageing SAN-based Hyper-V and a hardware replacement coming. The measurement checked the intended order list against the HCL and the network design against the requirements for RDMA.",
       "inLanguage":"nl-NL",
       "datePublished":"2026-09-01",
       "dateModified":"2026-09-01",
-      "mainEntityOfPage":"https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html",
+      "mainEntityOfPage":"https://clustertriage.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html",
       "genre":"Praktijkvoorbeeld",
       "about":[
         {"@type":"Thing","name":"Storage Spaces Direct"},
@@ -55,16 +55,16 @@
       ],
       "keywords":"Storage Spaces Direct, S2D, RDMA, RoCE, PFC, HCL, hardware compatibility list, SAN migratie, Hyper-V, Azure Local",
       "author":{
-        "@type":"Person","@id":"https://cldlbs.com/about.html#hans","name":"Hans Vredevoort",
+        "@type":"Person","@id":"https://clustertriage.com/about.html#hans","name":"Hans Vredevoort",
         "jobTitle":"Cluster- en virtualisatiespecialist",
         "knowsAbout":["Hyper-V","Failover Clustering","Azure Local","Storage Spaces Direct","Windows Server"],
-        "worksFor":{"@id":"https://cldlbs.com/#organisatie"}
+        "worksFor":{"@id":"https://clustertriage.com/#organisatie"}
       },
-      "publisher":{"@type":"Organization","@id":"https://cldlbs.com/#organisatie","name":"CloudLabs","url":"https://cldlbs.com/"}
+      "publisher":{"@type":"Organization","@id":"https://clustertriage.com/#organisatie","name":"CloudLabs","url":"https://clustertriage.com/"}
     },
     {
       "@type":"FAQPage",
-      "@id":"https://cldlbs.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html#vragen",
+      "@id":"https://clustertriage.com/praktijkvoorbeeld/hardware-en-rdma-voor-storage-spaces-direct.html#vragen",
       "mainEntity":[
         {"@type":"Question","name":"Why is the hardware list so decisive with Storage Spaces Direct?",
          "acceptedAnswer":{"@type":"Answer","text":"Because S2D builds the storage layer in software out of the disks and the network cards of the hosts themselves. With a SAN the reliability sits with the storage system; with S2D it sits with the combination of components in your own servers. A network card that supports RDMA on paper but is not on the list of validated configurations can drop packets under load that the cluster sees as a storage fault. That cannot be repaired with a setting: it is the wrong card. That is why the check against the HCL belongs before the purchase order, not after it."}},
@@ -287,7 +287,7 @@
 </section>
 </main>
 
-<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Services</h4><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div><div class="footer-column"><h4>Organisation</h4><a href="/en/about/">About us</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/rates/">Rates</a><a href="/en/partners/">For partners</a></div><div class="footer-column"><h4>Knowledge base</h4><a href="/en/blog/">Blog</a><a href="/en/case-studies/">Case studies</a><a href="/en/blog/top-10-hyper-v-cluster-issues/">Failures and causes</a><a href="/en/blog/cluster-witness-comparison/">Quorum and witness</a><a href="/en/blog/san-vs-s2d-vs-azure-local-hyper-v-storage/">Storage and Storage Spaces Direct</a><a href="/en/faq/">FAQ</a><a href="/en/topics/">Topics</a></div><div class="footer-column"><h4>Contact</h4><a href="/en/triage/#aanvraag">Request the free script</a><a href="/en/appointment/#agenda">Book a call</a><a href="/en/contact/#bericht">Get in touch</a></div><div class="newsletter"><h4>Technical findings by email</h4><form action="#" method="post"><label><span class="skip">Email address</span><input type="email" name="email" placeholder="name@company.com" autocomplete="email"></label><button type="submit">Subscribe</button></form><p>No marketing stream. Only new findings and practical explanation.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="Email"><img src="/assets/icons/email.svg" alt=""></a><a href="/en/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/en/">Cloud<span>Labs</span></a><p class="footer-tagline">Independent measurements of Hyper-V, Failover Cluster and Azure Local environments. Reports in Dutch, English, German, Spanish and French.</p><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/en/privacy/">Privacy statement</a><a href="/en/triage/#veilig">Security</a><a href="/en/terms/">Terms of engagement</a><button type="button" class="cookiebalk-open">Cookie preferences</button></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
+<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Services</h4><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div><div class="footer-column"><h4>Organisation</h4><a href="/en/about/">About us</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/rates/">Rates</a><a href="/en/partners/">For partners</a></div><div class="footer-column"><h4>Knowledge base</h4><a href="/en/blog/">Blog</a><a href="/en/case-studies/">Case studies</a><a href="/en/blog/top-10-hyper-v-cluster-issues/">Failures and causes</a><a href="/en/blog/cluster-witness-comparison/">Quorum and witness</a><a href="/en/blog/san-vs-s2d-vs-azure-local-hyper-v-storage/">Storage and Storage Spaces Direct</a><a href="/en/faq/">FAQ</a><a href="/en/topics/">Topics</a></div><div class="footer-column"><h4>Contact</h4><a href="/en/triage/#aanvraag">Request the free script</a><a href="/en/appointment/#agenda">Book a call</a><a href="/en/contact/#bericht">Get in touch</a></div><div class="newsletter"><h4>Technical findings by email</h4><form action="#" method="post"><label><span class="skip">Email address</span><input type="email" name="email" placeholder="name@company.com" autocomplete="email"></label><button type="submit">Subscribe</button></form><p>No marketing stream. Only new findings and practical explanation.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans@vredevoort.com" aria-label="Email"><img src="/assets/icons/email.svg" alt=""></a><a href="/en/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/en/">Cloud<span>Labs</span></a><p class="footer-tagline">Independent measurements of Hyper-V, Failover Cluster and Azure Local environments. Reports in Dutch, English, German, Spanish and French.</p><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/en/privacy/">Privacy statement</a><a href="/en/triage/#veilig">Security</a><a href="/en/terms/">Terms of engagement</a><button type="button" class="cookiebalk-open">Cookie preferences</button></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
 
 <script>
 (function(){

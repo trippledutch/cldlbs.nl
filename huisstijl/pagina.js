@@ -177,7 +177,7 @@
   });
   mail.addEventListener('click', function(){
     var b = bericht(); if(b === null) return;
-    location.href = 'mailto:hans@cldlbs.com,rob@cldlbs.com?subject='
+    location.href = 'mailto:hans@vredevoort.com?subject='
       + encodeURIComponent('Cluster Triage') + '&body=' + encodeURIComponent(b);
   });
 })();
@@ -193,7 +193,7 @@
   function bericht(){
     if(!F.reportValidity()) return null;
     var v = function(n){ return F.elements[n].value.trim(); };
-    return 'Bericht via cldlbs.com'
+    return 'Bericht via clustertriage.com'
       + '\nNaam: '      + v('voornaam') + ' ' + v('achternaam')
       + '\nBedrijf: '   + v('bedrijf')
       + '\nE-mail: '    + v('email')
@@ -207,8 +207,8 @@
   });
   mail.addEventListener('click', function(){
     var b = bericht(); if(b === null) return;
-    location.href = 'mailto:hans.vredevoort@cldlbs.com?subject='
-      + encodeURIComponent(F.elements['onderwerp'].value.trim() || 'Bericht via cldlbs.com')
+    location.href = 'mailto:hans@vredevoort.com?subject='
+      + encodeURIComponent(F.elements['onderwerp'].value.trim() || 'Bericht via clustertriage.com')
       + '&body=' + encodeURIComponent(b);
   });
 })();
@@ -223,7 +223,7 @@
   function bericht(){
     if(!F.reportValidity()) return null;
     var v = function(n){ return F.elements[n].value.trim(); };
-    return 'Afspraakverzoek via cldlbs.com'
+    return 'Afspraakverzoek via clustertriage.com'
       + '\nNaam: '      + v('voornaam') + ' ' + v('achternaam')
       + '\nBedrijf: '   + v('bedrijf')
       + '\nE-mail: '    + v('email')
@@ -239,7 +239,7 @@
   });
   mail.addEventListener('click', function(){
     var b = bericht(); if(b === null) return;
-    location.href = 'mailto:hans.vredevoort@cldlbs.com?subject='
+    location.href = 'mailto:hans@vredevoort.com?subject='
       + encodeURIComponent('Afspraak: ' + F.elements['onderwerp'].value.trim())
       + '&body=' + encodeURIComponent(b);
   });
@@ -276,7 +276,7 @@
   });
   mail.addEventListener('click', function(){
     var b = bericht(); if(b === null) return;
-    location.href = 'mailto:hans.vredevoort@cldlbs.com?subject='
+    location.href = 'mailto:hans@vredevoort.com?subject='
       + encodeURIComponent('Partnerbriefing CloudLabs') + '&body=' + encodeURIComponent(b);
   });
 })();
@@ -670,7 +670,7 @@
         '<button type="button" class="btn primary" id="hulp-wa">'+T.wa+'</button>'+
         '<button type="button" class="btn dark" id="hulp-mail">'+T.mail+'</button>'+
       '</div>'+
-      '<p class="aanvraag-noot">'+T.noot+'<br>WhatsApp +66&nbsp;99&nbsp;146&nbsp;1761 &middot; hans@cldlbs.com</p>'+
+      '<p class="aanvraag-noot">'+T.noot+'<br>WhatsApp +66&nbsp;99&nbsp;146&nbsp;1761 &middot; hans@vredevoort.com</p>'+
     '</form>';
 
   var kaart=null;
@@ -748,7 +748,7 @@
     F.querySelector('#hulp-mail').addEventListener('click',function(){
       var b=bericht(); if(b===null) return;
       onthoud();
-      location.href='mailto:hans@cldlbs.com,rob@cldlbs.com?subject='
+      location.href='mailto:hans@vredevoort.com?subject='
         + encodeURIComponent('Cluster Triage') + '&body=' + encodeURIComponent(b);
     });
   }
