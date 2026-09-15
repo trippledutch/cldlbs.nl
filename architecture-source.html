@@ -1059,7 +1059,7 @@ function card(g, x, y, d, tone, w){
     const show = () => {
       const z = document.getElementById(panelId);
       z.dataset.open = "1";
-      z.scrollIntoView({behavior:"smooth",block:"start"});
+      goTo(z);
       flash(z);
       LENSES.forEach(fn=>fn());
     };
@@ -1191,9 +1191,8 @@ function build(){
   cat.setAttribute("role","button");
   const cOpen = () => { const z=document.getElementById("catpanel");
     z.dataset.open = z.dataset.open === "1" ? "0" : "1";
-    if (z.dataset.open==="1"){ z.scrollIntoView({behavior:"smooth",block:"start"}); flash(z); }
-    else { const st=document.querySelector(".stage-wrap");
-           if (st) st.scrollIntoView({behavior:"smooth",block:"start"}); }
+    if (z.dataset.open==="1"){ goTo(z); flash(z); }
+    else { toStage(); }
     LENSES.forEach(fn=>fn()); };
   cat.addEventListener("click", cOpen);
   cat.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();cOpen();} });
@@ -2124,18 +2123,17 @@ const goHome = ()=>{
   if (why) why.innerHTML = HINT();
   if (whyrap) whyrap.innerHTML = RHINT();
   LENSES.forEach(fn=>fn());
-  window.scrollTo({top:0,behavior:"smooth"});
+  goTo(null);
 };
 
 document.querySelectorAll(".jump button").forEach(b=>b.addEventListener("click",()=>{
   const to=b.dataset.to;
   if (to==="top"){ goHome(); return; }
-  if (to==="stage"){ document.querySelector(".stage-wrap")
-      .scrollIntoView({behavior:"smooth",block:"start"}); return; }
+  if (to==="stage"){ toStage(); return; }
   const map={mods:"zoom", rap:"rappanel"};
   if (map[to]){ const z=document.getElementById(map[to]);
     z.dataset.open="1"; LENSES.forEach(fn=>fn());
-    z.scrollIntoView({behavior:"smooth",block:"start"}); flash(z); }
+    goTo(z); flash(z); }
 }));
 
 const lb=document.getElementById("lb"), lbimg=document.getElementById("lbimg"),
@@ -2186,13 +2184,38 @@ JOINS.forEach(([n,r])=>{
   s2.innerHTML = `<b></b> · ${r.join(" + ")}`; s2.querySelector("b").textContent = n;
   jrow.appendChild(s2);
 });
+// Scrollen, ook in de ingebedde stand. De methodepagina zet dit document in
+// een iframe dat op zijn volle inhoudshoogte staat, dus dit venster scrolt
+// zelf nooit. window.scrollTo doet daar niets, scrollIntoView reikt in de
+// meeste browsers wel door naar de ouderpagina maar zet het doel precies
+// onder haar kleefbalk, en het iframe groeit pas 260 ms na een klik mee.
+// Daarom: eerst het iframe op maat zetten, dan de ouderpagina zelf
+// verschuiven, met de hoogte van die balk erbij opgeteld. Los van een iframe
+// blijft het gewone gedrag. Zonder el gaat het naar het begin van de tekening.
+function goTo(el){
+  const still = window.matchMedia &&
+                window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const behavior = still ? "auto" : "smooth";
+  let fe = null;
+  try { fe = window.frameElement; } catch(e){ fe = null; }
+  if (!fe){
+    if (el) el.scrollIntoView({behavior, block:"start"});
+    else window.scrollTo({top:0, behavior});
+    return;
+  }
+  const pdoc = fe.ownerDocument, pwin = pdoc.defaultView;
+  fe.style.height = Math.max(900, document.documentElement.scrollHeight + 20) + "px";
+  const bar = pdoc.querySelector(".topbar");
+  const offset = (bar ? bar.getBoundingClientRect().height : 0) + 16;
+  const frameTop = fe.getBoundingClientRect().top + pwin.scrollY;
+  const inner = el ? el.getBoundingClientRect().top + window.scrollY : 0;
+  pwin.scrollTo({top: Math.max(0, frameTop + inner - offset), behavior});
+}
+
 // inklappen brengt je altijd terug naar de tekening, langs welke weg dan ook
 function toStage(){
   const st = document.querySelector(".stage-wrap");
-  if (!st) return;
-  const still = window.matchMedia &&
-                window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  st.scrollIntoView({behavior: still ? "auto" : "smooth", block:"start"});
+  if (st) goTo(st);
 }
 
 document.querySelectorAll("button.close").forEach(b=>b.addEventListener("click", ()=>{
@@ -2221,8 +2244,7 @@ document.querySelectorAll(".hitcard").forEach(c=>{
       // anker op de CATALOGUS, niet op het doel: anders duwt een lang scherm
       // de drie kaarten uit beeld en kun je niet meer wisselen
       const anchor = document.getElementById("catpanel");
-      (anchor && anchor.dataset.open === "1" ? anchor : z)
-        .scrollIntoView({behavior:"smooth",block:"start"});
+      goTo(anchor && anchor.dataset.open === "1" ? anchor : z);
       flash(z);
     }
     LENSES.forEach(fn=>fn());
