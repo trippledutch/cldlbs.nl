@@ -1962,6 +1962,7 @@ function pickModule(id){
   else bits.push(P("geenPacks"));
   bits.push(`${P("levertAan")} ${m.to.map(t=>DOCS.filter(d=>d.tgt===t).map(d=>docName(d.id)).join(", ")).join(", ")}.`);
   why.innerHTML = bits.join(" ");
+  reveal(why);
 }
 
 const drow = document.getElementById("drow");
@@ -2016,6 +2017,7 @@ function pickDoc(id){
     (missing.length ? ` (${missing.map(m=>m.id).join(", ")})` : "") + `. ` +
     P("docZin2") +
     (doc.from ? P("docAfgeleid") : "");
+  reveal(whyrap);
 }
 
 // ---- de uitleg bij de opslagvarianten, per taal ------------------------
@@ -2071,6 +2073,7 @@ function pickAxis(id){
   ax.mods.forEach(m=>mark(m,"and",P("vanToepassing")));
   markPacks(ax.mods);
   why.innerHTML = `<b>${ax.nm}</b>: ${axWhy(ax)}`;
+  reveal(why);
 }
 
 // de snelkoppelingen verschijnen pas voorbij de tekening: daarboven heb je ze
@@ -2212,6 +2215,34 @@ function goTo(el){
   pwin.scrollTo({top: Math.max(0, frameTop + inner - offset), behavior});
 }
 
+// Zorgt dat een uitleg in beeld is zonder de pagina meer te verschuiven dan
+// nodig. Een module of rapport aanklikken vult de uitleg onder het rooster;
+// op een telefoon staat die vaak onder de vouw en dan lijkt de klik niets te
+// doen. Staat de uitleg al in beeld, dan gebeurt er niets. Verborgen (het
+// scherm is dicht) ook niets.
+function reveal(el){
+  if (!el || el.offsetParent === null) return;
+  const still = window.matchMedia &&
+                window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const behavior = still ? "auto" : "smooth";
+  let fe = null;
+  try { fe = window.frameElement; } catch(e){ fe = null; }
+  if (!fe){ el.scrollIntoView({behavior, block:"nearest"}); return; }
+  const pdoc = fe.ownerDocument, pwin = pdoc.defaultView;
+  fe.style.height = Math.max(900, document.documentElement.scrollHeight + 20) + "px";
+  const bar = pdoc.querySelector(".topbar");
+  const offset = (bar ? bar.getBoundingClientRect().height : 0) + 16;
+  const r = el.getBoundingClientRect();
+  const frameTop = fe.getBoundingClientRect().top + pwin.scrollY;
+  const top = frameTop + r.top + window.scrollY, bottom = top + r.height;
+  const vTop = pwin.scrollY + offset, vBottom = pwin.scrollY + pwin.innerHeight - 16;
+  if (top >= vTop && bottom <= vBottom) return;
+  if (top < vTop || r.height > pwin.innerHeight - offset - 32)
+    pwin.scrollTo({top: Math.max(0, top - offset), behavior});
+  else
+    pwin.scrollTo({top: Math.max(0, bottom - pwin.innerHeight + 16), behavior});
+}
+
 // inklappen brengt je altijd terug naar de tekening, langs welke weg dan ook
 function toStage(){
   const st = document.querySelector(".stage-wrap");
@@ -2238,13 +2269,19 @@ document.querySelectorAll(".hitcard").forEach(c=>{
     CATTARGETS.forEach(t=>{ if (t !== target) document.getElementById(t).dataset.open = "0"; });
     document.querySelectorAll(".hitcard").forEach(x=>x.classList.remove("active"));
     const z = document.getElementById(target);
-    if (already){ z.dataset.open = "0"; toStage(); }
+    const cat = document.getElementById("catpanel");
+    if (already){
+      z.dataset.open = "0";
+      // dichtklappen via de kaart brengt je terug bij de catalogus, want die
+      // staat nog open; de Collapse-knop gaat naar de tekening
+      if (cat && cat.dataset.open === "1") goTo(cat); else toStage();
+    }
     else {
       z.dataset.open = "1"; c.classList.add("active");
-      // anker op de CATALOGUS, niet op het doel: anders duwt een lang scherm
-      // de drie kaarten uit beeld en kun je niet meer wisselen
-      const anchor = document.getElementById("catpanel");
-      goTo(anchor && anchor.dataset.open === "1" ? anchor : z);
+      // spring naar het diepere scherm zelf. Ankeren op de catalogus hield de
+      // kaarten in beeld, maar op een telefoon staat het scherm dan ver onder
+      // de vouw en lijkt de kaart dood
+      goTo(z);
       flash(z);
     }
     LENSES.forEach(fn=>fn());
