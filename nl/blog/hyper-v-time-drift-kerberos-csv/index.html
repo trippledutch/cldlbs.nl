@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A1024">
+<title>Time drift in Hyper-V clusters: de stille killer van Kerberos en CSV &middot; ClusterTriage</title>
+<meta name="description" content="Een Hyper-V cluster met klok-skew tussen nodes is een tijdbom. Niet figuurlijk, maar letterlijk. Wanneer de klokken op cluster-nodes meer dan vijf minuten uit elkaar lopen, valt Kerberos om. Vanaf vijftig seconden raken cluster-heartbeats hun synchronisatie kwijt. En zodra een Hyper-V host zijn tijd">
+<link rel="canonical" href="https://clustertriage.com/nl/blog/hyper-v-time-drift-kerberos-csv/">
+<link rel="alternate" hreflang="nl" href="https://clustertriage.com/nl/blog/hyper-v-time-drift-kerberos-csv/">
+<link rel="alternate" hreflang="en" href="https://clustertriage.com/en/blog/hyper-v-time-drift-kerberos-csv/">
+<link rel="alternate" hreflang="x-default" href="https://clustertriage.com/en/blog/hyper-v-time-drift-kerberos-csv/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:url" content="https://clustertriage.com/nl/blog/hyper-v-time-drift-kerberos-csv/">
+<meta property="og:title" content="Time drift in Hyper-V clusters: de stille killer van Kerberos en CSV">
+<meta property="og:description" content="Een Hyper-V cluster met klok-skew tussen nodes is een tijdbom. Niet figuurlijk, maar letterlijk. Wanneer de klokken op cluster-nodes meer dan vijf minuten uit elkaar lopen, valt Kerberos om. Vanaf vijftig seconden raken cluster-heartbeats hun synchronisatie kwijt. En zodra een Hyper-V host zijn tijd">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=5279f5a9">
+<link rel="stylesheet" href="/huisstijl/artikel.css?v=9a147c57">
+<link rel="stylesheet" href="/huisstijl/clustertriage.css?v=30af5db3">
+<link rel="stylesheet" href="/huisstijl/clustertriage-v2.css?v=c711d81a">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://clustertriage.com/nl/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://clustertriage.com/nl/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Time drift in Hyper-V clusters: de stille killer van Kerberos en CSV",
+          "item": "https://clustertriage.com/nl/blog/hyper-v-time-drift-kerberos-csv/"
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://clustertriage.com/nl/blog/hyper-v-time-drift-kerberos-csv/#artikel",
+      "headline": "Time drift in Hyper-V clusters: de stille killer van Kerberos en CSV",
+      "description": "Een Hyper-V cluster met klok-skew tussen nodes is een tijdbom. Niet figuurlijk, maar letterlijk. Wanneer de klokken op cluster-nodes meer dan vijf minuten uit elkaar lopen, valt Kerberos om. Vanaf vijftig seconden raken cluster-heartbeats hun synchronisatie kwijt. En zodra een Hyper-V host zijn tijd",
+      "inLanguage": "nl-NL",
+      "datePublished": "2026-05-28",
+      "dateModified": "2026-05-28",
+      "mainEntityOfPage": "https://clustertriage.com/nl/blog/hyper-v-time-drift-kerberos-csv/",
+      "articleSection": "Time Service",
+      "author": {
+        "@type": "Person",
+        "name": "Hans Vredevoort",
+        "jobTitle": "Cluster- en virtualisatiespecialist",
+        "knowsAbout": [
+          "Hyper-V",
+          "Failover Clustering",
+          "Azure Local",
+          "Storage Spaces Direct",
+          "Windows Server"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ClusterTriage",
+        "url": "https://clustertriage.com/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://clustertriage.com/nl/blog/hyper-v-time-drift-kerberos-csv/#vragen",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Mijn cluster werkt prima al jaren, waarom zou ik me zorgen maken over time service?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Drift bouwt langzaam op. Tot het moment dat een PDC emulator uitvalt of een Hyper-V host wordt gepatcht, kan een misconfiguratie jarenlang verborgen blijven. We zien regelmatig dat een geplande maintenance-actie de eerste keer is dat de drift zichtbaar wordt, en dat is een ongelukkig moment voor verrassingen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Werkt dit hetzelfde op Azure Local en Azure Stack HCI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Grotendeels ja. Azure Local nodes zijn domain-joined en volgen dezelfde w32time-hiërarchie. Wel: voor Arc-managed Azure Local clusters zit er een aanvullende laag, omdat de Arc-agent ook zijn eigen tijd-validatie doet richting Azure. De drempel daar is strikter (vijf minuten max), dus drift wordt eerder zichtbaar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wat als ik geen externe NTP-bron mag gebruiken vanwege security-policy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dan is een hardware-stratum-1-bron in het managementnetwerk de oplossing. Apparaten als Meinberg, Microsemi of een GPS-disciplined Linux-server kunnen als interne NTP-bron dienen. De PDC emulator wijst dan naar die hardware in plaats van naar time.windows.com. Voor strict air-gapped omgevingen is dit de standaard-aanpak."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hoeveel klok-skew is acceptabel tussen cluster-nodes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Onder 1 seconde in steady state. Tot 5 seconden tijdens een patch-ronde of node-reboot. Boven 30 seconden is een dringend remediation-onderwerp. Boven 5 minuten is het al een actief incident, want Kerberos zal nieuwe authenticatie weigeren."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Wat is /reliable:yes en wanneer gebruik je het?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "/reliable:yes markeert een tijd-bron als \"betrouwbaar\", wat andere w32time-clients toestaat om met hem te syncen. Het is een verplichte instelling op de PDC emulator (zonder is hij geen geldige tijd-bron voor de rest van het domein). Op een DC die geen PDC is, hoort /reliable:no of geen instelling."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Naar inhoud</a><header class="topbar"><nav class="nav"><a class="brand ct-brand" href="/nl/"><b>Cluster<span>Triage</span></b><small>Decades of server expertise</small></a><div class="navlinks" id="navlinks"><a href="/nl/assurance/">Assurance</a><a href="/nl/methodologie/">Methode</a><a href="/nl/over-ons/">Over ons</a><a href="/nl/blog/" aria-current="page">Blog</a><a href="https://clusterdown.com/nl/">Cluster down?</a><span class="lang-set"><span aria-current="true">NL</span><a href="/en/blog/hyper-v-time-drift-kerberos-csv/">EN</a></span></div><div class="nav-actions"><a class="btn primary" href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Plan een kennismaking</a><button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button></div></nav></header>
+
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+  <article class="artikelpagina">
+
+    <p class="kruimelpad"><a href="/nl/">ClusterTriage</a> / <a href="/nl/blog/">Blog</a> / Time Service</p>
+
+    <header class="artikelkop">
+      <h1>Time drift in Hyper-V clusters: de stille killer van Kerberos en CSV</h1>
+      <p class="lede">Een Hyper-V cluster met klok-skew tussen nodes is een tijdbom. Niet figuurlijk, maar letterlijk. Wanneer de klokken op cluster-nodes meer dan vijf minuten uit elkaar lopen, valt Kerberos om. Vanaf vijftig seconden raken cluster-heartbeats hun synchronisatie kwijt. En zodra een Hyper-V host zijn tijd-referentie verliest, kunnen domain-joined VM's die op die host draaien hun authenticatie naar AD niet meer onderhouden.</p>
+        <p class="lede">In de meeste Hyper-V Cluster Health Checks die CloudLabs uitvoert, vinden we klok-issues. Niet altijd dramatisch, vaak nog onder de drempel waarop iets faalt, maar wel duidelijk uit balans. En het is precies het soort probleem dat monitoring tools missen tot het te laat is, omdat een paar seconden afwijking nergens een alarm triggert.</p>
+        <p class="lede">Dit artikel legt uit waarom time service op een Hyper-V cluster anders werkt dan op een standalone server, welke configuraties wij in 2026 als best practice hanteren, en hoe je drift detecteert vóór de eerste Kerberos-failure.</p>
+      <p class="artikelmeta"><b>Door Hans Vredevoort</b> <i>&middot;</i> <b>28 mei 2026</b> <i>&middot;</i> <b>13 minuten leestijd</b> <i>&middot;</i> <b>Time Service</b></p>
+    </header>
+
+    <div class="artikelbody">
+      <nav class="toc" aria-label="Inhoud van dit artikel">
+        <p class="toc-title">In dit artikel</p>
+        <ol>
+            <li><a href="#nl-1">Waarom time drift in Hyper-V clusters specifiek riskant is</a></li>
+            <li><a href="#nl-2">De Microsoft tijd-hiërarchie en waar Hyper-V hosts in passen</a></li>
+            <li><a href="#nl-3">De Hyper-V Time Synchronization Integration Service, en wanneer hem uit te zetten</a></li>
+            <li><a href="#nl-4">PDC emulator-configuratie, de root van alle tijd</a></li>
+            <li><a href="#nl-5">Cluster-node configuratie, w32time settings die er werkelijk toe doen</a></li>
+            <li><a href="#nl-6">Drift detecteren vóór het faalt</a></li>
+            <li><a href="#nl-7">Drie veelvoorkomende foutpatronen</a></li>
+            <li><a href="#nl-8">Remediation playbook</a></li>
+          </ol>
+      </nav>
+
+      <div class="tekst">
+<h2 id="nl-1">1. Waarom time drift in Hyper-V clusters specifiek riskant is</h2>
+        <p>Op een standalone server is klok-drift een irritatie. Op een Hyper-V cluster is het een cascade-trigger.</p>
+        <p><strong>Kerberos.</strong> Active Directory gebruikt Kerberos voor authenticatie, en Kerberos heeft een standaard klok-tolerantie van vijf minuten. Verschil meer dan dat tussen client en KDC, en alle nieuwe authenticatie faalt met <code>KRB_AP_ERR_SKEW</code>. Bestaande sessies blijven werken tot hun ticket verloopt, dus de eerste symptomen komen 8 tot 10 uur na de drift en lijken zonder oorzaak. We hebben dit op klantsite zien gebeuren: maandagochtend kan niemand inloggen, alles wijst naar DNS, en de werkelijke oorzaak is een Hyper-V host die zaterdag zijn NTP-bron verloor.</p>
+        <p><strong>Cluster heartbeats.</strong> Failover Clustering verwacht dat alle nodes binnen redelijke tijd-tolerantie zitten om heartbeat-events correct te volgen. Bij grote skew gaan nodes events in verkeerde volgorde rapporteren, en kan de Cluster Service besluiten dat een node uit het cluster is terwijl die node prima draait.</p>
+        <p><strong>CSV coordinator-arbitratie.</strong> Cluster Shared Volume coordinator-roloverdrachten worden gelogd met timestamps. Skew tussen nodes maakt log-analyse onmogelijk, en in zeldzame gevallen kan het CSV-rebalancing in een loop brengen waarbij de balancer zijn eigen acties als gelijktijdig met de andere node interpreteert.</p>
+        <p><strong>Live Migration timing.</strong> De live-migration handshake gebruikt timestamps voor sequence-validatie. Grote skew tussen bron en doel-host kan migraties afbreken zonder duidelijke foutmelding, of erger, de migratie compleet rapporteren terwijl er memory pages zijn overgeslagen.</p>
+        <p><strong>VM clocks die afdwalen.</strong> Domain-joined VM's syncen met hun PDC emulator. Als die PDC emulator op zijn beurt afhankelijk is van een Hyper-V host die zijn eigen tijd niet goed beheert, krijg je drift in twee lagen, en de oplossing wordt veel ingewikkelder dan "fix de NTP-bron".</p>
+
+        <h2 id="nl-2">2. De Microsoft tijd-hiërarchie en waar Hyper-V hosts in passen</h2>
+        <p>De juiste tijd-architectuur in een domein-omgeving:</p>
+        <ul>
+          <li><strong>Het top-level.</strong> Eén DC met de PDC emulator FSMO-rol synchroniseert met een externe, betrouwbare tijdbron. Bij voorkeur <code>time.windows.com</code>, <code>pool.ntp.org</code>, of een hardware-stratum-1-bron. Configuratie: <code>Type = NTP</code>, <code>NtpServer = &lt;bron&gt;,0x9</code>.</li>
+          <li><strong>Alle andere DC's.</strong> Synchroniseren met de PDC emulator via de domein-hiërarchie. Configuratie: <code>Type = NT5DS</code>.</li>
+          <li><strong>Alle domain-joined servers, inclusief Hyper-V hosts.</strong> Synchroniseren met de domein-hiërarchie. Configuratie: <code>Type = NT5DS</code>.</li>
+          <li><strong>Alle domain-joined VM's.</strong> Synchroniseren met de domein-hiërarchie via hun eigen w32time-service. Configuratie: <code>Type = NT5DS</code>. En cruciaal: de Hyper-V Time Synchronization Integration Service moet uit staan voor deze VM's. Zie sectie 3.</li>
+          <li><strong>Non-domain VM's of geïsoleerde clusters.</strong> Direct synchroniseren met een externe NTP-bron of met een NTP-bron in het managementnetwerk. Configuratie: <code>Type = NTP</code>.</li>
+        </ul>
+
+        <p>Wat we in een typische Hyper-V Cluster Health Check vinden, is dat deze hiërarchie ergens halverwege is gebroken. De PDC emulator staat op <code>Type = NT5DS</code> (synct met zichzelf, in feite met de hardware-klok), de Hyper-V hosts staan op <code>Type = NTP</code> (en wijzen elk naar een andere bron), en de VM's hebben hun Hyper-V Time Sync IS aan staan terwijl ze ook NT5DS proberen te doen. Resultaat: drie tijd-bronnen die elk in een andere richting trekken.</p>
+
+        <h2 id="nl-3">3. De Hyper-V Time Synchronization Integration Service, en wanneer hem uit te zetten</h2>
+        <p>De Hyper-V Time Sync Integration Service synchroniseert de VM-klok met die van de Hyper-V host. Dat klinkt nuttig, en voor non-domain-joined VM's is het dat ook. Voor domain-joined VM's is het schadelijk en hoort het uit te staan.</p>
+
+        <p><strong>Waarom uit voor domain-joined VM's:</strong></p>
+        <p>Een domain-joined VM hoort zijn tijd uit AD te halen via w32time NT5DS. Als de Hyper-V Time Sync IS ook actief is, krijg je twee concurrerende tijdbronnen: de host (die zijn eigen tijd-staat heeft) en het domein. Op het moment dat host en domein van elkaar afwijken (en dat gebeurt vaker dan je denkt), gaat de VM-klok pingpongen tussen beide.</p>
+
+        <p><strong>Het Microsoft-advies:</strong></p>
+        <p>De documentatie van Microsoft zegt dit expliciet sinds Windows Server 2012 R2: voor domain-joined VM's hoort Time Sync alleen actief te zijn voor de "Time Synchronization" sub-service tijdens save/restore-operaties, niet voor reguliere klok-sync. Praktisch betekent dat de integration service zelf uit, of de specifieke sync-component uit.</p>
+
+        <p><strong>Controleer per VM:</strong></p>
+<pre><code># Per VM, op de Hyper-V host
+Get-VMIntegrationService -VMName 'MyVM' |
+    Where-Object Name -eq 'Time Synchronization' |
+    Select-Object VMName, Name, Enabled</code></pre>
+
+        <p><strong>Uitschakelen voor domain-joined VM's:</strong></p>
+<pre><code># Voor één VM
+Disable-VMIntegrationService -VMName 'MyVM' -Name 'Time Synchronization'
+
+# Voor alle VM's op een host (filter op naam, OS-type, of gewoon allemaal)
+Get-VM | Disable-VMIntegrationService -Name 'Time Synchronization'</code></pre>
+
+        <p>In een Health Check rapporteren we dit per VM, met een vlag voor elke domain-joined VM die Time Sync nog aan heeft staan.</p>
+
+        <h2 id="nl-4">4. PDC emulator-configuratie, de root van alle tijd</h2>
+        <p>Alles begint bij de PDC emulator. Als die niet goed staat, propageert de fout door het hele domein.</p>
+
+        <p><strong>Welke node heeft de PDC emulator-rol:</strong></p>
+<pre><code># Vanaf elke domain-joined machine
+Get-ADDomain | Select-Object PDCEmulator</code></pre>
+
+        <p><strong>Configureer de PDC emulator met een externe tijdbron:</strong></p>
+<pre><code># Op de PDC emulator zelf
+w32tm /config /manualpeerlist:"time.windows.com,0x9 pool.ntp.org,0x9" `
+    /syncfromflags:manual /reliable:yes /update
+
+# Stop en herstart w32time
+Restart-Service w32time
+
+# Forceer een sync en check status
+w32tm /resync /rediscover
+w32tm /query /status
+w32tm /query /source</code></pre>
+
+        <p><strong>Tolerantie-instellingen die we standaard zetten:</strong></p>
+<pre><code># Maximum 5 minuten in beide richtingen (default is veel hoger)
+w32tm /config /computer:&lt;PDC&gt; `
+    /maxposphasecorrection:300 `
+    /maxnegphasecorrection:300 `
+    /update
+
+Restart-Service w32time</code></pre>
+
+        <p>De <code>MaxPosPhaseCorrection</code> en <code>MaxNegPhaseCorrection</code> waarden bepalen hoe groot een tijd-aanpassing mag zijn voordat w32time hem weigert. Default-waarden zijn in oudere Windows-versies absurd hoog (54 jaar), wat betekent dat een corrupte NTP-bron je klok wagenwijd kan verzetten zonder dat w32time klaagt. 300 seconden (5 minuten) is een veilige drempel die handmatige tussenkomst forceert bij grote drift.</p>
+
+        <p><strong>Verifieer dat de PDC emulator daadwerkelijk extern synct:</strong></p>
+<pre><code>w32tm /query /source
+# Verwacht: &lt;externe NTP-bron&gt;, niet "Local CMOS Clock" of "Free-running System Clock"</code></pre>
+
+        <p>Vinden we dit niet, dan staat de PDC emulator effectief op zijn eigen hardware-klok, en alle andere DC's en servers in het domein syncen vrolijk met die drifting klok.</p>
+
+        <h2 id="nl-5">5. Cluster-node configuratie, w32time settings die er werkelijk toe doen</h2>
+        <p>Cluster-nodes als domain-joined servers horen op <code>Type = NT5DS</code>. Dat is meestal de default na domain-join. Maar er zijn een paar settings die op Hyper-V hosts specifieke aandacht verdienen.</p>
+
+        <p><strong>Verifieer per cluster-node:</strong></p>
+<pre><code>Invoke-Command -ComputerName (Get-ClusterNode).Name {
+    [PSCustomObject]@{
+        Node              = $env:COMPUTERNAME
+        Type              = (w32tm /query /configuration | Select-String 'Type:').Line.Trim()
+        Source            = (w32tm /query /source)
+        LastSync          = (w32tm /query /status | Select-String 'Last Successful').Line.Trim()
+        Stratum           = (w32tm /query /status | Select-String 'Stratum').Line.Trim()
+        MaxPosPhaseCorr   = (Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Services\W32Time\Config').MaxPosPhaseCorrection
+        MaxNegPhaseCorr   = (Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Services\W32Time\Config').MaxNegPhaseCorrection
+    }
+} | Format-Table -AutoSize</code></pre>
+
+        <p><strong>Wat de output moet laten zien:</strong></p>
+        <ul>
+          <li><strong>Type</strong> moet <code>NT5DS</code> zijn op elke cluster-node. <code>NTP</code> op een node die geen DC of PDC is, is een misconfiguratie.</li>
+          <li><strong>Source</strong> moet een domain controller in hetzelfde domein zijn. "Local CMOS Clock" of "Free-running System Clock" is een symptoom van een w32time-service die zijn bron kwijt is.</li>
+          <li><strong>LastSync</strong> moet recent zijn, binnen het laatste sync-interval (default elke 64 tot 1024 seconden afhankelijk van stabiliteit).</li>
+          <li><strong>Stratum</strong> moet één hoger zijn dan dat van de PDC emulator. Als de PDC stratum 2 is (sync met extern stratum-1), dan zijn alle andere DC's stratum 3, en zijn cluster-nodes stratum 4.</li>
+          <li><strong>MaxPosPhaseCorrection</strong> en <strong>MaxNegPhaseCorrection</strong> zetten we standaard op 300 seconden, zelfde als op de PDC emulator. Dit voorkomt dat een corrupte sync-bron de klok ineens uren verzet.</li>
+        </ul>
+
+        <p><strong>De klok-skew tussen nodes meten:</strong></p>
+<pre><code>$nodes = (Get-ClusterNode).Name
+foreach ($node in $nodes) {
+    foreach ($peer in $nodes) {
+        if ($node -ne $peer) {
+            $offset = w32tm /stripchart /computer:$peer /dataonly /samples:1 |
+                Select-String '^\d' | Select-Object -First 1
+            Write-Host "$node &lt;-&gt; $peer : $offset"
+        }
+    }
+}</code></pre>
+
+        <p>Acceptabele skew tussen cluster-nodes: onder 1 seconde in steady state, onder 5 seconden gedurende een patch-ronde of node-reboot. Boven 30 seconden is een dringend remediation-onderwerp.</p>
+
+        <h2 id="nl-6">6. Drift detecteren vóór het faalt</h2>
+        <p>Monitoring tools alarmeren meestal pas bij klok-skew die al schade veroorzaakt. Wij voegen tijdens Health Check remediation een eenvoudige drift-monitor toe aan klant-omgevingen:</p>
+
+<pre><code># Drift-detection script, draaien op een management-host of via scheduled task
+$threshold = 30  # seconden
+
+$cluster = Get-Cluster
+$nodes = (Get-ClusterNode -Cluster $cluster).Name
+$baseline = $nodes[0]
+
+foreach ($peer in $nodes | Where-Object {$_ -ne $baseline}) {
+    $output = w32tm /stripchart /computer:$peer /dataonly /samples:1 2>&amp;1
+    $offsetLine = $output | Where-Object {$_ -match '^\d'} | Select-Object -First 1
+    if ($offsetLine -match '([\d\.\-]+)s') {
+        $offset = [math]::Abs([double]$matches[1])
+        if ($offset -gt $threshold) {
+            Write-Warning "Drift between $baseline and $peer: $offset seconds"
+            # Naar SIEM, Teams webhook, of monitoring stack hier
+        }
+    }
+}</code></pre>
+
+        <p>Schedule dit elke 15 minuten op een management-host. De waarde van een dedicated drift-monitor is dat hij issues uren vóór de eerste Kerberos-failure oppikt, op een moment waarop remediation nog niet-disruptief is.</p>
+
+        <div class="mid-cta">
+          <p>Time service-configuratie is een van die onderwerpen waar elke beheerder denkt dat het op orde is, en waar we tijdens een Health Check in 7 van de 10 omgevingen iets vinden dat niet klopt.</p>
+          <p>Een CloudLabs Hyper-V Cluster Health Check controleert tijd-hiërarchie, PDC emulator-configuratie, per-node settings en Hyper-V Time Sync IS-status per VM, en levert een remediation-script mee als onderdeel van het rapport.</p>
+          <a href="/book.html">Plan een Health Check kennismaking →</a>
+        </div>
+
+        <h2 id="nl-7">7. Drie veelvoorkomende foutpatronen</h2>
+
+        <h3>Patroon 1: PDC emulator op Type = NT5DS</h3>
+        <p>Klassieke configuratiefout. De PDC emulator wijst zichzelf aan als bron via NT5DS, wat effectief betekent: ik sync met mezelf, ik gebruik mijn eigen hardware-klok. Werkt totdat de hardware-klok afdrijft, en dan drijft het hele domein mee.</p>
+        <p>Fix: zet de PDC emulator op <code>Type = NTP</code> met een externe peer-lijst en <code>/reliable:yes</code>. Zie sectie 4.</p>
+
+        <h3>Patroon 2: Hyper-V host met Type = NTP naar een externe bron</h3>
+        <p>Een Hyper-V host die zelfstandig naar <code>time.windows.com</code> synct in plaats van naar de domein-hiërarchie. Klinkt logisch ("dichter bij de bron"), maar breekt het hele principe van een domein-hiërarchie en zorgt voor inconsistente tijd tussen hosts.</p>
+        <p>Fix: zet de host op <code>Type = NT5DS</code>. De host synct dan met een DC, die met de PDC emulator synct, die met externe NTP synct.</p>
+
+        <h3>Patroon 3: VM's met Hyper-V Time Sync IS aan plus NT5DS</h3>
+        <p>Domain-joined VM die op zowel de Hyper-V host als de domein-hiërarchie probeert te syncen. De klok ping-pongt, zeker als host en domein een fractie van een seconde van elkaar verschillen.</p>
+        <p>Fix: zet Hyper-V Time Sync IS uit per VM voor alle domain-joined VM's. Zie sectie 3.</p>
+
+        <h2 id="nl-8">8. Remediation playbook</h2>
+        <p>De volgorde die wij standaard hanteren in een CloudLabs remediation-opdracht:</p>
+
+        <p><strong>Stap 1, identificeer de PDC emulator:</strong></p>
+<pre><code>Get-ADDomain | Select-Object PDCEmulator</code></pre>
+
+        <p><strong>Stap 2, fix de PDC emulator:</strong></p>
+        <p>Configureer externe NTP-bronnen, zet <code>/reliable:yes</code>, zet <code>MaxPosPhaseCorrection</code> en <code>MaxNegPhaseCorrection</code> op 300 seconden, herstart w32time. Verifieer dat <code>w32tm /query /source</code> daadwerkelijk een externe bron toont.</p>
+
+        <p><strong>Stap 3, fix alle andere DC's:</strong></p>
+        <p>Zet ze op <code>Type = NT5DS</code>, verifieer dat hun source een DC in het domein is. Geen externe NTP-bronnen op niet-PDC DC's.</p>
+
+        <p><strong>Stap 4, fix alle Hyper-V hosts en domain-joined member-servers:</strong></p>
+        <p>Zet ze op <code>Type = NT5DS</code>. Pas <code>MaxPosPhaseCorrection</code> en <code>MaxNegPhaseCorrection</code> aan. Herstart w32time. Verifieer sync.</p>
+
+        <p><strong>Stap 5, fix VM's:</strong></p>
+        <p>Voor alle domain-joined VM's: zet Hyper-V Time Synchronization Integration Service uit. Verifieer dat de VM's via <code>w32tm /query /source</code> een DC in het domein als bron tonen.</p>
+
+        <p><strong>Stap 6, monitor:</strong></p>
+        <p>Schedule het drift-detection script uit sectie 6 elke 15 minuten. Hook het in op je bestaande monitoring of SIEM. Zet een drempel op 30 seconden voor early warning.</p>
+
+        <p><strong>Stap 7, documenteer:</strong></p>
+        <p>Schrijf op welke instellingen waar staan, welke externe NTP-bronnen worden gebruikt, en wat de procedure is bij een PDC emulator-failover. Dit is precies het soort kennis dat verloren gaat bij personeelswissels en waar Health Checks twee jaar later weer drift in dezelfde omgeving aantreffen.</p>
+
+        <h2>De kern</h2>
+        <p>Time service in een Hyper-V cluster is niet "set and forget". De interactie tussen w32time, AD-replicatie, cluster-heartbeats, Live Migration handshake en Hyper-V Time Sync IS is complex genoeg dat een verkeerde aanname op één laag tot symptomen op een andere laag leidt. Wanneer Kerberos faalt, kijkt iedereen naar AD. Wanneer cluster-heartbeats wegvallen, kijkt iedereen naar het netwerk. De werkelijke oorzaak zit vaak twee lagen dieper, in een w32time-configuratie die niemand de afgelopen drie jaar heeft aangeraakt.</p>
+        <p>Een CloudLabs Hyper-V Cluster Health Check bevat standaard tijd-serviceanalyse. Bevindingen worden gerapporteerd met severity die schaalt met de werkelijke skew en de blast radius. Remediation-scripts zijn idempotent en kunnen door het klant-team zelf worden toegepast.</p>
+        <p><a href="/book.html"><strong>Plan een Hyper-V Cluster Health Check kennismaking →</strong></a></p>
+
+        <div class="faq-block">
+          <h2>Veelgestelde vragen</h2>
+
+          <div class="faq-q">Mijn cluster werkt prima al jaren, waarom zou ik me zorgen maken over time service?</div>
+          <p>Drift bouwt langzaam op. Tot het moment dat een PDC emulator uitvalt of een Hyper-V host wordt gepatcht, kan een misconfiguratie jarenlang verborgen blijven. We zien regelmatig dat een geplande maintenance-actie de eerste keer is dat de drift zichtbaar wordt, en dat is een ongelukkig moment voor verrassingen.</p>
+
+          <div class="faq-q">Werkt dit hetzelfde op Azure Local en Azure Stack HCI?</div>
+          <p>Grotendeels ja. Azure Local nodes zijn domain-joined en volgen dezelfde w32time-hiërarchie. Wel: voor Arc-managed Azure Local clusters zit er een aanvullende laag, omdat de Arc-agent ook zijn eigen tijd-validatie doet richting Azure. De drempel daar is strikter (vijf minuten max), dus drift wordt eerder zichtbaar.</p>
+
+          <div class="faq-q">Wat als ik geen externe NTP-bron mag gebruiken vanwege security-policy?</div>
+          <p>Dan is een hardware-stratum-1-bron in het managementnetwerk de oplossing. Apparaten als Meinberg, Microsemi of een GPS-disciplined Linux-server kunnen als interne NTP-bron dienen. De PDC emulator wijst dan naar die hardware in plaats van naar <code>time.windows.com</code>. Voor strict air-gapped omgevingen is dit de standaard-aanpak.</p>
+
+          <div class="faq-q">Hoeveel klok-skew is acceptabel tussen cluster-nodes?</div>
+          <p>Onder 1 seconde in steady state. Tot 5 seconden tijdens een patch-ronde of node-reboot. Boven 30 seconden is een dringend remediation-onderwerp. Boven 5 minuten is het al een actief incident, want Kerberos zal nieuwe authenticatie weigeren.</p>
+
+          <div class="faq-q">Wat is /reliable:yes en wanneer gebruik je het?</div>
+          <p><code>/reliable:yes</code> markeert een tijd-bron als "betrouwbaar", wat andere w32time-clients toestaat om met hem te syncen. Het is een verplichte instelling op de PDC emulator (zonder is hij geen geldige tijd-bron voor de rest van het domein). Op een DC die geen PDC is, hoort <code>/reliable:no</code> of geen instelling.</p>
+        </div>
+<div class="related">
+        <h3>Gerelateerde artikelen</h3>
+        <ul>
+          <!--LINK:top-10-hyper-v-cluster-issues--><li><a href="/nl/blog/top-10-hyper-v-cluster-issues/">Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026</a></li><!--/LINK:top-10-hyper-v-cluster-issues-->
+          <!--LINK:csv-ownership-imbalance--><li><a href="/nl/blog/csv-ownership-imbalance/">CSV ownership onbalans, oorzaken en oplossingen</a></li><!--/LINK:csv-ownership-imbalance-->
+          <!--LINK:live-migration-wrong-network--><li><a href="/nl/blog/live-migration-wrong-network/">Live Migration over het verkeerde netwerk</a></li><!--/LINK:live-migration-wrong-network-->
+          <!--LINK:vmware-to-hyper-v-migration-assessment--><li><a href="/nl/blog/vmware-to-hyper-v-migration-assessment/">VMware naar Hyper-V cluster migratie, pre-migration assessment</a></li><!--/LINK:vmware-to-hyper-v-migration-assessment-->
+        </ul>
+      </div>
+      </div>
+    </div>
+
+  </article>
+</section>
+</main>
+
+<footer class="ct-footer"><div class="ct-footer-inner"><div class="ct-footer-brand"><b>Cluster<span>Triage</span></b><p>Onafhankelijke Failover Cluster Assessment, Risk &amp; Remediation Assurance.</p></div><div><h4>Dienst</h4><a href="/nl/assurance/">Assurance</a><a href="/nl/methodologie/">Methode</a></div><div><h4>Bedrijf</h4><a href="/nl/over-ons/">Over ons</a><a href="/nl/blog/">Blog</a><a href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Contact</a></div><div><h4>Incident</h4><a href="https://clusterdown.com/nl/">ClusterDown</a></div></div><div class="ct-footer-bottom"><span>© ClusterTriage</span><span>Windows Server · Hyper-V · Failover Clustering · Storage Spaces Direct · Azure Local</span></div></footer><script>(function(){{var m=document.getElementById('menu'),n=document.getElementById('navlinks');if(m&&n)m.addEventListener('click',function(){{var o=m.getAttribute('aria-expanded')==='true';m.setAttribute('aria-expanded',String(!o));n.classList.toggle('open',!o)}});}})();</script></body></html>

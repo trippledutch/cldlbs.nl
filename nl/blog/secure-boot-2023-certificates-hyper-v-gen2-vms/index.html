@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A1024">
+<title>Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM&#x27;s niet bijwerken, en wat er in 2026 stukgaat &middot; ClusterTriage</title>
+<meta name="description" content="Een vraag blijft terugkomen op Reddit en in de praktijk: heeft een Hyper-V-host bijgewerkte firmware en hardware Secure Boot nodig voordat de Generation 2-VM&#x27;s de Secure Boot-certificaten van 2023 kunnen ontvangen? Het antwoord is nee. De hosthardware heeft hier niets mee te maken. Toch is het de mo">
+<link rel="canonical" href="https://clustertriage.com/nl/blog/secure-boot-2023-certificates-hyper-v-gen2-vms/">
+<link rel="alternate" hreflang="nl" href="https://clustertriage.com/nl/blog/secure-boot-2023-certificates-hyper-v-gen2-vms/">
+<link rel="alternate" hreflang="en" href="https://clustertriage.com/en/blog/secure-boot-2023-certificates-hyper-v-gen2-vms/">
+<link rel="alternate" hreflang="x-default" href="https://clustertriage.com/en/blog/secure-boot-2023-certificates-hyper-v-gen2-vms/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="nl_NL">
+<meta property="og:url" content="https://clustertriage.com/nl/blog/secure-boot-2023-certificates-hyper-v-gen2-vms/">
+<meta property="og:title" content="Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM&#x27;s niet bijwerken, en wat er in 2026 stukgaat">
+<meta property="og:description" content="Een vraag blijft terugkomen op Reddit en in de praktijk: heeft een Hyper-V-host bijgewerkte firmware en hardware Secure Boot nodig voordat de Generation 2-VM&#x27;s de Secure Boot-certificaten van 2023 kunnen ontvangen? Het antwoord is nee. De hosthardware heeft hier niets mee te maken. Toch is het de mo">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=5279f5a9">
+<link rel="stylesheet" href="/huisstijl/artikel.css?v=9a147c57">
+<link rel="stylesheet" href="/huisstijl/clustertriage.css?v=30af5db3">
+<link rel="stylesheet" href="/huisstijl/clustertriage-v2.css?v=c711d81a">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://clustertriage.com/nl/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://clustertriage.com/nl/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM's niet bijwerken, en wat er in 2026 stukgaat",
+          "item": "https://clustertriage.com/nl/blog/secure-boot-2023-certificates-hyper-v-gen2-vms/"
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://clustertriage.com/nl/blog/secure-boot-2023-certificates-hyper-v-gen2-vms/#artikel",
+      "headline": "Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM's niet bijwerken, en wat er in 2026 stukgaat",
+      "description": "Een vraag blijft terugkomen op Reddit en in de praktijk: heeft een Hyper-V-host bijgewerkte firmware en hardware Secure Boot nodig voordat de Generation 2-VM's de Secure Boot-certificaten van 2023 kunnen ontvangen? Het antwoord is nee. De hosthardware heeft hier niets mee te maken. Toch is het de mo",
+      "inLanguage": "nl-NL",
+      "datePublished": "2026-06-05",
+      "dateModified": "2026-06-05",
+      "mainEntityOfPage": "https://clustertriage.com/nl/blog/secure-boot-2023-certificates-hyper-v-gen2-vms/",
+      "articleSection": "Failover Clustering",
+      "author": {
+        "@type": "Person",
+        "name": "Hans Vredevoort",
+        "jobTitle": "Cluster- en virtualisatiespecialist",
+        "knowsAbout": [
+          "Hyper-V",
+          "Failover Clustering",
+          "Azure Local",
+          "Storage Spaces Direct",
+          "Windows Server"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ClusterTriage",
+        "url": "https://clustertriage.com/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://clustertriage.com/nl/blog/secure-boot-2023-certificates-hyper-v-gen2-vms/#vragen",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Moet op de fysieke host Secure Boot in de BIOS ingeschakeld zijn voordat VM's kunnen bijwerken?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nee. Microsoft voorziet elke Gen 2-VM van virtuele UEFI-firmware die losstaat van de host, en Secure Boot is op de host helemaal niet vereist. Een Gen 2-VM met Secure Boot ingeschakeld valt binnen de scope van het 2023-certificaatwerk, ongeacht de hardware Secure Boot-status van de host. Het patchniveau van het host-OS telt; de hardware Secure Boot van de host niet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Stoppen mijn VM's in juni 2026 met booten als ik niets doe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Niet op die datum. Ze blijven draaien op de 2011-certificaten en gewone updates blijven installeren. Wat ze verliezen is het vermogen om bootpad-beveiligingsupdates te ontvangen, en uiteindelijk het vermogen om media te booten die uitsluitend met de 2023-certificaten zijn ondertekend. Het boot-faalrisico ligt stroomafwaarts, en er is tijd om het te voorkomen als je nu begint."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Ik heb de register-opt-in in de VM gezet maar het 2023-CA verscheen nooit. Waarom?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Op bestaande Server 2019- en 2022 Gen 2-VM's mislukt de KEK-update vaak met Event ID 1795, media schrijfbeveiligd. Omdat de 2023-KEK de poort is voor de DB-updates, landt er niets. Toggle de Secure Boot-template op de host met de VM uitgeschakeld, zet daarna de opt-in binnen de guest opnieuw en verifieer de DB en KEK."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hoe controleer ik de werkelijke status in plaats van alleen of de opt-in gezet is?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Lees binnen de guest de DB- en KEK-variabelen en match op Windows UEFI CA 2023 en KEK 2K CA 2023. De registerwaarde legt alleen de intentie vast; de key stores leggen vast wat daadwerkelijk is toegepast."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "En VM's met een virtuele TPM?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Die kunnen niet ter plekke worden bijgewerkt, omdat de TPM-bootmetingen de certificaatstatus meenemen, wat ook BitLocker raakt. Ze moeten worden geherprovisioneerd naar een actuele image. Identificeer ze vroeg."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hebben Generation 1-VM's hier iets van nodig?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Nee. Gen 1-VM's hebben geen UEFI en geen Secure Boot, dus ze zijn helemaal niet geraakt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Hoe lang duurt een Health Check, en raakt die de productie?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Een CloudLabs Hyper-V Cluster Health Check loopt over twee dagen en is read-only tijdens de beoordeling. De diagnose gebruikt niet-verstorende PowerShell; het herstel wordt geleverd als een op severity gerangschikt runbook dat je in je eigen onderhoudsvenster toepast."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Naar inhoud</a><header class="topbar"><nav class="nav"><a class="brand ct-brand" href="/nl/"><b>Cluster<span>Triage</span></b><small>Decades of server expertise</small></a><div class="navlinks" id="navlinks"><a href="/nl/assurance/">Assurance</a><a href="/nl/methodologie/">Methode</a><a href="/nl/over-ons/">Over ons</a><a href="/nl/blog/" aria-current="page">Blog</a><a href="https://clusterdown.com/nl/">Cluster down?</a><span class="lang-set"><span aria-current="true">NL</span><a href="/en/blog/secure-boot-2023-certificates-hyper-v-gen2-vms/">EN</a></span></div><div class="nav-actions"><a class="btn primary" href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Plan een kennismaking</a><button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button></div></nav></header>
+
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+  <article class="artikelpagina">
+
+    <p class="kruimelpad"><a href="/nl/">ClusterTriage</a> / <a href="/nl/blog/">Blog</a> / Failover Clustering</p>
+
+    <header class="artikelkop">
+      <h1>Secure Boot-certificaten en Hyper-V: waarom je Gen 2-VM's niet bijwerken, en wat er in 2026 stukgaat</h1>
+      <p class="lede">Een vraag blijft terugkomen op Reddit en in de praktijk: heeft een Hyper-V-host bijgewerkte firmware en hardware Secure Boot nodig voordat de Generation 2-VM's de Secure Boot-certificaten van 2023 kunnen ontvangen? Het antwoord is nee. De hosthardware heeft hier niets mee te maken. Toch is het de moeite waard de vraag serieus te nemen, want de aanname erachter verbergt een probleem dat de meeste Windows Server-omgevingen nog niet hebben opgemerkt, met een harde deadline eraan vast.</p>
+        <p class="lede">De Microsoft Secure Boot-certificaten uit 2011 beginnen in juni 2026 te verlopen. De meeste berichtgeving brengt dit als een verhaal over desktops en laptops, aangejaagd door automatische Windows 11-servicing. Op Windows Server, en dus binnen je Gen 2-VM's, is het gedrag anders: de update gaat niet automatisch, en op bestaande VM's mislukt hij vaak zonder enig zichtbaar teken. Dit artikel legt uit waar de afhankelijkheid werkelijk zit, waarom bestaande VM's en templates de nieuwe certificaten niet opnemen, welke storing je precies moet zoeken, en welke herstelvolgorde werkt in een geclusterde omgeving. Er is nog tijd om dit goed te doen. Het doel van dit artikel is dat het met de juiste prioriteit op je planning komt, in plaats van te blijven liggen tot het een incident wordt.</p>
+      <p class="artikelmeta"><b>Door Hans Vredevoort</b> <i>&middot;</i> <b>5 juni 2026</b> <i>&middot;</i> <b>13 minuten leestijd</b> <i>&middot;</i> <b>Failover Clustering</b></p>
+    </header>
+
+    <div class="artikelbody">
+      <nav class="toc" aria-label="Inhoud van dit artikel">
+        <p class="toc-title">In dit artikel</p>
+        <ol>
+            <li><a href="#nl-1">De vraag over hostfirmware, en waar de afhankelijkheid werkelijk zit</a></li>
+            <li><a href="#nl-2">De certificaatopslagplaatsen, en de overgang van 2011 naar 2023</a></li>
+            <li><a href="#nl-3">Wat de deadlines van 2026 en 2027 daadwerkelijk stukmaken</a></li>
+            <li><a href="#nl-4">Waarom Windows Server zich niet gedraagt als Windows 11</a></li>
+            <li><a href="#nl-5">De valkuil: bestaande Gen 2-VM's laten de KEK-update mislukken met Event ID 1795</a></li>
+            <li><a href="#nl-6">De werkelijke status in kaart brengen over een cluster</a></li>
+            <li><a href="#nl-7">Herstel: de template-toggle, de opt-in, de verificatie</a></li>
+            <li><a href="#nl-8">De vTPM-kanttekening en de DBX-intrekvalkuil</a></li>
+            <li><a href="#nl-9">Templates, golden images, en versiespecifiek gedrag</a></li>
+          </ol>
+      </nav>
+
+      <div class="tekst">
+<h2 id="nl-1">1. De vraag over hostfirmware</h2>
+        <p>De Secure Boot van een Generation 2-VM is volledig gevirtualiseerd. Hyper-V voorziet elke Gen 2-VM van zijn eigen virtuele UEFI-firmware, en Microsoft is er duidelijk over dat deze firmware losstaat van wat er op de fysieke host draait. Secure Boot en UEFI-firmware zijn op de host zelf niet vereist. De key stores van de VM zitten in de eigen NVRAM van de VM, die deel uitmaakt van de VM-configuratie, niet op het fysieke moederbord, en niet gedeeld met enige andere VM.</p>
+        <p>Hieruit volgen twee dingen, en zij zijn de reden voor dit hele onderwerp.</p>
+        <p>Ten eerste heeft de fysieke host geen hardware Secure Boot nodig, en geen BIOS- of systeemfirmware-update, om zijn guests de certificaten van 2023 te laten ontvangen. Een host met oude systeemfirmware en hardware Secure Boot uitgeschakeld kan zijn Gen 2-guests nog steeds van actuele certificaten voorzien en die bijwerken. Zeg het ook andersom, want dat is het stuk dat mensen verkeerd inschatten: een Gen 2-VM met Secure Boot ingeschakeld valt volledig binnen de scope van het 2023-certificaatwerk, zelfs wanneer de host Secure Boot uitgeschakeld heeft of niet ondersteunt. De toestand van de host beschermt de VM niet en stelt hem evenmin vrij. Als je hebt aangenomen dat hosts zonder Secure Boot hun VM's buiten scope plaatsen, dan is het tegendeel waar.</p>
+        <p>Ten tweede, omdat elke VM zijn eigen onafhankelijke NVRAM draagt, lost geen enkele actie op de host alle guests in één keer op. De host patchen reikt niet tot in de NVRAM van een draaiende VM. Elke guest, en elke template, is een aparte certificaatopslag die zich in een andere staat kan bevinden en die afzonderlijk gecontroleerd moet worden.</p>
+        <p>De twee vragen die door elkaar worden gehaald staan dus los van elkaar:</p>
+        <ul>
+          <li><strong>Hardware Secure Boot en systeemfirmware van de host:</strong> irrelevant voor de vraag of guests de 2023-certificaten kunnen opnemen.</li>
+          <li><strong>Patchniveau van het host-OS, patchniveau van het guest-OS, en de NVRAM-status per VM:</strong> dat is het hele probleem.</li>
+        </ul>
+        <p>De afhankelijkheid is software, op elk niveau, en zij is per VM.</p>
+
+        <h2 id="nl-2">2. De certificaatopslagplaatsen, en de overgang van 2011 naar 2023</h2>
+        <p>Secure Boot bewaart zijn vertrouwen in vier UEFI-variabelen, en de meldingen in het event log slaan nergens op tot je weet wat elk ervan is.</p>
+        <p><strong>PK</strong>, de Platform Key, is de enige rootsleutel die wijzigingen aan de KEK-lijst autoriseert. <strong>KEK</strong>, de Key Exchange Key, bevat de sleutels die de twee onderliggende signature-databases mogen bijwerken. <strong>DB</strong> is de database van toegestane handtekeningen, de certificaten waartegen een boot-component ondertekend moet zijn om te mogen draaien. <strong>DBX</strong> is het tegenovergestelde, de verboden database, een intrekkingslijst van handtekeningen die geweigerd moeten worden, ook als ze verder geldig zijn.</p>
+        <p>De vervanging is geen schone één-op-één-wissel, en daarom oogt de uitvoer druk. In de KEK wordt <code>Microsoft Corporation KEK CA 2011</code> opgevolgd door <code>Microsoft Corporation KEK 2K CA 2023</code>. Deze ene sleutel is de poort: zonder de 2023-KEK op zijn plaats kan de guest de DB-updates die erna komen niet autoriseren. In de DB wordt de third-party <code>Microsoft Corporation UEFI CA 2011</code> vervangen door twee 2023-certificaten, <code>Windows UEFI CA 2023</code> en <code>Microsoft UEFI CA 2023</code>, waarbij de laatste de option ROMs dekt, en de ondertekenaar van de Windows Boot Manager, <code>Microsoft Windows Production PCA 2011</code>, verschuift naar het 2023-bootpad.</p>
+        <p>De praktische conclusie is kort: het boot-kritieke certificaat dat je moet bevestigen is <code>Windows UEFI CA 2023</code> in de DB, en dat wordt afgeschermd door <code>KEK 2K CA 2023</code> in de KEK. Als de 2023-KEK ontbreekt, landt er stroomafwaarts niets, ongeacht wat je binnen de guest instelt.</p>
+
+        <h2 id="nl-3">3. Wat de deadlines van 2026 en 2027 daadwerkelijk stukmaken</h2>
+        <p>Wees hier precies, want de koppen overdrijven de directe impact en onderschatten de uiteindelijke, en juist de nuance laat je plannen in plaats van panikeren.</p>
+        <p>Een VM die na juni 2026 nog uitsluitend de 2011-certificaten vertrouwt, stopt op die datum niet met booten. Hij blijft normaal starten en draaien, en gewone Windows-updates blijven installeren. Op de dag zelf faalt er niets.</p>
+        <p>Wat hij verliest is de beveiligingsketen voor de vroege bootfase: updates voor de Windows Boot Manager, Secure Boot DB-updates, DBX-intrekkingslijst-updates, en mitigaties voor toekomstige boot-niveaukwetsbaarheden van de BlackLotus-klasse (CVE-2023-24932). Het systeem zit vast op zijn huidige bootpad-beveiligingsniveau, zonder manier om dat te verhogen.</p>
+        <p>De gevolgen zijn gefaseerd, en dat is het goede nieuws voor de planning. Microsoft heeft aangegeven dat beveiligingsupdates voor de Windows Boot Manager rond oktober 2026 stoppen met landen op systemen met het oude certificaat, en dat het verlopen van Windows Production PCA 2011 in 2027 volgt. Het toekomstgerichte risico dat het meeste telt is bootmedia: een OS-image, WinPE-build of herstelmedium dat uitsluitend tegen de 2023-certificaten is ondertekend, boot niet op een VM waarvan de DB die nooit heeft ontvangen. Dat is het scenario dat een uitgesteld klusje verandert in een Sev-1 tijdens een herstelactie, precies op het moment dat je grijpt naar media die een vastgelopen VM weigert te vertrouwen.</p>
+        <p>Geen van deze datums is deze week. Ze liggen allemaal dicht genoeg bij dat een geclusterde omgeving met honderden guests nu zou moeten inventariseren en in de komende onderhoudsvensters zou moeten herstellen, niet pas volgend jaar. Behandel het als gepland werk met een echte einddatum, niet als een noodgeval en niet als iets optioneels.</p>
+
+        <div class="mid-cta">
+          <p>De meeste Windows Server-omgevingen hebben dit nog niet opgemerkt. Een CloudLabs Hyper-V Cluster Health Check inventariseert de Secure Boot-status over elke Gen 2-guest en template, identificeert de 1795-valkuil, en levert een op severity gerangschikt herstelplan.</p>
+          <a href="/book.html">Plan een kennismaking voor een Health Check →</a>
+        </div>
+
+        <h2 id="nl-4">4. Waarom Windows Server zich niet gedraagt als Windows 11</h2>
+        <p>Dit is het belangrijkste operationele verschil, en het is waar algemene richtlijnen serverbeheerders in de steek laten.</p>
+        <p>Op Windows 11 worden de 2023-certificaten in toenemende mate automatisch geleverd en toegepast via servicing. Op Windows Server, en dus op je Gen 2 Windows Server-guests, zitten ze vanaf 2024 in de cumulatieve updates maar worden ze niet automatisch toegepast. Server vereist een expliciete opt-in, omdat het onbeheerd toepassen van certificaatwijzigingen op server- en virtuele workloads een boot-risico met zich meebrengt dat Microsoft niet namens jou wilde nemen. De behoudende standaardinstelling is een bewuste keuze, en betekent dat er niets gebeurt tot je binnen elke guest in actie komt.</p>
+        <p>De opt-in is één registerwaarde die Windows opdraagt de 2023-certificaten uit te rollen en de boot manager bij te werken naar de 2023-ondertekende versie, terwijl het oude 2011-certificaat blijft staan in plaats van te worden ingetrokken. Het 2011-certificaat laten staan is precies wat je in dit stadium wilt.</p>
+
+<pre><code># Inside the guest. Opt in to Secure Boot certificate deployment.
+# This adds the 2023 certificates and updates the boot manager.
+# It does NOT revoke the 2011 certificate (revocation is a later step).
+$p = "HKLM:\SYSTEM\CurrentControlSet\Control\SecureBoot"
+Set-ItemProperty -Path $p -Name AvailableUpdates -Value 0x5944 -Type DWord</code></pre>
+
+        <p>Een achtergrondtaak verwerkt de wijziging op zijn eigen cyclus. Trigger hem in plaats van te wachten:</p>
+
+<pre><code># Inside the guest. Run the servicing task that applies the update now.
+Start-ScheduledTask -TaskName "\Microsoft\Windows\PI\Secure-Boot-Update"</code></pre>
+
+        <p>Daarna is een herstart vereist om de boot manager te laten overschakelen naar de 2023-ondertekende versie. Dit alles draait binnen elke guest. Niets ervan wordt voor je gedaan door de host te patchen.</p>
+
+        <h2 id="nl-5">5. De valkuil: bestaande Gen 2-VM's laten de KEK-update mislukken met Event ID 1795</h2>
+        <p>Dit is het stuk dat echt onderbelicht is, en de reden dat dit artikel bestaat.</p>
+        <p>Nieuwe VM's die worden aangemaakt op een volledig gepatchte host, Windows Server 2025 of een actuele Windows 11 Hyper-V-host, worden bij het aanmaken geïnitialiseerd met zowel de 2011- als de 2023-certificaten, inclusief de 2023-KEK. Zij zijn vanaf dag één in orde.</p>
+        <p>Bestaande VM's worden niet bijgewerkt wanneer je de host patcht, omdat hun certificaatstatus in hun eigen NVRAM zit. Dus doe je het verstandige: je zet de register-opt-in binnen de guest, precies zoals je dat op fysieke hardware zou doen, draait de taak, herstart, en op een groot deel van de bestaande Server 2019- en Server 2022 Gen 2-VM's mislukt het.</p>
+        <p>Het kenmerk is <strong>Event ID 1795</strong> in het System-log van de guest, met een strekking als: de systeemfirmware gaf een fout terug, de media is schrijfbeveiligd, bij een poging een Secure Boot-variabele <code>KEK 2023</code> bij te werken. De virtuele UEFI weigert de KEK-schrijfactie. Omdat de 2023-KEK de poort is voor de DB-updates, loopt de hele keten vast. De opt-in lijkt geconfigureerd, de taak draait, en toch verschijnt <code>Windows UEFI CA 2023</code> nooit in de DB.</p>
+        <p>Wat dit riskant maakt, is dat er op dat moment niets stuk is. De VM boot en draait. Je merkt het niet tenzij je gaat kijken, of tot een storing na de deadline de zaak afdwingt. Een heel cluster kan in deze staat zitten, opt-in gezet, certificaten niet daadwerkelijk toegepast, en er volledig gezond uitzien op elk dashboard dat je hebt.</p>
+
+        <h2 id="nl-6">6. De werkelijke status in kaart brengen over een cluster</h2>
+        <p>Controleer dit programmatisch vanaf je beheerserver, de machine die al WMI-toegang heeft tot elke clusternode, zoals je VMM-server. Voor de host-zijdige enumeratie hieronder werkt dat schoon. De controles per guest liggen anders: het uitlezen van de firmware-variabelen van een guest vereist remoting naar de guest, dus draai die guest-lokaal waar het kan, of via je bestaande configuratiebeheerkanaal, in plaats van ze uit te waaieren over geneste remoting. Beheerserver naar host naar guest in één hop loopt tegen de Kerberos double-hop- en credential-delegatiegrenzen aan die de meeste omgevingen niet voor ad-hocwerk hebben ingericht, en het faalt doorgaans stilletjes. Loop de VM's niet één voor één na in de GUI, en vertrouw de registerwaarde niet als bewijs, want die legt alleen de intentie vast.</p>
+        <p>Inventariseer eerst, vanaf de beheerserver, welke VM's binnen scope vallen over alle nodes. Alleen Gen 2-VM's hebben UEFI en Secure Boot; Gen 1-VM's vallen volledig buiten scope.</p>
+
+<pre><code># From the management server. Gen 2 VMs and their Secure Boot state, all nodes.
+Get-ClusterNode -Cluster "HVCLUSTER01" | ForEach-Object {
+  Get-VM -ComputerName $_.Name |
+    Where-Object Generation -eq 2 |
+    Get-VMFirmware |
+    Select-Object @{n='Node';e={$_.ComputerName}}, VMName, SecureBoot, SecureBootTemplate
+}</code></pre>
+
+        <p>De gezaghebbende controle moet binnen de guest draaien, omdat de host niet in de toegepaste DB en KEK van de VM kan kijken. Bevestig in één keer zowel het boot-kritieke DB-certificaat als de KEK-poort:</p>
+
+<pre><code># Inside the guest. True/True means on track. A False KEK is the 1795 signature.
+$db  = [Text.Encoding]::ASCII.GetString((Get-SecureBootUEFI db).bytes)
+$kek = [Text.Encoding]::ASCII.GetString((Get-SecureBootUEFI KEK).bytes)
+[pscustomobject]@{
+  DB_2023  = $db  -match 'Windows UEFI CA 2023'
+  KEK_2023 = $kek -match 'KEK 2K CA 2023'
+}</code></pre>
+
+        <p>Draai die controle guest-lokaal over de omgeving, met de resultaten centraal verzameld, zodat je één tabel krijgt in plaats van een handmatige rondgang. Als je toch met <code>Invoke-Command</code> naar binnen reikt, houd dan rekening met de double-hop-grens die hierboven is genoemd. De VM's waar <code>KEK_2023</code> op false staat zijn je hersteldoelen. Waar je de oorzaak bevestigd wilt zien in plaats van afgeleid, haal de gebeurtenis dan direct op:</p>
+
+<pre><code># Inside the guest. Surface the write-protected KEK failure if present.
+Get-WinEvent -FilterHashtable @{LogName='System'; Id=1795} -MaxEvents 5 -EA SilentlyContinue |
+  Select-Object TimeCreated, Message</code></pre>
+
+        <h2 id="nl-7">7. Herstel: de template-toggle, de opt-in, de verificatie</h2>
+        <p>Wanneer een guest tegen de 1795-schrijfbeveiligingsfout aanloopt, zit de oplossing niet binnen de guest. Het is een Secure Boot-template-toggle die op de host wordt uitgevoerd en die de key store van de VM terugzet naar de template-standaarden. Op een actuele host bevatten die standaarden de 2023-certificaten, waarmee de vastgelopen KEK-store wordt vlotgetrokken.</p>
+        <p>Draai dit met de VM uitgeschakeld, tegen de eigenaarsnode:</p>
+
+<pre><code># On the owning node. Reset the Secure Boot key store via template defaults.
+# Toggle to the open CA template, then straight back to the Windows template.
+Stop-VM -Name "VM01"
+Set-VMFirmware -VMName "VM01" -SecureBootTemplate MicrosoftUEFICertificateAuthority
+Set-VMFirmware -VMName "VM01" -SecureBootTemplate MicrosoftWindows
+Start-VM -Name "VM01"</code></pre>
+
+        <p>De volledige volgorde die betrouwbaar werkt op bestaande Server 2019- en 2022 Gen 2-VM's is: schakel de VM uit, toggle de template op de host, start de VM, zet de register-opt-in binnen de guest als die er nog niet is, draai de <code>Secure-Boot-Update</code>-taak, herstart de guest, en verifieer dan met de controle uit sectie 6. <code>KEK_2023</code> zou nu true moeten teruggeven en <code>DB_2023</code> zou moeten volgen. Het overslaan van de host-zijdige template-toggle is precies waarom de aanpak van alleen binnen de guest op deze VM's faalt.</p>
+
+        <div class="callout"><strong>CloudLabs bevindingen-template</strong>
+        Wij scoren dit op risico-blootstelling, niet op symptoom. Een losstaande Gen 2-VM die nog op 2011-certificaten draait, zonder afhankelijkheid van bootmedia of herstel, is <em>Medium</em>: reëel maar begrensd risico, op te lossen in een gewoon onderhoudsvenster. Diezelfde verouderde staat binnen een template of golden image is <em>Hoog</em>, want elke nieuw uitgerolde VM erft hem en het risico vermenigvuldigt zich sneller over de omgeving dan je kunt herstellen. Een vTPM-ondersteunde VM die helemaal niet ter plekke kan worden bijgewerkt is <em>Hoog</em> en wordt gemarkeerd voor herprovisioning-planning in plaats van een snelle ingreep.</div>
+
+        <h2 id="nl-8">8. De vTPM-kanttekening en de DBX-intrekvalkuil</h2>
+        <p>Twee waarschuwingen die je een vervelende middag besparen, mogelijk een vervelend kwartaal.</p>
+        <p>Ten eerste, virtuele TPM. Als een Gen 2-VM een vTPM gebruikt, kun je de certificaten niet ter plekke bijwerken. De TPM-metingen die tijdens de boot worden gedaan nemen de certificaatstatus mee, dus het wijzigen van de certificaten maakt die metingen ongeldig, met directe gevolgen voor BitLocker en elke attestatie die erop steunt. Deze VM's moeten worden geherprovisioneerd naar een actuele image in plaats van getoggled. Identificeer ze op het moment van inventarisatie, want herprovisioning is een geplande activiteit met afhandeling van data en key protectors, geen klusje van vijf minuten. In een geclusterde omgeving is dit doorgaans de grootste afzonderlijke post in het herstelplan, een reden te meer om vroeg met inventarisatie te beginnen.</p>
+        <p>Ten tweede, haast je niet met de DBX-intrekking. Microsoft documenteert een handmatige procedure die het oude 2011-certificaat intrekt door het toe te voegen aan de DBX, de verboden database. Voer die intrekking niet uit als onderdeel van deze oefening. 2011 voortijdig intrekken kan bestaande bootmedia, WinPE-images, herstelschijven en provisioning-targets onbootbaar maken, omdat die nog tegen 2011 zijn ondertekend. De veilige volgorde is strikt: voeg de 2023-certificaten toe, valideer dat alles boot vanaf zowel de OS als je herstelmedia, en laat de intrekking over aan een veel latere, bewuste fase, zodra de hele omgeving en alle media bevestigd op 2023 zitten. Vertrouwen toevoegen is omkeerbaar en veilig. Het weghalen is waar omgevingen zichzelf onbruikbaar maken.</p>
+
+        <h2 id="nl-9">9. Templates, golden images, en versiespecifiek gedrag</h2>
+        <p>De actie met de meeste hefboomwerking is je templates en golden images herstellen voordat je nog een draaiende VM aanraakt. Een ongepatchte template brengt nieuwe VM's voort die al achterlopen, zodat het probleem zich sneller reproduceert dan je het kunt herstellen.</p>
+        <p>Breng elke template op een actueel patchniveau, pas de template-toggle- en opt-in-behandeling toe als het Server 2019 of 2022 betreft, bevestig dat <code>Windows UEFI CA 2023</code> aanwezig is in de DB met de controle uit sectie 6, en re-seal dan en hervat het uitrollen ervan.</p>
+        <p>Gedrag per versie, in het kort. Windows Server 2025-hosts initialiseren nieuwe VM's bij het aanmaken met beide certificaatsets, dus vers gebouwde VM's zijn schoon, maar bestaande VM's die naar 2025-hosts zijn gemigreerd worden niet met terugwerkende kracht hersteld en hebben nog steeds het werk per guest nodig. Windows Server 2022 en 2019 dragen de certificaten vanaf 2024 in de cumulatieve updates, passen niets automatisch toe, vereisen de opt-in, en zijn de versies die het meest vatbaar zijn voor de 1795-KEK-storing op bestaande VM's. Windows Server 2016 staat er het zwakst voor, met de dunste tooling- en servicingondersteuning voor deze overgang, dus behandel elke 2016 Gen 2-VM als iets dat individuele validatie vereist en, waar het kan, onderdeel van een migratieplan in plaats van een certificaatfix. Generation 1-VM's van welke versie dan ook zijn niet geraakt, zonder uitzondering.</p>
+
+        <h2>Het patroon achter de lijst</h2>
+        <p>Dit is een bekende vorm. Een langlevend cryptografisch artefact, uitgegeven en vergeten in 2011, bereikt stilletjes het einde van zijn leven en verandert in een omgevingsbrede operationele deadline. Vandaag staat er niets in brand, en juist dat maakt het makkelijk om uit te stellen: de kosten van niets doen blijven onzichtbaar tot precies het moment waarop een VM niet vanaf nieuwe media wil booten, of een bootpad-kwetsbaarheid landt zonder patchpad op een omgeving die de fix niet meer kan opnemen.</p>
+        <p>De vraag over hostfirmware versterkt het, want die stuurt mensen naar het moederbord terwijl het antwoord zit in patchpariteit en NVRAM-status per VM. In een geclusterde Hyper-V-omgeving zijn dat tientallen of honderden onafhankelijke certificaatopslagplaatsen, die elk stilletjes kunnen falen met de opt-in gezet en de certificaten nog afwezig. Het werk is methodisch in plaats van heldhaftig, en er is tijd om het methodisch te doen: inventariseer elke Gen 2-guest en template vanaf je beheerserver, verifieer de werkelijke DB- en KEK-status in plaats van het register te vertrouwen, herstel bestaande VM's met de template-toggle, plan de vTPM-herprovisioning als een apart traject, en laat de DBX-intrekking voor het laatst.</p>
+        <p><a href="/book.html"><strong>Plan een kennismaking voor een Hyper-V Cluster Health Check →</strong></a></p>
+
+        <div class="faq-block">
+          <h2>Veelgestelde vragen</h2>
+
+          <div class="faq-q">Moet op de fysieke host Secure Boot in de BIOS ingeschakeld zijn voordat VM's kunnen bijwerken?</div>
+          <p>Nee. Microsoft voorziet elke Gen 2-VM van virtuele UEFI-firmware die losstaat van de host, en Secure Boot is op de host helemaal niet vereist. Een Gen 2-VM met Secure Boot ingeschakeld valt binnen de scope van het 2023-certificaatwerk, ongeacht de hardware Secure Boot-status van de host. Het patchniveau van het host-OS telt; de hardware Secure Boot van de host niet.</p>
+
+          <div class="faq-q">Stoppen mijn VM's in juni 2026 met booten als ik niets doe?</div>
+          <p>Niet op die datum. Ze blijven draaien op de 2011-certificaten en gewone updates blijven installeren. Wat ze verliezen is het vermogen om bootpad-beveiligingsupdates te ontvangen, en uiteindelijk het vermogen om media te booten die uitsluitend met de 2023-certificaten zijn ondertekend. Het boot-faalrisico ligt stroomafwaarts, en er is tijd om het te voorkomen als je nu begint.</p>
+
+          <div class="faq-q">Ik heb de register-opt-in in de VM gezet maar het 2023-CA verscheen nooit. Waarom?</div>
+          <p>Op bestaande Server 2019- en 2022 Gen 2-VM's mislukt de KEK-update vaak met Event ID 1795, media schrijfbeveiligd. Omdat de 2023-KEK de poort is voor de DB-updates, landt er niets. Toggle de Secure Boot-template op de host met de VM uitgeschakeld, zet daarna de opt-in binnen de guest opnieuw en verifieer de DB en KEK.</p>
+
+          <div class="faq-q">Hoe controleer ik de werkelijke status in plaats van alleen of de opt-in gezet is?</div>
+          <p>Lees binnen de guest de DB- en KEK-variabelen en match op <code>Windows UEFI CA 2023</code> en <code>KEK 2K CA 2023</code>. De registerwaarde legt alleen de intentie vast; de key stores leggen vast wat daadwerkelijk is toegepast.</p>
+
+          <div class="faq-q">En VM's met een virtuele TPM?</div>
+          <p>Die kunnen niet ter plekke worden bijgewerkt, omdat de TPM-bootmetingen de certificaatstatus meenemen, wat ook BitLocker raakt. Ze moeten worden geherprovisioneerd naar een actuele image. Identificeer ze vroeg.</p>
+
+          <div class="faq-q">Hebben Generation 1-VM's hier iets van nodig?</div>
+          <p>Nee. Gen 1-VM's hebben geen UEFI en geen Secure Boot, dus ze zijn helemaal niet geraakt.</p>
+
+          <div class="faq-q">Hoe lang duurt een Health Check, en raakt die de productie?</div>
+          <p>Een CloudLabs Hyper-V Cluster Health Check loopt over twee dagen en is read-only tijdens de beoordeling. De diagnose gebruikt niet-verstorende PowerShell; het herstel wordt geleverd als een op severity gerangschikt runbook dat je in je eigen onderhoudsvenster toepast.</p>
+        </div>
+<div class="related">
+        <h3>Gerelateerde artikelen</h3>
+        <ul>
+          <!--LINK:top-10-hyper-v-cluster-issues--><li><a href="/nl/blog/top-10-hyper-v-cluster-issues/">Hyper-V Cluster Health Check: 10 issues die we steeds vinden in 2026</a></li><!--/LINK:top-10-hyper-v-cluster-issues-->
+          <!--LINK:windows-server-2025-hyper-v-cluster-features--><li><a href="/nl/blog/windows-server-2025-hyper-v-cluster-features/">Windows Server 2025 Hyper-V: wat het werkelijk toevoegt voor cluster-operators</a></li><!--/LINK:windows-server-2025-hyper-v-cluster-features-->
+          <!--LINK:cluster-aware-updating-runbook-audit-trail--><!--draft:<li><a href="/nl/blog/cluster-aware-updating-runbook-audit-trail/">Cluster Aware Updating: runbook, audit trail, en wat niemand documenteert</a></li>--><!--/LINK:cluster-aware-updating-runbook-audit-trail-->
+          <!--LINK:vmware-to-hyper-v-migration-assessment--><li><a href="/nl/blog/vmware-to-hyper-v-migration-assessment/">VMware naar Hyper-V cluster migratie: pre-migration assessment</a></li><!--/LINK:vmware-to-hyper-v-migration-assessment-->
+        </ul>
+      </div>
+      </div>
+    </div>
+
+  </article>
+</section>
+</main>
+
+<footer class="ct-footer"><div class="ct-footer-inner"><div class="ct-footer-brand"><b>Cluster<span>Triage</span></b><p>Onafhankelijke Failover Cluster Assessment, Risk &amp; Remediation Assurance.</p></div><div><h4>Dienst</h4><a href="/nl/assurance/">Assurance</a><a href="/nl/methodologie/">Methode</a></div><div><h4>Bedrijf</h4><a href="/nl/over-ons/">Over ons</a><a href="/nl/blog/">Blog</a><a href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Contact</a></div><div><h4>Incident</h4><a href="https://clusterdown.com/nl/">ClusterDown</a></div></div><div class="ct-footer-bottom"><span>© ClusterTriage</span><span>Windows Server · Hyper-V · Failover Clustering · Storage Spaces Direct · Azure Local</span></div></footer><script>(function(){{var m=document.getElementById('menu'),n=document.getElementById('navlinks');if(m&&n)m.addEventListener('click',function(){{var o=m.getAttribute('aria-expanded')==='true';m.setAttribute('aria-expanded',String(!o));n.classList.toggle('open',!o)}});}})();</script></body></html>

@@ -163,7 +163,7 @@
       <div class="tekst">
 <h2 id="nl-1">1. Live Migration over het verkeerde netwerk</h2>
         <p>De meest voorkomende bevinding. Live Migration valt terug op het management- of heartbeat-VLAN omdat het toegewezen migratienetwerk niet is aangezet voor clusterverkeer, of nooit is toegevoegd aan de expliciete Live Migration-lijst per Hyper-V host. Het symptoom is zelden een failure. Wel trage migraties tijdens patch-vensters en onverklaarbare latency op cluster-heartbeats wanneer meerdere VM's tegelijk verplaatsen.</p>
-        <p>Twee configuratie-vlakken zijn relevant. De <code>Role</code> per cluster-netwerk op clusterniveau, en de expliciete Live Migration-netwerklijst per host. Die zijn onafhankelijk. Wij vinden regelmatig dat het ene correct staat en het andere vergeten is. Volledige uitleg in <!--LINK:live-migration-wrong-network--><!--draft:<a href="/nl/blog/live-migration-wrong-network/">Live Migration over het verkeerde netwerk: een veelvoorkomende Hyper-V valkuil</a>-->Live Migration over het verkeerde netwerk: een veelvoorkomende Hyper-V valkuil<!--/LINK:live-migration-wrong-network-->.</p>
+        <p>Twee configuratie-vlakken zijn relevant. De <code>Role</code> per cluster-netwerk op clusterniveau, en de expliciete Live Migration-netwerklijst per host. Die zijn onafhankelijk. Wij vinden regelmatig dat het ene correct staat en het andere vergeten is. Volledige uitleg in <!--LINK:live-migration-wrong-network--><a href="/nl/blog/live-migration-wrong-network/">Live Migration over het verkeerde netwerk: een veelvoorkomende Hyper-V valkuil</a><!--/LINK:live-migration-wrong-network-->.</p>
         <p>Belangrijk detail bij diagnose: sinds Windows Server 2016 is de default-transportmodus voor Live Migration SMB, dus verkeer loopt over poort 445, niet over de oude TCP-poort 6600. Filteren op alleen 6600 levert op moderne clusters geen resultaat op.</p>
 
         <p><strong>Diagnose:</strong></p>
@@ -203,7 +203,7 @@ Get-ClusterResource | Where-Object {$_.OwnerGroup -eq 'Cluster Group'} |
           <li><strong>Two-site stretched:</strong> Cloud Witness, of een File Share Witness in een derde site, nooit in een van de twee cluster-sites.</li>
           <li><strong>Disconnected of air-gapped:</strong> File Share Witness op gedocumenteerd onafhankelijke storage en voeding.</li>
         </ul>
-        <p>Volledige vergelijking in <!--LINK:cluster-witness-comparison--><!--draft:<a href="/nl/blog/cluster-witness-comparison/">File Share Witness vs Cloud Witness vs Disk Witness: welk type kies je?</a>-->File Share Witness vs Cloud Witness vs Disk Witness: welk type kies je?<!--/LINK:cluster-witness-comparison-->.</p>
+        <p>Volledige vergelijking in <!--LINK:cluster-witness-comparison--><a href="/nl/blog/cluster-witness-comparison/">File Share Witness vs Cloud Witness vs Disk Witness: welk type kies je?</a><!--/LINK:cluster-witness-comparison-->.</p>
 
         <h2 id="nl-3">3. CSV ownership-onbalans</h2>
         <p>Cluster Shared Volume-eigendom stapelt zich op één node na een patch-ronde, een failover, of een node-drain die niemand achteraf herbalanceerd heeft. Het symptoom is ongelijke CPU op de coordinator-node en read-heavy workloads die latency-pieken ervaren die er random uitzien, totdat je ze correleert met CSV-ownership.</p>
@@ -341,7 +341,7 @@ Get-PhysicalDisk | Group-Object MediaType, OperationalStatus, FirmwareVersion</c
           <p>Een Health Check is technisch en gericht op operationele stabiliteit, performance en supportability. Een audit is breder en raakt vaak ook security en compliance. Wij doen Health Checks; voor audits werken we samen met partners.</p>
 
           <div class="faq-q">Werkt dit ook voor Azure Local of Azure Stack HCI clusters?</div>
-          <p>Ja, met een aangepaste scope. Storage Fabric- en Storage Array-secties vervangen we door een Storage Spaces Direct-sectie. Zie <!--LINK:azure-local-migration-readiness--><!--draft:<a href="/nl/blog/azure-local-migration-readiness/">Azure Local migratie-readiness checklist</a>-->Azure Local migratie-readiness checklist<!--/LINK:azure-local-migration-readiness-->.</p>
+          <p>Ja, met een aangepaste scope. Storage Fabric- en Storage Array-secties vervangen we door een Storage Spaces Direct-sectie. Zie <!--LINK:azure-local-migration-readiness--><a href="/nl/blog/azure-local-migration-readiness/">Azure Local migratie-readiness checklist</a><!--/LINK:azure-local-migration-readiness-->.</p>
 
           <div class="faq-q">Bieden jullie ook remediation, of alleen advies?</div>
           <p>Beide. Een Health Check kan op zichzelf opgeleverd worden, of als startpunt voor een remediation-traject waar wij de gevonden issues samen met de klant oplossen.</p>
@@ -350,9 +350,9 @@ Get-PhysicalDisk | Group-Object MediaType, OperationalStatus, FirmwareVersion</c
         <h3>Gerelateerde artikelen</h3>
         <ul>
           <!--LINK:csv-ownership-imbalance--><li><a href="/nl/blog/csv-ownership-imbalance/">CSV ownership-onbalans: oorzaken en oplossingen</a></li><!--/LINK:csv-ownership-imbalance-->
-          <!--LINK:live-migration-wrong-network--><!--draft:<li><a href="/nl/blog/live-migration-wrong-network/">Live Migration over het verkeerde netwerk</a></li>--><!--/LINK:live-migration-wrong-network-->
-          <!--LINK:cluster-witness-comparison--><!--draft:<li><a href="/nl/blog/cluster-witness-comparison/">File Share Witness vs Cloud Witness vs Disk Witness</a></li>--><!--/LINK:cluster-witness-comparison-->
-          <!--LINK:azure-local-migration-readiness--><!--draft:<li><a href="/nl/blog/azure-local-migration-readiness/">Azure Local migratie-readiness checklist</a></li>--><!--/LINK:azure-local-migration-readiness-->
+          <!--LINK:live-migration-wrong-network--><li><a href="/nl/blog/live-migration-wrong-network/">Live Migration over het verkeerde netwerk</a></li><!--/LINK:live-migration-wrong-network-->
+          <!--LINK:cluster-witness-comparison--><li><a href="/nl/blog/cluster-witness-comparison/">File Share Witness vs Cloud Witness vs Disk Witness</a></li><!--/LINK:cluster-witness-comparison-->
+          <!--LINK:azure-local-migration-readiness--><li><a href="/nl/blog/azure-local-migration-readiness/">Azure Local migratie-readiness checklist</a></li><!--/LINK:azure-local-migration-readiness-->
         </ul>
       </div>
       </div>
