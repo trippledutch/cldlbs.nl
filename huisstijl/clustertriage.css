@@ -127,9 +127,10 @@
 .ct-footer-bottom{max-width:var(--max);margin:38px auto 0;padding-top:18px;border-top:1px solid var(--band-rule);font-family:var(--mono);font-size:9px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--band-faint)}
 
 /* Language switch */
-.lang-set{display:flex;gap:8px;align-items:center;font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.08em}
+.lang-set{display:flex;gap:12px;align-items:center;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
 .lang-set a,.lang-set span{opacity:.65;text-decoration:none}
 .lang-set [aria-current="true"]{opacity:1;color:var(--band-accent)}
+@media(max-width:800px){.navlinks.open .lang-set{font-size:14px;margin-top:6px}}
 
 /* 2026 visual refinement: depth, bold type and restrained motion.
    Deliberately selective: ClusterTriage is an enterprise engineering brand,
