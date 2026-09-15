@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0A1024">
+<title>September 2026 Patch Tuesday: the RDS/RDP regression and the case for N-1 patching &middot; ClusterTriage</title>
+<meta name="description" content="What the September 2026 Cumulative Update fixed, the RDS/RDP regression it caused on Server 2019/2022/2025, how Microsoft responded, and whether N-1 patching is the right default.">
+<link rel="canonical" href="https://clustertriage.com/en/blog/rdp-regression-n-minus-1-patch-strategy/">
+<link rel="alternate" hreflang="nl" href="https://clustertriage.com/nl/blog/rdp-regression-n-minus-1-patch-strategy/">
+<link rel="alternate" hreflang="en" href="https://clustertriage.com/en/blog/rdp-regression-n-minus-1-patch-strategy/">
+<link rel="alternate" hreflang="x-default" href="https://clustertriage.com/en/blog/rdp-regression-n-minus-1-patch-strategy/">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://clustertriage.com/en/blog/rdp-regression-n-minus-1-patch-strategy/">
+<meta property="og:title" content="September 2026 Patch Tuesday: the RDS/RDP regression and the case for N-1 patching">
+<meta property="og:description" content="What the September 2026 CU fixed, the RDS/RDP regression it caused, how Microsoft responded, and whether N-1 patching is the right default.">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="stylesheet" href="/huisstijl/pagina.css?v=5279f5a9">
+<link rel="stylesheet" href="/huisstijl/artikel.css?v=9a147c57">
+<link rel="stylesheet" href="/huisstijl/clustertriage.css?v=30af5db3">
+<link rel="stylesheet" href="/huisstijl/clustertriage-v2.css?v=c711d81a">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://clustertriage.com/en/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://clustertriage.com/en/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "September 2026 Patch Tuesday: the RDS/RDP regression and the case for N-1 patching",
+          "item": "https://clustertriage.com/en/blog/rdp-regression-n-minus-1-patch-strategy/"
+        }
+      ]
+    },
+    {
+      "@type": "BlogPosting",
+      "@id": "https://clustertriage.com/en/blog/rdp-regression-n-minus-1-patch-strategy/#artikel",
+      "headline": "September 2026 Patch Tuesday: the RDS/RDP regression and the case for N-1 patching",
+      "description": "What the September 2026 Cumulative Update fixed, the RDS/RDP regression it caused on Server 2019/2022/2025, how Microsoft responded, and whether N-1 patching is the right default.",
+      "inLanguage": "en-GB",
+      "datePublished": "2026-09-15",
+      "dateModified": "2026-09-15",
+      "mainEntityOfPage": "https://clustertriage.com/en/blog/rdp-regression-n-minus-1-patch-strategy/",
+      "articleSection": "Patching",
+      "author": {
+        "@type": "Person",
+        "name": "Hans Vredevoort",
+        "jobTitle": "Server & Cluster Specialist",
+        "knowsAbout": [
+          "Hyper-V",
+          "Failover Clustering",
+          "Azure Local",
+          "Storage Spaces Direct",
+          "Windows Server"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ClusterTriage",
+        "url": "https://clustertriage.com/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://clustertriage.com/en/blog/rdp-regression-n-minus-1-patch-strategy/#vragen",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What exactly is a Known Issue Rollback?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A Known Issue Rollback (KIR) is a group policy that reverts only the behaviour of a specific regression, not the underlying security fix. The cumulative update stays installed and every CVE in it stays patched; the KIR just switches off, via policy, the specific piece of changed code causing the problem. That makes a KIR faster to trust than a hotfix, and it is usually available within a week of Patch Tuesday."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this mean I should always wait a month before patching?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. N-1 as a default protects against regressions like this one, but it also costs a month of extra exposure to vulnerabilities that are already being actively exploited at the moment of patching, such as the two zero-days in this same round. The rule we hold to: N-1 as the default, with an exception for any CVE Microsoft or your national CERT marks as actively exploited. That fix gets pulled forward outside the monthly cycle."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which Windows Server versions are affected by the RDS/RDP regression?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Windows Server 2019 (KB5122876), Windows Server 2022 (KB5122882) and Windows Server 2025 (KB5122871), all through the same change in RDP's audio-redirection code path. The out-of-band fix KB5129237 from 14 September currently covers Server 2022 only; for 2019 and 2025, the Known Issue Rollback remains the way to go for now."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the WSUS synchronisation notice a separate bug in this update?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. WSUS has temporarily stopped showing synchronisation error detail since this round, but that is a deliberate measure tied to CVE-2025-59287, not an unintended regression. It feels the same as a bug because it removes diagnostic information right when you need it most, but the behaviour is intentional."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How fast should an actively exploited CVE actually be applied?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The moment Microsoft or your national CERT labels a CVE as actively exploited, it no longer fits a monthly cycle. We fast-track that specific fix, usually through the standalone security-only update for that CVE or a KB-specific action, without waiting for the next regular round and without abandoning the rest of the N-1 policy."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+
+<body>
+<a class="skip" href="#main">Skip to content</a><header class="topbar"><nav class="nav"><a class="brand ct-brand" href="/en/"><b>Cluster<span>Triage</span></b><small>Decades of server expertise</small></a><div class="navlinks" id="navlinks"><a href="/en/assurance/">Assurance</a><a href="/en/methodology/">Method</a><a href="/en/about/">About</a><a href="/en/blog/" aria-current="page">Blog</a><a href="https://clusterdown.com/en/">Cluster down?</a><span class="lang-set"><a href="/nl/blog/rdp-regression-n-minus-1-patch-strategy/">NL</a><span aria-current="true">EN</span></span></div><div class="nav-actions"><a class="btn primary" href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Schedule a discussion</a><button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button></div></nav></header>
+
+<main id="main">
+<section class="section" style="padding-bottom:70px">
+  <article class="artikelpagina">
+
+    <p class="kruimelpad"><a href="/en/">ClusterTriage</a> / <a href="/en/blog/">Blog</a> / Patching</p>
+
+    <header class="artikelkop">
+      <h1>September 2026 Patch Tuesday: the RDS/RDP regression and the case for N-1 patching</h1>
+      <p class="lede">September 2026's Patch Tuesday was the largest ever, and nine days later Remote Desktop Services session hosts on Server 2019, 2022 and 2025 started locking up at organisations that did exactly what is recommended: patch every month, on time. Apply the cumulative update within a week like you are supposed to, and you got a session host that hangs a few hours after boot, RDP connections stuck on "Connecting…", and an MMC console that stops responding.</p>
+      <p class="lede">This article walks through what the update fixed, what it broke, how Microsoft responded, and whether that means an N-1 patch policy, deliberately staying one month behind the latest cumulative update, is the right default for Failover Cluster nodes.</p>
+      <p class="artikelmeta"><b>By Hans Vredevoort</b> <i>&middot;</i> <b>15 September 2026</b> <i>&middot;</i> <b>8 minute read</b> <i>&middot;</i> <b>Patching</b></p>
+    </header>
+
+    <div class="artikelbody">
+      <nav class="toc" aria-label="Contents of this article">
+        <p class="toc-title">In this article</p>
+        <ol>
+          <li><a href="#en-1">What the September CU fixed</a></li>
+          <li><a href="#en-2">The RDS/RDP regression: what broke and why</a></li>
+          <li><a href="#en-3">How Microsoft responded: a Known Issue Rollback, then a real fix</a></li>
+          <li><a href="#en-4">Why N-1 dodged this regression automatically</a></li>
+          <li><a href="#en-5">Caveat 1: N-1 also costs you the zero-day window</a></li>
+          <li><a href="#en-6">Caveat 2: a KIR is faster than waiting a full month</a></li>
+          <li><a href="#en-7">The patch-round procedure I would keep</a></li>
+        </ol>
+      </nav>
+
+      <div class="tekst">
+<h2 id="en-1">1. What the September CU fixed</h2>
+        <p>This round was, by a margin, the largest Patch Tuesday to date. The exact count depends on whether you count only Microsoft's own CVEs or also the third-party ones that ride along in the Microsoft catalogue, but the most commonly cited figure lands around 974 Microsoft CVEs in a single round.</p>
+        <p>Two of them were already being actively exploited at the moment of patching: <code>CVE-2026-81963</code> in the Windows Update stack itself, and <code>CVE-2026-85880</code> in Windows ALPC. For anyone running Remote Desktop Services on Failover Clusters, there was also a critical remote-code-execution vulnerability, <code>CVE-2026-69525</code>, with a CVSS score of 9.8, in exactly the component that would cause the regression a few days later.</p>
+        <p>That is not a coincidence. It is exactly why a patch round is never only about whether you install the newest cumulative update, but also about which component that update touches and how critical that component is in your environment.</p>
+
+        <h2 id="en-2">2. The RDS/RDP regression: what broke and why</h2>
+        <p>Within nine days of Patch Tuesday, a confirmed, large regression showed up in three cumulative updates: <code>KB5122876</code> (Server 2019), <code>KB5122882</code> (Server 2022) and <code>KB5122871</code> (Server 2025). RDS session hosts lock up a few hours after a reboot. RDP connections hang on "Connecting…" without ever building a session. And it does not stop at RDP: MMC, File Explorer, the RDS Licensing Diagnoser and even the Windows Update page itself hang along with it.</p>
+        <p>The cause sits in a change to RDP's audio-redirection code path, the part that forwards sound from the session host to the client. A change there, most likely made to support one of the security fixes in this round, blocks the rest of the session under the right conditions. For Failover Cluster nodes carrying RDS roles, or simply managed over RDP, that is immediately operational: a session host that locks up a few hours after boot is not something you notice during the patch round itself, but exactly when the operations team is in the middle of it.</p>
+        <p>A smaller change in the same round is worth calling out separately: WSUS has temporarily stopped showing synchronisation error detail. That is not a bug, but a deliberate measure tied to <code>CVE-2025-59287</code>. It feels the same as a regression because it removes diagnostic information right when you need it most, but the behaviour is intentional.</p>
+
+        <div class="mid-cta">
+          <p>Is your patch round still running on "install and hope nothing breaks"? A Hyper-V Cluster Health Check documents the current state of your patch cycle, CAU configuration and escalation path before the next Patch Tuesday does it for you.</p>
+          <a href="/en/appointment/">Schedule a patch strategy assessment →</a>
+        </div>
+
+        <h2 id="en-3">3. How Microsoft responded: a Known Issue Rollback, then a real fix</h2>
+        <p>Microsoft's response came in two steps. First a Known Issue Rollback: a group policy that reverts only the behaviour of the regression, not the underlying security fix. The cumulative update stays installed, every CVE in this round stays patched, and only the changed piece of audio-redirection code gets switched off through policy. The rollback IDs are <code>260911_18471</code> for Server 2022 and <code>260911_18474</code> for Server 2019.</p>
+        <p>On 14 September, nine days after Patch Tuesday, a real out-of-band fix followed: <code>KB5129237</code>, for now Server 2022 only. For 2019 and 2025, the Known Issue Rollback remains the way to go until Microsoft ships a specific hotfix for those too.</p>
+
+        <h2 id="en-4">4. Why N-1 dodged this regression automatically</h2>
+        <p>This is precisely the scenario an N-1 patch policy exists for. An environment that deliberately installed the August CU on 6 September, instead of jumping straight to the newest September round, automatically ends up outside the reach of this RDS regression. The nodes were not specifically protected against this one bug; they were protected against any regression that surfaces in the first weeks after a Patch Tuesday, and that happens more than once a year.</p>
+        <p>That is not luck, it is exactly the point of the design. One month of grace between a cumulative update shipping and that update landing on production nodes is, in our own convention, not a deviation. Two months is: at that point you fall so far behind that you become a risk yourself instead of avoiding one.</p>
+
+        <h2 id="en-5">5. Caveat 1: N-1 also costs you the zero-day window</h2>
+        <p>N-1 as a blind rule has a price, and that price is visible in this exact round: the same CU that carried the RDS regression also patched two vulnerabilities that were already being actively exploited at the moment of patching. A month of delay on everything is not free security. It trades a visible, measurable regression for an invisibly extended window in which an actively exploited vulnerability stays open on production nodes.</p>
+        <p>That is why we keep N-1 as the default, but with an explicit exception: the moment Microsoft or your national CERT marks a CVE as actively exploited, we pull the fix for that specific vulnerability forward, outside the monthly cycle, through the standalone security-only update or a KB-specific action, rather than waiting blindly for the next round.</p>
+
+        <h2 id="en-6">6. Caveat 2: a KIR is faster than waiting a full month</h2>
+        <p>A Known Issue Rollback is usually available within about nine days of Patch Tuesday, well before the next monthly round comes into view. Once that KIR is published, you can still apply the current month's CU, with the KIR group policy alongside it. You get the security fixes without the regression, without the full month of N-1 delay.</p>
+        <p>That deserves a fixed spot in the patch-round procedure, as the first check before deciding "we wait until next month." Has a Known Issue Rollback already been published for a known problem in the previous round? If so, applying it with the KIR is usually the better choice over waiting an entire extra month.</p>
+
+        <h2 id="en-7">7. The patch-round procedure I would keep</h2>
+        <p>Summed up, that comes down to three rules that complement each other, rather than one rule that makes the other two redundant.</p>
+        <ol>
+          <li><strong>N-1 as the default.</strong> New cumulative updates go to a non-production environment or a canary node first, for a month, before they reach the rest of the cluster. That catches most regressions before they hit production.</li>
+          <li><strong>An escape hatch for actively exploited CVEs.</strong> The moment Microsoft or your national CERT marks a vulnerability as actively exploited, that specific fix gets pulled forward, outside the monthly cycle. N-1 applies to the regular round, not to a vulnerability already being used today.</li>
+          <li><strong>A KIR check before accepting the wait.</strong> Before accepting a full month of delay because of a known regression, check whether Microsoft has already published a Known Issue Rollback. If so, patch the current round anyway, with the KIR in place, instead of waiting the whole month.</li>
+        </ol>
+        <p>None of these three rules is new on its own. The combination is what turns a patch round from "install and hope" into a procedure that holds up, even when the largest Patch Tuesday to date also happens to be the messiest.</p>
+
+        <div class="faq-block">
+          <h2>Frequently asked questions</h2>
+
+          <div class="faq-q">What exactly is a Known Issue Rollback?</div>
+          <p>A Known Issue Rollback (KIR) is a group policy that reverts only the behaviour of a specific regression, not the underlying security fix. The cumulative update stays installed and every CVE in it stays patched; the KIR just switches off, via policy, the specific piece of changed code causing the problem. That makes a KIR faster to trust than a hotfix, and it is usually available within a week of Patch Tuesday.</p>
+
+          <div class="faq-q">Does this mean I should always wait a month before patching?</div>
+          <p>No. N-1 as a default protects against regressions like this one, but it also costs a month of extra exposure to vulnerabilities that are already being actively exploited at the moment of patching, such as the two zero-days in this same round. The rule we hold to: N-1 as the default, with an exception for any CVE Microsoft or your national CERT marks as actively exploited. That fix gets pulled forward outside the monthly cycle.</p>
+
+          <div class="faq-q">Which Windows Server versions are affected by the RDS/RDP regression?</div>
+          <p>Windows Server 2019 (<code>KB5122876</code>), Windows Server 2022 (<code>KB5122882</code>) and Windows Server 2025 (<code>KB5122871</code>), all through the same change in RDP's audio-redirection code path. The out-of-band fix <code>KB5129237</code> from 14 September currently covers Server 2022 only; for 2019 and 2025, the Known Issue Rollback remains the way to go for now.</p>
+
+          <div class="faq-q">Is the WSUS synchronisation notice a separate bug in this update?</div>
+          <p>No. WSUS has temporarily stopped showing synchronisation error detail since this round, but that is a deliberate measure tied to <code>CVE-2025-59287</code>, not an unintended regression. It feels the same as a bug because it removes diagnostic information right when you need it most, but the behaviour is intentional.</p>
+
+          <div class="faq-q">How fast should an actively exploited CVE actually be applied?</div>
+          <p>The moment Microsoft or your national CERT labels a CVE as actively exploited, it no longer fits a monthly cycle. We fast-track that specific fix, usually through the standalone security-only update for that CVE or a KB-specific action, without waiting for the next regular round and without abandoning the rest of the N-1 policy.</p>
+        </div>
+<div class="related">
+        <h3>Related articles</h3>
+        <ul>
+          <!--LINK:cluster-aware-updating-runbook-audit-trail--><!--draft:<li><a href="/en/blog/cluster-aware-updating-runbook-audit-trail/">Cluster Aware Updating: runbook, audit trail, and what nobody documents</a></li>--><!--/LINK:cluster-aware-updating-runbook-audit-trail-->
+          <!--LINK:health-check-to-patch-night--><li><a href="/en/blog/health-check-to-patch-night/">From Health Check to Patch Night: the method at work</a></li><!--/LINK:health-check-to-patch-night-->
+        </ul>
+      </div>
+      </div>
+    </div>
+
+  </article>
+</section>
+</main>
+
+<footer class="ct-footer"><div class="ct-footer-inner"><div class="ct-footer-brand"><b>Cluster<span>Triage</span></b><p>Independent Failover Cluster Assessment, Risk &amp; Remediation Assurance.</p></div><div><h4>Service</h4><a href="/en/assurance/">Assurance</a><a href="/en/methodology/">Method</a></div><div><h4>Company</h4><a href="/en/about/">About</a><a href="/en/blog/">Blog</a><a href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Contact</a></div><div><h4>Incident</h4><a href="https://clusterdown.com/en/">ClusterDown</a></div></div><div class="ct-footer-bottom"><span>© ClusterTriage</span><span>Windows Server · Hyper-V · Failover Clustering · Storage Spaces Direct · Azure Local</span></div></footer><script>(function(){var m=document.getElementById('menu'),n=document.getElementById('navlinks');if(m&&n)m.addEventListener('click',function(){var o=m.getAttribute('aria-expanded')==='true';m.setAttribute('aria-expanded',String(!o));n.classList.toggle('open',!o)});})();</script></body></html>
