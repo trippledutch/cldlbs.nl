@@ -297,9 +297,16 @@ body{font-family:var(--sans)}
    ineens #3FB6D8 in plaats van #0A7E9E. Nagemeten op 404.html: 8046 pixels
    verschil, en dat is een wijziging aan de lichte site waar niemand om heeft
    gevraagd. In de donkere stand krijgt hij zijn lichte accent alsnog, want dan
-   staat #3FB6D8 al in :root. */
+   staat #3FB6D8 al in :root.
+
+   .incident-bridge en .ct-footer (ClusterTriage-redesign, clustertriage.css)
+   zijn er op 2026-09-15 bijgekomen: ook altijd-donkere band, dezelfde bug als
+   hierboven (het "Cluster"-woordmerk in de voettekst was in de donkere stand
+   onleesbaar omdat var(--surface) daar omklapte terwijl de bandkleur nooit
+   verandert). Ze gebruiken al var(--band-*) en var(--band-accent) voor de
+   rest, dus horen alleen bij deze eerste regel, niet bij de accent-regel. */
 .topbar,.hero,.proof,.intro,.trust,.cta,.footer,.gate,.scan-card,.triage-list,
-.meldband,.solution-visual,.cookiebalk{
+.meldband,.solution-visual,.cookiebalk,.incident-bridge,.ct-footer{
   --ground:#FBFCFD; --surface:#FFFFFF; --sunk:#F4F6F9;
   --ink:#0A1024; --dim:#3A4255; --faint:#6B7285; --rule:#D3D8E0;
   --chip-ink:#FFFFFF;
