@@ -2152,13 +2152,65 @@ document.querySelectorAll(".jump button").forEach(b=>b.addEventListener("click",
 
 const lb=document.getElementById("lb"), lbimg=document.getElementById("lbimg"),
       lbcap=document.getElementById("lbcap");
+// De lightbox in de ingebedde stand. position:fixed slaat in een iframe dat
+// op zijn volle inhoudshoogte staat op het hele iframe, niet op het scherm:
+// het beeld komt dan ergens halverwege een metershoog vlak en het kruisje
+// staat ver erboven. Daarom wordt het venster dan in de ouderpagina zelf
+// opgebouwd, met dezelfde opmaak, en daar getoond. Los van een iframe blijft
+// de eigen lightbox in gebruik.
+let hostBox = null;
+function hostLb(){
+  if (hostBox) return hostBox;
+  let fe = null;
+  try { fe = window.frameElement; } catch(e){ fe = null; }
+  if (!fe) return null;
+  const pdoc = fe.ownerDocument;
+  hostBox = pdoc.getElementById("ct-lb");
+  if (hostBox) return hostBox;
+  const st = pdoc.createElement("style");
+  st.textContent =
+    "#ct-lb{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;" +
+    "background:rgba(8,14,20,.86);backdrop-filter:blur(3px);padding:2.5rem 1.5rem}" +
+    "#ct-lb[hidden]{display:none!important}" +
+    "#ct-lb figure{margin:0;max-width:min(58rem,92vw);max-height:88vh;display:flex;flex-direction:column;gap:.6rem}" +
+    "#ct-lb img{max-width:100%;max-height:80vh;object-fit:contain;border-radius:8px;" +
+    "box-shadow:0 24px 60px -20px rgba(0,0,0,.8);background:#fff}" +
+    "#ct-lb figcaption{color:#e9eef3;font-size:.84rem;font-weight:450;text-align:center}" +
+    "#ct-lb button{position:absolute;top:1rem;right:1.25rem;width:2.4rem;height:2.4rem;border-radius:50%;" +
+    "border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.1);color:#fff;font-size:1.5rem;line-height:1;cursor:pointer}" +
+    "#ct-lb button:hover{background:rgba(255,255,255,.22)}" +
+    "#ct-lb button:focus-visible{outline:2px solid #fff;outline-offset:2px}";
+  pdoc.head.appendChild(st);
+  hostBox = pdoc.createElement("div");
+  hostBox.id = "ct-lb"; hostBox.hidden = true;
+  hostBox.setAttribute("role","dialog"); hostBox.setAttribute("aria-modal","true");
+  hostBox.innerHTML = '<button type="button" aria-label="Sluiten">&times;</button>' +
+                      '<figure><img alt=""><figcaption></figcaption></figure>';
+  pdoc.body.appendChild(hostBox);
+  hostBox.querySelector("button").addEventListener("click", closeLb);
+  hostBox.addEventListener("click", e=>{ if (e.target === hostBox) closeLb(); });
+  pdoc.addEventListener("keydown", e=>{ if (!hostBox.hidden && e.key === "Escape") closeLb(); });
+  return hostBox;
+}
 function openLb(id, nm){
+  const host = hostLb();
+  if (host){
+    const img = host.querySelector("img"), knop = host.querySelector("button");
+    img.src = SHOTS[id]; img.alt = "Voorbeeldpagina uit " + nm;
+    host.querySelector("figcaption").textContent = nm + " · " + T().sample;
+    knop.setAttribute("aria-label", T().aClose || "Sluiten");
+    host.hidden = false; knop.focus();
+    return;
+  }
   if (!lb) return;
   lbimg.src = SHOTS[id]; lbimg.alt = "Voorbeeldpagina uit " + nm;
   lbcap.textContent = nm + " · " + T().sample;
   lb.hidden = false; document.getElementById("lbx").focus();
 }
-function closeLb(){ if (!lb) return; lb.hidden = true; lbimg.src = ""; }
+function closeLb(){
+  if (hostBox){ hostBox.hidden = true; hostBox.querySelector("img").src = ""; }
+  if (!lb) return; lb.hidden = true; lbimg.src = "";
+}
 const lbx=document.getElementById("lbx");
 if (lbx) lbx.addEventListener("click", closeLb);
 if (lb) lb.addEventListener("click", e=>{ if (e.target === lb) closeLb(); });
