@@ -7,20 +7,22 @@
      eruit; die krijgt later een eigen URL onder /en/. De inhoud is niet
      herschreven. Vrijgegeven voor indexering op 2 september 2026. -->
 <meta name="theme-color" content="#0A1024">
-<title>Classic Hyper-V or Azure Local? · CloudLabs</title>
+<title>Classic Hyper-V or Azure Local? · ClusterTriage</title>
 <meta name="description" content="Azure Stack HCI is gone, folded into Azure Local with Arc still mandatory. When a classic Hyper-V failover cluster beats Azure Local, and when it does not.">
-<link rel="canonical" href="https://cldlbs.com/en/blog/azure-local-vs-classic-hyper-v-cluster/">
+<link rel="canonical" href="https://clustertriage.com/en/blog/azure-local-vs-classic-hyper-v-cluster/">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_GB">
-<meta property="og:url" content="https://cldlbs.com/en/blog/azure-local-vs-classic-hyper-v-cluster/">
-<meta property="og:title" content="Classic Hyper-V or Azure Local? · CloudLabs">
+<meta property="og:url" content="https://clustertriage.com/en/blog/azure-local-vs-classic-hyper-v-cluster/">
+<meta property="og:title" content="Classic Hyper-V or Azure Local? · ClusterTriage">
 <meta property="og:description" content="Azure Stack HCI is gone. When a classic Hyper-V failover cluster on shared storage beats Azure Local with Arc, and when it does not.">
-<link rel="alternate" hreflang="nl" href="https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html">
-<link rel="alternate" hreflang="en" href="https://cldlbs.com/en/blog/azure-local-vs-classic-hyper-v-cluster/">
-<link rel="alternate" hreflang="x-default" href="https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html">
+<link rel="alternate" hreflang="nl" href="https://clustertriage.com/nl/blog/azure-local-vs-classic-hyper-v-cluster/">
+<link rel="alternate" hreflang="en" href="https://clustertriage.com/en/blog/azure-local-vs-classic-hyper-v-cluster/">
+<link rel="alternate" hreflang="x-default" href="https://clustertriage.com/en/blog/azure-local-vs-classic-hyper-v-cluster/">
 <link rel="icon" href="/favicon.png" type="image/png">
 <link rel="stylesheet" href="/huisstijl/pagina.css?v=5279f5a9">
 <link rel="stylesheet" href="/huisstijl/artikel.css?v=9a147c57">
+<link rel="stylesheet" href="/huisstijl/clustertriage.css?v=30af5db3">
+<link rel="stylesheet" href="/huisstijl/clustertriage-v2.css?v=c711d81a">
 
 <script type="application/ld+json">
 {
@@ -33,37 +35,36 @@
           "@type": "ListItem",
           "position": 1,
           "name": "Home",
-          "item": "https://cldlbs.com/"
+          "item": "https://clustertriage.com/en/"
         },
         {
           "@type": "ListItem",
           "position": 2,
           "name": "Blog",
-          "item": "https://cldlbs.com/blog/"
+          "item": "https://clustertriage.com/en/blog/"
         },
         {
           "@type": "ListItem",
           "position": 3,
           "name": "What's it gonna be: Classic Hyper-V or Azure Local?",
-          "item": "https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html"
+          "item": "https://clustertriage.com/en/blog/azure-local-vs-classic-hyper-v-cluster/"
         }
       ]
     },
     {
       "@type": "BlogPosting",
-      "@id": "https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html#artikel",
+      "@id": "https://clustertriage.com/en/blog/azure-local-vs-classic-hyper-v-cluster/#artikel",
       "headline": "What's it gonna be: Classic Hyper-V or Azure Local?",
       "description": "Azure Stack HCI is gone, folded into Azure Local with Arc still mandatory. When a classic Hyper-V failover cluster beats Azure Local, and when it does not.",
-      "inLanguage": "nl-NL",
+      "inLanguage": "en-GB",
       "datePublished": "2026-06-25",
       "dateModified": "2026-06-25",
-      "mainEntityOfPage": "https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html",
+      "mainEntityOfPage": "https://clustertriage.com/en/blog/azure-local-vs-classic-hyper-v-cluster/",
       "articleSection": "Strategy",
       "author": {
         "@type": "Person",
-        "@id": "https://cldlbs.com/over-ons/#hans",
         "name": "Hans Vredevoort",
-        "jobTitle": "Cluster- en virtualisatiespecialist",
+        "jobTitle": "Server & Cluster Specialist",
         "knowsAbout": [
           "Hyper-V",
           "Failover Clustering",
@@ -74,14 +75,13 @@
       },
       "publisher": {
         "@type": "Organization",
-        "@id": "https://cldlbs.com/#organisatie",
-        "name": "CloudLabs",
-        "url": "https://cldlbs.com/"
+        "name": "ClusterTriage",
+        "url": "https://clustertriage.com/"
       }
     },
     {
       "@type": "FAQPage",
-      "@id": "https://cldlbs.com/blog/azure-local-vs-classic-hyper-v-cluster.html#vragen",
+      "@id": "https://clustertriage.com/en/blog/azure-local-vs-classic-hyper-v-cluster/#vragen",
       "mainEntity": [
         {
           "@type": "Question",
@@ -112,25 +112,16 @@
   ]
 }
 </script>
-<script>(function(d){d.setAttribute('data-js','ja');try{var t=localStorage.getItem('cl-thema');if(t==='dark'||t==='light')d.setAttribute('data-theme',t)}catch(e){}})(document.documentElement)</script><!-- Google tag (gtag.js) met Consent Mode v2. Alles staat op denied; het paginascript zet analytics_storage om zodra de bezoeker akkoord gaat. De drie advertentiesoorten blijven altijd geweigerd. --><script async src="https://www.googletagmanager.com/gtag/js?id=G-BETH09PH6C"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',functionality_storage:'granted',security_storage:'granted',wait_for_update:500});gtag('js',new Date());gtag('config','G-BETH09PH6C',{anonymize_ip:true})</script></head>
+</head>
 
 <body>
-<a class="skip" href="#main">Skip to content</a><script>try{if(sessionStorage.getItem('cl-melding'))document.documentElement.setAttribute('data-melding','weg')}catch(e){}</script><div class="announcement" id="announcement"><span>Cluster down? Secure the evidence first.</span><a href="/en/triage/#aanvraag">Start free triage &rarr;</a><button type="button" aria-label="Close" id="close-announcement">&times;</button></div>
-
-<header class="topbar">
-  <nav class="nav">
-    <a class="brand" href="/en/" hreflang="en"><b>Cloud<span>Labs</span></b><small>Decades of server expertise</small></a>
-    <div class="navlinks" id="navlinks"><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-the-healthcheck">The HealthCheck</button><div class="navmenu" id="nav-the-healthcheck"><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div></div><a href="/en/rates/">Rates</a><a href="/en/blog/">Blog</a><div class="navgroep"><button type="button" class="navtop" aria-expanded="false" aria-controls="nav-knowledge-base">Knowledge base</button><div class="navmenu" id="nav-knowledge-base"><a href="/en/faq/">FAQ</a><a href="/en/case-studies/">Case studies</a><a href="/en/topics/">Topics</a></div></div><a href="/en/about/">About us</a><div class="nav-keuzes"><span class="taalwissel"><a href="/blog/azure-local-vs-classic-hyper-v-cluster.html" hreflang="nl" lang="nl">NL</a><span aria-current="true">EN</span></span><button type="button" class="themawissel" aria-pressed="false" aria-label="Dark mode"></button></div></div><div class="nav-actions"><a class="btn primary" href="/en/triage/#aanvraag">Start free triage</a>
-      <button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button>
-    </div>
-  </nav>
-</header>
+<a class="skip" href="#main">Skip to content</a><header class="topbar"><nav class="nav"><a class="brand ct-brand" href="/en/"><b>Cluster<span>Triage</span></b><small>Decades of server expertise</small></a><div class="navlinks" id="navlinks"><a href="/en/assurance/">Assurance</a><a href="/en/methodology/">Method</a><a href="/en/about/">About</a><a href="/en/blog/" aria-current="page">Blog</a><a href="https://clusterdown.com/en/">Cluster down?</a><span class="lang-set"><a href="/nl/blog/">NL</a><span aria-current="true">EN</span></span></div><div class="nav-actions"><a class="btn primary" href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Schedule a discussion</a><button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button></div></nav></header>
 
 <main id="main">
 <section class="section" style="padding-bottom:70px">
   <article class="artikelpagina">
 
-    <p class="kruimelpad"><a href="/">CloudLabs</a> / <a href="/en/blog/">Blog</a>Strategy</p>
+    <p class="kruimelpad"><a href="/en/">ClusterTriage</a> / <a href="/en/blog/">Blog</a> / Strategy</p>
 
     <header class="artikelkop">
       <h1>What's it gonna be: Classic Hyper-V or Azure Local?</h1>
@@ -199,15 +190,4 @@
 </section>
 </main>
 
-<footer class="footer"><div class="footer-main"><div class="footer-column"><h4>Services</h4><a href="/en/triage/">Cluster Triage</a><a href="/en/after-an-incident/">After an incident</a><a href="/en/healthcheck/">The HealthCheck</a><a href="/en/modules/">The modules</a><a href="/en/report/">The findings report</a></div><div class="footer-column"><h4>Organisation</h4><a href="/en/about/">About us</a><a href="/en/healthcheck/#doorloop">How we work</a><a href="/en/rates/">Rates</a><a href="/en/partners/">For partners</a></div><div class="footer-column"><h4>Knowledge base</h4><a href="/en/blog/">Blog</a><a href="/en/case-studies/">Case studies</a><!--LINK:top-10-hyper-v-cluster-issues--><a href="/en/blog/top-10-hyper-v-cluster-issues/">Failures and causes</a><!--/LINK:top-10-hyper-v-cluster-issues--><!--LINK:cluster-witness-comparison--><a href="/en/blog/cluster-witness-comparison/">Quorum and witness</a><!--/LINK:cluster-witness-comparison--><!--LINK:san-vs-s2d-vs-azure-local-hyper-v-storage--><!--draft:<a href="/en/blog/san-vs-s2d-vs-azure-local-hyper-v-storage/">Storage and Storage Spaces Direct</a>-->Storage and Storage Spaces Direct<!--/LINK:san-vs-s2d-vs-azure-local-hyper-v-storage--><a href="/en/faq/">FAQ</a><a href="/en/topics/">Topics</a></div><div class="footer-column"><h4>Contact</h4><a href="/en/triage/#aanvraag">Request the free script</a><a href="/en/appointment/#agenda">Book a call</a><a href="/en/contact/#bericht">Get in touch</a></div><div class="newsletter"><h4>Technical findings by email</h4><form action="#" method="post"><label><span class="skip">Email address</span><input type="email" name="email" placeholder="name@company.com" autocomplete="email"></label><button type="submit">Subscribe</button></form><p>No marketing stream. Only new findings and practical explanation.</p><div class="social-links"><a href="https://www.linkedin.com/in/hans-vredevoort" rel="noopener" aria-label="LinkedIn"><img src="/assets/icons/linkedin.svg" alt=""></a><a href="mailto:hans.vredevoort@cldlbs.com" aria-label="Email"><img src="/assets/icons/email.svg" alt=""></a><a href="/en/blog/" aria-label="Blog"><img src="/assets/icons/rss.svg" alt=""></a></div></div></div><div class="footer-lower"><div class="footer-brand"><a class="brand" href="/en/">Cloud<span>Labs</span></a><p class="footer-tagline">Independent measurements of Hyper-V, Failover Cluster and Azure Local environments. Reports in Dutch, English, German, Spanish and French.</p><p>&copy; 2026 CloudLabs</p><div class="footer-legal"><a href="/en/privacy/">Privacy statement</a><a href="/en/triage/#veilig">Security</a><a href="/en/terms/">Terms of engagement</a><button type="button" class="cookiebalk-open">Cookie preferences</button></div></div><div class="footer-badges"><div class="merkrij"><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Local</b></span><span class="merk-logo"><img src="/assets/brands/azure-local.svg" alt=""><b>Azure Stack HCI</b></span><span class="hyperv-logo"><img src="/assets/brands/hyper-v.png" alt="Microsoft Hyper-V"></span></div><div class="merkrij"><span class="hardware-logo"><img src="/assets/brands/dell.svg" alt="Dell Technologies"></span><span class="hardware-logo"><img src="/assets/brands/hpe.svg" alt="Hewlett Packard Enterprise"></span><span class="hardware-logo"><img src="/assets/brands/lenovo.svg" alt="Lenovo"></span></div></div></div></footer>
-
-
-<script>
-(function(){
-  var menu=document.getElementById('menu'),links=document.getElementById('navlinks');
-  if(menu)menu.onclick=function(){var o=links.classList.toggle('open');menu.setAttribute('aria-expanded',o)};
-})();
-</script>
-<div class="cookiebalk" id="cookiebalk" role="dialog" aria-live="polite" aria-label="Cookies"><div class="cookiebalk-inner"><p>We use Google Analytics to understand how visitors use this site. Analytics cookies are only set if you accept. What exactly is recorded is in the <a href="/en/privacy/">privacy statement</a>.</p><div class="cookiebalk-knoppen"><button type="button" class="btn primary" id="cookie-ja">Accept analytics</button><button type="button" class="btn ghost" id="cookie-nee">Decline</button></div></div></div><script src="/huisstijl/pagina.js?v=89a5807f"></script>
-</body>
-</html>
+<footer class="ct-footer"><div class="ct-footer-inner"><div class="ct-footer-brand"><b>Cluster<span>Triage</span></b><p>Independent Failover Cluster Assessment, Risk &amp; Remediation Assurance.</p></div><div><h4>Service</h4><a href="/en/assurance/">Assurance</a><a href="/en/methodology/">Method</a></div><div><h4>Company</h4><a href="/en/about/">About</a><a href="/en/blog/">Blog</a><a href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Contact</a></div><div><h4>Incident</h4><a href="https://clusterdown.com/en/">ClusterDown</a></div></div><div class="ct-footer-bottom"><span>© ClusterTriage</span><span>Windows Server · Hyper-V · Failover Clustering · Storage Spaces Direct · Azure Local</span></div></footer><script>(function(){var m=document.getElementById('menu'),n=document.getElementById('navlinks');if(m&&n)m.addEventListener('click',function(){var o=m.getAttribute('aria-expanded')==='true';m.setAttribute('aria-expanded',String(!o));n.classList.toggle('open',!o)});})();</script></body></html>
