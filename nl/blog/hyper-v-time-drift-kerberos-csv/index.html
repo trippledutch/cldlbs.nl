@@ -307,7 +307,7 @@ foreach ($peer in $nodes | Where-Object {$_ -ne $baseline}) {
         <div class="mid-cta">
           <p>Time service-configuratie is een van die onderwerpen waar elke beheerder denkt dat het op orde is, en waar we tijdens een Health Check in 7 van de 10 omgevingen iets vinden dat niet klopt.</p>
           <p>Een CloudLabs Hyper-V Cluster Health Check controleert tijd-hiërarchie, PDC emulator-configuratie, per-node settings en Hyper-V Time Sync IS-status per VM, en levert een remediation-script mee als onderdeel van het rapport.</p>
-          <a href="/book.html">Plan een Health Check kennismaking →</a>
+          <a href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Plan een Health Check kennismaking →</a>
         </div>
 
         <h2 id="nl-7">7. Drie veelvoorkomende foutpatronen</h2>
@@ -351,7 +351,7 @@ foreach ($peer in $nodes | Where-Object {$_ -ne $baseline}) {
         <h2>De kern</h2>
         <p>Time service in een Hyper-V cluster is niet "set and forget". De interactie tussen w32time, AD-replicatie, cluster-heartbeats, Live Migration handshake en Hyper-V Time Sync IS is complex genoeg dat een verkeerde aanname op één laag tot symptomen op een andere laag leidt. Wanneer Kerberos faalt, kijkt iedereen naar AD. Wanneer cluster-heartbeats wegvallen, kijkt iedereen naar het netwerk. De werkelijke oorzaak zit vaak twee lagen dieper, in een w32time-configuratie die niemand de afgelopen drie jaar heeft aangeraakt.</p>
         <p>Een CloudLabs Hyper-V Cluster Health Check bevat standaard tijd-serviceanalyse. Bevindingen worden gerapporteerd met severity die schaalt met de werkelijke skew en de blast radius. Remediation-scripts zijn idempotent en kunnen door het klant-team zelf worden toegepast.</p>
-        <p><a href="/book.html"><strong>Plan een Hyper-V Cluster Health Check kennismaking →</strong></a></p>
+        <p><a href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener"><strong>Plan een Hyper-V Cluster Health Check kennismaking →</strong></a></p>
 
         <div class="faq-block">
           <h2>Veelgestelde vragen</h2>
