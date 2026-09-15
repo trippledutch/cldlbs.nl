@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="nl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0A1024"><title>Maak een afspraak · ClusterTriage</title><meta name="description" content="Vraag een kennismaking of assessment aan. Vijf gegevens zijn genoeg; de aanvraag gaat eruit via WhatsApp en e-mail, wat u prefereert."><link rel="canonical" href="https://clustertriage.com/nl/afspraak/"><link rel="alternate" hreflang="nl" href="https://clustertriage.com/nl/afspraak/"><link rel="alternate" hreflang="en" href="https://clustertriage.com/en/appointment/"><link rel="alternate" hreflang="x-default" href="https://clustertriage.com/en/appointment/"><link rel="icon" href="/favicon.png" type="image/png"><link rel="stylesheet" href="/huisstijl/pagina.css?v=5279f5a9"><link rel="stylesheet" href="/huisstijl/clustertriage.css?v=30af5db3"><link rel="stylesheet" href="/huisstijl/clustertriage-v2.css?v=c711d81a"></head>
+<body><a class="skip" href="#main">Naar inhoud</a><header class="topbar"><nav class="nav"><a class="brand ct-brand" href="/nl/"><b>Cluster<span>Triage</span></b><small>Decades of server expertise</small></a><div class="navlinks" id="navlinks"><a href="/nl/assurance/">Assurance</a><a href="/nl/methodologie/">Methode</a><a href="/nl/over-ons/">Over ons</a><a href="/nl/blog/">Blog</a><a href="https://clusterdown.com/nl/">Cluster down?</a><span class="lang-set"><span aria-current="true">NL</span><a href="/en/appointment/">EN</a></span></div><div class="nav-actions"><a class="btn primary" href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Plan een kennismaking</a><button class="menu" id="menu" aria-controls="navlinks" aria-expanded="false">Menu</button></div></nav></header>
+
+<main id="main">
+<section class="section" id="request"><div class="inner" style="max-width:760px">
+  <div class="section-head" style="text-align:left;max-width:none">
+    <p class="eyebrow">Maak een afspraak</p>
+    <h2 style="font-size:clamp(34px,4vw,52px)">Vraag een kennismaking of assessment aan.</h2>
+    <p class="lead" style="margin:0">Vijf gegevens zijn genoeg om u met de juiste vervolgstap terug te bellen. De aanvraag gaat via WhatsApp en e-mail samen, zodat we hem niet kunnen missen.</p>
+  </div>
+  <form class="aanvraag" id="afspraakform">
+    <div class="veldrij">
+      <label><span class="lbl">Voornaam</span><input name="voornaam" autocomplete="given-name" required></label>
+      <label><span class="lbl">Achternaam</span><input name="achternaam" autocomplete="family-name" required></label>
+    </div>
+    <label><span class="lbl">Bedrijf of organisatie</span><input name="bedrijf" autocomplete="organization" required></label>
+    <label><span class="lbl">E-mailadres</span><input name="email" type="email" autocomplete="email" required></label>
+    <div class="veldrij">
+      <label><span class="lbl">Telefoon, met landcode</span><input name="telefoon" type="tel" autocomplete="tel" placeholder="+31 6 ..." required></label>
+      <label><span class="lbl">Land</span><input name="land" autocomplete="country-name" required></label>
+    </div>
+    <label><span class="lbl">Onderwerp</span><input name="onderwerp" placeholder="bv. Windows Server 2025 upgrade-assessment" required></label>
+    <label><span class="lbl">Nog iets dat we moeten weten?</span><textarea name="bericht" rows="4" placeholder="Optioneel"></textarea></label>
+
+    <p class="verzendhint">Verstuur de aanvraag via zowel WhatsApp als e-mail, zodat we hem niet kunnen missen.</p>
+    <div class="verzendrij">
+      <button type="button" class="btn primary" id="knop-wa">Versturen via WhatsApp</button>
+      <button type="button" class="btn dark" id="knop-mail">Ook versturen per e-mail</button>
+    </div>
+    <p class="aanvraag-noot">We reageren doorgaans binnen een werkdag.<br>
+      <b>Dit formulier verstuurt zelf niets:</b> de aanvraag gaat via uw eigen WhatsApp of e-mail.
+      Deze pagina bewaart niets.
+    </p>
+  </form>
+</div></section>
+</main>
+
+<footer class="ct-footer"><div class="ct-footer-inner"><div class="ct-footer-brand"><b>Cluster<span>Triage</span></b><p>Onafhankelijke Failover Cluster Assessment, Risk &amp; Remediation Assurance.</p></div><div><h4>Dienst</h4><a href="/nl/assurance/">Assurance</a><a href="/nl/methodologie/">Methode</a></div><div><h4>Bedrijf</h4><a href="/nl/over-ons/">Over ons</a><a href="/nl/blog/">Blog</a><a href="https://www.linkedin.com/in/hans-vredevoort-9531b5385/en" target="_blank" rel="noopener">Contact</a></div><div><h4>Incident</h4><a href="https://clusterdown.com/nl/">ClusterDown</a></div></div><div class="ct-footer-bottom"><span>© ClusterTriage</span><span>Windows Server · Hyper-V · Failover Clustering · Storage Spaces Direct · Azure Local</span></div></footer>
+<script>
+(function(){
+  var m=document.getElementById('menu'),n=document.getElementById('navlinks');
+  if(m&&n)m.addEventListener('click',function(){var o=m.getAttribute('aria-expanded')==='true';m.setAttribute('aria-expanded',String(!o));n.classList.toggle('open',!o)});
+  var F=document.getElementById('afspraakform');
+  if(F){
+    function veld(naam){return F.elements[naam].value.trim()}
+    function bericht(){
+      if(!F.reportValidity()) return null;
+      var d=new Date(),p=function(x){return String(x).padStart(2,'0')};
+      var stamp=d.getUTCFullYear()+'-'+p(d.getUTCMonth()+1)+'-'+p(d.getUTCDate())+' '+p(d.getUTCHours())+':'+p(d.getUTCMinutes())+' UTC';
+      var msg='ClusterTriage-aanvraag\nDatum: '+stamp+'\nOnderwerp: '+veld('onderwerp')+'\nNaam: '+veld('voornaam')+' '+veld('achternaam')+'\nBedrijf: '+veld('bedrijf')+'\nE-mail: '+veld('email')+'\nTelefoon: '+veld('telefoon')+'\nLand: '+veld('land');
+      var extra=veld('bericht'); if(extra) msg+='\nBericht: '+extra;
+      return msg;
+    }
+    document.getElementById('knop-wa').addEventListener('click',function(){
+      var b=bericht(); if(b===null) return;
+      window.open('https://wa.me/66991461761?text='+encodeURIComponent(b),'_blank','noopener');
+    });
+    document.getElementById('knop-mail').addEventListener('click',function(){
+      var b=bericht(); if(b===null) return;
+      location.href='mailto:hans@cldlbs.com?subject='+encodeURIComponent('ClusterTriage: '+veld('onderwerp'))+'&body='+encodeURIComponent(b);
+    });
+  }
+})();
+</script>
+</body></html>
