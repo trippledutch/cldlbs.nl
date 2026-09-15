@@ -7,7 +7,7 @@
 
 /* Brand lock-up */
 .brand.ct-brand{display:flex;flex-direction:column;line-height:1.05;min-width:max-content}
-.brand.ct-brand b{font-size:20px;letter-spacing:-.02em}
+.brand.ct-brand b{font-size:20px;letter-spacing:-.02em;color:#FFFFFF}
 .brand.ct-brand small{margin-top:5px;font-family:var(--mono);font-size:10.5px;line-height:1.15;font-weight:500;letter-spacing:.065em;white-space:nowrap;color:var(--band-dim)}
 
 /* Homepage hero */
@@ -121,7 +121,7 @@
 .ct-footer h4{font-family:var(--mono);font-size:9px;text-transform:uppercase;letter-spacing:.13em;color:var(--band-faint);margin:0 0 14px}
 .ct-footer a{display:block;color:var(--band-dim);text-decoration:none;font-size:13px;margin:8px 0}
 .ct-footer a:hover{color:var(--surface)}
-.ct-footer-brand b{display:block;color:var(--surface);font-size:20px}
+.ct-footer-brand b{display:block;color:#FFFFFF;font-size:20px}
 .ct-footer-brand b span{color:var(--band-accent)}
 .ct-footer-brand p{font-size:12px;max-width:34ch}
 .ct-footer-bottom{max-width:var(--max);margin:38px auto 0;padding-top:18px;border-top:1px solid var(--band-rule);font-family:var(--mono);font-size:9px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--band-faint)}
